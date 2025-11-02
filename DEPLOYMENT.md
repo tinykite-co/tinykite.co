@@ -1,49 +1,79 @@
 # Deployment Guide
 
-## Deploy to Vercel
+## Deploy to GitHub Pages
 
-This TinyKite.co website is optimized for deployment on Vercel.
+This TinyKite.co website is configured for deployment on GitHub Pages with automated builds via GitHub Actions.
 
-### Quick Deploy
+### Automated Deployment Setup
 
-1. **Push to GitHub**: All code is already committed
-2. **Import to Vercel**: 
-   - Go to [vercel.com](https://vercel.com)
-   - Click "Import Project"
-   - Select this repository
-3. **Configure** (auto-detected):
-   - Framework: Astro
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-4. **Deploy**: Click deploy!
+1. **Enable GitHub Pages**:
+   - Go to repository Settings → Pages
+   - Under "Build and deployment", select "GitHub Actions" as the source
 
-### Environment Variables
+2. **Push to main branch**:
+   ```bash
+   git push origin main
+   ```
 
-No environment variables are required for basic deployment.
+3. **Automatic deployment**:
+   - The GitHub Actions workflow will automatically build and deploy
+   - Visit your site at: `https://elloloop.github.io/tinykite.co/`
 
-### Custom Domain
+### GitHub Actions Workflow
 
-After deployment, you can add your custom domain:
-1. Go to Project Settings → Domains
-2. Add `tinykite.co`
-3. Follow DNS configuration instructions
+The `.github/workflows/deploy.yml` file is configured to:
+- Trigger on pushes to `main` branch
+- Build the Astro site
+- Deploy to GitHub Pages
+- Support manual workflow dispatch
+
+### Custom Domain (Optional)
+
+To use a custom domain like `tinykite.co`:
+
+1. Add a `CNAME` file to the `public/` directory:
+   ```
+   tinykite.co
+   ```
+
+2. Configure DNS records:
+   - Add a CNAME record pointing to `elloloop.github.io`
+   - Or add A records for GitHub Pages IPs
+
+3. Enable custom domain in Settings → Pages → Custom domain
+
+### Site Configuration
+
+The `astro.config.mjs` is configured for GitHub Pages:
+```js
+export default defineConfig({
+  site: 'https://elloloop.github.io',
+  base: '/tinykite.co',
+  // ...
+});
+```
+
+If using a custom domain, update the `site` value:
+```js
+site: 'https://tinykite.co',
+base: '/',  // Remove base for custom domain
+```
+
+### Local Development
+
+To test the production build locally:
+```bash
+npm run build
+npm run preview
+```
+
+Visit http://localhost:4321/tinykite.co/ to see the production build.
 
 ### Build Settings
 
-The `vercel.json` file is already configured with optimal settings:
-```json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install"
-}
-```
-
-### Automatic Deployments
-
-- **Production**: Pushes to `main` branch
-- **Preview**: Pull requests and other branches
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Node Version**: 20.x
 
 ### Performance
 
@@ -56,27 +86,27 @@ Expected Lighthouse scores:
 ### Monitoring
 
 After deployment:
-- Check Analytics in Vercel dashboard
-- Monitor build times and deployment status
-- Set up custom alerts if needed
-
-## Local Development
-
-To test the production build locally:
-```bash
-npm run build
-npm run preview
-```
-
-Visit http://localhost:4321 to see the production build.
+- Check the Actions tab for build status
+- View deployment history in Settings → Pages
+- Monitor via GitHub Pages insights
 
 ## Troubleshooting
 
-If the build fails:
-1. Check that all dependencies are installed: `npm install`
-2. Verify TypeScript types: `npm run build`
-3. Review build logs in Vercel dashboard
+### Build fails in Actions
+1. Check the Actions tab for error logs
+2. Ensure all dependencies are in `package.json`
+3. Verify the build works locally with `npm run build`
+
+### 404 errors on deployed site
+1. Ensure `base: '/tinykite.co'` is set in `astro.config.mjs`
+2. Check that assets are using relative paths
+3. Verify GitHub Pages is enabled in repository settings
+
+### Links not working
+- Make sure all internal links account for the base path
+- Use Astro's built-in path helpers when possible
 
 For issues, refer to:
-- [Astro Docs](https://docs.astro.build)
-- [Vercel Docs](https://vercel.com/docs)
+- [Astro Docs](https://docs.astro.build/en/guides/deploy/github/)
+- [GitHub Pages Docs](https://docs.github.com/en/pages)
+

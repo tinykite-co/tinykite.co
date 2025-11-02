@@ -5,7 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://tinykite.co',
+  site: 'https://elloloop.github.io',
+  base: '/tinykite.co',
   integrations: [
     tailwind(),
     mdx(),

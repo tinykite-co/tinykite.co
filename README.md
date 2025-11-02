@@ -67,14 +67,16 @@ All commands are run from the root of the project, from a terminal:
 
 ## 🚢 Deployment
 
-This site is configured for deployment on Vercel:
+This site is configured for deployment on GitHub Pages:
 
-1. Push your code to GitHub
-2. Import the repository in Vercel
-3. Vercel will automatically detect the Astro framework
-4. Deploy!
+1. Enable GitHub Pages in repository Settings → Pages
+2. Select "GitHub Actions" as the build source
+3. Push to the `main` branch
+4. GitHub Actions will automatically build and deploy
 
-The `vercel.json` configuration ensures optimal build settings.
+The site will be available at: `https://elloloop.github.io/tinykite.co/`
+
+See `DEPLOYMENT.md` for detailed instructions and custom domain setup.
 
 ## 📝 Adding Content
 
