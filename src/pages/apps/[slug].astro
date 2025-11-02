@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map(app => ({
+    params: { slug: app.slug },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+const { Content } = await app.render();
+---
+
+<Layout 
+  title={`${app.data.title} - TinyKite`}
+  description={app.data.description}
+>
+  <article class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- Back Button -->
+        <a 
+          href="/apps" 
+          class="inline-flex items-center text-primary hover:text-primary-dark mb-8 transition-colors"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Apps
+        </a>
+
+        <!-- App Header -->
+        <div class="mb-8">
+          {app.data.icon && (
+            <div class="text-6xl mb-4">{app.data.icon}</div>
+          )}
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">{app.data.title}</h1>
+          <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
+            {app.data.description}
+          </p>
+          <div class="flex items-center gap-4">
+            <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-sm capitalize">
+              {app.data.category}
+            </span>
+            {app.data.featured && (
+              <span class="px-3 py-1 bg-primary text-white rounded-full text-sm">
+                Featured
+              </span>
+            )}
+          </div>
+        </div>
+
+        <!-- App Link -->
+        {app.data.link && (
+          <div class="mb-8">
+            <a 
+              href={app.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary inline-flex items-center"
+            >
+              Visit App
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+            </a>
+          </div>
+        )}
+
+        <!-- App Content -->
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style is:global>
+  .prose {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+  
+  .prose h2 {
+    @apply text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-gray-100;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-bold mt-6 mb-3 text-gray-900 dark:text-gray-100;
+  }
+  
+  .prose p {
+    @apply mb-4;
+  }
+  
+  .prose ul {
+    @apply list-disc pl-6 mb-4;
+  }
+  
+  .prose ol {
+    @apply list-decimal pl-6 mb-4;
+  }
+  
+  .prose a {
+    @apply text-primary hover:text-primary-dark underline;
+  }
+  
+  .prose code {
+    @apply bg-gray-100 dark:bg-dark-light px-2 py-1 rounded text-sm;
+  }
+  
+  .prose pre {
+    @apply bg-gray-100 dark:bg-dark-light p-4 rounded-lg overflow-x-auto mb-4;
+  }
+</style>
