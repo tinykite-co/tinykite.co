@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Changelog - TinyKite" 
+  description="Track the latest updates and improvements to TinyKite apps."
+>
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Changelog</h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-12">
+          Track the latest updates and improvements to our apps and platform.
+        </p>
+
+        <div class="space-y-12">
+          <!-- Changelog Entry -->
+          <div class="border-l-4 border-primary pl-6">
+            <div class="flex items-center gap-4 mb-2">
+              <h2 class="text-2xl font-bold">v1.0.0</h2>
+              <span class="text-sm px-3 py-1 bg-primary text-white rounded-full">Latest</span>
+            </div>
+            <time class="text-gray-600 dark:text-gray-400 text-sm mb-4 block">
+              November 2025
+            </time>
+            <div class="prose dark:prose-invert">
+              <h3 class="text-lg font-semibold mb-2">🎉 Initial Release</h3>
+              <ul class="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
+                <li>Launched TinyKite website with Astro + Tailwind</li>
+                <li>Implemented light/dark mode theme toggle</li>
+                <li>Added MDX content support for apps and blog posts</li>
+                <li>Created app filtering by category</li>
+                <li>Integrated SEO meta tags across all pages</li>
+                <li>Added RSS feed for blog posts</li>
+                <li>Generated sitemap for better search engine indexing</li>
+                <li>Configured for seamless Vercel deployment</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Future entries will be added here -->
+          <div class="text-center text-gray-600 dark:text-gray-400 py-8">
+            <p>More updates coming soon...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  .prose h3 {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+  
+  .prose ul li {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+</style>

@@ -1,0 +1,5 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="600" fill="#10B981"/>
+  <text x="150" y="300" font-family="Arial" font-size="24" fill="white" text-anchor="middle">QuickNote</text>
+  <text x="150" y="330" font-family="Arial" font-size="14" fill="white" text-anchor="middle">App Screenshot</text>
+</svg>

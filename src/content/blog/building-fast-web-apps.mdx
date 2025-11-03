@@ -1,0 +1,101 @@
+---
+title: "Building Fast Web Apps: Our Tech Stack"
+description: "Learn about the technologies we use to build lightning-fast utility applications at TinyKite."
+publishDate: 2025-10-28
+author: "TinyKite Team"
+tags: ["tech", "development", "performance"]
+---
+
+## The Stack Behind TinyKite
+
+At TinyKite, performance isn't just a feature—it's a requirement. Here's how we achieve lightning-fast load times and smooth interactions across all our apps.
+
+## Astro for Static Generation
+
+We chose [Astro](https://astro.build) as our framework for several compelling reasons:
+
+- **Zero JavaScript by default** - Only ship JS when absolutely necessary
+- **Component Islands** - Hydrate interactive components independently
+- **Flexible** - Works with React, Vue, Svelte, or vanilla JS
+- **Fast builds** - Optimized build process for quick deployments
+
+Our marketing site (the one you're reading now) is built entirely with Astro, delivering sub-second page loads.
+
+## Tailwind CSS for Styling
+
+Tailwind enables us to:
+
+- Write styles quickly with utility classes
+- Maintain consistency across components
+- Keep bundle sizes small with automatic purging
+- Support dark mode with ease
+
+Our signature green theme (`#1DB954`) is defined once and used consistently throughout.
+
+## MDX for Content
+
+MDX combines Markdown's simplicity with React's power:
+
+- Write content in familiar Markdown
+- Embed interactive components when needed
+- Type-safe with TypeScript
+- Version control friendly
+
+## Vercel for Deployment
+
+Vercel provides:
+
+- Instant deployments from Git
+- Global CDN for fast content delivery
+- Automatic HTTPS
+- Zero-configuration setup
+
+## Performance Results
+
+Our approach delivers impressive metrics:
+
+- **First Contentful Paint**: < 1.2s
+- **Time to Interactive**: < 1.5s
+- **Lighthouse Score**: 95+
+- **Bundle Size**: Minimal (< 50KB initial)
+
+## Lessons Learned
+
+### 1. Less JavaScript is More
+
+Most interactions don't need JavaScript. We use progressive enhancement to deliver a fast baseline experience.
+
+### 2. Optimize Images Aggressively
+
+Images are often the biggest performance bottleneck. We use:
+- WebP format with fallbacks
+- Lazy loading for below-fold images
+- Responsive images for different screen sizes
+
+### 3. Measure Everything
+
+We use performance budgets and monitor metrics continuously. What gets measured gets improved.
+
+## Looking Forward
+
+We're constantly exploring new ways to make our apps faster. Future experiments include:
+
+- Edge computing for dynamic features
+- Service workers for offline support
+- Streaming responses for instant perceived performance
+
+## Try It Yourself
+
+Want to build fast web apps? Here's our starter checklist:
+
+1. Choose a static-first framework (Astro, Next.js, etc.)
+2. Minimize JavaScript bundles
+3. Optimize images and assets
+4. Use a CDN for global distribution
+5. Monitor performance metrics
+
+Speed matters. Your users will thank you.
+
+---
+
+*Have questions about our tech stack? Reach out—we'd love to share more details!*
