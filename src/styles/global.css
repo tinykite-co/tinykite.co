@@ -4,13 +4,15 @@
 
 @layer base {
   :root {
-    --color-primary: #1db954;
+    /* Primary color - sourced from centralized theme (src/config/theme.ts) */
+    --color-primary: #4F46E5;
     --color-background: #ffffff;
     --color-foreground: #111111;
   }
 
   .dark {
-    --color-primary: #1db954;
+    /* Primary color - sourced from centralized theme (src/config/theme.ts) */
+    --color-primary: #4F46E5;
     --color-background: #111111;
     --color-foreground: #ffffff;
   }
