@@ -417,9 +417,64 @@ import { apps } from "../data/apps";
     }, 50);
   }
 
+  // Detect which app is currently visible in a scroll container
+  function detectVisibleApp(container) {
+    if (!container) return null;
+
+    const containerRect = container.getBoundingClientRect();
+    const containerCenter = containerRect.top + containerRect.height / 2;
+
+    let closestApp = null;
+    let closestDistance = Infinity;
+
+    const appElements = container.querySelectorAll("[data-app-id]");
+    appElements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      const elementCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(elementCenter - containerCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestApp = element.getAttribute("data-app-id");
+      }
+    });
+
+    return closestApp ? parseInt(closestApp) : null;
+  }
+
+  // Handle scroll events on phone containers
+  function handlePhoneScroll(container) {
+    const visibleAppId = detectVisibleApp(container);
+    if (visibleAppId && visibleAppId !== appsData[currentAppIndex].id) {
+      const newIndex = appsData.findIndex((app) => app.id === visibleAppId);
+      if (newIndex !== -1) {
+        currentAppIndex = newIndex;
+        updateAppContent(visibleAppId);
+      }
+    }
+  }
+
   // Add wheel event listener
   if (typeof window !== "undefined") {
     window.addEventListener("wheel", handleWheel, { passive: false });
+
+    // Add scroll event listeners to phone containers
+    const iphoneContainer = document.getElementById("phone-scroll-container");
+    const androidContainer = document.getElementById(
+      "phone-scroll-container-android"
+    );
+
+    if (iphoneContainer) {
+      iphoneContainer.addEventListener("scroll", () => {
+        handlePhoneScroll(iphoneContainer);
+      });
+    }
+
+    if (androidContainer) {
+      androidContainer.addEventListener("scroll", () => {
+        handlePhoneScroll(androidContainer);
+      });
+    }
 
     // Also handle touch swipe on mobile
     let touchStartY = 0;
