@@ -458,21 +458,30 @@ import { apps } from "../data/apps";
   if (typeof window !== "undefined") {
     window.addEventListener("wheel", handleWheel, { passive: false });
 
-    // Add scroll event listeners to phone containers
+    // Add scroll event listeners to phone containers with throttling
     const iphoneContainer = document.getElementById("phone-scroll-container");
     const androidContainer = document.getElementById(
       "phone-scroll-container-android"
     );
 
+    let scrollThrottleTimer = null;
     if (iphoneContainer) {
       iphoneContainer.addEventListener("scroll", () => {
-        handlePhoneScroll(iphoneContainer);
+        if (scrollThrottleTimer) return;
+        scrollThrottleTimer = setTimeout(() => {
+          handlePhoneScroll(iphoneContainer);
+          scrollThrottleTimer = null;
+        }, 100);
       });
     }
 
     if (androidContainer) {
       androidContainer.addEventListener("scroll", () => {
-        handlePhoneScroll(androidContainer);
+        if (scrollThrottleTimer) return;
+        scrollThrottleTimer = setTimeout(() => {
+          handlePhoneScroll(androidContainer);
+          scrollThrottleTimer = null;
+        }, 100);
       });
     }
 
