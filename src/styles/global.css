@@ -4,14 +4,18 @@
 
 @layer base {
   :root {
-    /* Primary color - sourced from centralized theme (src/config/theme.ts) */
+    /* 
+     * Note: CSS custom properties cannot directly import from TypeScript.
+     * These values are manually synced with src/config/theme.ts.
+     * Use Tailwind utility classes (bg-primary, text-primary, etc.) for automatic theme updates.
+     */
     --color-primary: #4F46E5;
     --color-background: #ffffff;
     --color-foreground: #111111;
   }
 
   .dark {
-    /* Primary color - sourced from centralized theme (src/config/theme.ts) */
+    /* See note above about CSS custom properties and centralized theme */
     --color-primary: #4F46E5;
     --color-background: #111111;
     --color-foreground: #ffffff;
