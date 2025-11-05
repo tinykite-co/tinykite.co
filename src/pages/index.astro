@@ -19,9 +19,9 @@ import { apps } from "../data/apps";
             <!-- iPhone Notch -->
             <div
               class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-gray-900 rounded-b-3xl z-10"
-            >
-            </div>
-            <!-- Phone Screen with Scrollable Content -->
+            ></div>
+
+            <!-- Phone Screen -->
             <div
               id="iphone-screen"
               class="relative w-full h-full bg-white rounded-[2.5rem] overflow-hidden"
@@ -152,7 +152,8 @@ import { apps } from "../data/apps";
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              ></path>
             </svg>
           </p>
         </div>
@@ -162,7 +163,7 @@ import { apps } from "../data/apps";
           <div
             class="relative w-72 h-[600px] bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl"
           >
-            <!-- Phone Screen with Scrollable Content -->
+            <!-- Phone Screen -->
             <div
               id="android-screen"
               class="relative w-full h-full bg-white rounded-[2rem] overflow-hidden"
@@ -190,8 +191,7 @@ import { apps } from "../data/apps";
             <!-- Android Navigation Bar -->
             <div
               class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-700 rounded-full"
-            >
-            </div>
+            ></div>
           </div>
           <p
             id="android-label"
@@ -232,7 +232,7 @@ import { apps } from "../data/apps";
                   <div
                     class={`w-2 h-2 rounded-full transition-colors ${index === 0 ? "bg-gray-900 dark:bg-white" : "bg-gray-300 dark:bg-gray-600"}`}
                     data-indicator={app.id}
-                  />
+                  ></div>
                 ))
               }
             </div>
@@ -312,7 +312,8 @@ import { apps } from "../data/apps";
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              ></path>
             </svg>
           </p>
         </div>
@@ -321,50 +322,35 @@ import { apps } from "../data/apps";
   </div>
 </Layout>
 
+<!-- ✅ Fixed Script -->
 <script define:vars={{ apps }}>
-  // App data for dynamic updates
   const appsData = apps;
   let currentAppIndex = 0;
+  let scrollTimeout;
 
-  // Update center content based on current app
   function updateAppContent(appId) {
     const app = appsData.find((a) => a.id === appId);
     if (!app) return;
 
-    // Update desktop content
-    const titleEl = document.getElementById("app-title");
-    const descEl = document.getElementById("app-description");
-    const appStoreLink = document.getElementById("appstore-link");
-    const playStoreLink = document.getElementById("playstore-link");
-    const iphoneLabel = document.getElementById("iphone-label");
-    const androidLabel = document.getElementById("android-label");
+    // Desktop content
+    document.getElementById("app-title").textContent = app.name;
+    document.getElementById("app-description").textContent = app.description;
+    document.getElementById("appstore-link").href = app.appStoreUrl;
+    document.getElementById("playstore-link").href = app.playStoreUrl;
+    document.getElementById("iphone-label").textContent = app.name;
+    document.getElementById("android-label").textContent = app.name;
 
-    if (titleEl) titleEl.textContent = app.name;
-    if (descEl) descEl.textContent = app.description;
-    if (appStoreLink) appStoreLink.href = app.appStoreUrl;
-    if (playStoreLink) playStoreLink.href = app.playStoreUrl;
-    if (iphoneLabel) iphoneLabel.textContent = app.name;
-    if (androidLabel) androidLabel.textContent = app.name;
+    // Mobile content
+    document.getElementById("app-title-mobile").textContent = app.name;
+    document.getElementById("app-description-mobile").textContent = app.description;
+    document.getElementById("appstore-link-mobile").href = app.appStoreUrl;
+    document.getElementById("playstore-link-mobile").href = app.playStoreUrl;
 
-    // Update mobile content
-    const titleMobile = document.getElementById("app-title-mobile");
-    const descMobile = document.getElementById("app-description-mobile");
-    const appStoreLinkMobile = document.getElementById("appstore-link-mobile");
-    const playStoreLinkMobile = document.getElementById(
-      "playstore-link-mobile"
-    );
-
-    if (titleMobile) titleMobile.textContent = app.name;
-    if (descMobile) descMobile.textContent = app.description;
-    if (appStoreLinkMobile) appStoreLinkMobile.href = app.appStoreUrl;
-    if (playStoreLinkMobile) playStoreLinkMobile.href = app.playStoreUrl;
-
-    // Update mobile indicators
-    const indicators = document.querySelectorAll("[data-indicator]");
-    indicators.forEach((indicator, index) => {
+    // Indicators
+    document.querySelectorAll("[data-indicator]").forEach((indicator, index) => {
       if (index === appId - 1) {
-        indicator.classList.remove("bg-gray-300", "dark:bg-gray-600");
         indicator.classList.add("bg-gray-900", "dark:bg-white");
+        indicator.classList.remove("bg-gray-300", "dark:bg-gray-600");
       } else {
         indicator.classList.remove("bg-gray-900", "dark:bg-white");
         indicator.classList.add("bg-gray-300", "dark:bg-gray-600");
@@ -372,97 +358,59 @@ import { apps } from "../data/apps";
     });
   }
 
-  // Handle scroll wheel for cycling through apps
-  let scrollTimeout;
   function handleWheel(e) {
     e.preventDefault();
-
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
       if (e.deltaY > 0 && currentAppIndex < appsData.length - 1) {
-        // Scroll down - next app
         currentAppIndex++;
       } else if (e.deltaY < 0 && currentAppIndex > 0) {
-        // Scroll up - previous app
         currentAppIndex--;
-      } else {
-        return;
-      }
+      } else return;
 
       const appId = appsData[currentAppIndex].id;
-
-      // Scroll both phone containers
       const iphoneContainer = document.getElementById("phone-scroll-container");
-      const androidContainer = document.getElementById(
-        "phone-scroll-container-android"
-      );
+      const androidContainer = document.getElementById("phone-scroll-container-android");
 
-      if (iphoneContainer) {
-        const targetScroll =
-          iphoneContainer.children[0].children[currentAppIndex];
-        if (targetScroll) {
-          targetScroll.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-
-      if (androidContainer) {
-        const targetScroll =
-          androidContainer.children[0].children[currentAppIndex];
-        if (targetScroll) {
-          targetScroll.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
+      iphoneContainer?.querySelector(`[data-app-id="${appId}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      androidContainer?.querySelector(`[data-app-id="${appId}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
 
       updateAppContent(appId);
-    }, 50);
+    }, 100);
   }
 
-  // Detect which app is currently visible in a scroll container
   function detectVisibleApp(container) {
-    if (!container) return null;
-
     const containerRect = container.getBoundingClientRect();
     const containerCenter = containerRect.top + containerRect.height / 2;
 
     let closestApp = null;
     let closestDistance = Infinity;
-
-    const appElements = container.querySelectorAll("[data-app-id]");
-    appElements.forEach((element) => {
+    container.querySelectorAll("[data-app-id]").forEach((element) => {
       const rect = element.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
       const distance = Math.abs(elementCenter - containerCenter);
-
       if (distance < closestDistance) {
         closestDistance = distance;
         closestApp = element.getAttribute("data-app-id");
       }
     });
-
     return closestApp ? parseInt(closestApp) : null;
   }
 
-  // Handle scroll events on phone containers
   function handlePhoneScroll(container) {
     const visibleAppId = detectVisibleApp(container);
     if (visibleAppId && visibleAppId !== appsData[currentAppIndex].id) {
-      const newIndex = appsData.findIndex((app) => app.id === visibleAppId);
-      if (newIndex !== -1) {
-        currentAppIndex = newIndex;
-        updateAppContent(visibleAppId);
-      }
+      currentAppIndex = appsData.findIndex((a) => a.id === visibleAppId);
+      updateAppContent(visibleAppId);
     }
   }
 
-  // Add wheel event listener
   if (typeof window !== "undefined") {
     window.addEventListener("wheel", handleWheel, { passive: false });
 
     // Add scroll event listeners to phone containers with throttling
     const iphoneContainer = document.getElementById("phone-scroll-container");
-    const androidContainer = document.getElementById(
-      "phone-scroll-container-android"
-    );
+    const androidContainer = document.getElementById("phone-scroll-container-android");
 
     let scrollThrottleTimer = null;
     if (iphoneContainer) {
@@ -485,33 +433,24 @@ import { apps } from "../data/apps";
       });
     }
 
-    // Also handle touch swipe on mobile
+    // Touch swipe (mobile)
     let touchStartY = 0;
     window.addEventListener("touchstart", (e) => {
       touchStartY = e.touches[0].clientY;
     });
-
     window.addEventListener("touchmove", (e) => {
-      const touchY = e.touches[0].clientY;
-      const diff = touchStartY - touchY;
-
+      const diff = touchStartY - e.touches[0].clientY;
       if (Math.abs(diff) > 50) {
-        if (diff > 0 && currentAppIndex < appsData.length - 1) {
-          currentAppIndex++;
-          updateAppContent(appsData[currentAppIndex].id);
-          touchStartY = touchY;
-        } else if (diff < 0 && currentAppIndex > 0) {
-          currentAppIndex--;
-          updateAppContent(appsData[currentAppIndex].id);
-          touchStartY = touchY;
-        }
+        if (diff > 0 && currentAppIndex < appsData.length - 1) currentAppIndex++;
+        else if (diff < 0 && currentAppIndex > 0) currentAppIndex--;
+        updateAppContent(appsData[currentAppIndex].id);
+        touchStartY = e.touches[0].clientY;
       }
     });
   }
 </script>
 
 <style>
-  /* Hide scrollbar but keep functionality */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
