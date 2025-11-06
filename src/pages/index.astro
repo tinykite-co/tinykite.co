@@ -84,8 +84,8 @@ import { apps } from "../data/apps";
               passions in a vibrant, safe space.
             </p>
 
-            <!-- App Store Badges -->
-            <div class="flex justify-center gap-3 mb-6">
+            <!-- ✅ Fixed App Store Badges -->
+            <div class="flex justify-center gap-3 mb-6 items-center">
               <a
                 id="appstore-link"
                 href="#"
@@ -96,10 +96,11 @@ import { apps } from "../data/apps";
                 <img
                   src="/app-store-badge.svg"
                   alt="Download on App Store"
-                  class="h-[64px] w-auto object-contain"
+                  class="store-badge appstore"
                   loading="eager"
                 />
               </a>
+
               <a
                 id="playstore-link"
                 href="#"
@@ -110,11 +111,12 @@ import { apps } from "../data/apps";
                 <img
                   src="/google-play-badge.svg"
                   alt="Get it on Google Play"
-                  class="h-[56px] w-auto object-contain"
+                  class="store-badge playstore"
                   loading="eager"
                 />
               </a>
             </div>
+
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -208,7 +210,7 @@ import { apps } from "../data/apps";
     document.getElementById("iphone-label").textContent = app.name;
     document.getElementById("android-label").textContent = app.name;
 
-    // 🎨 Smooth background color transition using Web Animations API
+    // 🎨 Smooth background color transition
     const iphoneScreen = document.getElementById("iphone-screen");
     const androidScreen = document.getElementById("android-screen");
     [iphoneScreen, androidScreen].forEach((el) => {
@@ -265,7 +267,6 @@ import { apps } from "../data/apps";
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -277,23 +278,63 @@ import { apps } from "../data/apps";
     transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
-  /* Store Badge Fix */
-  .store-badge {
-    height: 3.5rem;
-    width: auto;
-    object-fit: contain;
-    display: block;
-  }
+  /* --- ✅ Store Badge Consistency Fix --- */
+  /* --- 🎯 Final Balanced Store Badge Sizes --- */
+/* --- 🎯 Final Balanced App Store + Play Store Badges --- */
+/* --- 🎯 Final Perfect Alignment for App Store & Google Play badges --- */
+.store-badge {
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* App Store: visually heavier, slightly taller ratio */
+.store-badge.appstore {
+  height: 54px;
+  transform: scale(1) translateY(1px);
+  transform-origin: center;
+}
+
+/* Google Play: more horizontal, visually thinner */
+.store-badge.playstore {
+  height: 54px;
+  transform: scale(1.05, 1.08) translateY(-0.5px);
+  transform-origin: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
   .store-badge.appstore {
-    transform: scale(1.15);
-    transform-origin: center;
+    height: 48px;
+    transform: scale(1) translateY(1px);
   }
-  @media (max-width: 768px) {
-    .store-badge {
-      height: 2.8rem;
-    }
-    .store-badge.appstore {
-      transform: scale(1.18);
-    }
+  .store-badge.playstore {
+    height: 48px;
+    transform: scale(1.05, 1.08) translateY(-0.5px);
   }
+}
+
+@media (max-width: 768px) {
+  .store-badge.appstore {
+    height: 42px;
+    transform: scale(1) translateY(1px);
+  }
+  .store-badge.playstore {
+    height: 42px;
+    transform: scale(1.05, 1.08) translateY(-0.5px);
+  }
+}
+
+
+/* Small screens (mobiles) */
+@media (max-width: 768px) {
+  .store-badge.appstore {
+    height: 38px;
+  }
+  .store-badge.playstore {
+    height: 42px;
+  }
+}
+
 </style>
