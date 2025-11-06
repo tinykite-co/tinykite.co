@@ -4,7 +4,6 @@ import { apps } from "../data/apps";
 ---
 
 <Layout title="TinyKite - We innovate. We build. We connect.">
-  <!-- Single Screen Hero - Fixed Height, No Page Scroll -->
   <div
     class="fixed inset-0 overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark"
   >
@@ -13,34 +12,30 @@ import { apps } from "../data/apps";
       <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
         <!-- Left Phone - iPhone -->
         <div class="flex flex-col items-center justify-center">
-          <div
-            class="relative w-72 h-[600px] bg-gray-900 rounded-[3rem] p-3 shadow-2xl"
-          >
-            <!-- iPhone Notch -->
+          <div class="relative w-72 h-[600px] bg-gray-900 rounded-[3rem] p-3 shadow-2xl overflow-hidden transition-all duration-700">
             <div
               class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-gray-900 rounded-b-3xl z-10"
-            >
-            </div>
-            <!-- Phone Screen with Scrollable Content -->
+            ></div>
+
+            <!-- Phone Screen -->
             <div
               id="iphone-screen"
-              class="relative w-full h-full bg-white rounded-[2.5rem] overflow-hidden"
+              class="relative w-full h-full rounded-[2.5rem] overflow-hidden"
+              style="background-color: #4F46E5;"
             >
               <div
-                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide"
+                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide relative"
                 id="phone-scroll-container"
               >
                 {
                   apps.map((app) => (
                     <div
-                      class="h-full snap-start relative"
+                      class="h-full snap-start relative flex items-center justify-center"
                       data-app-id={app.id}
                     >
-                      <img
-                        src={app.screenshot}
-                        alt={`${app.name} screenshot`}
-                        class="w-full h-full object-cover"
-                      />
+                      <p class="relative z-10 text-white text-xl font-semibold drop-shadow-md">
+                        {app.name}
+                      </p>
                     </div>
                   ))
                 }
@@ -89,11 +84,11 @@ import { apps } from "../data/apps";
               passions in a vibrant, safe space.
             </p>
 
-            <!-- App Store Badges -->
-            <div class="flex justify-center gap-4 mb-6 relative z-10">
+            <!-- ✅ Fixed App Store Badges -->
+            <div class="flex justify-center gap-3 mb-6 items-center">
               <a
                 id="appstore-link"
-                href="https://apps.apple.com/app/community-hub"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="transform hover:scale-105 transition-transform block"
@@ -101,13 +96,14 @@ import { apps } from "../data/apps";
                 <img
                   src="/app-store-badge.svg"
                   alt="Download on App Store"
-                  class="h-12 w-auto block"
+                  class="store-badge appstore"
                   loading="eager"
                 />
               </a>
+
               <a
                 id="playstore-link"
-                href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="transform hover:scale-105 transition-transform block"
@@ -115,13 +111,13 @@ import { apps } from "../data/apps";
                 <img
                   src="/google-play-badge.svg"
                   alt="Get it on Google Play"
-                  class="h-12 w-auto block"
+                  class="store-badge playstore"
                   loading="eager"
                 />
               </a>
             </div>
 
-            <!-- CTA Buttons -->
+
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/apps"
@@ -152,46 +148,41 @@ import { apps } from "../data/apps";
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              ></path>
             </svg>
           </p>
         </div>
 
         <!-- Right Phone - Android -->
         <div class="flex flex-col items-center justify-center">
-          <div
-            class="relative w-72 h-[600px] bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl"
-          >
-            <!-- Phone Screen with Scrollable Content -->
+          <div class="relative w-72 h-[600px] bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl overflow-hidden transition-all duration-700">
             <div
               id="android-screen"
-              class="relative w-full h-full bg-white rounded-[2rem] overflow-hidden"
+              class="relative w-full h-full rounded-[2rem] overflow-hidden"
+              style="background-color: #4F46E5;"
             >
               <div
-                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide"
+                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide relative"
                 id="phone-scroll-container-android"
               >
                 {
                   apps.map((app) => (
                     <div
-                      class="h-full snap-start relative"
+                      class="h-full snap-start relative flex items-center justify-center"
                       data-app-id={app.id}
                     >
-                      <img
-                        src={app.screenshot}
-                        alt={`${app.name} screenshot`}
-                        class="w-full h-full object-cover"
-                      />
+                      <p class="relative z-10 text-white text-xl font-semibold drop-shadow-md">
+                        {app.name}
+                      </p>
                     </div>
                   ))
                 }
               </div>
             </div>
-            <!-- Android Navigation Bar -->
             <div
               class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-700 rounded-full"
-            >
-            </div>
+            ></div>
           </div>
           <p
             id="android-label"
@@ -202,252 +193,77 @@ import { apps } from "../data/apps";
         </div>
       </div>
     </div>
-
-    <!-- Mobile Layout -->
-    <div class="lg:hidden flex flex-col h-full overflow-hidden">
-      <div class="flex-1 flex items-center justify-center px-4 py-8">
-        <div class="text-center space-y-6 max-w-md">
-          <div>
-            <h1
-              class="text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight"
-            >
-              We innovate.<br />We build.<br />We connect.
-            </h1>
-            <p class="text-base text-gray-600 dark:text-gray-400">
-              TinyKite is a product studio crafting a seamless ecosystem of apps
-              that empower and inspire.
-            </p>
-          </div>
-
-          <!-- App Showcase -->
-          <div
-            class="bg-white dark:bg-dark-light rounded-2xl p-6 shadow-lg relative"
-          >
-            <!-- Scroll Indicators -->
-            <div
-              class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10"
-            >
-              {
-                apps.map((app, index) => (
-                  <div
-                    class={`w-2 h-2 rounded-full transition-colors ${index === 0 ? "bg-gray-900 dark:bg-white" : "bg-gray-300 dark:bg-gray-600"}`}
-                    data-indicator={app.id}
-                  />
-                ))
-              }
-            </div>
-
-            <h2
-              id="app-title-mobile"
-              class="text-xl font-bold text-gray-900 dark:text-white mb-2"
-            >
-              Community Hub
-            </h2>
-            <p
-              id="app-description-mobile"
-              class="text-sm text-gray-600 dark:text-gray-400 mb-4"
-            >
-              Connect with like-minded individuals, join groups, and share
-              passions in a vibrant, safe space.
-            </p>
-
-            <!-- App Store Badges -->
-            <div class="flex justify-center gap-3 mb-6">
-              <a
-                id="appstore-link-mobile"
-                href="https://apps.apple.com/app/community-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform"
-              >
-                <img
-                  src="/app-store-badge.svg"
-                  alt="Download on App Store"
-                  class="h-10 w-auto"
-                />
-              </a>
-              <a
-                id="playstore-link-mobile"
-                href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform"
-              >
-                <img
-                  src="/google-play-badge.svg"
-                  alt="Get it on Google Play"
-                  class="h-10 w-auto"
-                />
-              </a>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-col gap-3">
-              <a
-                href="/apps"
-                class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg text-center"
-              >
-                Explore Our Apps
-              </a>
-              <a
-                href="/about"
-                class="px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors text-center"
-              >
-                Learn Our Story →
-              </a>
-            </div>
-          </div>
-
-          <p
-            class="text-sm text-gray-500 dark:text-gray-500 flex items-center justify-center gap-2"
-          >
-            Scroll to see our portfolio
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
 </Layout>
 
+<!-- ✅ Smooth Scroll + Color Transition Script -->
 <script define:vars={{ apps }}>
-  // App data for dynamic updates
   const appsData = apps;
   let currentAppIndex = 0;
+  let isAnimating = false;
 
-  // Update center content based on current app
-  function updateAppContent(appId) {
-    const app = appsData.find((a) => a.id === appId);
-    if (!app) return;
+  function updateAppContent(app) {
+    document.getElementById("app-title").textContent = app.name;
+    document.getElementById("app-description").textContent = app.description;
+    document.getElementById("appstore-link").href = app.appStoreUrl;
+    document.getElementById("playstore-link").href = app.playStoreUrl;
+    document.getElementById("iphone-label").textContent = app.name;
+    document.getElementById("android-label").textContent = app.name;
 
-    // Update desktop content
-    const titleEl = document.getElementById("app-title");
-    const descEl = document.getElementById("app-description");
-    const appStoreLink = document.getElementById("appstore-link");
-    const playStoreLink = document.getElementById("playstore-link");
-    const iphoneLabel = document.getElementById("iphone-label");
-    const androidLabel = document.getElementById("android-label");
-
-    if (titleEl) titleEl.textContent = app.name;
-    if (descEl) descEl.textContent = app.description;
-    if (appStoreLink) appStoreLink.href = app.appStoreUrl;
-    if (playStoreLink) playStoreLink.href = app.playStoreUrl;
-    if (iphoneLabel) iphoneLabel.textContent = app.name;
-    if (androidLabel) androidLabel.textContent = app.name;
-
-    // Update mobile content
-    const titleMobile = document.getElementById("app-title-mobile");
-    const descMobile = document.getElementById("app-description-mobile");
-    const appStoreLinkMobile = document.getElementById("appstore-link-mobile");
-    const playStoreLinkMobile = document.getElementById(
-      "playstore-link-mobile"
-    );
-
-    if (titleMobile) titleMobile.textContent = app.name;
-    if (descMobile) descMobile.textContent = app.description;
-    if (appStoreLinkMobile) appStoreLinkMobile.href = app.appStoreUrl;
-    if (playStoreLinkMobile) playStoreLinkMobile.href = app.playStoreUrl;
-
-    // Update mobile indicators
-    const indicators = document.querySelectorAll("[data-indicator]");
-    indicators.forEach((indicator, index) => {
-      if (index === appId - 1) {
-        indicator.classList.remove("bg-gray-300", "dark:bg-gray-600");
-        indicator.classList.add("bg-gray-900", "dark:bg-white");
-      } else {
-        indicator.classList.remove("bg-gray-900", "dark:bg-white");
-        indicator.classList.add("bg-gray-300", "dark:bg-gray-600");
+    // 🎨 Smooth background color transition
+    const iphoneScreen = document.getElementById("iphone-screen");
+    const androidScreen = document.getElementById("android-screen");
+    [iphoneScreen, androidScreen].forEach((el) => {
+      if (el) {
+        el.animate(
+          [
+            { backgroundColor: el.style.backgroundColor },
+            { backgroundColor: app.bgColor }
+          ],
+          { duration: 800, easing: "ease-in-out", fill: "forwards" }
+        );
       }
     });
   }
 
-  // Handle scroll wheel for cycling through apps
-  let scrollTimeout;
+  function scrollToApp(appId) {
+    const iphoneContainer = document.getElementById("phone-scroll-container");
+    const androidContainer = document.getElementById("phone-scroll-container-android");
+    const iphoneTarget = iphoneContainer?.querySelector(`[data-app-id="${appId}"]`);
+    const androidTarget = androidContainer?.querySelector(`[data-app-id="${appId}"]`);
+    iphoneTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
+    androidTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function handleWheel(e) {
-    e.preventDefault();
+    if (isAnimating) return;
+    isAnimating = true;
 
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      if (e.deltaY > 0 && currentAppIndex < appsData.length - 1) {
-        // Scroll down - next app
-        currentAppIndex++;
-      } else if (e.deltaY < 0 && currentAppIndex > 0) {
-        // Scroll up - previous app
-        currentAppIndex--;
-      } else {
-        return;
-      }
+    if (e.deltaY > 0 && currentAppIndex < appsData.length - 1) currentAppIndex++;
+    else if (e.deltaY < 0 && currentAppIndex > 0) currentAppIndex--;
+    else {
+      isAnimating = false;
+      return;
+    }
 
-      const appId = appsData[currentAppIndex].id;
+    const app = appsData[currentAppIndex];
+    scrollToApp(app.id);
+    updateAppContent(app);
 
-      // Scroll both phone containers
-      const iphoneContainer = document.getElementById("phone-scroll-container");
-      const androidContainer = document.getElementById(
-        "phone-scroll-container-android"
-      );
-
-      if (iphoneContainer) {
-        const targetScroll =
-          iphoneContainer.children[0].children[currentAppIndex];
-        if (targetScroll) {
-          targetScroll.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-
-      if (androidContainer) {
-        const targetScroll =
-          androidContainer.children[0].children[currentAppIndex];
-        if (targetScroll) {
-          targetScroll.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-
-      updateAppContent(appId);
-    }, 50);
+    // Unlock next animation after transition
+    setTimeout(() => (isAnimating = false), 900);
   }
 
-  // Add wheel event listener
   if (typeof window !== "undefined") {
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
-    // Also handle touch swipe on mobile
-    let touchStartY = 0;
-    window.addEventListener("touchstart", (e) => {
-      touchStartY = e.touches[0].clientY;
-    });
-
-    window.addEventListener("touchmove", (e) => {
-      const touchY = e.touches[0].clientY;
-      const diff = touchStartY - touchY;
-
-      if (Math.abs(diff) > 50) {
-        if (diff > 0 && currentAppIndex < appsData.length - 1) {
-          currentAppIndex++;
-          updateAppContent(appsData[currentAppIndex].id);
-          touchStartY = touchY;
-        } else if (diff < 0 && currentAppIndex > 0) {
-          currentAppIndex--;
-          updateAppContent(appsData[currentAppIndex].id);
-          touchStartY = touchY;
-        }
-      }
-    });
+    window.addEventListener("wheel", handleWheel, { passive: true });
   }
 </script>
 
 <style>
-  /* Hide scrollbar but keep functionality */
+  html {
+    scroll-behavior: smooth;
+  }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -455,4 +271,70 @@ import { apps } from "../data/apps";
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  #phone-scroll-container,
+  #phone-scroll-container-android {
+    scroll-behavior: smooth;
+    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* --- ✅ Store Badge Consistency Fix --- */
+  /* --- 🎯 Final Balanced Store Badge Sizes --- */
+/* --- 🎯 Final Balanced App Store + Play Store Badges --- */
+/* --- 🎯 Final Perfect Alignment for App Store & Google Play badges --- */
+.store-badge {
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* App Store: visually heavier, slightly taller ratio */
+.store-badge.appstore {
+  height: 54px;
+  transform: scale(1) translateY(1px);
+  transform-origin: center;
+}
+
+/* Google Play: more horizontal, visually thinner */
+.store-badge.playstore {
+  height: 54px;
+  transform: scale(1.05, 1.08) translateY(-0.5px);
+  transform-origin: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .store-badge.appstore {
+    height: 48px;
+    transform: scale(1) translateY(1px);
+  }
+  .store-badge.playstore {
+    height: 48px;
+    transform: scale(1.05, 1.08) translateY(-0.5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .store-badge.appstore {
+    height: 42px;
+    transform: scale(1) translateY(1px);
+  }
+  .store-badge.playstore {
+    height: 42px;
+    transform: scale(1.05, 1.08) translateY(-0.5px);
+  }
+}
+
+
+/* Small screens (mobiles) */
+@media (max-width: 768px) {
+  .store-badge.appstore {
+    height: 38px;
+  }
+  .store-badge.playstore {
+    height: 42px;
+  }
+}
+
 </style>

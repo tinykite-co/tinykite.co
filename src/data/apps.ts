@@ -1,33 +1,29 @@
-// App showcase data
 export const apps = [
   {
     id: 1,
     name: "Community Hub",
-    description:
-      "Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.",
-    appStoreUrl: "https://apps.apple.com/app/community-hub",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.tinykite.communityhub",
-    screenshot: "/app-screenshots/community-hub.png.svg",
+    description: "Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.",
+    screenshot: "/community-hub.png",
+    appStoreUrl: "#",
+    playStoreUrl: "#",
+    bgColor: "#4F46E5", // Indigo
   },
   {
     id: 2,
     name: "QuickNote",
-    description:
-      "A fast and simple note-taking app for capturing your thoughts instantly.",
-    appStoreUrl: "https://apps.apple.com/app/quicknote",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.tinykite.quicknote",
-    screenshot: "/app-screenshots/quicknote.png.svg",
+    description: "Capture ideas instantly and stay organized with ease.",
+    screenshot: "/quicknote.png",
+    appStoreUrl: "#",
+    playStoreUrl: "#",
+    bgColor: "#10B981", // Green
   },
-  {
+    {
     id: 3,
     name: "ColorPicker Pro",
-    description:
-      "Professional color picker tool with multiple format support and color palette generation.",
-    appStoreUrl: "https://apps.apple.com/app/colorpicker-pro",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.tinykite.colorpicker",
-    screenshot: "/app-screenshots/colorpicker.png.svg",
+    description: "Pick, save, and share colors effortlessly.",
+    screenshot: "/colorpicker.png",
+    appStoreUrl: "#",
+    playStoreUrl: "#",
+    bgColor: "#F59E0B", // Amber
   },
 ];
