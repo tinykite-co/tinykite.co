@@ -4,39 +4,30 @@
 
 @layer base {
   :root {
-    /* 
-     * Note: CSS custom properties cannot directly import from TypeScript.
-     * These values are manually synced with src/config/theme.ts.
-     * Use Tailwind utility classes (bg-primary, text-primary, etc.) for automatic theme updates.
-     */
     --color-primary: #4F46E5;
-    --color-background: #ffffff;
+    --color-background: #FFFFFF;
     --color-foreground: #111111;
-
-    /* Global font variables */
-    --font-body: "Nunito Sans", system-ui, sans-serif;
-    --font-heading: "Nunito Sans", system-ui, sans-serif;
   }
 
-  .dark {
-    --color-primary: #4F46E5;
-    --color-background: #111111;
-    --color-foreground: #ffffff;
+  html.dark {
+    --color-primary: #4338CA;
+    --color-background: #0B0B0B;
+    --color-foreground: #F8FAFC;
   }
 
-  html, body {
-    font-family: var(--font-body);
-  }
-
-  body {
-    @apply bg-white dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  html {
+    @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    letter-spacing: -0.01em;
+  html.dark {
+    @apply bg-background-dark text-foreground-dark;
+  }
+
+  body {
+    @apply min-h-screen font-sans;
+    transition: background-color .2s ease, color .2s ease;
   }
 }
 
@@ -44,7 +35,6 @@
   .btn-primary {
     @apply px-6 py-3 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors;
   }
-
   .btn-secondary {
     @apply px-6 py-3 bg-gray-200 dark:bg-dark-light hover:bg-gray-300 dark:hover:bg-dark-lighter text-gray-900 dark:text-gray-100 font-medium rounded-lg transition-colors;
   }

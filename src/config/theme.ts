@@ -29,11 +29,23 @@ export const theme = {
       dark: '#7C3AED',    // Purple-600
     },
     
-    // Dark mode colors
+    // Add top-level semantic tokens Tailwind expects
+    background: {
+      DEFAULT: '#ffff',        // light mode background
+      dark: '#111111',           // dark mode background
+    },
+    foreground: {
+      DEFAULT: '#111827',        // light mode text
+      dark: '#FFFFFF',           // dark mode text
+    },
+
+    // keep original - optional but don't nest under a confusing shape
     dark: {
       DEFAULT: '#111111',
       lighter: '#1A1A1A',
       light: '#2A2A2A',
+      background: { light: '#f8f3f3ff', dark: '#111111' }, // optional
+      foreground: { light: '#111111', dark: '#FFFFFF' },
     },
   },
   
@@ -78,6 +90,8 @@ export const theme = {
       '"Courier New"',
       'monospace',
     ],
+
+    
   },
 } as const;
 
