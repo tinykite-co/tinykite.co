@@ -1,32 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
 ---
+
 <Layout title="TinyKite - We innovate. We build. We connect.">
   <div id="hero" class="min-h-screen flex items-center justify-center bg-background dark:bg-background-dark px-8">
     <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
       <!-- LEFT PHONE -->
       <div class="flex flex-col items-center justify-center">
-        <div id="left-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+        <div id="left-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden">
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
-          <div id="left-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
-            <!-- ensure phone-text wrapper exists so JS can animate/remove it cleanly -->
+          <div id="left-screen" class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
             <div class="phone-text">Community Hub</div>
           </div>
         </div>
         <p id="left-label" class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400">Community Hub</p>
       </div>
 
-      <!-- CENTER CARD (FIXED) -->
+      <!-- CENTER CARD -->
       <div class="flex flex-col items-center justify-center">
         <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight text-center">
-          We innovate. We build.<br/>We connect.
+          We innovate. We build.<br />We connect.
         </h1>
-        <p id="hero-sub" class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center">
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center">
           TinyKite is a product studio crafting a seamless ecosystem of apps that empower and inspire.
         </p>
 
-        <div id="center-card" class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden will-change-transform">
-          <!-- reflection -->
+        <div id="center-card" class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden">
+          <!-- Reflection -->
           <div class="absolute inset-0 pointer-events-none overflow-hidden">
             <div id="center-reflection" class="absolute top-0 left-[-130%] w-[220%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60 transform -skew-x-12"></div>
           </div>
@@ -99,9 +99,9 @@ import Layout from "../layouts/Layout.astro";
 
       <!-- RIGHT PHONE -->
       <div class="flex flex-col items-center justify-center">
-        <div id="right-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+        <div id="right-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden">
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
-          <div id="right-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
+          <div id="right-screen" class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
             <div class="phone-text">Community Hub</div>
           </div>
         </div>
@@ -382,17 +382,17 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </div>
 
-  <!-- Footer below hero; we will scroll to this after last app -->
-  <footer id="site-footer" class="bg-white dark:bg-dark-light py-20 text-center">
+  <!-- FOOTER -->
+  <footer id="site-footer" class="bg-white dark:bg-dark-light py-24 text-center transition-all duration-700">
     <div class="max-w-3xl mx-auto">
       <h3 class="text-2xl font-semibold mb-4">Footer / More content</h3>
-      <p class="text-gray-600">Scrolling past the last mockup reveals this footer. Scroll back up to return to apps.</p>
+      <p class="text-gray-600">Scroll past the last mockup to reveal this footer. Scroll back up to return to apps.</p>
     </div>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
     if (typeof window !== 'undefined') {
-      // apps data (hard-coded)
       const apps = [
         { name: 'Community Hub', desc: 'Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.', bg: '#4F46E5' },
         { name: 'Quick Note', desc: 'Capture thoughts in an instant — quick, clean, and beautifully simple note-taking on the go.', bg: '#10B981' },
@@ -402,8 +402,8 @@ import Layout from "../layouts/Layout.astro";
       let idx = 0;
       const maxIdx = apps.length - 1;
       let isAnimating = false;
+      let inFooter = false;
 
-      // Elements
       const leftScreen = document.getElementById('left-screen');
       const rightScreen = document.getElementById('right-screen');
       const leftLabel = document.getElementById('left-label');
@@ -414,119 +414,77 @@ import Layout from "../layouts/Layout.astro";
       const dotsWrap = document.getElementById('dots');
       const footer = document.getElementById('site-footer');
 
-      // used to detect user moving out/in footer only once per crossing
-      let inFooterPreviously = false;
-
       function finished(anim) {
-        if (!anim) return Promise.resolve();
-        return anim.finished.catch(()=>{});
+        return anim?.finished || Promise.resolve();
       }
 
       function renderDots() {
         dotsWrap.innerHTML = '';
         for (let i = 0; i < apps.length; i++) {
           const d = document.createElement('button');
-          d.className = 'w-3 h-3 rounded-full transition-transform';
+          d.className = 'w-3 h-3 rounded-full transition-transform duration-300';
           d.dataset.index = i;
-          if (i === idx) {
-            d.style.background = 'var(--tw-color-indigo-600, #4f46e5)';
-            d.style.transform = 'scale(1.2)';
-          } else {
-            d.style.background = '#d1d5db';
-          }
-          d.addEventListener('click', () => goToIndex(Number(d.dataset.index)));
+          d.style.background = i === idx ? '#4f46e5' : '#d1d5db';
+          d.style.transform = i === idx ? 'scale(1.2)' : 'scale(1)';
+          d.addEventListener('click', () => goToIndex(i));
           dotsWrap.appendChild(d);
         }
       }
-
       renderDots();
 
-      // animate single phone change: fade-out old text → create incoming → animate incoming & bg → cleanup
-      async function animatePhoneChange(screenEl, labelEl, newApp, direction='down') {
-        // find current phone-text
-        const existing = screenEl.querySelector('.phone-text');
-        if (existing) {
-          // fade-out old
-          const out = existing.animate(
-            [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -28 : 28}px)` }],
-            { duration: 360, easing: 'ease-in', fill: 'forwards' }
+      async function animateAll(app, dir = 'down') {
+        const offset = dir === 'down' ? 50 : -50;
+
+        const animatePhone = (screen, label) => {
+          const existing = screen.querySelector('.phone-text');
+          if (existing) existing.remove();
+
+          const newText = document.createElement('div');
+          newText.className = 'phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold';
+          newText.textContent = app.name;
+          newText.style.opacity = '0';
+          newText.style.transform = `translateY(${offset}px)`;
+          screen.appendChild(newText);
+
+          screen.style.backgroundColor = app.bg;
+          newText.animate(
+            [{ opacity: 0, transform: `translateY(${offset}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: 900, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' }
           );
-          await finished(out);
-          existing.remove();
-        }
 
-        // tiny gap so new text doesn't overlap
-        await new Promise(r => setTimeout(r, 120));
+          label.textContent = app.name;
+        };
 
-        // new text element
-        const incoming = document.createElement('div');
-        incoming.className = 'phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold';
-        incoming.textContent = newApp.name;
-        incoming.style.opacity = '0';
-        incoming.style.transform = `translateY(${direction === 'down' ? 28 : -28}px)`;
-        screenEl.appendChild(incoming);
-
-        // background color anim
-        const bgAnim = screenEl.animate(
-          [{ backgroundColor: getComputedStyle(screenEl).backgroundColor }, { backgroundColor: newApp.bg }],
-          { duration: 700, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
-        );
-        screenEl.style.backgroundColor = newApp.bg;
-
-        // text in anim
-        const inAnim = incoming.animate(
-          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 28 : -28}px)` }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 560, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
-        );
-
-        await Promise.all([finished(inAnim), finished(bgAnim)]);
-
-        // cleanup extras (should be only incoming)
-        Array.from(screenEl.children).forEach(child => {
-          if (child !== incoming && child.nodeType === 1) child.remove();
-        });
-
-        // remove inline style for cleanliness
-        incoming.style.position = '';
-        incoming.style.opacity = '';
-        incoming.style.transform = '';
-
-        labelEl.textContent = newApp.name;
-      }
-
-      // animate center card fade out + reflection + fade in
-      async function animateCard(newApp, direction='down') {
         const card = document.getElementById('center-card');
         const outAnim = card.animate(
-          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -18 : 18}px)` }],
-          { duration: 320, easing: 'ease-in', fill: 'forwards' }
+          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${-offset / 2}px)` }],
+          { duration: 400, easing: 'ease-in', fill: 'forwards' }
         );
         await finished(outAnim);
 
-        // update card content
-        cardTitle.textContent = newApp.name;
-        cardDesc.textContent = newApp.desc;
+        cardTitle.textContent = app.name;
+        cardDesc.textContent = app.desc;
 
-        // reflection sweep
-        const glowAnim = centerReflection.animate(
-          [{ transform: 'translateX(-130%) skewX(-12deg)', opacity: 0.6 }, { transform: 'translateX(100%) skewX(-12deg)', opacity: 0 }],
-          { duration: 820, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        const reflection = centerReflection.animate(
+          [{ transform: 'translateX(-130%) skewX(-12deg)', opacity: 0.6 },
+           { transform: 'translateX(100%) skewX(-12deg)', opacity: 0 }],
+          { duration: 1000, easing: 'ease', fill: 'forwards' }
         );
 
-        // card in
-        const inAnim = card.animate(
-          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 18 : -18}px)` }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 480, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        animatePhone(leftScreen, leftLabel);
+        animatePhone(rightScreen, rightLabel);
+
+        const cardIn = card.animate(
+          [{ opacity: 0, transform: `translateY(${offset / 2}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 900, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' }
         );
 
-        await Promise.all([finished(glowAnim), finished(inAnim)]);
+        await Promise.all([finished(reflection), finished(cardIn)]);
       }
 
-      // change index: animate left phone → right phone → card (one-by-one)
-      async function goToIndex(n, direction='down') {
+      async function goToIndex(n, dir = 'down') {
         if (isAnimating) return;
-        if (n < 0) n = 0;
-        if (n > maxIdx) n = maxIdx;
+        n = Math.max(0, Math.min(n, maxIdx));
         if (n === idx) return;
         isAnimating = true;
 
