@@ -1,340 +1,381 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { apps } from "../data/apps";
 ---
-
 <Layout title="TinyKite - We innovate. We build. We connect.">
-  <div
-    class="fixed inset-0 overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark"
-  >
-    <!-- Desktop Layout -->
-    <div class="hidden lg:flex h-full items-center justify-center px-8">
-      <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
-        <!-- Left Phone - iPhone -->
-        <div class="flex flex-col items-center justify-center">
-          <div class="relative w-72 h-[600px] bg-gray-900 rounded-[3rem] p-3 shadow-2xl overflow-hidden transition-all duration-700">
-            <div
-              class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-gray-900 rounded-b-3xl z-10"
-            ></div>
-
-            <!-- Phone Screen -->
-            <div
-              id="iphone-screen"
-              class="relative w-full h-full rounded-[2.5rem] overflow-hidden"
-              style="background-color: #4F46E5;"
-            >
-              <div
-                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide relative"
-                id="phone-scroll-container"
-              >
-                {
-                  apps.map((app) => (
-                    <div
-                      class="h-full snap-start relative flex items-center justify-center"
-                      data-app-id={app.id}
-                    >
-                      <p class="relative z-10 text-white text-xl font-semibold drop-shadow-md">
-                        {app.name}
-                      </p>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
+  <div id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark px-8">
+    <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
+      <!-- LEFT PHONE -->
+      <div class="flex flex-col items-center justify-center">
+        <div id="left-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
+          <div id="left-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
+            <!-- ensure phone-text wrapper exists so JS can animate/remove it cleanly -->
+            <div class="phone-text">Community Hub</div>
           </div>
-          <p
-            id="iphone-label"
-            class="mt-6 text-sm font-medium text-gray-600 dark:text-gray-400"
-          >
-            Community Hub
-          </p>
         </div>
+        <p id="left-label" class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400">Community Hub</p>
+      </div>
 
-        <!-- Center Content -->
-        <div class="text-center space-y-6">
-          <div>
-            <h1
-              class="text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight"
-            >
-              We innovate. We build.<br />We connect.
-            </h1>
-            <p
-              class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto"
-            >
-              TinyKite is a product studio crafting a seamless ecosystem of apps
-              that empower and inspire.
-            </p>
+      <!-- CENTER CARD (FIXED) -->
+      <div class="flex flex-col items-center justify-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight text-center">
+          We innovate. We build.<br/>We connect.
+        </h1>
+        <p id="hero-sub" class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center">
+          TinyKite is a product studio crafting a seamless ecosystem of apps that empower and inspire.
+        </p>
+
+        <div id="center-card" class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden will-change-transform">
+          <!-- reflection -->
+          <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div id="center-reflection" class="absolute top-0 left-[-130%] w-[220%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60 transform -skew-x-12"></div>
           </div>
 
-          <!-- Dynamic App Showcase -->
-          <div
-            class="bg-white dark:bg-dark-light rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-dark-light"
-          >
-            <h2
-              id="app-title"
-              class="text-3xl font-bold text-gray-900 dark:text-white mb-4"
-            >
-              Community Hub
-            </h2>
-            <p
-              id="app-description"
-              class="text-gray-600 dark:text-gray-400 mb-6 text-base leading-relaxed"
-            >
-              Connect with like-minded individuals, join groups, and share
-              passions in a vibrant, safe space.
-            </p>
-
-            <!-- ✅ Fixed App Store Badges -->
-            <div class="flex justify-center gap-3 mb-6 items-center">
-              <a
-                id="appstore-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform block"
-              >
-                <img
-                  src="/app-store-badge.svg"
-                  alt="Download on App Store"
-                  class="store-badge appstore"
-                  loading="eager"
-                />
-              </a>
-
-              <a
-                id="playstore-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform block"
-              >
-                <img
-                  src="/google-play-badge.svg"
-                  alt="Get it on Google Play"
-                  class="store-badge playstore"
-                  loading="eager"
-                />
-              </a>
-            </div>
-
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/apps"
-                class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg"
-              >
-                Explore Our Apps
-              </a>
-              <a
-                href="/about"
-                class="px-8 py-3 border-2 border-primary text-primary dark:text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
-              >
-                Request an App →
-              </a>
-            </div>
-          </div>
-
-          <p
-            class="text-sm text-gray-500 dark:text-gray-500 flex items-center justify-center gap-2"
-          >
-            Scroll to see our portfolio
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              ></path>
-            </svg>
+          <h2 id="card-title" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Community Hub</h2>
+          <p id="card-desc" class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base leading-relaxed">
+            Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.
           </p>
-        </div>
 
-        <!-- Right Phone - Android -->
-        <div class="flex flex-col items-center justify-center">
-          <div class="relative w-72 h-[600px] bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl overflow-hidden transition-all duration-700">
-            <div
-              id="android-screen"
-              class="relative w-full h-full rounded-[2rem] overflow-hidden"
-              style="background-color: #4F46E5;"
-            >
-              <div
-                class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide relative"
-                id="phone-scroll-container-android"
-              >
-                {
-                  apps.map((app) => (
-                    <div
-                      class="h-full snap-start relative flex items-center justify-center"
-                      data-app-id={app.id}
-                    >
-                      <p class="relative z-10 text-white text-xl font-semibold drop-shadow-md">
-                        {app.name}
-                      </p>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-            <div
-              class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-700 rounded-full"
-            ></div>
+          <div id="card-links" class="flex justify-center gap-3 mb-6">
+            <img src="/app-store-badge.svg" alt="App Store" class="h-12" />
+            <img src="/google-play-badge.svg" alt="Google Play" class="h-12" />
           </div>
-          <p
-            id="android-label"
-            class="mt-6 text-sm font-medium text-gray-600 dark:text-gray-400"
-          >
-            Community Hub
-          </p>
+
+          <div class="flex items-center justify-center gap-4">
+            <button id="prev-btn" aria-label="Previous" class="px-3 py-2 rounded-full bg-gray-200 hover:bg-primary">←</button>
+            <div id="dots" class="flex gap-3"></div>
+            <button id="next-btn" aria-label="Next" class="px-3 py-2 rounded-full bg-gray-200 hover:bg-primary">→</button>
+          </div>
         </div>
+      </div>
+
+      <!-- RIGHT PHONE -->
+      <div class="flex flex-col items-center justify-center">
+        <div id="right-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
+          <div id="right-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
+            <div class="phone-text">Community Hub</div>
+          </div>
+        </div>
+        <p id="right-label" class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400">Community Hub</p>
       </div>
     </div>
   </div>
-</Layout>
 
-<!-- ✅ Smooth Scroll + Color Transition Script -->
-<script define:vars={{ apps }}>
-  const appsData = apps;
-  let currentAppIndex = 0;
-  let isAnimating = false;
+  <!-- Footer below hero; we will scroll to this after last app -->
+  <footer id="site-footer" class="bg-white dark:bg-dark-light py-20 text-center">
+    <div class="max-w-3xl mx-auto">
+      <h3 class="text-2xl font-semibold mb-4">Footer / More content</h3>
+      <p class="text-gray-600">Scrolling past the last mockup reveals this footer. Scroll back up to return to apps.</p>
+    </div>
+  </footer>
 
-  function updateAppContent(app) {
-    document.getElementById("app-title").textContent = app.name;
-    document.getElementById("app-description").textContent = app.description;
-    document.getElementById("appstore-link").href = app.appStoreUrl;
-    document.getElementById("playstore-link").href = app.playStoreUrl;
-    document.getElementById("iphone-label").textContent = app.name;
-    document.getElementById("android-label").textContent = app.name;
+  <script>
+    if (typeof window !== 'undefined') {
+      // apps data (hard-coded)
+      const apps = [
+        { name: 'Community Hub', desc: 'Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.', bg: '#4F46E5' },
+        { name: 'Quick Note', desc: 'Capture thoughts in an instant — quick, clean, and beautifully simple note-taking on the go.', bg: '#10B981' },
+        { name: 'Color Picker Pro', desc: 'Pick, save, and manage stunning color palettes — perfect for designers and creators.', bg: '#F59E0B' },
+      ];
 
-    // 🎨 Smooth background color transition
-    const iphoneScreen = document.getElementById("iphone-screen");
-    const androidScreen = document.getElementById("android-screen");
-    [iphoneScreen, androidScreen].forEach((el) => {
-      if (el) {
-        el.animate(
-          [
-            { backgroundColor: el.style.backgroundColor },
-            { backgroundColor: app.bgColor }
-          ],
-          { duration: 800, easing: "ease-in-out", fill: "forwards" }
-        );
+      let idx = 0;
+      const maxIdx = apps.length - 1;
+      let isAnimating = false;
+
+      // Elements
+      const leftScreen = document.getElementById('left-screen');
+      const rightScreen = document.getElementById('right-screen');
+      const leftLabel = document.getElementById('left-label');
+      const rightLabel = document.getElementById('right-label');
+      const cardTitle = document.getElementById('card-title');
+      const cardDesc = document.getElementById('card-desc');
+      const centerReflection = document.getElementById('center-reflection');
+      const dotsWrap = document.getElementById('dots');
+      const footer = document.getElementById('site-footer');
+
+      // used to detect user moving out/in footer only once per crossing
+      let inFooterPreviously = false;
+
+      function finished(anim) {
+        if (!anim) return Promise.resolve();
+        return anim.finished.catch(()=>{});
       }
-    });
-  }
 
-  function scrollToApp(appId) {
-    const iphoneContainer = document.getElementById("phone-scroll-container");
-    const androidContainer = document.getElementById("phone-scroll-container-android");
-    const iphoneTarget = iphoneContainer?.querySelector(`[data-app-id="${appId}"]`);
-    const androidTarget = androidContainer?.querySelector(`[data-app-id="${appId}"]`);
-    iphoneTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
-    androidTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+      function renderDots() {
+        dotsWrap.innerHTML = '';
+        for (let i = 0; i < apps.length; i++) {
+          const d = document.createElement('button');
+          d.className = 'w-3 h-3 rounded-full transition-transform';
+          d.dataset.index = i;
+          if (i === idx) {
+            d.style.background = 'var(--tw-color-indigo-600, #4f46e5)';
+            d.style.transform = 'scale(1.2)';
+          } else {
+            d.style.background = '#d1d5db';
+          }
+          d.addEventListener('click', () => goToIndex(Number(d.dataset.index)));
+          dotsWrap.appendChild(d);
+        }
+      }
 
-  function handleWheel(e) {
-    if (isAnimating) return;
-    isAnimating = true;
+      renderDots();
 
-    if (e.deltaY > 0 && currentAppIndex < appsData.length - 1) currentAppIndex++;
-    else if (e.deltaY < 0 && currentAppIndex > 0) currentAppIndex--;
-    else {
-      isAnimating = false;
-      return;
+      // animate single phone change: fade-out old text → create incoming → animate incoming & bg → cleanup
+      async function animatePhoneChange(screenEl, labelEl, newApp, direction='down') {
+        // find current phone-text
+        const existing = screenEl.querySelector('.phone-text');
+        if (existing) {
+          // fade-out old
+          const out = existing.animate(
+            [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -28 : 28}px)` }],
+            { duration: 360, easing: 'ease-in', fill: 'forwards' }
+          );
+          await finished(out);
+          existing.remove();
+        }
+
+        // tiny gap so new text doesn't overlap
+        await new Promise(r => setTimeout(r, 120));
+
+        // new text element
+        const incoming = document.createElement('div');
+        incoming.className = 'phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold';
+        incoming.textContent = newApp.name;
+        incoming.style.opacity = '0';
+        incoming.style.transform = `translateY(${direction === 'down' ? 28 : -28}px)`;
+        screenEl.appendChild(incoming);
+
+        // background color anim
+        const bgAnim = screenEl.animate(
+          [{ backgroundColor: getComputedStyle(screenEl).backgroundColor }, { backgroundColor: newApp.bg }],
+          { duration: 700, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        );
+        screenEl.style.backgroundColor = newApp.bg;
+
+        // text in anim
+        const inAnim = incoming.animate(
+          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 28 : -28}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 560, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        );
+
+        await Promise.all([finished(inAnim), finished(bgAnim)]);
+
+        // cleanup extras (should be only incoming)
+        Array.from(screenEl.children).forEach(child => {
+          if (child !== incoming && child.nodeType === 1) child.remove();
+        });
+
+        // remove inline style for cleanliness
+        incoming.style.position = '';
+        incoming.style.opacity = '';
+        incoming.style.transform = '';
+
+        labelEl.textContent = newApp.name;
+      }
+
+      // animate center card fade out + reflection + fade in
+      async function animateCard(newApp, direction='down') {
+        const card = document.getElementById('center-card');
+        const outAnim = card.animate(
+          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -18 : 18}px)` }],
+          { duration: 320, easing: 'ease-in', fill: 'forwards' }
+        );
+        await finished(outAnim);
+
+        // update card content
+        cardTitle.textContent = newApp.name;
+        cardDesc.textContent = newApp.desc;
+
+        // reflection sweep
+        const glowAnim = centerReflection.animate(
+          [{ transform: 'translateX(-130%) skewX(-12deg)', opacity: 0.6 }, { transform: 'translateX(100%) skewX(-12deg)', opacity: 0 }],
+          { duration: 820, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        );
+
+        // card in
+        const inAnim = card.animate(
+          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 18 : -18}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 480, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        );
+
+        await Promise.all([finished(glowAnim), finished(inAnim)]);
+      }
+
+      // change index: animate left phone → right phone → card (one-by-one)
+      async function goToIndex(n, direction='down') {
+        if (isAnimating) return;
+        if (n < 0) n = 0;
+        if (n > maxIdx) n = maxIdx;
+        if (n === idx) return;
+        isAnimating = true;
+
+        const newApp = apps[n];
+
+        // left phone first
+        await animatePhoneChange(leftScreen, leftLabel, newApp, direction);
+
+        // right phone next
+        await animatePhoneChange(rightScreen, rightLabel, newApp, direction);
+
+        // then center card
+        await animateCard(newApp, direction);
+
+        idx = n;
+        renderDots();
+
+        isAnimating = false;
+      }
+
+      // smooth scroll to footer when beyond last app
+      function scrollToFooter() {
+        footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      // wheel handler: single gestures only (debounced)
+      let wheelTimer = null;
+      function handleWheel(e) {
+        // we want to intercept and handle scrolling ourselves for app transitions
+        e.preventDefault();
+        if (isAnimating) return;
+
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(async () => {
+          const delta = e.deltaY;
+          // if currently scrolled into footer area, handle specially
+          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
+
+          if (delta > 0) {
+            // scroll down
+            if (idx < maxIdx) {
+              await goToIndex(idx + 1, 'down');
+            } else {
+              // if already at last app: go to footer
+              scrollToFooter();
+              inFooterPreviously = true;
+            }
+          } else {
+            // scroll up
+            if (nearFooter && inFooterPreviously) {
+              // user scrolls up from footer — go back to last app in one shot
+              // scroll the page back to top of hero area (so fixed layout visible)
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              // ensure animation to last app plays (if not already)
+              if (idx !== maxIdx) {
+                await goToIndex(maxIdx, 'up');
+              } else {
+                // play reverse anim (optional) by re-playing same index with 'up'
+                await goToIndex(maxIdx, 'up').catch(()=>{});
+              }
+              inFooterPreviously = false;
+            } else {
+              // normal upward navigation between apps
+              if (idx > 0) await goToIndex(idx - 1, 'up');
+              else {
+                // at first app and scroll up: allow normal page scroll up a bit
+                window.scrollBy({ top: -window.innerHeight/2, behavior: 'smooth' });
+              }
+            }
+          }
+        }, 110);
+      }
+
+      // Listen wheel (desktop)
+      window.addEventListener('wheel', handleWheel, { passive: false });
+
+      // Touch gestures (mobile) - basic swipe detection
+      let touchStartY = null;
+      window.addEventListener('touchstart', (ev) => { touchStartY = ev.touches[0].clientY; }, { passive: true });
+      window.addEventListener('touchend', (ev) => {
+        if (touchStartY === null) return;
+        const dy = touchStartY - (ev.changedTouches[0].clientY);
+        if (Math.abs(dy) < 40) { touchStartY = null; return; }
+        if (dy > 0) {
+          // swipe up -> next
+          if (idx < maxIdx) goToIndex(idx + 1, 'down').catch(()=>{});
+          else { scrollToFooter(); inFooterPreviously = true; }
+        } else {
+          // swipe down -> prev or back from footer
+          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
+          if (nearFooter && inFooterPreviously) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (idx !== maxIdx) goToIndex(maxIdx, 'up').catch(()=>{});
+            else goToIndex(maxIdx, 'up').catch(()=>{});
+            inFooterPreviously = false;
+          } else {
+            if (idx > 0) goToIndex(idx - 1, 'up').catch(()=>{});
+          }
+        }
+        touchStartY = null;
+      }, { passive: true });
+
+      // buttons
+      document.getElementById('prev-btn').addEventListener('click', () => goToIndex(Math.max(0, idx - 1), 'up'));
+      document.getElementById('next-btn').addEventListener('click', () => {
+        if (idx < maxIdx) goToIndex(idx + 1, 'down');
+        else { scrollToFooter(); inFooterPreviously = true; }
+      });
+
+      // clicking on phone triggers next (or footer from last)
+      leftScreen.addEventListener('click', () => { if (idx < maxIdx) goToIndex(idx + 1, 'down'); else { scrollToFooter(); inFooterPreviously = true; } });
+      rightScreen.addEventListener('click', () => { if (idx < maxIdx) goToIndex(idx + 1, 'down'); else { scrollToFooter(); inFooterPreviously = true; } });
+
+      // scroll listener to set inFooterPreviously when user reaches footer naturally
+      window.addEventListener('scroll', () => {
+        const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+        if (window.scrollY + window.innerHeight >= footerTop - 10) {
+          // user reached footer area
+          inFooterPreviously = true;
+        }
+      }, { passive: true });
+
+      // init: set initial colors & text
+      leftScreen.style.backgroundColor = apps[0].bg;
+      rightScreen.style.backgroundColor = apps[0].bg;
+      leftLabel.textContent = apps[0].name;
+      rightLabel.textContent = apps[0].name;
+      cardTitle.textContent = apps[0].name;
+      cardDesc.textContent = apps[0].desc;
+
+      // keyboard nav
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          if (idx < maxIdx) goToIndex(idx + 1, 'down');
+          else { scrollToFooter(); inFooterPreviously = true; }
+        }
+        if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          // if in footer, bring back to last app first
+          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
+          if (nearFooter && inFooterPreviously) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (idx !== maxIdx) goToIndex(maxIdx, 'up');
+            else goToIndex(maxIdx, 'up');
+            inFooterPreviously = false;
+          } else {
+            if (idx > 0) goToIndex(idx - 1, 'up');
+          }
+        }
+      });
     }
+  </script>
 
-    const app = appsData[currentAppIndex];
-    scrollToApp(app.id);
-    updateAppContent(app);
-
-    // Unlock next animation after transition
-    setTimeout(() => (isAnimating = false), 900);
-  }
-
-  if (typeof window !== "undefined") {
-    window.addEventListener("wheel", handleWheel, { passive: true });
-  }
-</script>
-
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  #phone-scroll-container,
-  #phone-scroll-container-android {
-    scroll-behavior: smooth;
-    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-
-  /* --- ✅ Store Badge Consistency Fix --- */
-  /* --- 🎯 Final Balanced Store Badge Sizes --- */
-/* --- 🎯 Final Balanced App Store + Play Store Badges --- */
-/* --- 🎯 Final Perfect Alignment for App Store & Google Play badges --- */
-.store-badge {
-  width: auto;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-/* App Store: visually heavier, slightly taller ratio */
-.store-badge.appstore {
-  height: 54px;
-  transform: scale(1) translateY(1px);
-  transform-origin: center;
-}
-
-/* Google Play: more horizontal, visually thinner */
-.store-badge.playstore {
-  height: 54px;
-  transform: scale(1.05, 1.08) translateY(-0.5px);
-  transform-origin: center;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .store-badge.appstore {
-    height: 48px;
-    transform: scale(1) translateY(1px);
-  }
-  .store-badge.playstore {
-    height: 48px;
-    transform: scale(1.05, 1.08) translateY(-0.5px);
-  }
-}
-
-@media (max-width: 768px) {
-  .store-badge.appstore {
-    height: 42px;
-    transform: scale(1) translateY(1px);
-  }
-  .store-badge.playstore {
-    height: 42px;
-    transform: scale(1.05, 1.08) translateY(-0.5px);
-  }
-}
-
-
-/* Small screens (mobiles) */
-@media (max-width: 768px) {
-  .store-badge.appstore {
-    height: 38px;
-  }
-  .store-badge.playstore {
-    height: 42px;
-  }
-}
-
-</style>
+  <style is:global>
+    html { scroll-behavior: smooth; }
+    /* ensure phone texts are positioned nicely */
+    #left-screen, #right-screen { transition: background-color 700ms cubic-bezier(.25,.1,.25,1); position: relative; }
+    #left-screen > div, #right-screen > div { position: relative; z-index: 2; padding: 0 12px; text-align: center; }
+    /* will-change hints for smoother animation */
+    #left-phone, #right-phone, #center-card { will-change: transform, opacity; }
+    /* dots basic */
+    #dots button { border: none; outline: none; cursor: pointer; width: 10px; height: 10px; border-radius: 999px; }
+    /* responsive */
+    @media (max-width: 1024px) {
+      .grid { gap: 8px; }
+      #left-phone, #right-phone { width: 60vw; height: calc(60vw * 1.8); min-height: 420px; }
+      #center-card { width: min(92vw, 480px); }
+    }
+  </style>
+</Layout>
