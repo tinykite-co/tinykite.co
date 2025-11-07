@@ -1,32 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
 ---
+
 <Layout title="TinyKite - We innovate. We build. We connect.">
-  <div id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark px-8">
+  <div id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark px-8 overflow-hidden">
     <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
       <!-- LEFT PHONE -->
       <div class="flex flex-col items-center justify-center">
-        <div id="left-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+        <div id="left-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden">
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
-          <div id="left-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
-            <!-- ensure phone-text wrapper exists so JS can animate/remove it cleanly -->
+          <div id="left-screen" class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
             <div class="phone-text">Community Hub</div>
           </div>
         </div>
         <p id="left-label" class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400">Community Hub</p>
       </div>
 
-      <!-- CENTER CARD (FIXED) -->
+      <!-- CENTER CARD -->
       <div class="flex flex-col items-center justify-center">
         <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight text-center">
-          We innovate. We build.<br/>We connect.
+          We innovate. We build.<br />We connect.
         </h1>
-        <p id="hero-sub" class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center">
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center">
           TinyKite is a product studio crafting a seamless ecosystem of apps that empower and inspire.
         </p>
 
-        <div id="center-card" class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden will-change-transform">
-          <!-- reflection -->
+        <div id="center-card" class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden">
+          <!-- Reflection -->
           <div class="absolute inset-0 pointer-events-none overflow-hidden">
             <div id="center-reflection" class="absolute top-0 left-[-130%] w-[220%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60 transform -skew-x-12"></div>
           </div>
@@ -36,24 +36,24 @@ import Layout from "../layouts/Layout.astro";
             Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.
           </p>
 
-          <div id="card-links" class="flex justify-center gap-3 mb-6">
+          <div class="flex justify-center gap-3 mb-6">
             <img src="/app-store-badge.svg" alt="App Store" class="h-12" />
             <img src="/google-play-badge.svg" alt="Google Play" class="h-12" />
           </div>
 
           <div class="flex items-center justify-center gap-4">
-            <button id="prev-btn" aria-label="Previous" class="px-3 py-2 rounded-full bg-gray-200 hover:bg-primary">←</button>
+            <button id="prev-btn" class="arrow-btn">←</button>
             <div id="dots" class="flex gap-3"></div>
-            <button id="next-btn" aria-label="Next" class="px-3 py-2 rounded-full bg-gray-200 hover:bg-primary">→</button>
+            <button id="next-btn" class="arrow-btn">→</button>
           </div>
         </div>
       </div>
 
       <!-- RIGHT PHONE -->
       <div class="flex flex-col items-center justify-center">
-        <div id="right-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden will-change-transform">
+        <div id="right-phone" class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden">
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
-          <div id="right-screen" class="relative w-full h-full rounded-[2.2rem] overflow-hidden flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
+          <div id="right-screen" class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold">
             <div class="phone-text">Community Hub</div>
           </div>
         </div>
@@ -62,17 +62,17 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </div>
 
-  <!-- Footer below hero; we will scroll to this after last app -->
-  <footer id="site-footer" class="bg-white dark:bg-dark-light py-20 text-center">
+  <!-- FOOTER -->
+  <footer id="site-footer" class="bg-white dark:bg-dark-light py-24 text-center transition-all duration-700">
     <div class="max-w-3xl mx-auto">
       <h3 class="text-2xl font-semibold mb-4">Footer / More content</h3>
-      <p class="text-gray-600">Scrolling past the last mockup reveals this footer. Scroll back up to return to apps.</p>
+      <p class="text-gray-600">Scroll past the last mockup to reveal this footer. Scroll back up to return to apps.</p>
     </div>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
     if (typeof window !== 'undefined') {
-      // apps data (hard-coded)
       const apps = [
         { name: 'Community Hub', desc: 'Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.', bg: '#4F46E5' },
         { name: 'Quick Note', desc: 'Capture thoughts in an instant — quick, clean, and beautifully simple note-taking on the go.', bg: '#10B981' },
@@ -82,8 +82,8 @@ import Layout from "../layouts/Layout.astro";
       let idx = 0;
       const maxIdx = apps.length - 1;
       let isAnimating = false;
+      let inFooter = false;
 
-      // Elements
       const leftScreen = document.getElementById('left-screen');
       const rightScreen = document.getElementById('right-screen');
       const leftLabel = document.getElementById('left-label');
@@ -94,288 +94,149 @@ import Layout from "../layouts/Layout.astro";
       const dotsWrap = document.getElementById('dots');
       const footer = document.getElementById('site-footer');
 
-      // used to detect user moving out/in footer only once per crossing
-      let inFooterPreviously = false;
-
       function finished(anim) {
-        if (!anim) return Promise.resolve();
-        return anim.finished.catch(()=>{});
+        return anim?.finished || Promise.resolve();
       }
 
       function renderDots() {
         dotsWrap.innerHTML = '';
         for (let i = 0; i < apps.length; i++) {
           const d = document.createElement('button');
-          d.className = 'w-3 h-3 rounded-full transition-transform';
+          d.className = 'w-3 h-3 rounded-full transition-transform duration-300';
           d.dataset.index = i;
-          if (i === idx) {
-            d.style.background = 'var(--tw-color-indigo-600, #4f46e5)';
-            d.style.transform = 'scale(1.2)';
-          } else {
-            d.style.background = '#d1d5db';
-          }
-          d.addEventListener('click', () => goToIndex(Number(d.dataset.index)));
+          d.style.background = i === idx ? '#4f46e5' : '#d1d5db';
+          d.style.transform = i === idx ? 'scale(1.2)' : 'scale(1)';
+          d.addEventListener('click', () => goToIndex(i));
           dotsWrap.appendChild(d);
         }
       }
-
       renderDots();
 
-      // animate single phone change: fade-out old text → create incoming → animate incoming & bg → cleanup
-      async function animatePhoneChange(screenEl, labelEl, newApp, direction='down') {
-        // find current phone-text
-        const existing = screenEl.querySelector('.phone-text');
-        if (existing) {
-          // fade-out old
-          const out = existing.animate(
-            [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -28 : 28}px)` }],
-            { duration: 360, easing: 'ease-in', fill: 'forwards' }
+      async function animateAll(app, dir = 'down') {
+        const offset = dir === 'down' ? 50 : -50;
+
+        const animatePhone = (screen, label) => {
+          const existing = screen.querySelector('.phone-text');
+          if (existing) existing.remove();
+
+          const newText = document.createElement('div');
+          newText.className = 'phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold';
+          newText.textContent = app.name;
+          newText.style.opacity = '0';
+          newText.style.transform = `translateY(${offset}px)`;
+          screen.appendChild(newText);
+
+          screen.style.backgroundColor = app.bg;
+          newText.animate(
+            [{ opacity: 0, transform: `translateY(${offset}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: 900, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' }
           );
-          await finished(out);
-          existing.remove();
-        }
 
-        // tiny gap so new text doesn't overlap
-        await new Promise(r => setTimeout(r, 120));
+          label.textContent = app.name;
+        };
 
-        // new text element
-        const incoming = document.createElement('div');
-        incoming.className = 'phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold';
-        incoming.textContent = newApp.name;
-        incoming.style.opacity = '0';
-        incoming.style.transform = `translateY(${direction === 'down' ? 28 : -28}px)`;
-        screenEl.appendChild(incoming);
-
-        // background color anim
-        const bgAnim = screenEl.animate(
-          [{ backgroundColor: getComputedStyle(screenEl).backgroundColor }, { backgroundColor: newApp.bg }],
-          { duration: 700, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
-        );
-        screenEl.style.backgroundColor = newApp.bg;
-
-        // text in anim
-        const inAnim = incoming.animate(
-          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 28 : -28}px)` }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 560, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
-        );
-
-        await Promise.all([finished(inAnim), finished(bgAnim)]);
-
-        // cleanup extras (should be only incoming)
-        Array.from(screenEl.children).forEach(child => {
-          if (child !== incoming && child.nodeType === 1) child.remove();
-        });
-
-        // remove inline style for cleanliness
-        incoming.style.position = '';
-        incoming.style.opacity = '';
-        incoming.style.transform = '';
-
-        labelEl.textContent = newApp.name;
-      }
-
-      // animate center card fade out + reflection + fade in
-      async function animateCard(newApp, direction='down') {
         const card = document.getElementById('center-card');
         const outAnim = card.animate(
-          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${direction === 'down' ? -18 : 18}px)` }],
-          { duration: 320, easing: 'ease-in', fill: 'forwards' }
+          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: `translateY(${-offset / 2}px)` }],
+          { duration: 400, easing: 'ease-in', fill: 'forwards' }
         );
         await finished(outAnim);
 
-        // update card content
-        cardTitle.textContent = newApp.name;
-        cardDesc.textContent = newApp.desc;
+        cardTitle.textContent = app.name;
+        cardDesc.textContent = app.desc;
 
-        // reflection sweep
-        const glowAnim = centerReflection.animate(
-          [{ transform: 'translateX(-130%) skewX(-12deg)', opacity: 0.6 }, { transform: 'translateX(100%) skewX(-12deg)', opacity: 0 }],
-          { duration: 820, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        const reflection = centerReflection.animate(
+          [{ transform: 'translateX(-130%) skewX(-12deg)', opacity: 0.6 },
+           { transform: 'translateX(100%) skewX(-12deg)', opacity: 0 }],
+          { duration: 1000, easing: 'ease', fill: 'forwards' }
         );
 
-        // card in
-        const inAnim = card.animate(
-          [{ opacity: 0, transform: `translateY(${direction === 'down' ? 18 : -18}px)` }, { opacity: 1, transform: 'translateY(0)' }],
-          { duration: 480, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' }
+        animatePhone(leftScreen, leftLabel);
+        animatePhone(rightScreen, rightLabel);
+
+        const cardIn = card.animate(
+          [{ opacity: 0, transform: `translateY(${offset / 2}px)` }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 900, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' }
         );
 
-        await Promise.all([finished(glowAnim), finished(inAnim)]);
+        await Promise.all([finished(reflection), finished(cardIn)]);
       }
 
-      // change index: animate left phone → right phone → card (one-by-one)
-      async function goToIndex(n, direction='down') {
+      async function goToIndex(n, dir = 'down') {
         if (isAnimating) return;
-        if (n < 0) n = 0;
-        if (n > maxIdx) n = maxIdx;
+        n = Math.max(0, Math.min(n, maxIdx));
         if (n === idx) return;
         isAnimating = true;
-
-        const newApp = apps[n];
-
-        // left phone first
-        await animatePhoneChange(leftScreen, leftLabel, newApp, direction);
-
-        // right phone next
-        await animatePhoneChange(rightScreen, rightLabel, newApp, direction);
-
-        // then center card
-        await animateCard(newApp, direction);
-
+        await animateAll(apps[n], dir);
         idx = n;
         renderDots();
-
         isAnimating = false;
       }
 
-      // smooth scroll to footer when beyond last app
       function scrollToFooter() {
-        footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        footer.scrollIntoView({ behavior: 'smooth' });
+        inFooter = true;
       }
 
-      // wheel handler: single gestures only (debounced)
-      let wheelTimer = null;
-      function handleWheel(e) {
-        // we want to intercept and handle scrolling ourselves for app transitions
+      let scrollTimeout;
+      function handleScroll(e) {
         e.preventDefault();
         if (isAnimating) return;
-
-        clearTimeout(wheelTimer);
-        wheelTimer = setTimeout(async () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(async () => {
           const delta = e.deltaY;
-          // if currently scrolled into footer area, handle specially
-          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
-
           if (delta > 0) {
-            // scroll down
-            if (idx < maxIdx) {
-              await goToIndex(idx + 1, 'down');
-            } else {
-              // if already at last app: go to footer
-              scrollToFooter();
-              inFooterPreviously = true;
-            }
+            if (idx < maxIdx) await goToIndex(idx + 1, 'down');
+            else scrollToFooter();
           } else {
-            // scroll up
-            if (nearFooter && inFooterPreviously) {
-              // user scrolls up from footer — go back to last app in one shot
-              // scroll the page back to top of hero area (so fixed layout visible)
+            if (inFooter && window.scrollY < footer.offsetTop - 10) {
+              inFooter = false;
+              await goToIndex(maxIdx, 'up');
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              // ensure animation to last app plays (if not already)
-              if (idx !== maxIdx) {
-                await goToIndex(maxIdx, 'up');
-              } else {
-                // play reverse anim (optional) by re-playing same index with 'up'
-                await goToIndex(maxIdx, 'up').catch(()=>{});
-              }
-              inFooterPreviously = false;
-            } else {
-              // normal upward navigation between apps
-              if (idx > 0) await goToIndex(idx - 1, 'up');
-              else {
-                // at first app and scroll up: allow normal page scroll up a bit
-                window.scrollBy({ top: -window.innerHeight/2, behavior: 'smooth' });
-              }
-            }
+            } else if (idx > 0) await goToIndex(idx - 1, 'up');
           }
-        }, 110);
+        }, 100);
       }
 
-      // Listen wheel (desktop)
-      window.addEventListener('wheel', handleWheel, { passive: false });
+      window.addEventListener('wheel', handleScroll, { passive: false });
 
-      // Touch gestures (mobile) - basic swipe detection
-      let touchStartY = null;
-      window.addEventListener('touchstart', (ev) => { touchStartY = ev.touches[0].clientY; }, { passive: true });
-      window.addEventListener('touchend', (ev) => {
-        if (touchStartY === null) return;
-        const dy = touchStartY - (ev.changedTouches[0].clientY);
-        if (Math.abs(dy) < 40) { touchStartY = null; return; }
-        if (dy > 0) {
-          // swipe up -> next
-          if (idx < maxIdx) goToIndex(idx + 1, 'down').catch(()=>{});
-          else { scrollToFooter(); inFooterPreviously = true; }
-        } else {
-          // swipe down -> prev or back from footer
-          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
-          if (nearFooter && inFooterPreviously) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (idx !== maxIdx) goToIndex(maxIdx, 'up').catch(()=>{});
-            else goToIndex(maxIdx, 'up').catch(()=>{});
-            inFooterPreviously = false;
-          } else {
-            if (idx > 0) goToIndex(idx - 1, 'up').catch(()=>{});
-          }
-        }
-        touchStartY = null;
-      }, { passive: true });
-
-      // buttons
-      document.getElementById('prev-btn').addEventListener('click', () => goToIndex(Math.max(0, idx - 1), 'up'));
-      document.getElementById('next-btn').addEventListener('click', () => {
-        if (idx < maxIdx) goToIndex(idx + 1, 'down');
-        else { scrollToFooter(); inFooterPreviously = true; }
-      });
-
-      // clicking on phone triggers next (or footer from last)
-      leftScreen.addEventListener('click', () => { if (idx < maxIdx) goToIndex(idx + 1, 'down'); else { scrollToFooter(); inFooterPreviously = true; } });
-      rightScreen.addEventListener('click', () => { if (idx < maxIdx) goToIndex(idx + 1, 'down'); else { scrollToFooter(); inFooterPreviously = true; } });
-
-      // scroll listener to set inFooterPreviously when user reaches footer naturally
-      window.addEventListener('scroll', () => {
-        const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-        if (window.scrollY + window.innerHeight >= footerTop - 10) {
-          // user reached footer area
-          inFooterPreviously = true;
-        }
-      }, { passive: true });
-
-      // init: set initial colors & text
       leftScreen.style.backgroundColor = apps[0].bg;
       rightScreen.style.backgroundColor = apps[0].bg;
       leftLabel.textContent = apps[0].name;
       rightLabel.textContent = apps[0].name;
       cardTitle.textContent = apps[0].name;
       cardDesc.textContent = apps[0].desc;
-
-      // keyboard nav
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-          if (idx < maxIdx) goToIndex(idx + 1, 'down');
-          else { scrollToFooter(); inFooterPreviously = true; }
-        }
-        if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-          // if in footer, bring back to last app first
-          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-          const nearFooter = window.scrollY + window.innerHeight >= footerTop - 10;
-          if (nearFooter && inFooterPreviously) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (idx !== maxIdx) goToIndex(maxIdx, 'up');
-            else goToIndex(maxIdx, 'up');
-            inFooterPreviously = false;
-          } else {
-            if (idx > 0) goToIndex(idx - 1, 'up');
-          }
-        }
-      });
     }
   </script>
 
   <style is:global>
-    html { scroll-behavior: smooth; }
-    /* ensure phone texts are positioned nicely */
-    #left-screen, #right-screen { transition: background-color 700ms cubic-bezier(.25,.1,.25,1); position: relative; }
-    #left-screen > div, #right-screen > div { position: relative; z-index: 2; padding: 0 12px; text-align: center; }
-    /* will-change hints for smoother animation */
-    #left-phone, #right-phone, #center-card { will-change: transform, opacity; }
-    /* dots basic */
-    #dots button { border: none; outline: none; cursor: pointer; width: 10px; height: 10px; border-radius: 999px; }
-    /* responsive */
-    @media (max-width: 1024px) {
-      .grid { gap: 8px; }
-      #left-phone, #right-phone { width: 60vw; height: calc(60vw * 1.8); min-height: 420px; }
-      #center-card { width: min(92vw, 480px); }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    #left-screen, #right-screen { transition: background-color 1s cubic-bezier(0.4,0,0.2,1); }
+    .phone-text { transition: all 1s cubic-bezier(0.4,0,0.2,1); text-align: center; }
+    #center-card { transition: transform 1s ease, opacity 1s ease; }
+    #dots button { border: none; cursor: pointer; width: 10px; height: 10px; border-radius: 999px; }
+
+    /* ✨ Arrow glow effect */
+    .arrow-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #9ca3af;
+      transition: all 0.3s ease-in-out;
+      text-shadow: 0 0 0px rgba(0, 0, 0, 0);
+      cursor: pointer;
+    }
+
+    .arrow-btn:hover {
+      color: #4f46e5;
+      text-shadow: 0 0 15px rgba(79, 70, 229, 0.6);
+      transform: scale(1.15);
+    }
+
+    .arrow-btn:active {
+      transform: scale(0.97);
+      text-shadow: 0 0 25px rgba(79, 70, 229, 0.8);
     }
   </style>
 </Layout>
