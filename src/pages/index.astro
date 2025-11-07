@@ -3,395 +3,363 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="TinyKite - We innovate. We build. We connect.">
-  <div
-    id="hero"
-    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark px-8 overflow-hidden"
-  >
-    <div class="grid grid-cols-3 gap-12 items-center max-w-7xl w-full">
-      <!-- LEFT PHONE -->
-      <div class="flex flex-col items-center justify-center">
-        <div
-          id="left-phone"
-          class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden"
-        >
+  <!-- ✅ Hero Section -->
+  <section class="pt-32 md:pt-36 pb-20">
+    <div
+      id="hero"
+      class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white dark:from-dark-lighter dark:to-dark px-8 overflow-hidden"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center max-w-7xl w-full">
+        <!-- LEFT PHONE -->
+        <div class="flex flex-col items-center justify-center order-2 lg:order-1">
           <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"
-          ></div>
-          <div
-            id="left-screen"
-            class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold"
+            id="left-phone"
+            class="relative w-64 md:w-72 h-[540px] md:h-[600px] bg-gray-900 rounded-[2.5rem] p-4 shadow-2xl overflow-hidden transition-transform duration-700 ease-out"
           >
-            <div class="phone-text">Community Hub</div>
-          </div>
-        </div>
-        <p
-          id="left-label"
-          class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400"
-        >
-          Community Hub
-        </p>
-      </div>
-
-      <!-- CENTER CARD -->
-      <div class="flex flex-col items-center justify-center">
-        <h1
-          class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight text-center"
-        >
-          We innovate. We build.<br />We connect.
-        </h1>
-        <p
-          class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center"
-        >
-          TinyKite is a product studio crafting a seamless ecosystem of apps that
-          empower and inspire.
-        </p>
-
-        <div
-          id="center-card"
-          class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[360px] md:w-[480px] overflow-hidden"
-        >
-          <!-- Reflection -->
-          <div class="absolute inset-0 pointer-events-none overflow-hidden">
             <div
-              id="center-reflection"
-              class="absolute top-0 left-[-130%] w-[220%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60 transform -skew-x-12"
+              class="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-6 bg-gray-900 rounded-b-3xl z-10"
             ></div>
+            <div
+              id="left-screen"
+              class="relative w-full h-full rounded-[2rem] flex items-center justify-center text-white text-lg md:text-2xl font-semibold"
+            >
+              <div class="phone-text">Community Hub</div>
+            </div>
           </div>
-
-          <h2
-            id="card-title"
-            class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3"
+          <p
+            id="left-label"
+            class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400"
           >
             Community Hub
-          </h2>
-          <p
-            id="card-desc"
-            class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base leading-relaxed"
+          </p>
+        </div>
+
+        <!-- CENTER CARD -->
+        <div class="flex flex-col items-center justify-center order-1 lg:order-2">
+          <h1
+            class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight text-center"
           >
-            Connect with like-minded individuals, join groups, and share passions
-            in a vibrant, safe space.
+            We innovate. We build.<br />We connect.
+          </h1>
+          <p
+            class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-lg mb-6 text-center"
+          >
+            TinyKite is a product studio crafting a seamless ecosystem of apps
+            that empower and inspire.
           </p>
 
-          <!-- ✅ PERFECTLY ALIGNED STORE BADGES -->
-          <div class="flex justify-center gap-4 mb-6 items-center">
-            <div class="badge-wrapper">
-              <img
-                src="/app-store-badge-fixed.svg"
-                alt="App Store"
-                class="store-badge"
-                loading="lazy"
-              />
-            </div>
-            <div class="badge-wrapper">
-              <img
-                src="/google-play-badge-fixed.svg"
-                alt="Google Play"
-                class="store-badge"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          <div class="flex items-center justify-center gap-4">
-            <button id="prev-btn" class="arrow-btn">←</button>
-            <div id="dots" class="flex gap-3"></div>
-            <button id="next-btn" class="arrow-btn">→</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT PHONE -->
-      <div class="flex flex-col items-center justify-center">
-        <div
-          id="right-phone"
-          class="relative w-72 md:w-80 h-[600px] md:h-[640px] bg-gray-900 rounded-[2.8rem] p-4 shadow-2xl overflow-hidden"
-        >
           <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-7 bg-gray-900 rounded-b-3xl z-10"
-          ></div>
-          <div
-            id="right-screen"
-            class="relative w-full h-full rounded-[2.2rem] flex items-center justify-center text-white text-xl md:text-2xl font-semibold"
+            id="center-card"
+            class="relative bg-white/10 dark:bg-dark-light/30 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/30 dark:border-dark-light/50 w-[340px] md:w-[460px] overflow-hidden"
           >
-            <div class="phone-text">Community Hub</div>
+            <!-- Reflection -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+              <div
+                id="center-reflection"
+                class="absolute top-0 left-[-130%] w-[220%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60 transform -skew-x-12"
+              ></div>
+            </div>
+
+            <h2
+              id="card-title"
+              class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3"
+            >
+              Community Hub
+            </h2>
+            <p
+              id="card-desc"
+              class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base leading-relaxed"
+            >
+              Connect with like-minded individuals, join groups, and share
+              passions in a vibrant, safe space.
+            </p>
+
+            <div class="flex justify-center gap-4 mb-6 items-center">
+              <div class="badge-wrapper">
+                <img
+                  src="/app-store-badge-fixed.svg"
+                  alt="App Store"
+                  class="store-badge"
+                  loading="lazy"
+                />
+              </div>
+              <div class="badge-wrapper">
+                <img
+                  src="/google-play-badge-fixed.svg"
+                  alt="Google Play"
+                  class="store-badge"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4">
+              <button id="prev-btn" class="arrow-btn">←</button>
+              <div id="dots" class="flex gap-3"></div>
+              <button id="next-btn" class="arrow-btn">→</button>
+            </div>
           </div>
         </div>
-        <p
-          id="right-label"
-          class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400"
-        >
-          Community Hub
-        </p>
+
+        <!-- RIGHT PHONE -->
+        <div class="flex flex-col items-center justify-center order-3">
+          <div
+            id="right-phone"
+            class="relative w-64 md:w-72 h-[540px] md:h-[600px] bg-gray-900 rounded-[2.5rem] p-4 shadow-2xl overflow-hidden transition-transform duration-700 ease-out"
+          >
+            <div
+              class="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-6 bg-gray-900 rounded-b-3xl z-10"
+            ></div>
+            <div
+              id="right-screen"
+              class="relative w-full h-full rounded-[2rem] flex items-center justify-center text-white text-lg md:text-2xl font-semibold"
+            >
+              <div class="phone-text">Community Hub</div>
+            </div>
+          </div>
+          <p
+            id="right-label"
+            class="mt-4 text-sm font-medium text-gray-600 dark:text-gray-400"
+          >
+            Community Hub
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- FOOTER -->
+  <!-- ✅ Footer -->
   <footer
     id="site-footer"
     class="bg-white dark:bg-dark-light py-24 text-center transition-all duration-700"
   >
     <div class="max-w-3xl mx-auto">
       <h3 class="text-2xl font-semibold mb-4">Footer / More content</h3>
-      <p class="text-gray-600">
+      <p class="text-gray-600 dark:text-gray-400">
         Scroll past the last mockup to reveal this footer. Scroll back up to
         return to apps.
       </p>
     </div>
   </footer>
 
-  <!-- SCRIPT -->
-  <script>
-    if (typeof window !== "undefined") {
-      const apps = [
-        {
-          name: "Community Hub",
-          desc: "Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.",
-          bg: "#4F46E5",
-        },
-        {
-          name: "Quick Note",
-          desc: "Capture thoughts in an instant — quick, clean, and beautifully simple note-taking on the go.",
-          bg: "#10B981",
-        },
-        {
-          name: "Color Picker Pro",
-          desc: "Pick, save, and manage stunning color palettes — perfect for designers and creators.",
-          bg: "#F59E0B",
-        },
-      ];
+<script>
+  if (typeof window !== "undefined") {
+    const apps = [
+      {
+        name: "Community Hub",
+        desc: "Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.",
+        bg: "#4F46E5",
+      },
+      {
+        name: "Quick Note",
+        desc: "Capture thoughts in an instant — quick, clean, and beautifully simple note-taking on the go.",
+        bg: "#10B981",
+      },
+      {
+        name: "Color Picker Pro",
+        desc: "Pick, save, and manage stunning color palettes — perfect for designers and creators.",
+        bg: "#F59E0B",
+      },
+    ];
 
-      let idx = 0;
-      const maxIdx = apps.length - 1;
-      let isAnimating = false;
-      let inFooter = false;
+    let idx = 0;
+    const maxIdx = apps.length - 1;
+    let isAnimating = false;
+    let inFooter = false;
 
-      const leftScreen = document.getElementById("left-screen");
-      const rightScreen = document.getElementById("right-screen");
-      const leftLabel = document.getElementById("left-label");
-      const rightLabel = document.getElementById("right-label");
-      const cardTitle = document.getElementById("card-title");
-      const cardDesc = document.getElementById("card-desc");
-      const centerReflection = document.getElementById("center-reflection");
-      const dotsWrap = document.getElementById("dots");
-      const footer = document.getElementById("site-footer");
+    const leftPhone = document.getElementById("left-phone");
+    const rightPhone = document.getElementById("right-phone");
+    const leftScreen = document.getElementById("left-screen");
+    const rightScreen = document.getElementById("right-screen");
+    const leftLabel = document.getElementById("left-label");
+    const rightLabel = document.getElementById("right-label");
+    const card = document.getElementById("center-card");
+    const cardTitle = document.getElementById("card-title");
+    const cardDesc = document.getElementById("card-desc");
+    const centerReflection = document.getElementById("center-reflection");
+    const dotsWrap = document.getElementById("dots");
+    const footer = document.getElementById("site-footer");
+    const hero = document.getElementById("hero");
 
-      function finished(anim) {
-        return anim?.finished || Promise.resolve();
+    function finished(anim) {
+      return anim?.finished || Promise.resolve();
+    }
+
+    function renderDots() {
+      dotsWrap.innerHTML = "";
+      for (let i = 0; i < apps.length; i++) {
+        const d = document.createElement("button");
+        d.className = "w-3 h-3 rounded-full transition-transform duration-300";
+        d.dataset.index = i;
+        d.style.background = i === idx ? "#4f46e5" : "#d1d5db";
+        d.style.transform = i === idx ? "scale(1.3)" : "scale(1)";
+        d.addEventListener("click", () => goToIndex(i));
+        dotsWrap.appendChild(d);
       }
+    }
+    renderDots();
 
-      function renderDots() {
-        dotsWrap.innerHTML = "";
-        for (let i = 0; i < apps.length; i++) {
-          const d = document.createElement("button");
-          d.className = "w-3 h-3 rounded-full transition-transform duration-300";
-          d.dataset.index = i;
-          d.style.background = i === idx ? "#4f46e5" : "#d1d5db";
-          d.style.transform = i === idx ? "scale(1.2)" : "scale(1)";
-          d.addEventListener("click", () => goToIndex(i));
-          dotsWrap.appendChild(d);
-        }
-      }
+    async function animateAll(app, dir = "down") {
+      const offset = dir === "down" ? 40 : -40;
+
+      const animatePhone = (screen, label) => {
+        const existing = screen.querySelector(".phone-text");
+        if (existing) existing.remove();
+
+        const newText = document.createElement("div");
+        newText.className =
+          "phone-text absolute inset-0 flex items-center justify-center text-white text-lg md:text-2xl font-semibold";
+        newText.textContent = app.name;
+        newText.style.opacity = "0";
+        newText.style.transform = `translateY(${offset}px) scale(0.98)`;
+        screen.appendChild(newText);
+
+        screen.animate(
+          [{ backgroundColor: screen.style.backgroundColor }, { backgroundColor: app.bg }],
+          { duration: 900, easing: "ease-in-out", fill: "forwards" }
+        );
+
+        newText.animate(
+          [
+            { opacity: 0, transform: `translateY(${offset}px) scale(0.98)` },
+            { opacity: 1, transform: "translateY(0) scale(1)" },
+          ],
+          { duration: 800, easing: "cubic-bezier(0.4,0,0.2,1)", fill: "forwards" }
+        );
+
+        label.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 600,
+          easing: "ease-out",
+          fill: "forwards",
+        });
+        label.textContent = app.name;
+      };
+
+      const cardOut = card.animate(
+        [
+          { opacity: 1, transform: "translateY(0) scale(1)" },
+          { opacity: 0, transform: `translateY(${-offset / 2}px) scale(0.97)` },
+        ],
+        { duration: 400, easing: "ease-in-out", fill: "forwards" }
+      );
+      await finished(cardOut);
+
+      cardTitle.textContent = app.name;
+      cardDesc.textContent = app.desc;
+
+      const reflection = centerReflection.animate(
+        [
+          { transform: "translateX(-130%) skewX(-12deg)", opacity: 0.6 },
+          { transform: "translateX(100%) skewX(-12deg)", opacity: 0 },
+        ],
+        { duration: 1200, easing: "ease-in-out", fill: "forwards" }
+      );
+
+      animatePhone(leftScreen, leftLabel);
+      animatePhone(rightScreen, rightLabel);
+
+      const cardIn = card.animate(
+        [
+          { opacity: 0, transform: `translateY(${offset / 2}px) scale(0.97)` },
+          { opacity: 1, transform: "translateY(0) scale(1)" },
+        ],
+        { duration: 900, easing: "cubic-bezier(0.4,0,0.2,1)", fill: "forwards" }
+      );
+
+      await Promise.all([finished(reflection), finished(cardIn)]);
+    }
+
+    async function goToIndex(n, dir = "down") {
+      if (isAnimating) return;
+      n = Math.max(0, Math.min(n, maxIdx));
+      if (n === idx) return;
+      isAnimating = true;
+      await animateAll(apps[n], dir);
+      idx = n;
       renderDots();
-
-      async function animateAll(app, dir = "down") {
-        const offset = dir === "down" ? 50 : -50;
-
-        const animatePhone = (screen, label) => {
-          const existing = screen.querySelector(".phone-text");
-          if (existing) existing.remove();
-
-          const newText = document.createElement("div");
-          newText.className =
-            "phone-text absolute inset-0 flex items-center justify-center text-white text-xl md:text-2xl font-semibold";
-          newText.textContent = app.name;
-          newText.style.opacity = "0";
-          newText.style.transform = `translateY(${offset}px)`;
-          screen.appendChild(newText);
-
-          screen.style.backgroundColor = app.bg;
-          newText.animate(
-            [
-              { opacity: 0, transform: `translateY(${offset}px)` },
-              { opacity: 1, transform: "translateY(0)" },
-            ],
-            {
-              duration: 900,
-              easing: "cubic-bezier(0.4,0,0.2,1)",
-              fill: "forwards",
-            }
-          );
-
-          label.textContent = app.name;
-        };
-
-        const card = document.getElementById("center-card");
-        const outAnim = card.animate(
-          [
-            { opacity: 1, transform: "translateY(0)" },
-            { opacity: 0, transform: `translateY(${-offset / 2}px)` },
-          ],
-          { duration: 400, easing: "ease-in", fill: "forwards" }
-        );
-        await finished(outAnim);
-
-        cardTitle.textContent = app.name;
-        cardDesc.textContent = app.desc;
-
-        const reflection = centerReflection.animate(
-          [
-            {
-              transform: "translateX(-130%) skewX(-12deg)",
-              opacity: 0.6,
-            },
-            {
-              transform: "translateX(100%) skewX(-12deg)",
-              opacity: 0,
-            },
-          ],
-          { duration: 1000, easing: "ease", fill: "forwards" }
-        );
-
-        animatePhone(leftScreen, leftLabel);
-        animatePhone(rightScreen, rightLabel);
-
-        const cardIn = card.animate(
-          [
-            {
-              opacity: 0,
-              transform: `translateY(${offset / 2}px)`,
-            },
-            { opacity: 1, transform: "translateY(0)" },
-          ],
-          {
-            duration: 900,
-            easing: "cubic-bezier(0.4,0,0.2,1)",
-            fill: "forwards",
-          }
-        );
-
-        await Promise.all([finished(reflection), finished(cardIn)]);
-      }
-
-      async function goToIndex(n, dir = "down") {
-        if (isAnimating) return;
-        n = Math.max(0, Math.min(n, maxIdx));
-        if (n === idx) return;
-        isAnimating = true;
-        await animateAll(apps[n], dir);
-        idx = n;
-        renderDots();
-        isAnimating = false;
-      }
-
-      function scrollToFooter() {
-        footer.scrollIntoView({ behavior: "smooth" });
-        inFooter = true;
-      }
-
-      let scrollTimeout;
-      function handleScroll(e) {
-        e.preventDefault();
-        if (isAnimating) return;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(async () => {
-          const delta = e.deltaY;
-          if (delta > 0) {
-            if (idx < maxIdx) await goToIndex(idx + 1, "down");
-            else scrollToFooter();
-          } else {
-            if (inFooter && window.scrollY < footer.offsetTop - 10) {
-              inFooter = false;
-              await goToIndex(maxIdx, "up");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            } else if (idx > 0) await goToIndex(idx - 1, "up");
-          }
-        }, 100);
-      }
-
-      window.addEventListener("wheel", handleScroll, { passive: false });
-
-      leftScreen.style.backgroundColor = apps[0].bg;
-      rightScreen.style.backgroundColor = apps[0].bg;
-      leftLabel.textContent = apps[0].name;
-      rightLabel.textContent = apps[0].name;
-      cardTitle.textContent = apps[0].name;
-      cardDesc.textContent = apps[0].desc;
-    }
-  </script>
-
-  <style is:global>
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-    #left-screen,
-    #right-screen {
-      transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .phone-text {
-      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: center;
-    }
-    #center-card {
-      transition: transform 1s ease, opacity 1s ease;
-    }
-    #dots button {
-      border: none;
-      cursor: pointer;
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
+      isAnimating = false;
     }
 
-    /* ✅ Perfect badge alignment */
-    .badge-wrapper {
-      width: 180px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
+    function scrollToFooter() {
+      footer.scrollIntoView({ behavior: "smooth" });
+      inFooter = true;
     }
 
-    .store-badge {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: transform 0.25s ease-in-out;
+    let scrollTimeout;
+    function handleScroll(e) {
+      e.preventDefault();
+      if (isAnimating) return;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(async () => {
+        const delta = e.deltaY;
+        if (delta > 0) {
+          if (idx < maxIdx) await goToIndex(idx + 1, "down");
+          else scrollToFooter();
+        } else {
+          if (inFooter && window.scrollY < footer.offsetTop - 10) {
+            inFooter = false;
+            await goToIndex(maxIdx, "up");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else if (idx > 0) await goToIndex(idx - 1, "up");
+        }
+      }, 100);
     }
 
-    .store-badge:hover {
-      transform: scale(1.05);
-    }
+    window.addEventListener("wheel", handleScroll, { passive: false });
 
-    /* ✨ Arrow glow effect */
-    .arrow-btn {
-      background: transparent;
-      border: none;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #9ca3af;
-      transition: all 0.3s ease-in-out;
-      text-shadow: 0 0 0px rgba(0, 0, 0, 0);
-      cursor: pointer;
-    }
-    .arrow-btn:hover {
-      color: #4f46e5;
-      text-shadow: 0 0 15px rgba(79, 70, 229, 0.6);
-      transform: scale(1.15);
-    }
-    .arrow-btn:active {
-      transform: scale(0.97);
-      text-shadow: 0 0 25px rgba(79, 70, 229, 0.8);
-    }
+    // Initialize first state
+    leftScreen.style.backgroundColor = apps[0].bg;
+    rightScreen.style.backgroundColor = apps[0].bg;
+    leftLabel.textContent = apps[0].name;
+    rightLabel.textContent = apps[0].name;
+    cardTitle.textContent = apps[0].name;
+    cardDesc.textContent = apps[0].desc;
 
-    /* 📱 Responsive adjustment */
-    @media (max-width: 640px) {
-      .badge-wrapper {
-        width: 150px;
-        height: 50px;
-      }
-    }
-  </style>
-</Layout>
+    // 🌈 Parallax Effect for Phones
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY * 0.05;
+      leftPhone.style.transform = `translateY(${scrollY}px) rotate(-1deg)`;
+      rightPhone.style.transform = `translateY(${-scrollY}px) rotate(1deg)`;
+    });
+
+    hero.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      leftPhone.style.transform = `translate(${x}px, ${y}px) rotate(-1deg)`;
+      rightPhone.style.transform = `translate(${-x}px, ${-y}px) rotate(1deg)`;
+    });
+
+    hero.addEventListener("mouseleave", () => {
+      leftPhone.style.transform = `translate(0,0) rotate(0deg)`;
+      rightPhone.style.transform = `translate(0,0) rotate(0deg)`;
+    });
+
+    // 💡 Moving Light Reflection on Center Card
+    const glow = document.createElement("div");
+    glow.style.position = "absolute";
+    glow.style.top = 0;
+    glow.style.left = 0;
+    glow.style.width = "100%";
+    glow.style.height = "100%";
+    glow.style.pointerEvents = "none";
+    glow.style.borderRadius = "1rem";
+    glow.style.background =
+      "radial-gradient(circle at center, rgba(255,255,255,0.25), transparent 70%)";
+    glow.style.transition = "opacity 0.4s ease";
+    glow.style.opacity = "0";
+    glow.style.mixBlendMode = "soft-light";
+    card.appendChild(glow);
+
+    hero.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      glow.style.opacity = "1";
+      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.25), transparent 70%)`;
+    });
+
+    hero.addEventListener("mouseleave", () => {
+      glow.style.opacity = "0";
+    });
+  }
+</script>
