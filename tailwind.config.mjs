@@ -1,30 +1,37 @@
-/** @type {import('tailwindcss').Config} */
+import { theme } from './src/config/theme.ts';
+
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
+        ...theme.colors,
+        // ensure semantic access
+        background: {
+          DEFAULT: theme.colors.background?.DEFAULT ?? '#ffffff',
+          dark: theme.colors.background?.dark ?? '#111111',
+        },
+        foreground: {
+          DEFAULT: theme.colors.foreground?.DEFAULT ?? '#111827',
+          dark: theme.colors.foreground?.dark ?? '#ffffff',
+        },
         primary: {
-          DEFAULT: '#4F46E5', // Indigo-600
-          light: '#6366F1',   // Indigo-500
-          dark: '#4338CA',    // Indigo-700
+          DEFAULT: theme.colors.primary?.DEFAULT ?? '#4F46E5',
+          light: theme.colors.primary?.light ?? '#6366F1',
+          dark: theme.colors.primary?.dark ?? '#4338CA',
         },
-        secondary: {
-          DEFAULT: '#3B82F6', // Blue-500
-          light: '#60A5FA',   // Blue-400
-          dark: '#2563EB',    // Blue-600
-        },
-        dark: {
-          DEFAULT: '#111111',
-          lighter: '#1A1A1A',
-          light: '#2A2A2A',
-        },
+        // ...secondary/tertiary as before
+      },
+      fontFamily: {
+        sans: theme.fontFamily.sans,
+        serif: theme.fontFamily.serif,
+        mono: theme.fontFamily.mono,
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%)',
+        'gradient-primary': `linear-gradient(135deg, ${theme.colors.primary.DEFAULT} 0%, ${theme.colors.secondary.DEFAULT} 100%)`,
       },
     },
   },
   plugins: [],
-}
+};

@@ -4,19 +4,30 @@
 
 @layer base {
   :root {
-    --color-primary: #1db954;
-    --color-background: #ffffff;
+    --color-primary: #4F46E5;
+    --color-background: #FFFFFF;
     --color-foreground: #111111;
   }
 
-  .dark {
-    --color-primary: #1db954;
-    --color-background: #111111;
-    --color-foreground: #ffffff;
+  html.dark {
+    --color-primary: #4338CA;
+    --color-background: #0B0B0B;
+    --color-foreground: #F8FAFC;
+  }
+
+  html {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.dark {
+    @apply bg-background-dark text-foreground-dark;
   }
 
   body {
-    @apply bg-white dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-200;
+    @apply min-h-screen font-sans;
+    transition: background-color .2s ease, color .2s ease;
   }
 }
 
@@ -24,7 +35,6 @@
   .btn-primary {
     @apply px-6 py-3 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors;
   }
-
   .btn-secondary {
     @apply px-6 py-3 bg-gray-200 dark:bg-dark-light hover:bg-gray-300 dark:hover:bg-dark-lighter text-gray-900 dark:text-gray-100 font-medium rounded-lg transition-colors;
   }
