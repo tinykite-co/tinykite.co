@@ -1,116 +1,134 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
-
 const currentPath = Astro.url.pathname;
 ---
 
-<header
-  class="sticky top-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-sm border-b border-gray-200 dark:border-dark-light"
->
-  <nav class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
-      <a href="/" class="flex items-center space-x-2">
+<header class="sticky top-0 z-50">
+  <!-- Outer subtle band (theme-aware) -->
+  <div class="mx-4 my-3 rounded-[28px] px-3 py-1 bg-[linear-gradient(90deg,#f8fafc99_0%,#e6f7ff55_50%,#f0fbff66_100%)] dark:bg-[linear-gradient(90deg,#0b122033_0%,#0b203033_50%,#06101f33_100%)]">
+    <!-- Inner nav pill (theme-aware) -->
+    <nav
+      class="mx-auto flex items-center justify-between gap-4 rounded-[22px] px-6 py-3 border transition-colors"
+      role="navigation"
+      aria-label="Main Navigation"
+      class:list={[
+        "bg-white/80 border-gray-200/60 text-gray-800",
+        "dark:bg-gray-800/95 dark:border-gray-700/60 dark:text-white"
+      ]}
+    >
+      <!-- Left: TinyKite logo + name -->
+      <a href="/" class="flex items-center gap-2">
         <img src="/tinykite-logo.svg" alt="TinyKite Logo" class="w-6 h-6" />
-        <span class="text-xl font-bold text-gray-900 dark:text-white"
-          >TinyKite</span
-        >
+        <span class="font-semibold text-lg tracking-tight">TinyKite</span>
       </a>
 
-      <div class="hidden md:flex items-center space-x-8">
+      <!-- Center: main navigation links -->
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
         <a
           href="/"
           class:list={[
-            "hover:text-primary transition-colors",
-            currentPath === "/" ? "text-primary font-medium" : "",
+            "transition-colors",
+            currentPath === "/" ? "text-primary font-semibold" : "text-gray-700 dark:text-white/75 hover:text-primary"
           ]}
         >
           Ecosystem
         </a>
+
         <a
-          href="/blog"
+          href="/404error"
           class:list={[
-            "hover:text-primary transition-colors",
-            currentPath.startsWith("/blog") ? "text-primary font-medium" : "",
+            "transition-colors",
+            currentPath.startsWith("/blog") ? "text-primary font-semibold" : "text-gray-700 dark:text-white/75 hover:text-primary"
           ]}
         >
           Innovation
         </a>
+
         <a
           href="/about"
           class:list={[
-            "hover:text-primary transition-colors",
-            currentPath === "/about" ? "text-primary font-medium" : "",
+            "transition-colors",
+            currentPath === "/about" ? "text-primary font-semibold" : "text-gray-700 dark:text-white/75 hover:text-primary"
           ]}
         >
           About
         </a>
+
         <a
           href="/blog"
           class:list={[
-            "hover:text-primary transition-colors",
-            currentPath.startsWith("/blog") ? "text-primary font-medium" : "",
+            "transition-colors",
+            currentPath.startsWith("/blog") ? "text-primary font-semibold" : "text-gray-700 dark:text-white/75 hover:text-primary"
           ]}
         >
           Blog
         </a>
       </div>
 
-      <div class="flex items-center space-x-4">
+      <!-- Right: Join Us button + ThemeToggle + mobile button -->
+      <div class="flex items-center space-x-3">
+        <!-- Join Us button: hover uses primary for text & border -->
         <a
           href="/about"
-          class="hidden md:inline-block px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+          class="hidden md:inline-flex items-center px-5 py-1.5 rounded-full border text-sm font-medium transition animate-gradient"
+          class:list={[
+            "border-gray-300 text-gray-800 hover:border-primary hover:text-primary",
+            "dark:border-white/30 dark:text-white/90 dark:hover:border-primary dark:hover:text-primary",
+            "text-sm font-medium bg-gradient-to-r from-primary via-secondary to-tertiary bg-[length:200%_auto] text-transparent bg-clip-text animate-gradient"
+          ]}
         >
           Join Us
         </a>
-        <ThemeToggle />
+
+        <!-- Theme Toggle (preserved) -->
+        <div class="ml-1 p-1 rounded-md hover:bg-gray-100/40 dark:hover:bg-white/5 transition">
+          <ThemeToggle />
+        </div>
+
+        <!-- Mobile menu toggle -->
         <button
           id="mobile-menu-toggle"
-          class="md:hidden p-2 rounded-lg bg-gray-200 dark:bg-dark-light"
+          class="md:hidden p-2 rounded-md bg-gray-100/60 dark:bg-gray-700/40"
           aria-label="Toggle menu"
+          type="button"
         >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"></path>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
-    </div>
+    </nav>
+  </div>
 
-    <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-2">
-      <a href="/" class="block py-2 hover:text-primary transition-colors"
-        >Ecosystem</a
-      >
-      <a href="/blog" class="block py-2 hover:text-primary transition-colors"
-        >Innovation</a
-      >
-      <a href="/about" class="block py-2 hover:text-primary transition-colors"
-        >About</a
-      >
-      <a href="/blog" class="block py-2 hover:text-primary transition-colors"
-        >Blog</a
-      >
+  <!-- Mobile menu (theme-aware) -->
+  <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+    <div class="rounded-lg mt-2 p-3 shadow-sm transition-colors"
+         class:list={[
+           "bg-white/95 text-gray-800",
+           "dark:bg-gray-800/95 dark:text-white"
+         ]}>
+      <a href="/" class="block py-2 transition-colors text-gray-800 dark:text-white/75 hover:text-primary">Ecosystem</a>
+      <a href="/404error" class="block py-2 transition-colors text-gray-800 dark:text-white/75 hover:text-primary">Innovation</a>
+      <a href="/about" class="block py-2 transition-colors text-gray-800 dark:text-white/75 hover:text-primary">About</a>
+      <a href="/blog" class="block py-2 transition-colors text-gray-800 dark:text-white/75 hover:text-primary">Blog</a>
+
       <a
         href="/about"
-        class="block py-2 px-4 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-lg hover:opacity-90 transition-opacity text-center"
+        class="block mt-3 py-2 px-4 rounded-lg text-center font-medium transition"
+        class:list={[
+          "bg-gradient-to-r from-primary to-secondary text-white",
+          "dark:bg-gradient-to-r from-primary to-secondary text-white"
+        ]}
       >
         Join Us
       </a>
     </div>
-  </nav>
+  </div>
 </header>
 
 <script>
   const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
-
   mobileMenuToggle?.addEventListener("click", () => {
     mobileMenu?.classList.toggle("hidden");
   });

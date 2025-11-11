@@ -31,7 +31,7 @@ export const theme = {
     
     // Add top-level semantic tokens Tailwind expects
     background: {
-      DEFAULT: '#ffff',        // light mode background
+      DEFAULT: '#f6f5f9da',        // light mode background
       dark: '#111111',           // dark mode background
     },
     foreground: {
