@@ -72,90 +72,109 @@ import { apps } from "../data/apps";
           </div>
         
           <!-- Dynamic App Showcase -->
-<div
-            class="bg-background/80 dark:bg-background-dark/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-dark-light"
-          >
-            <h2
-              id="app-title"
-              class="text-3xl font-bold text-gray-900 dark:text-white mb-4"
-            >
-              Community Hub
-            </h2>
-            <p
-              id="app-description"
-              class="text-gray-600 dark:text-gray-400 mb-6 text-base leading-relaxed"
-            >
-              Connect with like-minded individuals, join groups, and share
-              passions in a vibrant, safe space.
-            </p>
+<!-- Center Content (replace existing showcase block) -->
+<div class="text-center space-y-6">
+  
 
-            <!-- App Store Badges -->
-            <div class="flex justify-center gap-4 mb-6 relative z-10">
-              <a
-                id="appstore-link"
-                href="https://apps.apple.com/app/community-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform block"
-              >
-                <img
-                  src="/app-store-badge.svg"
-                  alt="Download on App Store"
-                  class="h-12 w-auto block"
-                  loading="eager"
-                />
-              </a>
-              <a
-                id="playstore-link"
-                href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform block"
-              >
-                <img
-                  src="/google-play-badge.svg"
-                  alt="Get it on Google Play"
-                  class="h-12 w-auto block"
-                  loading="eager"
-                />
-              </a>
-            </div>
+  <!-- Improved Center Card -->
+  <div
+    id="center-card"
+    class="w-full max-w-3xl mx-auto bg-white dark:bg-[#0b0b0b] rounded-2xl p-6 md:p-8 shadow-2xl border border-gray-100 dark:border-dark-light relative z-30
+           max-h-[62vh] md:max-h-[52vh] overflow-auto"
+  >
+    <!-- Title + description -->
+    <div class="mb-4">
+      <h2 id="app-title" class="text-2xl font-semibold text-gray-900 dark:text-white">
+        Community Hub
+      </h2>
+      <p id="app-description" class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+        Connect with like-minded individuals, join groups, and share passions in a vibrant, safe space.
+      </p>
+    </div>
 
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/apps"
-                class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg"
-              >
-                Explore Our Apps
-              </a>
-              <a
-                href="/about"
-                class="px-8 py-3 border-2 border-primary text-primary dark:text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors"
-              >
-                Request an App →
-              </a>
-            </div>
-          </div>
+    <!-- App store badges -->
+    <div class="flex justify-center items-center gap-2 mb-2 relative z-10 flex-wrap">
+  <a
+    href="https://apps.apple.com/app/community-hub"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transform hover:scale-105 transition-transform"
+  >
+  <span
+      class="inline-flex items-center justify-center leading-none rounded-md overflow-hidden"
+    >
+    <img
+      src="/app-store-badge.svg"
+      alt="Download on App Store"
+      class="h-[45px] w-auto object-contain block"
+      loading="eager"
+    />  
+  </span>
+    
+  </a>
+  <a
+    href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transform hover:scale-105 transition-transform"
+  >
+    <span
+      class="inline-flex items-center justify-center leading-none rounded-md overflow-hidden"
+    >
+    <img
+      src="/google-play-badge.svg"
+      alt="Get it on Google Play"
+      class="h-[55px] w-auto object-contain block"
+      loading="eager"
+    /> 
+  </span>
+    
+  </a>
+</div>
 
+    <!-- CTA Buttons: stacked on small, two columns on md+ -->
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+      <a
+        href="/apps"
+        class="flex items-center justify-center px-3 py-1 rounded-lg font-semibold text-white bg-gradient-to-r from-primary to-secondary shadow-md hover:opacity-95 transition-opacity
+               w-full h-full"
+      >
+        Explore Our Apps → 
+      </a>
 
-          <p
-            class="text-sm text-gray-500 dark:text-gray-500 flex items-center justify-center gap-2"
-          >
-            Scroll to see our portfolio
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </p>
+      <a
+        href="/about"
+        class="flex items-center justify-center px-3 py-1 rounded-lg font-semibold border-2 border-primary text-primary dark:text-primary bg-transparent hover:bg-primary hover:text-white transition-colors
+               w-full h-full"
+      >
+        Request an App →
+      </a>
+    </div>
+
+    <!-- optional small hint / footer inside card -->
+    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4">Scroll the phone previews left/right to see screenshots</p>
+    <!-- Desktop Indicator Dots -->
+<div id="desktop-indicators" class="hidden lg:flex justify-center mt-4 gap-2">
+  {apps.map((app, index) => (
+    <div
+      class={`w-2 h-2 rounded-full transition-colors ${
+        index === 0 ? "bg-gray-900 dark:bg-white" : "bg-gray-300 dark:bg-gray-600"
+      }`}
+      data-indicator-desktop={app.id}
+    />
+  ))}
+</div>
+
+  </div>
+
+  <p class="text-sm text-gray-500 dark:text-gray-500 flex items-center justify-center gap-2">
+    Scroll to see our portfolio
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </p>
+</div>
+
         </div>
 
         <!-- Right Phone - Android -->
@@ -253,46 +272,56 @@ import { apps } from "../data/apps";
             </p>
 
             <!-- App Store Badges -->
-            <div class="flex justify-center gap-3 mb-6">
-              <a
-                id="appstore-link-mobile"
-                href="https://apps.apple.com/app/community-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform"
-              >
-                <img
-                  src="/app-store-badge.svg"
-                  alt="Download on App Store"
-                  class="h-10 w-auto"
-                />
-              </a>
-              <a
-                id="playstore-link-mobile"
-                href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="transform hover:scale-105 transition-transform"
-              >
-                <img
-                  src="/google-play-badge.svg"
-                  alt="Get it on Google Play"
-                  class="h-10 w-auto"
-                />
-              </a>
-            </div>
+            <div class="flex justify-center items-center gap-1 mb-6 relative z-10 flex-wrap">
+  <a
+    href="https://apps.apple.com/app/community-hub"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transform hover:scale-105 transition-transform"
+  >
+  <span
+      class="inline-flex items-center justify-center leading-none rounded-md overflow-hidden"
+    >
+    <img
+      src="/app-store-badge.svg"
+      alt="Download on App Store"
+      class="h-[50px] w-auto object-contain block"
+      loading="eager"
+    />  
+  </span>
+    
+  </a>
+  <a
+    href="https://play.google.com/store/apps/details?id=com.tinykite.communityhub"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="transform hover:scale-105 transition-transform"
+  >
+    <span
+      class="inline-flex items-center justify-center leading-none rounded-md overflow-hidden"
+    >
+    <img
+      src="/google-play-badge.svg"
+      alt="Get it on Google Play"
+      class="h-[60px] w-auto object-contain block"
+      loading="eager"
+    /> 
+  </span>
+    
+  </a>
+</div>
 
             <!-- CTA Buttons -->
             <div class="flex flex-col gap-3">
               <a
                 href="/apps"
-                class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg text-center"
+                class="px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg text-center"
               >
                 Explore Our Apps
               </a>
               <a
                 href="/about"
-                class="px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors text-center"
+                class="px-4 py-2 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors text-center"
               >
                 Learn Our Story →
               </a>
@@ -361,8 +390,29 @@ import { apps } from "../data/apps";
     if (appStoreLinkMobile && app.appStoreUrl) appStoreLinkMobile.href = app.appStoreUrl;
     if (playStoreLinkMobile && app.playStoreUrl) playStoreLinkMobile.href = app.playStoreUrl;
 
+  // Desktop indicators
+const desktopIndicators = document.querySelectorAll("[data-indicator-desktop]");
+
+desktopIndicators.forEach((indicator, idx) => {
+  if (idx === index) {
+    indicator.classList.remove("bg-gray-300", "dark:bg-gray-600");
+    indicator.classList.add("bg-gray-900", "dark:bg-white");
+  } else {
+    indicator.classList.remove("bg-gray-900", "dark:bg-white");
+    indicator.classList.add("bg-gray-300", "dark:bg-gray-600");
+  }
+});
+  desktopIndicators.forEach((indicator, idx) => {
+  indicator.addEventListener("click", () => {
+    currentAppIndex = idx;
+    scrollPhonesToIndex(currentAppIndex);
+    updateAppContentByIndex(currentAppIndex);
+  });
+});
+
+
     // Indicators: compare by index (not by id)
-    const indicators = document.querySelectorAll("[data-indicator]");
+  const indicators = document.querySelectorAll("[data-indicator]");
   if (!indicators || indicators.length === 0) return;
 
   // sanity: warn if counts mismatch with slides
@@ -556,6 +606,27 @@ startTypewriter(
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
 }
+
+/* Ensure center card always sits above header and phone elements */
+#center-card { z-index: 30; }
+
+/* keep buttons identical height and full width within grid cells */
+#center-card a { min-height: 48px; }
+
+/* On very short desktop heights (Nest Hub) allow a little scaling so everything fits */
+@media (min-width: 1024px) and (max-height: 650px) {
+  #center-card {
+    transform-origin: top center;
+    transform: translateY(0) scale(0.92);
+  }
+}
+
+/* Optional: prevent the title from truncating too aggressively — allow wrap */
+#center-card #app-title { white-space: normal; }
+
+/* Make card internal scrolling smooth, but keep it visually compact */
+#center-card::-webkit-scrollbar { height: 6px; width: 6px; }
+#center-card::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 9999px; }
 
 
 </style>
