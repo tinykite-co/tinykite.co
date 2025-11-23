@@ -11,7 +11,7 @@ interface Props {
 
 const { 
   title, 
-  description = 'TinyKite - Utility apps that make your life easier',
+  description = 'TinyKite - We build tomorrow. Utility apps and AI innovation.',
   image = '/og-image.png'
 } = Astro.props;
 
@@ -19,7 +19,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,9 +38,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
      
-    <!-- font Nunito Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-
+    <!-- font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -48,15 +47,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
-    
-    <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title="TinyKite Blog RSS Feed" href="/rss.xml" />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="bg-background text-white antialiased">
     <Header />
-    <main class="flex-grow">
-      <slot />
-    </main>
+    <slot />
     <Footer />
+    <script>
+      // Spotlight Effect
+      document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.spotlight-card');
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+          (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    </script>
   </body>
 </html>

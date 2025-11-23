@@ -1,0 +1,47 @@
+---
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="/assets/hero_background_abstract_1763922557351.png" 
+      alt="Abstract Background" 
+      class="w-full h-full object-cover opacity-5 dark:opacity-40"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-6 text-center">
+    <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s;">
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-text">
+        We build <span class="text-gradient">tomorrow</span>.
+      </h1>
+    </div>
+    
+    <div class="animate-slide-up opacity-0" style="animation-delay: 0.4s;">
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+        TinyKite is a product studio crafting a seamless ecosystem of apps that empower, inspire, and connect.
+      </p>
+    </div>
+
+    <div class="animate-slide-up opacity-0" style="animation-delay: 0.6s;">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#apps" class="px-8 py-4 bg-text text-background rounded-full font-semibold hover:opacity-90 transition-opacity duration-300">
+          Explore Apps
+        </a>
+        <a href="#glassa" class="px-8 py-4 glass-panel text-text rounded-full font-semibold hover:bg-text/10 transition-colors duration-300">
+          Meet Glassa.ai
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</section>
