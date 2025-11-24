@@ -1,16 +1,38 @@
 ---
 ---
 
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
   <!-- Background Image with Overlay -->
-  <div class="absolute inset-0 z-0">
-    <img 
-      src="/assets/hero_background_abstract_1763922557351.png" 
-      alt="Abstract Background" 
-      class="w-full h-full object-cover opacity-5 dark:opacity-40"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background"></div>
+  <!-- Dynamic CSS Background -->
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-10"></div>
+    
+    <!-- Interactive Gradient Orbs -->
+    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-primary mix-blend-multiply dark:mix-blend-screen transition-transform duration-100 ease-out -translate-x-1/2 -translate-y-1/2" style="top: 50%; left: 50%;"></div>
+    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-secondary mix-blend-multiply dark:mix-blend-screen transition-transform duration-300 ease-out -translate-x-1/2 -translate-y-1/2" style="top: 50%; left: 50%;"></div>
   </div>
+
+  <script>
+    const section = document.getElementById('hero');
+    const orb1 = document.getElementById('hero-bg-orb-1');
+    const orb2 = document.getElementById('hero-bg-orb-2');
+
+    if (section && orb1 && orb2) {
+      section.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Orb 1 follows mouse directly but smoothly
+        orb1.style.transform = `translate(${x - 400}px, ${y - 400}px)`;
+
+        // Orb 2 moves in opposition
+        const x2 = rect.width - x;
+        const y2 = rect.height - y;
+        orb2.style.transform = `translate(${x2 - 300}px, ${y2 - 300}px)`;
+      });
+    }
+  </script>
 
   <!-- Content -->
   <div class="relative z-10 container mx-auto px-6 text-center">

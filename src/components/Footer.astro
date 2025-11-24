@@ -17,11 +17,15 @@ const currentYear = new Date().getFullYear();
           Building the future of digital interaction. Simple, elegant, and powerful tools for the modern world.
         </p>
       </div>
-    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-      <p>&copy; {currentYear} TinyKite.co. All rights reserved.</p>
+    <div class="border-t border-gray-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <p>&copy; {currentYear} TinyKite Ltd. All rights reserved.</p>
+        <span class="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
+        <p>Company No. 16825578</p>
+      </div>
       <div class="flex gap-6">
-        <a href="#" class="hover:text-white transition-colors">Twitter</a>
-        <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+        <a href="/privacy" class="hover:text-primary transition-colors">Privacy Policy</a>
+        <a href="/terms" class="hover:text-primary transition-colors">Terms of Service</a>
       </div>
     </div>
   </div>

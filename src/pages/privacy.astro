@@ -1,96 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const companyName = "TinyKite Ltd";
+const companyNumber = "16825578";
+const contactEmail = "hello@tinykite.co";
 ---
 
-<Layout 
-  title="Privacy Policy - TinyKite" 
-  description="TinyKite's privacy policy - how we handle your data and protect your privacy."
->
-  <section class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
-        <p class="text-gray-600 dark:text-gray-400 mb-8">
-          Last updated: November 2025
+<Layout title="Privacy Policy - TinyKite">
+  <main class="pt-32 pb-24 relative overflow-hidden">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold mb-8 text-text">Privacy Policy</h1>
+      
+      <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+        <p class="lead text-xl mb-8">
+          Last updated: {new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
 
-        <div class="prose prose-lg dark:prose-invert max-w-none">
-          <h2 class="text-2xl font-bold mt-8 mb-4">Introduction</h2>
-          <p class="mb-4">
-            At TinyKite, we take your privacy seriously. This Privacy Policy explains how we collect, 
-            use, and protect your information when you use our website and applications.
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">1. Introduction</h2>
+          <p>
+            Welcome to {companyName} ("we," "our," or "us"). We are committed to protecting your privacy and ensuring your personal data is handled in compliance with applicable laws. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our applications.
           </p>
+          <p class="mt-4">
+            <strong>Company Information:</strong><br/>
+            {companyName}<br/>
+            Company Number: {companyNumber}<br/>
+            Registered in England and Wales.
+          </p>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Information We Collect</h2>
-          <p class="mb-4">
-            We collect minimal information necessary to provide our services:
-          </p>
-          <ul class="list-disc pl-6 mb-4 space-y-2">
-            <li>Usage data to improve our apps and website</li>
-            <li>Technical information like browser type and device information</li>
-            <li>Cookies for essential website functionality</li>
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">2. Information We Collect</h2>
+          <p>We may collect the following types of information:</p>
+          <ul class="list-disc pl-6 space-y-2 mt-2">
+            <li><strong>Personal Information:</strong> Name, email address, and other contact details you voluntarily provide when contacting us or subscribing to our services.</li>
+            <li><strong>Usage Data:</strong> Information about how you interact with our website and apps, including IP address, browser type, device information, and pages visited.</li>
+            <li><strong>Cookies:</strong> We use cookies to enhance your experience. You can control cookie preferences through your browser settings.</li>
           </ul>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">How We Use Your Information</h2>
-          <p class="mb-4">
-            The information we collect is used to:
-          </p>
-          <ul class="list-disc pl-6 mb-4 space-y-2">
-            <li>Provide and improve our services</li>
-            <li>Ensure website functionality and security</li>
-            <li>Analyze usage patterns to enhance user experience</li>
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">3. How We Use Your Information</h2>
+          <p>We use your information for the following purposes:</p>
+          <ul class="list-disc pl-6 space-y-2 mt-2">
+            <li>To provide and maintain our services.</li>
+            <li>To improve and personalize your experience.</li>
+            <li>To communicate with you regarding updates, support, or inquiries.</li>
+            <li>To analyze usage patterns and optimize performance.</li>
+            <li>To comply with legal obligations.</li>
           </ul>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Data Protection</h2>
-          <p class="mb-4">
-            We implement appropriate security measures to protect your information from unauthorized 
-            access, alteration, or disclosure. We do not sell, trade, or rent your personal information 
-            to third parties.
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">4. Data Sharing and Disclosure</h2>
+          <p>
+            We do not sell your personal data. We may share your information with trusted third-party service providers who assist us in operating our business (e.g., hosting, analytics), provided they agree to keep your information confidential. We may also disclose information if required by law.
           </p>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Third-Party Services</h2>
-          <p class="mb-4">
-            Our website may contain links to third-party services. We are not responsible for the 
-            privacy practices of these external sites. We encourage you to review their privacy policies.
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">5. Data Security</h2>
+          <p>
+            We implement appropriate technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
           </p>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Your Rights</h2>
-          <p class="mb-4">
-            You have the right to:
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">6. Your Rights</h2>
+          <p>
+            Depending on your location, you may have rights regarding your personal data, including the right to access, correct, delete, or restrict its processing. To exercise these rights, please contact us at {contactEmail}.
           </p>
-          <ul class="list-disc pl-6 mb-4 space-y-2">
-            <li>Access the information we hold about you</li>
-            <li>Request correction of inaccurate information</li>
-            <li>Request deletion of your information</li>
-            <li>Opt-out of non-essential data collection</li>
-          </ul>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Changes to This Policy</h2>
-          <p class="mb-4">
-            We may update this Privacy Policy from time to time. We will notify you of any changes 
-            by posting the new policy on this page with an updated revision date.
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">7. Changes to This Policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page. You are advised to review this policy periodically for any changes.
           </p>
+        </section>
 
-          <h2 class="text-2xl font-bold mt-8 mb-4">Contact Us</h2>
-          <p class="mb-4">
-            If you have any questions about this Privacy Policy, please contact us through our website.
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-text">8. Contact Us</h2>
+          <p>
+            If you have any questions about this Privacy Policy, please contact us:<br/>
+            Email: <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a>
           </p>
-        </div>
+        </section>
       </div>
     </div>
-  </section>
+  </main>
 </Layout>
-
-<style is:global>
-  .prose {
-    @apply text-gray-700 dark:text-gray-300;
-  }
-  
-  .prose h2 {
-    @apply text-gray-900 dark:text-gray-100;
-  }
-  
-  .prose p, .prose ul li {
-    @apply text-gray-700 dark:text-gray-300;
-  }
-</style>
