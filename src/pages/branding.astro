@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title="Branding Showcase - tinykite">
+  <!-- Load Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 py-20 px-6">
+    <div class="max-w-4xl mx-auto space-y-16">
+      
+      <!-- Header -->
+      <div class="text-center space-y-4">
+        <h1 class="text-4xl font-bold text-text">Branding Showcase</h1>
+        <p class="text-gray-600 dark:text-gray-400">Reviewing logo texture and typography options.</p>
+      </div>
+
+      <!-- Logo Variants -->
+      <section class="space-y-8">
+        <h2 class="text-2xl font-semibold text-text border-b border-gray-200 dark:border-gray-700 pb-2">Logo Variants</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Current Flat Logo -->
+          <div class="bg-white dark:bg-black/50 p-8 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-4">
+            <span class="text-sm text-gray-500 uppercase tracking-wider font-medium">Current (Flat)</span>
+            <img src="/assets/logo.png" alt="Current Logo" class="w-24 h-24 rounded-2xl" />
+          </div>
+          
+          <!-- New Gradient Logo -->
+          <div class="bg-white dark:bg-black/50 p-8 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-4">
+            <span class="text-sm text-gray-500 uppercase tracking-wider font-medium">Gradient (Base)</span>
+            <img src="/assets/logo_gradient.png" alt="Gradient Logo" class="w-24 h-24 rounded-2xl" />
+          </div>
+
+          <!-- Variant 1 -->
+          <div class="bg-white dark:bg-black/50 p-8 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-4">
+            <span class="text-sm text-gray-500 uppercase tracking-wider font-medium">Variant 1 (Glass)</span>
+            <img src="/assets/logo_variant_1.png" alt="Variant 1" class="w-24 h-24 rounded-2xl" />
+          </div>
+
+          <!-- Variant 2 -->
+          <div class="bg-white dark:bg-black/50 p-8 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-4">
+            <span class="text-sm text-gray-500 uppercase tracking-wider font-medium">Variant 2 (Matte 3D)</span>
+            <img src="/assets/logo_variant_2.png" alt="Variant 2" class="w-24 h-24 rounded-2xl" />
+          </div>
+
+          <!-- Variant 3 -->
+          <div class="bg-white dark:bg-black/50 p-8 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-4">
+            <span class="text-sm text-gray-500 uppercase tracking-wider font-medium">Variant 3 (Layered)</span>
+            <img src="/assets/logo_variant_3.png" alt="Variant 3" class="w-24 h-24 rounded-2xl" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography Options -->
+      <section class="space-y-8">
+        <h2 class="text-2xl font-semibold text-text border-b border-gray-200 dark:border-gray-700 pb-2">Typography Options</h2>
+        <div class="grid gap-6">
+          
+
+
+
+
+          <!-- Option 3: Plus Jakarta Sans -->
+          <div class="bg-white dark:bg-black/50 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center gap-6">
+            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500 font-mono text-sm">03</div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 mb-1">Plus Jakarta Sans (Tech, Friendly)</p>
+              <div class="flex items-center gap-3">
+                <img src="/assets/logo_gradient.png" class="w-8 h-8 rounded-lg" />
+                <span class="text-3xl font-bold text-text tracking-tight" style="font-family: 'Plus Jakarta Sans', sans-serif;">tinykite</span>
+              </div>
+            </div>
+          </div>
+
+
+          
+          <!-- Option 5: Cormorant Garamond -->
+          <div class="bg-white dark:bg-black/50 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center gap-6">
+            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500 font-mono text-sm">05</div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 mb-1">Cormorant Garamond (Elegant, Classic)</p>
+              <div class="flex items-center gap-3">
+                <img src="/assets/logo_gradient.png" class="w-8 h-8 rounded-lg" />
+                <span class="text-3xl font-bold text-text tracking-tight" style="font-family: 'Cormorant Garamond', serif;">tinykite</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Option 6: Nunito -->
+          <div class="bg-white dark:bg-black/50 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center gap-6">
+            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500 font-mono text-sm">06</div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 mb-1">Nunito (Rounded, Friendly, Approachable)</p>
+              <div class="flex items-center gap-3">
+                <img src="/assets/logo_gradient.png" class="w-8 h-8 rounded-lg" />
+                <span class="text-3xl font-bold text-text tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option 7: Lora -->
+          <div class="bg-white dark:bg-black/50 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center gap-6">
+            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500 font-mono text-sm">07</div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 mb-1">Lora (Contemporary Serif, Cosy, Professional)</p>
+              <div class="flex items-center gap-3">
+                <img src="/assets/logo_gradient.png" class="w-8 h-8 rounded-lg" />
+                <span class="text-3xl font-bold text-text tracking-tight" style="font-family: 'Lora', serif;">tinykite</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option 8: Work Sans -->
+          <div class="bg-white dark:bg-black/50 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center gap-6">
+            <div class="w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500 font-mono text-sm">08</div>
+            <div class="flex-1">
+              <p class="text-sm text-gray-500 mb-1">Work Sans (Clean, Humanist, Professional)</p>
+              <div class="flex items-center gap-3">
+                <img src="/assets/logo_gradient.png" class="w-8 h-8 rounded-lg" />
+                <span class="text-3xl font-bold text-text tracking-tight" style="font-family: 'Work Sans', sans-serif;">tinykite</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="flex justify-center pt-8">
+        <a href="/" class="px-6 py-3 bg-gray-200 dark:bg-gray-800 text-text rounded-full font-medium hover:opacity-80 transition-opacity">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+</Layout>

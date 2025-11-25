@@ -8,8 +8,8 @@
     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-10"></div>
     
     <!-- Interactive Gradient Orbs -->
-    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-primary mix-blend-multiply dark:mix-blend-screen transition-transform duration-100 ease-out -translate-x-1/2 -translate-y-1/2" style="top: 50%; left: 50%;"></div>
-    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-secondary mix-blend-multiply dark:mix-blend-screen transition-transform duration-300 ease-out -translate-x-1/2 -translate-y-1/2" style="top: 50%; left: 50%;"></div>
+    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-primary mix-blend-multiply dark:mix-blend-screen transition-transform duration-100 ease-out top-0 left-0"></div>
+    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-secondary mix-blend-multiply dark:mix-blend-screen transition-transform duration-300 ease-out top-0 left-0"></div>
   </div>
 
   <script>
@@ -18,6 +18,19 @@
     const orb2 = document.getElementById('hero-bg-orb-2');
 
     if (section && orb1 && orb2) {
+      // Initialize orbs at center
+      const initOrbs = () => {
+        const rect = section.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        orb1.style.transform = `translate(${centerX - 400}px, ${centerY - 400}px)`;
+        orb2.style.transform = `translate(${centerX - 300}px, ${centerY - 300}px)`;
+      };
+      
+      // Run on load and resize
+      initOrbs();
+      window.addEventListener('resize', initOrbs);
+
       section.addEventListener('mousemove', (e) => {
         const rect = section.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -36,24 +49,31 @@
 
   <!-- Content -->
   <div class="relative z-10 container mx-auto px-6 text-center">
-    <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s;">
-      <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-text">
-        We build <span class="text-gradient">tomorrow</span>.
+    <div class="mb-6">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8 animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <span class="text-sm text-gray-400">Makers of <a href="https://glassa.ai" target="_blank" class="text-white hover:text-primary transition-colors font-medium">glassa.ai</a></span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-text">
+        <span class="inline-block reveal-on-scroll">We</span>
+        <span class="inline-block reveal-on-scroll delay-100">build</span>
+        <span class="inline-block reveal-on-scroll delay-200 text-gradient">tomorrow.</span>
       </h1>
     </div>
     
-    <div class="animate-slide-up opacity-0" style="animation-delay: 0.4s;">
+    <div class="reveal-on-scroll delay-300">
       <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 font-light">
         TinyKite is a product studio crafting a seamless ecosystem of apps that empower, inspire, and connect.
       </p>
     </div>
 
-    <div class="animate-slide-up opacity-0" style="animation-delay: 0.6s;">
+    <div class="reveal-on-scroll delay-300">
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#apps" class="px-8 py-4 bg-text text-background rounded-full font-semibold hover:opacity-90 transition-opacity duration-300">
+        <a href="#apps" class="magnetic-btn px-8 py-4 bg-text text-background rounded-full font-semibold hover:opacity-90 transition-opacity duration-300">
           Explore Apps
         </a>
-        <a href="#glassa" class="px-8 py-4 glass-panel text-text rounded-full font-semibold hover:bg-text/10 transition-colors duration-300">
+        <a href="#glassa" class="magnetic-btn px-8 py-4 glass-panel text-text rounded-full font-semibold hover:bg-text/10 transition-colors duration-300">
           Meet Glassa.ai
         </a>
       </div>

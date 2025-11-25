@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Coming Soon - tinykite">
+  <main class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 bg-background z-0">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6">
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text">
+        Coming <span class="text-gradient">Soon</span>
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-lg mx-auto mb-10">
+        We're putting the final touches on this app. Join our waitlist to be the first to know when it launches.
+      </p>
+      
+      <a href="/" class="px-8 py-4 bg-text text-background rounded-full font-semibold hover:opacity-90 transition-opacity">
+        Back to Home
+      </a>
+    </div>
+  </main>
+</Layout>

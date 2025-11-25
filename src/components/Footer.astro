@@ -8,18 +8,38 @@ const currentYear = new Date().getFullYear();
     <div class="grid md:grid-cols-4 gap-8 mb-12">
       <div class="col-span-1 md:col-span-2">
         <a href="/" class="flex items-center gap-2 mb-4">
-          <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-            T
-          </div>
-          <span class="font-bold text-text text-xl tracking-tight">TinyKite</span>
+          <img src="/assets/logo.png" alt="tinykite Logo" class="w-8 h-8 rounded-lg" />
+          <span class="font-bold text-text text-xl tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
         </a>
         <p class="text-gray-600 dark:text-gray-400 text-sm max-w-xs">
           Building the future of digital interaction. Simple, elegant, and powerful tools for the modern world.
         </p>
       </div>
+      
+      <div>
+        <h3 class="font-bold text-text mb-4">Product</h3>
+        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <li><a href="/#apps" class="hover:text-primary transition-colors">Apps</a></li>
+          <li><a href="/#glassa" class="hover:text-primary transition-colors">glassa.ai</a></li>
+          <li><a href="/coming-soon" class="hover:text-primary transition-colors">Waitlist</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-text mb-4">Company</h3>
+        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <li><a href="/#about" class="hover:text-primary transition-colors">About</a></li>
+          <li><a href="/contact" class="hover:text-primary transition-colors">Contact</a></li>
+          {import.meta.env.DEV && (
+            <li><a href="/branding" class="hover:text-primary transition-colors">Brand Assets</a></li>
+          )}
+        </ul>
+      </div>
+    </div>
+
     <div class="border-t border-gray-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
       <div class="flex flex-col md:flex-row gap-4 items-center">
-        <p>&copy; {currentYear} TinyKite Ltd. All rights reserved.</p>
+        <p>&copy; {currentYear} tinykite Ltd. All rights reserved.</p>
         <span class="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
         <p>Company No. 16825578</p>
       </div>

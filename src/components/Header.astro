@@ -7,17 +7,14 @@ import ThemeToggle from "./ThemeToggle.astro";
   
   <!-- Logo -->
   <a href="/" class="flex items-center gap-2 group">
-    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform">
-      T
-    </div>
-    <span class="font-bold text-text text-xl tracking-tight">TinyKite</span>
+    <img src="/assets/logo.png" alt="tinykite Logo" class="w-8 h-8 rounded-lg" />
+    <span class="font-bold text-text text-xl tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
   </a>
 
   <!-- Desktop Navigation -->
   <nav class="hidden md:flex items-center gap-8 text-gray-600 dark:text-gray-300 text-sm font-medium">
-    <a href="#apps" class="hover:text-primary transition-colors">Apps</a>
-    <a href="#glassa" class="hover:text-primary transition-colors">Glassa.ai</a>
-    <a href="#about" class="hover:text-primary transition-colors">About</a>
+    <a href="/#apps" class="hover:text-primary transition-colors">Apps</a>
+    <a href="/#about" class="hover:text-primary transition-colors">About</a>
   </nav>
 
   <!-- CTA & Theme Toggle -->
@@ -25,7 +22,7 @@ import ThemeToggle from "./ThemeToggle.astro";
     <div class="hidden md:block">
       <ThemeToggle />
     </div>
-    <a href="mailto:contact@tinykite.co" class="hidden md:block px-5 py-2 bg-text text-background text-sm font-semibold rounded-full hover:opacity-80 transition-opacity">
+    <a href="/contact" class="hidden md:block px-5 py-2 bg-text text-background text-sm font-semibold rounded-full hover:opacity-80 transition-opacity">
       Contact Us
     </a>
     
@@ -39,13 +36,12 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden absolute top-full mt-4 right-0 w-full bg-background/95 dark:bg-black/90 border border-border rounded-2xl p-6 flex flex-col gap-4 text-center backdrop-blur-xl shadow-xl">
-    <a href="#apps" class="text-gray-600 dark:text-gray-300 hover:text-primary text-lg">Apps</a>
-    <a href="#glassa" class="text-gray-600 dark:text-gray-300 hover:text-primary text-lg">Glassa.ai</a>
-    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-primary text-lg">About</a>
+    <a href="/#apps" class="text-gray-600 dark:text-gray-300 hover:text-primary text-lg">Apps</a>
+    <a href="/#about" class="text-gray-600 dark:text-gray-300 hover:text-primary text-lg">About</a>
     <div class="flex justify-center py-2">
       <ThemeToggle />
     </div>
-    <a href="mailto:contact@tinykite.co" class="text-primary font-medium">Contact Us</a>
+    <a href="/contact" class="text-primary font-medium">Contact Us</a>
   </div>
 </header>
 

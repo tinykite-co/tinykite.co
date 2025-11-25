@@ -1,0 +1,68 @@
+---
+layout: ../layouts/Layout.astro
+title: "Privacy Policy - TinyKite"
+---
+
+export const companyName = "TinyKite Ltd";
+export const companyNumber = "16825578";
+export const contactEmail = "hello@tinykite.co";
+
+<main class="pt-32 pb-24 relative overflow-hidden">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold mb-8 text-text">Privacy Policy</h1>
+    
+    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+      <p class="lead text-xl mb-8">
+        Last updated: {new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+
+        ## 1. Introduction
+
+        Welcome to {companyName} ("we," "our," or "us"). We are committed to protecting your privacy and ensuring your personal data is handled in compliance with applicable laws. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our applications.
+
+        **Company Information:**<br/>
+        {companyName}<br/>
+        Company Number: {companyNumber}<br/>
+        Registered in England and Wales.
+
+        ## 2. Information We Collect
+
+        We may collect the following types of information:
+
+        *   **Personal Information:** Name, email address, and other contact details you voluntarily provide when contacting us or subscribing to our services.
+        *   **Usage Data:** Information about how you interact with our website and apps, including IP address, browser type, device information, and pages visited.
+        *   **Cookies:** We use cookies to enhance your experience. You can control cookie preferences through your browser settings.
+
+        ## 3. How We Use Your Information
+
+        We use your information for the following purposes:
+
+        *   To provide and maintain our services.
+        *   To improve and personalize your experience.
+        *   To communicate with you regarding updates, support, or inquiries.
+        *   To analyze usage patterns and optimize performance.
+        *   To comply with legal obligations.
+
+        ## 4. Data Sharing and Disclosure
+
+        We do not sell your personal data. We may share your information with trusted third-party service providers who assist us in operating our business (e.g., hosting, analytics), provided they agree to keep your information confidential. We may also disclose information if required by law.
+
+        ## 5. Data Security
+
+        We implement appropriate technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+
+        ## 6. Your Rights
+
+        Depending on your location, you may have rights regarding your personal data, including the right to access, correct, delete, or restrict its processing. To exercise these rights, please contact us at {contactEmail}.
+
+        ## 7. Changes to This Policy
+
+        We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page. You are advised to review this policy periodically for any changes.
+
+        ## 8. Contact Us
+
+        If you have any questions about this Privacy Policy, please contact us:<br/>
+        Email: <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a>
+      </div>
+    </div>
+  </main>

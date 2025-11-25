@@ -6,8 +6,8 @@ const apps = [
     image: "/assets/iphone_mockup_community_hub_1763922598342.png",
     platform: "iOS & Android",
     badge: "Social",
-    appStoreUrl: "#",
-    playStoreUrl: "#"
+    appStoreUrl: "/coming-soon",
+    playStoreUrl: "/coming-soon"
   },
   {
     name: "QuickNote",
@@ -15,8 +15,8 @@ const apps = [
     image: "/assets/android_mockup_quicknote_1763922626773.png",
     platform: "Android",
     badge: "Productivity",
-    appStoreUrl: "#",
-    playStoreUrl: "#"
+    appStoreUrl: "/coming-soon",
+    playStoreUrl: "/coming-soon"
   },
   {
     name: "ZenFocus",
@@ -24,8 +24,8 @@ const apps = [
     image: "/assets/zenfocus_mockup_1763924656189.png",
     platform: "iOS",
     badge: "Health & Fitness",
-    appStoreUrl: "#",
-    playStoreUrl: "#"
+    appStoreUrl: "/coming-soon",
+    playStoreUrl: "/coming-soon"
   },
   {
     name: "TravelMate",
@@ -33,8 +33,8 @@ const apps = [
     image: "/assets/travelmate_mockup_1763924688436.png",
     platform: "Android",
     badge: "Travel",
-    appStoreUrl: "#",
-    playStoreUrl: "#"
+    appStoreUrl: "/coming-soon",
+    playStoreUrl: "/coming-soon"
   },
   {
     name: "BudgetBuddy",
@@ -42,15 +42,15 @@ const apps = [
     image: "/assets/budgetbuddy_mockup_1763924703558.png",
     platform: "iOS",
     badge: "Finance",
-    appStoreUrl: "#",
-    playStoreUrl: "#"
+    appStoreUrl: "/coming-soon",
+    playStoreUrl: "/coming-soon"
   }
 ];
 ---
 
 <section id="apps" class="py-24 bg-panel relative overflow-hidden">
   <div class="container mx-auto px-6">
-    <div class="text-center mb-16">
+    <div class="text-center mb-16 reveal-on-scroll">
       <h2 class="text-4xl md:text-5xl font-bold mb-6 text-text">
         Crafted for <span class="text-gradient">simplicity</span>
       </h2>
@@ -76,8 +76,8 @@ const apps = [
 
       <!-- Scrollable Area -->
       <div id="carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide scroll-smooth">
-        {apps.map((app) => (
-          <div class="flex-none w-[85vw] md:w-[400px] snap-center">
+        {apps.map((app, index) => (
+          <div class={`flex-none w-[85vw] md:w-[400px] snap-center reveal-on-scroll delay-${(index % 3 + 1) * 100}`}>
             <div class="group/card spotlight-card relative h-full bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/10 overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col shadow-card dark:shadow-none">
               
               <!-- Image Area -->
