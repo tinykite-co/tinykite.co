@@ -1,4 +1,6 @@
-# Walkthrough - Dynamic Background Implementation
+# Project Walkthrough - TinyKite.co (v1.1.0)
+
+**Current Status**: Deployed to Production (v1.1.0)
 
 ## Changes
 
@@ -47,6 +49,7 @@
   - **Contact Page**: Created a dedicated **[Contact](/contact)** page.
   - **MDX**: Converted Privacy and Terms pages to MDX for easier editing.
   - **Navigation**: Updated Header and Footer to link to these pages correctly. Fixed relative links to work from subpages.
+  - **Mobile Menu**: Fixed issue where the menu remained open after clicking a link.
   - **Environment**: Restricted **[Branding Showcase](/branding)** to development mode only.
   - **Glassa.ai**: Removed from main navigation and added a subtle "Makers of Glassa.ai" badge in the Hero section.
 - **Coming Soon**: Created a dedicated "Coming Soon" page for unreleased apps, replacing placeholder links.
