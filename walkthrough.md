@@ -1,6 +1,6 @@
-# Project Walkthrough - TinyKite.co (v1.1.0)
+# Project Walkthrough - TinyKite.co (v1.1.1)
 
-**Current Status**: Deployed to Production (v1.1.0)
+**Current Status**: Deployed to Production (v1.1.1)
 
 ## Changes
 
