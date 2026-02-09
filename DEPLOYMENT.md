@@ -17,7 +17,7 @@ This TinyKite.co website is configured for deployment on GitHub Pages with autom
 
 3. **Automatic deployment**:
    - The GitHub Actions workflow will automatically build and deploy
-   - Visit your site at: `https://elloloop.github.io/tinykite.co/`
+   - Visit your site at: `https://tinykite.co/`
 
 ### GitHub Actions Workflow
 
@@ -37,18 +37,17 @@ To use a custom domain like `tinykite.co`:
    ```
 
 2. Configure DNS records:
-   - Add a CNAME record pointing to `elloloop.github.io`
+   - Add a CNAME record pointing to `tinykite-co.github.io`
    - Or add A records for GitHub Pages IPs
 
 3. Enable custom domain in Settings → Pages → Custom domain
 
 ### Site Configuration
 
-The `astro.config.mjs` is configured for GitHub Pages:
+The `astro.config.mjs` is configured for the custom domain:
 ```js
 export default defineConfig({
-  site: 'https://elloloop.github.io',
-  base: '/tinykite.co',
+  site: 'https://tinykite.co',
   // ...
 });
 ```

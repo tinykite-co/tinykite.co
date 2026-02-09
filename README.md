@@ -7,7 +7,7 @@ TinyKite company website - Utility apps that make your life easier.
 - **Framework**: [Astro](https://astro.build) - Fast, modern static site generator
 - **Styling**: [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
 - **Content**: [MDX](https://mdxjs.com) - Markdown with JSX support
-- **Deployment**: [Vercel](https://vercel.com) - Optimized for edge delivery
+- **Deployment**: [GitHub Pages](https://pages.github.com) - Free static hosting with custom domain
 
 ## 🎨 Features
 
@@ -74,7 +74,7 @@ This site is configured for deployment on GitHub Pages:
 3. Push to the `main` branch
 4. GitHub Actions will automatically build and deploy
 
-The site will be available at: `https://elloloop.github.io/tinykite.co/`
+The site will be available at: `https://tinykite.co/`
 
 See `DEPLOYMENT.md` for detailed instructions and custom domain setup.
 
