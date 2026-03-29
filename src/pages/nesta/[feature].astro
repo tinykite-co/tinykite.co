@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import DeviceFrame from "../../components/DeviceFrame.astro";
 import features from "../../data/nesta/features.json";
 
 export function getStaticPaths() {
@@ -9,10 +10,15 @@ export function getStaticPaths() {
   }));
 }
 
+type DeviceType = "iphone" | "ipad" | "android-phone" | "android-tablet";
+type Orientation = "portrait" | "landscape";
+
 interface FeatureData {
   slug: string;
   title: string;
   summary: string;
+  device?: DeviceType;
+  orientation?: Orientation;
 }
 
 const { feature } = Astro.props as { feature: FeatureData };
@@ -97,6 +103,10 @@ function markdownToHtml(text: string): string {
 
 const segments = parseFeatureContent(rawContent);
 
+// Resolve device metadata — falls back to bare video if not specified
+const deviceType = (feature.device ?? "ipad") as DeviceType;
+const deviceOrientation = (feature.orientation ?? "portrait") as Orientation;
+
 // Find current feature index for prev/next navigation
 const currentIndex = features.findIndex((f) => f.slug === feature.slug);
 const previousFeature = currentIndex > 0 ? features[currentIndex - 1] : null;
@@ -155,21 +165,18 @@ const nextFeature =
           {
             segments.map((segment) =>
               segment.type === "video" ? (
-                <div class="my-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/[0.06] bg-panel">
-                  <div class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-black/40">
-                    <video
-                      class="w-full h-full object-cover"
-                      controls
-                      preload="none"
-                      poster=""
-                    >
-                      <source src={segment.content} type="video/mp4" />
-                      <p class="text-gray-500 text-sm p-8 text-center">
-                        Video demo will be available soon.
-                      </p>
-                    </video>
-                  </div>
-                </div>
+                <DeviceFrame device={deviceType} orientation={deviceOrientation}>
+                  <video
+                    controls
+                    preload="none"
+                    playsinline
+                  >
+                    <source src={segment.content} type="video/mp4" />
+                    <p class="text-gray-500 text-sm p-8 text-center">
+                      Video demo will be available soon.
+                    </p>
+                  </video>
+                </DeviceFrame>
               ) : (
                 <Fragment set:html={markdownToHtml(segment.content)} />
               )
