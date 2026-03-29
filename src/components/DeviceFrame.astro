@@ -1,0 +1,249 @@
+---
+/**
+ * DeviceFrame - Pure CSS device silhouette that wraps content (typically a video).
+ *
+ * Supported devices: iphone, ipad, android-phone, android-tablet
+ * Supported orientations: portrait, landscape
+ */
+interface Props {
+  device: "iphone" | "ipad" | "android-phone" | "android-tablet";
+  orientation: "portrait" | "landscape";
+}
+
+const { device, orientation } = Astro.props;
+
+const frameClass = `device-frame device-frame--${device} device-frame--${orientation}`;
+---
+
+<div class={frameClass}>
+  {/* Camera / notch elements rendered per device type */}
+  {device === "iphone" && <div class="device-frame__dynamic-island" />}
+  {device === "android-phone" && <div class="device-frame__punch-hole" />}
+
+  <div class="device-frame__screen">
+    <slot />
+  </div>
+
+  {/* Home indicator for devices that have one */}
+  {(device === "ipad" || device === "android-tablet") && (
+    <div class="device-frame__home-indicator" />
+  )}
+</div>
+
+<style>
+  /* ------------------------------------------------------------------ */
+  /*  Base frame                                                         */
+  /* ------------------------------------------------------------------ */
+  .device-frame {
+    position: relative;
+    margin: 2.5rem auto;
+    background: #111;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .device-frame__screen {
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    width: 100%;
+  }
+
+  /* Ensure video fills the screen area */
+  .device-frame__screen :global(video) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  iPad                                                               */
+  /* ------------------------------------------------------------------ */
+  .device-frame--ipad {
+    border: 3px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 14px;
+    max-width: 480px;
+  }
+
+  .device-frame--ipad .device-frame__screen {
+    border-radius: 10px;
+    aspect-ratio: 834 / 1210;
+  }
+
+  .device-frame--ipad.device-frame--landscape {
+    max-width: 580px;
+  }
+
+  .device-frame--ipad.device-frame--landscape .device-frame__screen {
+    aspect-ratio: 1210 / 834;
+  }
+
+  /* Home indicator bar */
+  .device-frame--ipad .device-frame__home-indicator {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36%;
+    height: 3px;
+    border-radius: 2px;
+    background: #3a3a3a;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  iPhone                                                             */
+  /* ------------------------------------------------------------------ */
+  .device-frame--iphone {
+    border: 3px solid #2a2a2a;
+    border-radius: 30px;
+    padding: 10px;
+    max-width: 320px;
+  }
+
+  .device-frame--iphone .device-frame__screen {
+    border-radius: 20px;
+    aspect-ratio: 9 / 19.5;
+  }
+
+  .device-frame--iphone.device-frame--landscape {
+    max-width: 580px;
+    border-radius: 30px;
+  }
+
+  .device-frame--iphone.device-frame--landscape .device-frame__screen {
+    aspect-ratio: 19.5 / 9;
+  }
+
+  /* Dynamic Island */
+  .device-frame__dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28%;
+    height: 22px;
+    border-radius: 14px;
+    background: #111;
+    z-index: 10;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  }
+
+  .device-frame--iphone.device-frame--landscape .device-frame__dynamic-island {
+    /* In landscape the island moves to the left edge */
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 28%;
+    border-radius: 14px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Android Phone                                                      */
+  /* ------------------------------------------------------------------ */
+  .device-frame--android-phone {
+    border: 3px solid #2a2a2a;
+    border-radius: 26px;
+    padding: 10px;
+    max-width: 320px;
+  }
+
+  .device-frame--android-phone .device-frame__screen {
+    border-radius: 16px;
+    aspect-ratio: 9 / 19.5;
+  }
+
+  .device-frame--android-phone.device-frame--landscape {
+    max-width: 580px;
+  }
+
+  .device-frame--android-phone.device-frame--landscape .device-frame__screen {
+    aspect-ratio: 19.5 / 9;
+  }
+
+  /* Punch-hole camera */
+  .device-frame__punch-hole {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    z-index: 10;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .device-frame--android-phone.device-frame--landscape .device-frame__punch-hole {
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Android Tablet                                                     */
+  /* ------------------------------------------------------------------ */
+  .device-frame--android-tablet {
+    border: 3px solid #2a2a2a;
+    border-radius: 18px;
+    padding: 12px;
+    max-width: 480px;
+  }
+
+  .device-frame--android-tablet .device-frame__screen {
+    border-radius: 8px;
+    aspect-ratio: 5 / 8;
+  }
+
+  .device-frame--android-tablet.device-frame--landscape {
+    max-width: 580px;
+  }
+
+  .device-frame--android-tablet.device-frame--landscape .device-frame__screen {
+    aspect-ratio: 8 / 5;
+  }
+
+  /* Home indicator bar (thin line like iPad) */
+  .device-frame--android-tablet .device-frame__home-indicator {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 3px;
+    border-radius: 2px;
+    background: #3a3a3a;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Responsive scaling                                                 */
+  /* ------------------------------------------------------------------ */
+  @media (max-width: 640px) {
+    .device-frame--ipad,
+    .device-frame--android-tablet {
+      max-width: 340px;
+      padding: 10px;
+      border-radius: 16px;
+    }
+
+    .device-frame--iphone,
+    .device-frame--android-phone {
+      max-width: 260px;
+      padding: 8px;
+      border-radius: 24px;
+    }
+
+    .device-frame--ipad .device-frame__screen {
+      border-radius: 8px;
+    }
+
+    .device-frame--iphone .device-frame__screen {
+      border-radius: 16px;
+    }
+  }
+</style>
