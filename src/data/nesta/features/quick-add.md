@@ -4,7 +4,7 @@ Adding something to your family's calendar should be faster than scribbling on a
 
 Most calendar apps bury the creation flow behind a wall of options: location, notes, attendees, reminders, colour coding. Nesta flips that around. The only thing you need is a title and a time. Everything else is optional, tucked away for the rare occasion you need it. The result is a creation flow so fast that you will actually use it in the middle of a conversation, while cooking dinner, or waiting at the school gate.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_quick_add.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_quick_add.mp4]
 
 ## Key Features
 

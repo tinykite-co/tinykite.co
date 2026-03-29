@@ -7,16 +7,16 @@ import features from "../../data/nesta/features.json";
   title="Nesta — A Calm Family Calendar"
   description="A local-first family calendar that syncs over your home WiFi. No cloud, no accounts, no fuss."
 >
-  <main class="min-h-screen">
+  <main class="min-h-screen bg-background">
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-transparent to-transparent pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none"></div>
       <div class="container mx-auto max-w-4xl text-center relative z-10">
-        <p class="text-amber-400 font-medium tracking-wide uppercase text-sm mb-4">Introducing</p>
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white" style="font-family: 'Lora', serif;">
+        <p class="text-primary font-medium tracking-wide uppercase text-sm mb-4">Introducing</p>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
           Nesta
         </h1>
-        <p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
           A calm, local-first family calendar that syncs over your home WiFi.
         </p>
         <p class="text-gray-500 text-base max-w-xl mx-auto">
@@ -29,10 +29,10 @@ import features from "../../data/nesta/features.json";
     <section class="py-16 px-6">
       <div class="container mx-auto max-w-6xl">
         <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-family: 'Lora', serif;">
+          <h2 class="text-3xl md:text-4xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">
             Everything your family needs
           </h2>
-          <p class="text-gray-400 text-lg max-w-xl mx-auto">
+          <p class="text-gray-600 dark:text-gray-400 text-lg max-w-xl mx-auto">
             Twelve thoughtful features, each designed to make family scheduling feel effortless.
           </p>
         </div>
@@ -42,24 +42,24 @@ import features from "../../data/nesta/features.json";
             <a
               href={`/nesta/${feature.slug}`}
               class:list={[
-                "group relative block p-6 rounded-2xl border transition-all duration-300",
-                "bg-white/[0.03] border-white/[0.06] hover:border-amber-400/30 hover:bg-white/[0.06]",
+                "group spotlight-card relative block p-6 rounded-2xl border transition-all duration-300",
+                "bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06] hover:border-primary/40 dark:hover:border-primary/30 hover:bg-gray-50 dark:hover:bg-white/[0.06]",
               ]}
             >
               <div class="flex items-start gap-4">
-                <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-400/10 text-amber-400 flex items-center justify-center text-sm font-bold">
+                <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">
                   {(index + 1).toString().padStart(2, "0")}
                 </span>
                 <div class="min-w-0">
-                  <h3 class="text-white font-semibold text-lg mb-2 group-hover:text-amber-300 transition-colors leading-snug">
+                  <h3 class="text-text font-semibold text-lg mb-2 group-hover:text-primary transition-colors leading-snug">
                     {feature.title}
                   </h3>
-                  <p class="text-gray-400 text-sm leading-relaxed">
+                  <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                     {feature.summary}
                   </p>
                 </div>
               </div>
-              <div class="mt-4 ml-12 flex items-center gap-1 text-amber-400/60 group-hover:text-amber-400 text-sm transition-colors">
+              <div class="mt-4 ml-12 flex items-center gap-1 text-primary/60 group-hover:text-primary text-sm transition-colors">
                 <span>Read more</span>
                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -74,16 +74,16 @@ import features from "../../data/nesta/features.json";
     <!-- Bottom CTA -->
     <section class="py-20 px-6">
       <div class="container mx-auto max-w-2xl text-center">
-        <div class="p-8 rounded-3xl border border-white/[0.06] bg-white/[0.02]">
-          <h3 class="text-2xl font-bold text-white mb-3" style="font-family: 'Lora', serif;">
+        <div class="p-8 rounded-3xl border border-gray-100 dark:border-white/[0.06] bg-panel">
+          <h3 class="text-2xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">
             Coming soon
           </h3>
-          <p class="text-gray-400 mb-6">
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
             Nesta is in active development. Follow us for launch updates.
           </p>
           <a
             href="/contact"
-            class="inline-block px-8 py-3 bg-amber-400 text-black font-semibold rounded-full hover:bg-amber-300 transition-colors text-sm"
+            class="inline-block px-8 py-3 bg-text text-background font-semibold rounded-full hover:opacity-80 transition-opacity text-sm"
           >
             Get in touch
           </a>

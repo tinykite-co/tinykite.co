@@ -4,7 +4,7 @@ Sometimes you need to look beyond today. The week view gives your family a seven
 
 The week view is designed for the Sunday evening planning moment, or the Wednesday morning "what is coming up?" check. It is not trying to show you everything. It is showing you just enough to feel oriented, with the confidence that you can tap any day to dive deeper.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_week_view.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_week_view.mp4]
 
 ## Key Features
 

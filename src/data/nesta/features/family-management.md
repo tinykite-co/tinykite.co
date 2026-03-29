@@ -4,7 +4,7 @@ Families change. A new baby arrives, grandparents visit for a month, the kids ge
 
 Everything about family management is designed to be simple enough that anyone in the household can handle it. Adding a family member is three fields: name, colour, and an optional avatar. Pairing a new device is one PIN. Removing a member preserves their historical events while cleaning up future assignments. No complicated admin panels, no permissions hierarchies — just a family, together.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_family_management.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_family_management.mp4]
 
 ## Key Features
 

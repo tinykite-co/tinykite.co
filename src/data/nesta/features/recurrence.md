@@ -4,7 +4,7 @@ Family life runs on rhythms. Swimming every Tuesday, bin night every Thursday, p
 
 Most calendar apps hide recurrence behind a cryptic dropdown: "Repeat: Custom..." followed by a confusing matrix of options. Nesta replaces that with a picker you can actually read. Choose your pattern, and a live preview shows the next five occurrences right there on screen. You will never wonder "wait, does this include the 14th?" again.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_recurrence.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_recurrence.mp4]
 
 ## Key Features
 

@@ -4,7 +4,7 @@ The day view is the heart of Nesta. It is what greets you first thing in the mor
 
 Families do not think in 30-minute calendar blocks. They think in moments: "before school," "after lunch," "bedtime." Nesta's day view reflects that reality. Events are organised into meaningful groups — school, meals, activities, tasks — so you can scan the whole day in seconds, the way you would glance at a paper schedule pinned to the kitchen wall.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_day_view.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_day_view.mp4]
 
 ## Key Features
 

@@ -4,7 +4,7 @@ There is something deeply satisfying about checking things off. Nesta leans into
 
 This is not just about productivity. It is about the small joy of progress. When Dad marks "pack school lunches" as complete, Mum sees it instantly on her phone. When Emma finishes her homework, the whole family's timeline updates. No one has to ask "did you do that?" — the answer is already there, faded to a calm grey on the paper-like display.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_completion_toggle.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_completion_toggle.mp4]
 
 ## Key Features
 

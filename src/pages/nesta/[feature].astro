@@ -64,7 +64,7 @@ function markdownToHtml(text: string): string {
   // Convert ## headings
   html = html.replace(
     /^## (.+)$/gm,
-    '<h2 class="text-2xl font-bold text-white mt-12 mb-4" style="font-family: \'Lora\', serif;">$1</h2>'
+    '<h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: \'Lora\', serif;">$1</h2>'
   );
 
   // Convert bold
@@ -73,20 +73,20 @@ function markdownToHtml(text: string): string {
   // Convert unordered list items
   html = html.replace(
     /^- (.+)$/gm,
-    '<li class="flex items-start gap-3"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400 mt-2.5"></span><span>$1</span></li>'
+    '<li class="flex items-start gap-3"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary mt-2.5"></span><span>$1</span></li>'
   );
 
   // Wrap consecutive <li> elements in <ul>
   html = html.replace(
     /(<li class="flex[\s\S]*?<\/li>\n?)+/g,
     (match) =>
-      `<ul class="space-y-3 text-gray-300 leading-relaxed">${match}</ul>`
+      `<ul class="space-y-3 text-gray-700 dark:text-gray-300 leading-relaxed">${match}</ul>`
   );
 
   // Convert paragraphs (lines that aren't headings, lists, or empty)
   html = html.replace(
     /^(?!<[hul])((?!^\s*$).+)$/gm,
-    '<p class="text-gray-300 leading-relaxed mb-4">$1</p>'
+    '<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">$1</p>'
   );
 
   // Clean up extra paragraph spacing
@@ -105,13 +105,13 @@ const nextFeature =
 ---
 
 <Layout title={`${feature.title} — Nesta`} description={feature.summary}>
-  <main class="min-h-screen">
+  <main class="min-h-screen bg-background">
     <!-- Back Navigation -->
     <div class="pt-28 px-6">
       <div class="container mx-auto max-w-3xl">
         <a
           href="/nesta"
-          class="inline-flex items-center gap-2 text-gray-400 hover:text-amber-400 transition-colors text-sm"
+          class="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-primary transition-colors text-sm"
         >
           <svg
             class="w-4 h-4"
@@ -136,14 +136,14 @@ const nextFeature =
         <!-- Feature number and title -->
         <div class="mb-10">
           <span
-            class="inline-block px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 text-sm font-medium mb-4"
+            class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4"
           >
             Feature {(currentIndex + 1).toString().padStart(2, "0")} of {
               features.length
             }
           </span>
           <h1
-            class="text-4xl md:text-5xl font-bold text-white leading-tight"
+            class="text-4xl md:text-5xl font-bold text-text leading-tight"
             style="font-family: 'Lora', serif;"
           >
             {feature.title}
@@ -155,8 +155,8 @@ const nextFeature =
           {
             segments.map((segment) =>
               segment.type === "video" ? (
-                <div class="my-10 rounded-2xl overflow-hidden border border-white/[0.06] bg-white/[0.02]">
-                  <div class="aspect-video flex items-center justify-center bg-black/40">
+                <div class="my-10 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/[0.06] bg-panel">
+                  <div class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-black/40">
                     <video
                       class="w-full h-full object-cover"
                       controls
@@ -179,16 +179,16 @@ const nextFeature =
 
         <!-- Prev/Next Navigation -->
         <nav
-          class="mt-16 pt-8 border-t border-white/[0.06] grid grid-cols-1 md:grid-cols-2 gap-4"
+          class="mt-16 pt-8 border-t border-gray-200 dark:border-white/[0.06] grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {
             previousFeature ? (
               <a
                 href={`/nesta/${previousFeature.slug}`}
-                class="group p-5 rounded-xl border border-white/[0.06] hover:border-amber-400/30 bg-white/[0.02] hover:bg-white/[0.04] transition-all"
+                class="group p-5 rounded-xl border border-gray-100 dark:border-white/[0.06] hover:border-primary/40 dark:hover:border-primary/30 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all"
               >
                 <span class="text-gray-500 text-sm">Previous</span>
-                <p class="text-white font-medium mt-1 group-hover:text-amber-300 transition-colors">
+                <p class="text-text font-medium mt-1 group-hover:text-primary transition-colors">
                   {previousFeature.title}
                 </p>
               </a>
@@ -200,10 +200,10 @@ const nextFeature =
             nextFeature && (
               <a
                 href={`/nesta/${nextFeature.slug}`}
-                class="group p-5 rounded-xl border border-white/[0.06] hover:border-amber-400/30 bg-white/[0.02] hover:bg-white/[0.04] transition-all text-right"
+                class="group p-5 rounded-xl border border-gray-100 dark:border-white/[0.06] hover:border-primary/40 dark:hover:border-primary/30 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all text-right"
               >
                 <span class="text-gray-500 text-sm">Next</span>
-                <p class="text-white font-medium mt-1 group-hover:text-amber-300 transition-colors">
+                <p class="text-text font-medium mt-1 group-hover:text-primary transition-colors">
                   {nextFeature.title}
                 </p>
               </a>
