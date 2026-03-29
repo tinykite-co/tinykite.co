@@ -8,7 +8,7 @@ const apps = defineCollection({
     icon: z.string().optional(),
     category: z.enum(['productivity', 'utility', 'developer', 'other']),
     featured: z.boolean().default(false),
-    link: z.string().url().optional(),
+    link: z.string().optional(),
     publishDate: z.coerce.date(),
   }),
 });

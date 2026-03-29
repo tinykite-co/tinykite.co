@@ -1,0 +1,14 @@
+[
+  {"slug": "setup", "title": "Family Setup in Under 3 Minutes", "summary": "Create your family, add members, and pair devices with a PIN. No accounts, no passwords, no cloud."},
+  {"slug": "day-view", "title": "Day View — Your Family's Timeline", "summary": "A clean, vertical timeline grouped by category with completion tracking. The heart of Nesta."},
+  {"slug": "completion-toggle", "title": "The Satisfying Completion Toggle", "summary": "Per-member task completion with a delightful micro-animation, synced to every device instantly."},
+  {"slug": "quick-add", "title": "Quick Add — 3 Taps to Schedule", "summary": "Add items to the calendar faster than writing a sticky note. Title, time, done."},
+  {"slug": "recurrence", "title": "Smart Recurrence", "summary": "Visual recurrence picker with live preview of the next 5 occurrences. No more guessing."},
+  {"slug": "week-view", "title": "Week at a Glance", "summary": "Seven-day strip with completion dots and tap-to-view navigation for planning ahead."},
+  {"slug": "month-view", "title": "Month Overview", "summary": "Traditional month grid with dot indicators for busy days. The long lens for your family."},
+  {"slug": "family-management", "title": "Family Management", "summary": "Add, remove, and manage family members and paired devices as life evolves."},
+  {"slug": "night-mode", "title": "Night Mode — Calm in the Dark", "summary": "True black display with a warm clock — designed for OLED screens at night."},
+  {"slug": "sync", "title": "Seamless Local Sync", "summary": "Automatic device discovery and sub-second sync over your home WiFi. Zero cloud dependency."},
+  {"slug": "notifications", "title": "Gentle Notifications", "summary": "Configurable reminders, daily summaries, and quiet hours. Helpful, never intrusive."},
+  {"slug": "display-mode", "title": "Display Mode — Dedicated Family Display", "summary": "Turn any device into a child-safe family command centre mounted on the kitchen wall."}
+]
