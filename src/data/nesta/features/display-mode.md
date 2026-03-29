@@ -4,7 +4,7 @@ Turn any tablet or old phone into a beautiful, always-on family command centre. 
 
 This is the feature that brings Nesta closest to its inspiration: an actual paper calendar on the wall. Display Mode locks the device into a focused, large-type view that auto-rotates between today's timeline and the week ahead. No one can accidentally swipe into YouTube or change the settings. It just sits there, quietly showing your family what is happening, like a thoughtful piece of furniture.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_kiosk_mode.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_kiosk_mode.mp4]
 
 ## Key Features
 

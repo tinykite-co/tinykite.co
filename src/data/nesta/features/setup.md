@@ -4,7 +4,7 @@ Getting your family onto Nesta is remarkably fast. There are no accounts to crea
 
 Nesta asks for exactly what it needs and nothing more. Pick a family name, choose a colour for each member, and share a simple PIN with the other devices in your household. Every phone and tablet that enters that PIN joins your family instantly. No cloud, no sign-up forms, no "check your inbox" — just your family, connected.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_setup_flow.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_setup_flow.mp4]
 
 ## Key Features
 

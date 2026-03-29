@@ -4,7 +4,7 @@ Nesta keeps every device in your home in perfect harmony without ever sending a 
 
 This is not a compromise — it is a deliberate design choice. Your family's schedule, your children's activities, your daily routines: none of it needs to live on someone else's server. Nesta uses conflict-free replicated data types (CRDTs) to ensure that even when two people edit the same event at the same time on different devices, everything merges cleanly without anyone losing their changes.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_sync.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_sync.mp4]
 
 ## Key Features
 

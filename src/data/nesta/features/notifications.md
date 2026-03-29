@@ -4,7 +4,7 @@ Nesta's notifications are designed to be helpful without being intrusive. A gent
 
 Most apps treat notifications as a megaphone. Nesta treats them as a quiet tap on the shoulder. The default settings are deliberately conservative — you will get a morning summary and event reminders, nothing more. No promotional messages, no "you have not opened the app in a while" guilt trips, no noise. Just the right information at the right time.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_notifications.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_notifications.mp4]
 
 ## Key Features
 

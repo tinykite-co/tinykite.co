@@ -4,7 +4,7 @@ When the house is quiet and the lights are off, the last thing you want is a bri
 
 Night mode is not just "dark theme." It is a completely different interface, stripped down to only what matters at 2am: the time, displayed large and warm, with tomorrow's first scheduled item shown in a whisper-soft font below. Nothing else. No timeline, no dots, no colours. Just calm in the dark.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_night_mode.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_night_mode.mp4]
 
 ## Key Features
 

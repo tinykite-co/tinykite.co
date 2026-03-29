@@ -4,7 +4,7 @@ The month view is the long lens. It is the view you reach for when you are booki
 
 Each day in the grid carries small coloured dots — one for each event or task scheduled. Busy days are obvious at a glance. Empty days stand out just as clearly. It is the kind of view that belongs on a kitchen wall, and that is exactly what it feels like.
 
-::video[https://cdn.tinykite.co/nesta/videos/demo_month_view.mp4]
+::video[https://pub-3466d7fda9d2473fa97dfd33cd3e0c1e.r2.dev/nesta/videos/demo_month_view.mp4]
 
 ## Key Features
 
