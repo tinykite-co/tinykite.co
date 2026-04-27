@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { themes, animations } from '../data/design-options';
+
+const title = "Design Studio";
+const description = "Explore different color themes and animation styles.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 transition-colors duration-500">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <!-- Header -->
+      <div class="text-center space-y-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-text tracking-tight">Design Studio</h1>
+        <p class="text-xl text-text-muted max-w-2xl mx-auto">
+          Customize the look and feel of the website. Choose a color theme and animation style to see them in action.
+        </p>
+      </div>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-panel p-8 rounded-3xl border border-border shadow-sm">
+        
+        <!-- Theme Selector -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-text">Color Theme</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {themes.map((theme) => (
+              <button
+                class="theme-btn group relative flex flex-col items-center gap-2 p-3 rounded-xl border border-border hover:border-primary transition-all"
+                data-theme-id={theme.id}
+                aria-label={`Select ${theme.name} theme`}
+              >
+                <div class="flex gap-1">
+                  <div class="w-6 h-6 rounded-full shadow-sm" style={`background-color: ${theme.colors.primary}`}></div>
+                  <div class="w-6 h-6 rounded-full shadow-sm" style={`background-color: ${theme.colors.secondary}`}></div>
+                  <div class="w-6 h-6 rounded-full shadow-sm" style={`background-color: ${theme.colors.bg}; border: 1px solid ${theme.colors.border}`}></div>
+                </div>
+                <span class="text-sm font-medium text-text-muted group-hover:text-primary transition-colors">{theme.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Animation Selector -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-semibold text-text">Animation Style</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {animations.map((anim) => (
+              <button
+                class="anim-btn p-4 rounded-xl border border-border hover:border-primary text-left transition-all"
+                data-anim-id={anim.id}
+              >
+                <span class="block font-medium text-text">{anim.name}</span>
+                <span class="text-xs text-text-muted">{anim.description}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="space-y-8">
+        <h2 class="text-2xl font-bold text-text text-center">Live Preview</h2>
+        
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div class="preview-card glass-panel p-6 rounded-2xl space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <h3 class="text-xl font-bold text-text">Feature {i}</h3>
+              <p class="text-text-muted">This is a sample card to demonstrate the selected theme and animation style. Hover to see the effect.</p>
+              <button class="text-primary font-semibold hover:opacity-80 transition-opacity">Learn more &rarr;</button>
+            </div>
+          ))}
+        </div>
+
+        <!-- Buttons & Elements -->
+        <div class="flex flex-wrap justify-center gap-6 p-8 bg-panel rounded-3xl border border-border">
+          <button class="px-6 py-3 bg-primary text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all">
+            Primary Action
+          </button>
+          <button class="px-6 py-3 bg-secondary text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all">
+            Secondary Action
+          </button>
+          <button class="px-6 py-3 bg-panel border border-border text-text rounded-full font-semibold hover:bg-bg transition-all">
+            Outline Button
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { animations } from '../data/design-options';
+
+  // Elements
+  const themeBtns = document.querySelectorAll('.theme-btn');
+  const animBtns = document.querySelectorAll('.anim-btn');
+  const previewCards = document.querySelectorAll('.preview-card');
+
+  // Functions
+  function setTheme(themeId: string) {
+    const root = document.documentElement;
+    
+    // Remove all theme attributes first
+    // Note: In a real app we might want to persist this
+    if (themeId === 'default') {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', themeId);
+    }
+
+    // Update active state
+    themeBtns.forEach(btn => {
+      const button = btn as HTMLElement;
+      if (button.dataset.themeId === themeId) {
+        button.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'bg-primary/5');
+      } else {
+        button.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'bg-primary/5');
+      }
+    });
+  }
+
+  function setAnimation(animId: string) {
+    const selectedAnim = animations.find(a => a.id === animId);
+    if (!selectedAnim) return;
+
+    // Update active state
+    animBtns.forEach(btn => {
+      const button = btn as HTMLElement;
+      if (button.dataset.animId === animId) {
+        button.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'bg-primary/5');
+      } else {
+        button.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'bg-primary/5');
+      }
+    });
+
+    // Apply classes to preview elements
+    previewCards.forEach((card, index) => {
+      const cardEl = card as HTMLElement;
+      // Reset classes
+      cardEl.className = 'preview-card glass-panel p-6 rounded-2xl space-y-4';
+      
+      // Add base animation class
+      if (selectedAnim.classes.fadeIn) {
+        cardEl.classList.add(selectedAnim.classes.fadeIn);
+        // Add stagger
+        cardEl.style.animationDelay = `${index * 100}ms`;
+      }
+
+      // Add hover effects
+      if (selectedAnim.classes.hover) {
+        const hoverClasses = selectedAnim.classes.hover.split(' ');
+        cardEl.classList.add(...hoverClasses);
+      }
+    });
+  }
+
+  // Event Listeners
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const button = btn as HTMLElement;
+      const themeId = button.dataset.themeId;
+      if (themeId) setTheme(themeId);
+    });
+  });
+
+  animBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const button = btn as HTMLElement;
+      const animId = button.dataset.animId;
+      if (animId) setAnimation(animId);
+    });
+  });
+
+  // Initialize
+  setTheme('default');
+  setAnimation('minimal');
+
+</script>

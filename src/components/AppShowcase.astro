@@ -50,7 +50,7 @@ const apps = [
 
 <section id="apps" class="py-24 bg-panel relative overflow-hidden">
   <div class="container mx-auto px-6">
-    <div class="text-center mb-16 reveal-on-scroll">
+    <div class="text-center mb-16 animate-fade-in-up">
       <h2 class="text-4xl md:text-5xl font-bold mb-6 text-text">
         Crafted for <span class="text-gradient">simplicity</span>
       </h2>
@@ -77,7 +77,7 @@ const apps = [
       <!-- Scrollable Area -->
       <div id="carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide scroll-smooth">
         {apps.map((app, index) => (
-          <div class={`flex-none w-[85vw] md:w-[400px] snap-center reveal-on-scroll delay-${(index % 3 + 1) * 100}`}>
+          <div class={`flex-none w-[85vw] md:w-[400px] snap-center animate-fade-in-up stagger-${(index % 4 + 1)}`}>
             <div class="group/card spotlight-card relative h-full bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/10 overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col shadow-card dark:shadow-none">
               
               <!-- Image Area -->
