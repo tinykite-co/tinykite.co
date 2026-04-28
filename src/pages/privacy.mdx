@@ -77,7 +77,15 @@ export const contactEmail = "hello@tinykite.co";
 
         **Children's audience.** Kite AI is not directed at children under 13 (or under 16 in the EEA / UK). We do not knowingly collect data from children. If you believe a child has supplied data through the app, contact us at {contactEmail} and we will help locate and remove it.
 
-        **Data deletion.** Because Kite AI does not collect or store your data on TinyKite servers, you can delete all of your in-app data at any time by uninstalling the app. To delete a synced GitHub repository, sign in to GitHub and remove the `kite-ai-conversations` (or your custom-named) repository directly. To revoke API keys, do so at the provider's dashboard. For any additional deletion request, email {contactEmail}.
+        #### Data deletion
+
+        Because Kite AI does not collect or store your data on TinyKite servers, you can delete your in-app data at any time, on your own, with no support request required:
+
+        1. **Per-conversation:** open the drawer (left), long-press a conversation, then use the multi-select toolbar to delete one or many at a time.
+        2. **All in-app data:** uninstall Kite AI. The app's storage on iOS and Android is private to the app, so removing it deletes every conversation, draft, saved prompt, and the encrypted local provider-key store with it.
+        3. **Synced GitHub repository (if you used the GitHub sync feature):** sign in to GitHub and delete the `kite-ai-conversations` repository (or whatever you named it). Detailed steps: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/deleting-a-repository" class="text-primary hover:underline">GitHub: Deleting a repository</a>.
+        4. **Provider API keys:** rotate or delete the keys at your provider's dashboard (Anthropic console, OpenAI keys page, Google AI Studio, OpenRouter, Together, Groq) so any cached request history at the provider is no longer associated with an active key you control.
+        5. **Anything else:** email <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a> and we will assist within five business days. Because we do not store your data, this is a courtesy channel — there is no record of your usage we could surface or remove ourselves.
 
         **Account deletion.** Kite AI does not require an account, so there is no separate "delete account" flow — uninstalling the app and rotating any provider API keys you supplied is sufficient.
 
