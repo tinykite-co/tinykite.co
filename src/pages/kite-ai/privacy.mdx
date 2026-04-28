@@ -1,0 +1,109 @@
+---
+layout: ../../layouts/Layout.astro
+title: "Kite AI — Privacy Policy"
+---
+
+export const companyName = "TinyKite Ltd";
+export const companyNumber = "16825578";
+export const contactEmail = "hello@tinykite.co";
+
+<main class="pt-32 pb-24 relative overflow-hidden">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-text">Kite AI — Privacy Policy</h1>
+    <p class="text-sm text-gray-500 mb-8">
+      App-specific disclosures for Kite AI on iOS, iPadOS, macOS, and Android.<br/>
+      For company-wide policy (legal basis, GDPR rights, contact, etc.), see the
+      <a href="/privacy" class="text-primary hover:underline">main TinyKite privacy policy</a>.
+    </p>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+      <p class="lead text-xl mb-8">
+        Last updated: {new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+
+      ## 1. What Kite AI is
+
+      Kite AI is a multi-provider AI chat client. You bring your own API key from a provider you already use (Anthropic, OpenAI, Google AI, OpenRouter, Together, Groq, etc.) and the app sends your prompts directly from your device to that provider's HTTPS endpoint. {companyName} does not run any backend that processes, stores, or relays your conversations.
+
+      ## 2. What stays on your device
+
+      *   **Conversations.** Every message, draft, and saved prompt is stored in encrypted local storage (Hive on iOS / Android, encrypted with platform Keystore-protected keys). Nothing is transmitted to {companyName}.
+      *   **Provider API keys.** Keys you enter in Settings are stored exclusively in your device's secure enclave (iOS Keychain / Android Keystore). They are never sent anywhere except, in plaintext over HTTPS, to the matching provider's API endpoint when you send a message.
+      *   **Voice dictation audio.** Speech-to-text runs on-device using Apple's `Speech` framework on iOS / iPadOS / macOS, and Android's local recognizer on Android. Raw audio never leaves your device. The recognized text — which you have a chance to edit before sending — is sent only when you send the resulting message.
+
+      ## 3. What leaves your device, and where it goes
+
+      When you send a message, two kinds of payload travel directly from your device to the AI provider you chose, over HTTPS:
+
+      1.  **Your prompt** (text, plus any photos you attached).
+      2.  **Recent conversation context** the model needs to answer coherently.
+
+      Both go to the provider, *not* to {companyName}. We do not see, log, proxy, or have any record of these requests. Each provider's privacy policy governs what they retain on their side. As a general rule, mainstream API providers retain prompts and responses transiently (typically up to 30 days for abuse monitoring), unless you have arranged a zero-retention agreement with them yourself.
+
+      Image attachments are full-resolution (downscaled by the app only when a provider's payload limit demands it) and travel inline in the same HTTPS request as the prompt.
+
+      ## 4. AI-generated content disclosure
+
+      Responses in Kite AI are produced by third-party large language models. **They may be inaccurate, incomplete, biased, or otherwise inappropriate.** Kite AI does not pre-screen prompts or post-screen responses beyond what the chosen provider applies on its side; we expose the provider's response as-is so you can judge it for yourself. Verify any information that matters before relying on it.
+
+      Every assistant message includes a **Report** affordance (flag icon in the action row). Tapping it copies a structured report to your clipboard so you can email it to {contactEmail}. Reports help us decide which providers to recommend and which guidance to surface in-app.
+
+      ## 5. Children's audience
+
+      Kite AI is **not directed at children under 13** (or under 16 in the EEA / UK). We do not knowingly accept data from children. If you believe a child has used the app and supplied data, contact {contactEmail} and we will help you locate and remove it.
+
+      The app's age rating reflects this: 17+ on the App Store via the *Unrestricted Web Access* declaration; equivalent on Google Play.
+
+      ## 6. Optional GitHub sync
+
+      If you connect a GitHub account in Settings → Sync, the app creates a private repository on your GitHub account (default name `kite-ai-conversations`) and writes your conversation history there as an append-only log. The repository is owned by *you* and stored in *your* GitHub account. {companyName} has no access to it. Your provider API keys are never written to this repository.
+
+      You can disconnect the sync at any time without losing in-app data, and you can delete the repository directly on github.com whenever you want.
+
+      ## 7. Permissions Kite AI requests
+
+      All permissions are optional. Denying any permission only disables the corresponding feature; the rest of the app continues to work.
+
+      *   **Camera** — to take a photo and attach it to a chat message.
+      *   **Photo library** — to pick an existing image and attach it to a chat message.
+      *   **Microphone + Speech recognition** — for voice dictation. As noted above, audio is processed on-device.
+
+      Kite AI does not request location, contacts, calendar, health, file system, or background access.
+
+      ## 8. Data deletion {#data-deletion}
+
+      Because Kite AI does not collect or store your data on TinyKite servers, you can delete your in-app data at any time, on your own, with no support request required:
+
+      1.  **Per-conversation:** open the drawer (left), long-press a conversation, then use the multi-select toolbar to delete one or many at once.
+      2.  **All in-app data:** uninstall Kite AI. The app's storage on iOS and Android is private to the app, so removing it deletes every conversation, draft, saved prompt, and the encrypted local provider-key store.
+      3.  **Synced GitHub repository (if you used the GitHub sync feature):** sign in to GitHub and delete the `kite-ai-conversations` repository. Detailed steps: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/deleting-a-repository" class="text-primary hover:underline">GitHub: Deleting a repository</a>.
+      4.  **Provider API keys:** rotate or delete the keys at your provider's dashboard (Anthropic console, OpenAI keys page, Google AI Studio, OpenRouter, Together, Groq) so any cached request history at the provider is no longer associated with an active key you control.
+      5.  **Anything else:** email <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a> and we will assist within five business days. Because we do not store your data, this is a courtesy channel — there is no record of your usage we could surface or remove ourselves.
+
+      ## 9. Account deletion
+
+      Kite AI does not require an account to function, so there is no separate "delete account" flow. Following the steps in § 8 is equivalent.
+
+      ## 10. Telemetry, analytics, and tracking
+
+      None. The app makes no requests to {companyName}-controlled servers. There is no analytics SDK, no crash reporter SDK, no advertising SDK, no usage telemetry, no device-fingerprinting library. Network traffic from Kite AI consists exclusively of:
+
+      1.  Provider API calls you initiated by sending a message.
+      2.  GitHub API calls, only if you opted into Sync.
+
+      ## 11. Mapping to App Store and Play Store disclosures
+
+      *   **App Store privacy nutrition labels.** Data linked to you = none collected by {companyName}. Data not linked to you = none collected by {companyName}. Data collected by third-party AI providers is governed by their respective policies.
+      *   **Google Play Data Safety.** Messages and image attachments you send are *shared* (transmitted to a user-selected AI provider) over HTTPS for app functionality. Nothing is *collected* by {companyName}. Encrypted in transit. Data deletion is supported via the steps in § 8.
+
+      ## 12. Changes
+
+      We may update this policy as Kite AI evolves. Material changes will be reflected here with an updated "Last updated" date at the top.
+
+      ## 13. Contact
+
+      For privacy questions about Kite AI specifically:<br/>
+      Email: <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a>
+    </div>
+  </div>
+</main>

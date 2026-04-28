@@ -59,37 +59,14 @@ export const contactEmail = "hello@tinykite.co";
 
         We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page. You are advised to review this policy periodically for any changes.
 
-        ## 8. App-Specific Disclosures
+        ## 8. App-Specific Privacy Policies
 
-        ### Kite AI (iOS / iPadOS / macOS / Android)
+        Each TinyKite app has its own privacy policy that covers its specific data flows, permissions, and disclosures. The page above describes company-wide policy that applies to {companyName} as a whole; the per-app pages below are the authoritative source for everything app-specific (data sharing, permissions, deletion paths, AI / health / family-data disclosures, age ratings, etc.).
 
-        Kite AI is a multi-provider AI chat client. We do not run any backend servers that process your conversations. The following describes data handling specific to this app.
+        *   **Kite AI** — <a href="/kite-ai/privacy" class="text-primary hover:underline">tinykite.co/kite-ai/privacy</a> — multi-provider AI chat, BYOK posture, optional GitHub sync.
+        *   **Nesta** — <a href="/nesta" class="text-primary hover:underline">tinykite.co/nesta</a> — local-first family calendar (privacy page coming soon).
 
-        *   **Conversations** are stored locally on your device using the platform's standard encrypted storage (Hive on iOS/Android Keychain-protected containers). They are not transmitted to TinyKite at any point.
-        *   **API keys** for third-party model providers (Anthropic, OpenAI, Google, OpenRouter, Together, Groq, etc.) that you supply in Settings are stored exclusively in your device's secure enclave (iOS Keychain / Android Keystore). They are never sent anywhere except directly to the provider's API endpoint when you send a message.
-        *   **Chat content sent to model providers** travels directly from your device to the provider's API over HTTPS. We do not see, log, or proxy these requests. Each provider's privacy policy governs how they handle your prompts.
-        *   **Voice dictation** is processed on-device using Apple's Speech framework / Android's local recognizer. Audio is not uploaded to TinyKite.
-        *   **Optional GitHub sync**: if you connect a GitHub account in Settings, the app creates a private repository on your account and syncs your conversation history there as an append-only log. The repository is owned by you and stored in your GitHub account, not TinyKite. Your API keys are never written to this repository. You can disconnect or delete the repository at any time without affecting in-app data.
-        *   **Telemetry / analytics**: none. The app makes no requests to TinyKite-controlled servers.
-        *   **Permissions requested**: camera and photo library (to attach images to messages), microphone and speech recognition (for dictation). All permissions are optional — denying them only disables the corresponding feature.
-
-        **AI-generated content disclosure.** Responses in Kite AI are produced by third-party large language models. They may be inaccurate, incomplete, biased, or otherwise inappropriate. Kite AI does not pre-screen or moderate model output beyond what the chosen provider applies; we expose the provider's response as-is. Users should verify any information that matters before relying on it. Each assistant message includes a "Report" affordance that lets you flag content; reported items are summarized to your clipboard for emailing to {contactEmail} so we can investigate and adjust providers or guidance accordingly.
-
-        **Children's audience.** Kite AI is not directed at children under 13 (or under 16 in the EEA / UK). We do not knowingly collect data from children. If you believe a child has supplied data through the app, contact us at {contactEmail} and we will help locate and remove it.
-
-        #### Data deletion
-
-        Because Kite AI does not collect or store your data on TinyKite servers, you can delete your in-app data at any time, on your own, with no support request required:
-
-        1. **Per-conversation:** open the drawer (left), long-press a conversation, then use the multi-select toolbar to delete one or many at a time.
-        2. **All in-app data:** uninstall Kite AI. The app's storage on iOS and Android is private to the app, so removing it deletes every conversation, draft, saved prompt, and the encrypted local provider-key store with it.
-        3. **Synced GitHub repository (if you used the GitHub sync feature):** sign in to GitHub and delete the `kite-ai-conversations` repository (or whatever you named it). Detailed steps: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/deleting-a-repository" class="text-primary hover:underline">GitHub: Deleting a repository</a>.
-        4. **Provider API keys:** rotate or delete the keys at your provider's dashboard (Anthropic console, OpenAI keys page, Google AI Studio, OpenRouter, Together, Groq) so any cached request history at the provider is no longer associated with an active key you control.
-        5. **Anything else:** email <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a> and we will assist within five business days. Because we do not store your data, this is a courtesy channel — there is no record of your usage we could surface or remove ourselves.
-
-        **Account deletion.** Kite AI does not require an account, so there is no separate "delete account" flow — uninstalling the app and rotating any provider API keys you supplied is sufficient.
-
-        For App Store privacy nutrition label purposes: data linked to you = none collected by TinyKite. Data not linked to you = none collected by TinyKite. Data collected by third-party model providers is governed by their respective policies. For Google Play Data Safety: messages are sent to user-selected AI providers over HTTPS and not collected by TinyKite; no other data types are collected.
+        If you are an App Store or Play Store reviewer, follow the per-app link above for the specific listing under review.
 
         ## 9. Contact Us
 

@@ -1,0 +1,130 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Kite AI — Multi-provider AI chat. Bring your own keys."
+  description="A calm, local-first AI chat client. Pick any provider (Anthropic, OpenAI, Google, OpenRouter, Together, Groq), bring your own API key, and your conversations stay on your device."
+>
+  <main class="min-h-screen bg-background">
+    <!-- Hero -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none"></div>
+      <div class="container mx-auto max-w-4xl text-center relative z-10">
+        <p class="text-primary font-medium tracking-wide uppercase text-sm mb-4">In closed beta</p>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text">
+          kite ai
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
+          One conversation. Every model.
+        </p>
+        <p class="text-gray-500 text-base max-w-xl mx-auto">
+          A calm AI chat client that talks to whichever provider you already pay for. Your keys, your conversations, your device.
+        </p>
+
+        <div class="mt-10 flex items-center justify-center gap-4 flex-wrap">
+          <a
+            href="https://testflight.apple.com/join/XJ21v7RX"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition"
+          >
+            Join the iOS beta
+          </a>
+          <a
+            href="/kite-ai/privacy"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 dark:border-white/10 text-text font-medium hover:bg-gray-50 dark:hover:bg-white/[0.04] transition"
+          >
+            Privacy
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why -->
+    <section class="py-16 px-6">
+      <div class="container mx-auto max-w-4xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-text mb-3">What's different</h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+            Most AI chat apps lock you in to one model and store your conversations on their servers. Kite AI does neither.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+            <h3 class="font-semibold text-text mb-2">Bring your own key</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Anthropic, OpenAI, Google, OpenRouter, Together, Groq. Use the model you trust — switch mid-conversation if you don't like the answer.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+            <h3 class="font-semibold text-text mb-2">Local first</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Conversations live on your device in encrypted storage. Nothing routes through TinyKite servers.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+            <h3 class="font-semibold text-text mb-2">Your repo, your history</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Optional GitHub sync creates a private repo on your account. You own the data, you own the history. Disconnect anytime.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+            <h3 class="font-semibold text-text mb-2">Calm interface</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Monochrome, no clutter, no telemetry. A chat surface that gets out of the way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section class="py-16 px-6 bg-gray-50 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-4xl">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-8 text-center">What you can do</h2>
+        <ul class="space-y-3 max-w-2xl mx-auto text-gray-700 dark:text-gray-300">
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Chat with any provider that supports the OpenAI or Anthropic API surface.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Attach photos and ask vision-capable models about them.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Voice dictation — speech-to-text runs entirely on your device.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Per-chat custom system prompts and saved prompts you can reuse.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Fork any message into a parallel exploration without losing the main thread.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-primary">→</span>
+            <span>Optional sync to a private GitHub repo you own.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 px-6">
+      <div class="container mx-auto max-w-2xl text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">Try the beta</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">
+          iOS only for now. Android internal testing is coming via Play Store.
+        </p>
+        <a
+          href="https://testflight.apple.com/join/XJ21v7RX"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition"
+        >
+          Join the iOS beta on TestFlight
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>
