@@ -42,6 +42,17 @@ export const contactEmail = "hello@tinykite.co";
 
       Image attachments are full-resolution (downscaled by the app only when a provider's payload limit demands it) and travel inline in the same HTTPS request as the prompt.
 
+      ### Optional web search
+
+      When you enable web search for a turn (the globe icon next to the composer), Kite AI uses one of two backends, depending on what's available:
+
+      *   **Federated open-data search.** Kite AI calls a small set of public, no-key APIs directly from your device to fetch background information for the model: Wikipedia, Hacker News, Stack Overflow, and arXiv. Each request sends only your search query (a few words derived from your prompt) over HTTPS to the named source. {companyName} does not run a search proxy; the requests go straight from your device to each source's public endpoint. The respective source's privacy policy governs what they retain (typically just rate-limit / abuse-monitoring data).
+      *   **Provider-native search.** When the model you picked supports it (e.g. Anthropic Claude's `web_search` tool), Kite AI lets the provider perform the search server-side instead. In that case, your search query is sent to the provider as part of the same chat request, and the provider's privacy policy governs all of it.
+
+      Search is **off by default** on every conversation. The globe icon in the composer toggles it per-turn. You can also disable web search globally in Settings → Search.
+
+      Search results returned to your device — page titles, URLs, brief snippets — are appended to your conversation as context for the model and persisted with the conversation history (locally and, if you opted in, in your GitHub sync repo). They are never sent to {companyName}.
+
       ## 4. AI-generated content disclosure
 
       Responses in Kite AI are produced by third-party large language models. **They may be inaccurate, incomplete, biased, or otherwise inappropriate.** Kite AI does not pre-screen prompts or post-screen responses beyond what the chosen provider applies on its side; we expose the provider's response as-is so you can judge it for yourself. Verify any information that matters before relying on it.
