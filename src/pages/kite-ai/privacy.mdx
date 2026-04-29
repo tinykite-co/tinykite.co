@@ -53,6 +53,17 @@ export const contactEmail = "hello@tinykite.co";
 
       Search results returned to your device — page titles, URLs, brief snippets — are appended to your conversation as context for the model and persisted with the conversation history (locally and, if you opted in, in your GitHub sync repo). They are never sent to {companyName}.
 
+      ### Voice conversation
+
+      Voice mode lets you talk to your selected AI provider hands-free. The audio path is built so your voice never leaves the device.
+
+      *   **Speech-to-text (what you say).** Kite AI uses Apple's `Speech` framework on iOS / iPadOS / macOS and Android's local recognizer where available. On iOS we explicitly set `requiresOnDeviceRecognition = true`, which keeps audio on the device at the cost of slightly lower transcription accuracy than Apple's online recogniser. On Android, recognition runs offline if the device has the relevant language pack pre-downloaded; if it doesn't, the system recogniser may fall back to Google's online service. We surface a one-time banner the first time voice mode opens on Android telling you whether your device is currently in offline-only mode.
+      *   **Recognised text.** The text the recogniser produces is sent to your selected AI provider over HTTPS, exactly the same way a typed message is. Your provider's privacy policy governs what they retain.
+      *   **Text-to-speech (what the model says back).** Kite AI uses your operating system's built-in voice synthesiser (Apple `AVSpeechSynthesizer`, Android `TextToSpeech`, macOS `NSSpeechSynthesizer`). Audio is generated on the device. {companyName} does not run a TTS proxy and does not contract a third-party voice service for v1.
+      *   **No audio recording.** Raw microphone audio is never recorded to disk, sent to {companyName}, or sent to your AI provider.
+      *   **Voice turns persist as text only.** A voice conversation appears in your chat history as ordinary text turns with a small microphone adornment indicating the user spoke. The audio itself is not stored.
+      *   **Permissions.** Voice mode requests microphone access and speech-recognition permission at first use. Both are required for the feature; declining either disables voice mode but the rest of the app keeps working.
+
       ## 4. AI-generated content disclosure
 
       Responses in Kite AI are produced by third-party large language models. **They may be inaccurate, incomplete, biased, or otherwise inappropriate.** Kite AI does not pre-screen prompts or post-screen responses beyond what the chosen provider applies on its side; we expose the provider's response as-is so you can judge it for yourself. Verify any information that matters before relying on it.
