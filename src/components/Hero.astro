@@ -1,80 +1,73 @@
 ---
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-  <!-- Background Image with Overlay -->
-  <!-- Dynamic CSS Background -->
+<section id="hero" class="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden bg-[#000]">
+  <!-- Dynamic Mesh Background (Apple/Stripe aesthetic) -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-10"></div>
+    <!-- Base deep black -->
+    <div class="absolute inset-0 bg-black z-0"></div>
     
-    <!-- Interactive Gradient Orbs -->
-    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-primary mix-blend-multiply dark:mix-blend-screen transition-transform duration-100 ease-out top-0 left-0"></div>
-    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-3xl opacity-20 dark:opacity-15 bg-secondary mix-blend-multiply dark:mix-blend-screen transition-transform duration-300 ease-out top-0 left-0"></div>
+    <!-- Refined Gradient Orbs -->
+    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-[140px] opacity-40 bg-[#1e1b4b] mix-blend-screen transition-transform duration-[1200ms] ease-out top-[-20%] left-[-10%]"></div>
+    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-50 bg-[#312e81] mix-blend-screen transition-transform duration-[800ms] ease-out bottom-[-10%] right-[-10%]"></div>
+    <div id="hero-bg-orb-3" class="absolute w-[500px] h-[500px] rounded-full blur-[100px] opacity-30 bg-[#4c1d95] mix-blend-screen transition-transform duration-[1500ms] ease-out top-[20%] right-[20%]"></div>
+
+    <!-- Soft ambient noise overlay -->
+    <div class="absolute inset-0 opacity-[0.03] z-10" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+    
+    <!-- Fade to bottom -->
+    <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black to-transparent z-20"></div>
   </div>
 
   <script>
     const section = document.getElementById('hero');
     const orb1 = document.getElementById('hero-bg-orb-1');
     const orb2 = document.getElementById('hero-bg-orb-2');
+    const orb3 = document.getElementById('hero-bg-orb-3');
 
-    if (section && orb1 && orb2) {
-      // Initialize orbs at center
-      const initOrbs = () => {
-        const rect = section.getBoundingClientRect();
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        orb1.style.transform = `translate(${centerX - 400}px, ${centerY - 400}px)`;
-        orb2.style.transform = `translate(${centerX - 300}px, ${centerY - 300}px)`;
-      };
-      
-      // Run on load and resize
-      initOrbs();
-      window.addEventListener('resize', initOrbs);
-
+    if (section && orb1 && orb2 && orb3 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       section.addEventListener('mousemove', (e) => {
-        const rect = section.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        // Orb 1 follows mouse directly but smoothly
-        orb1.style.transform = `translate(${x - 400}px, ${y - 400}px)`;
-
-        // Orb 2 moves in opposition
-        const x2 = rect.width - x;
-        const y2 = rect.height - y;
-        orb2.style.transform = `translate(${x2 - 300}px, ${y2 - 300}px)`;
+        requestAnimationFrame(() => {
+          const rect = section.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          
+          orb1.style.transform = `translate(${x * 80 - 40}px, ${y * 80 - 40}px)`;
+          orb2.style.transform = `translate(${-(x * 120 - 60)}px, ${-(y * 120 - 60)}px)`;
+          orb3.style.transform = `translate(${x * 50 - 25}px, ${-(y * 50 - 25)}px)`;
+        });
       });
     }
   </script>
 
   <!-- Content -->
-  <div class="relative z-10 container mx-auto px-6 text-center">
-    <div class="mb-6">
-
-      <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-text">
-        <span class="inline-block animate-fade-in-up stagger-1">We</span>
-        <span class="inline-block animate-fade-in-up stagger-2">build</span>
-        <span class="inline-block animate-fade-in-up stagger-3 text-gradient">tomorrow.</span>
+  <div class="relative z-30 container mx-auto px-6 text-center mt-[-5vh]">
+    <div class="mb-8">
+      <h1 class="text-6xl md:text-[7rem] font-bold tracking-tighter leading-[1.1]">
+        <span class="block text-white animate-fade-in-up stagger-1 drop-shadow-2xl">We</span>
+        <span class="block text-white animate-fade-in-up stagger-2 drop-shadow-2xl">build</span>
+        <span class="block animate-fade-in-up stagger-3 bg-gradient-to-r from-gray-100 to-gray-500 bg-clip-text text-transparent pb-4 drop-shadow-2xl">tomorrow.</span>
       </h1>
     </div>
     
     <div class="animate-fade-in-up stagger-4">
-      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 font-light">
-        TinyKite is a product studio crafting a seamless ecosystem of apps that empower, inspire, and connect.
+      <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 font-light leading-relaxed tracking-tight">
+        TinyKite is a product studio crafting a unified ecosystem of seamless mobile apps, secure AI tools, and transformative digital experiences.
       </p>
     </div>
 
-    <div class="animate-fade-in-up stagger-4">
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#apps" class="magnetic-btn px-8 py-4 bg-text text-background rounded-full font-semibold hover:opacity-90 transition-opacity duration-300">
-          Explore Apps
-        </a>
-      </div>
+    <div class="animate-fade-in-up stagger-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="#apps" class="px-8 py-4 bg-white text-black rounded-full font-medium text-lg hover:scale-105 active:scale-95 transition-all duration-200 shadow-[0_0_40px_rgba(255,255,255,0.15)]">
+        Explore the Ecosystem
+      </a>
+      <a href="https://chat.tinykite.co" class="px-8 py-4 bg-transparent border border-gray-700 text-white rounded-full font-medium text-lg hover:bg-white/10 transition-colors duration-200 backdrop-blur-sm">
+        Meet Kite AI
+      </a>
     </div>
   </div>
 
   <!-- Scroll Indicator -->
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce z-30">
     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
