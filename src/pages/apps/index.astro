@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const apps = [
+  {
+    name: "Kite AI Assistant",
+    tagline: "The only AI assistant you need.",
+    description: "A beautifully designed, unified assistant that gives you access to the world's most powerful frontier models like GPT-4 and Claude 3. Fast, private, and optimized to help you with your daily tasks.",
+    icon: "https://chat.tinykite.co/icon.png", // fallback if no icon
+    status: "Live",
+    url: "https://chat.tinykite.co"
+  },
+  {
+    name: "Nesta",
+    tagline: "A calm family calendar.",
+    description: "A beautiful, local-first family calendar that syncs over your home WiFi. No cloud, no accounts, no fuss. Perfect for a wall display or your phone.",
+    icon: "/assets/nesta_icon.png",
+    status: "Beta",
+    url: "/nesta"
+  },
+  {
+    name: "LearnLoop",
+    tagline: "Adventures in programming.",
+    description: "An immersive, beautifully illustrated digital curriculum led by Lumi the sprite. Master complex programming concepts through intuitive, story-driven learning.",
+    icon: "/assets/learnloop_icon.png",
+    status: "Development",
+    url: "/learnloop"
+  },
+  {
+    name: "EasyLoops",
+    tagline: "Interactive learning agents.",
+    description: "Next-generation pedagogical learning agents leveraging advanced WebRTC mesh networks for real-time, interactive tutoring designed to safely educate and empower your children.",
+    icon: "/assets/easyloops_icon.png",
+    status: "Development",
+    url: "/easyloops"
+  }
+];
+---
+
+<Layout title="Ecosystem | TinyKite" description="Explore the complete TinyKite family of apps.">
+  <main class="min-h-screen bg-[#09090b] text-white pt-32 pb-24 relative overflow-hidden">
+    
+    <!-- Ambient Background -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full blur-[120px] opacity-20 bg-[#1e1b4b] mix-blend-screen"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[100px] opacity-20 bg-[#312e81] mix-blend-screen"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+      <div class="mb-20 animate-fade-in-up">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6" style="font-family: 'Inter', sans-serif;">
+          App Directory
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl font-light leading-relaxed">
+          Explore our curated collection of beautifully crafted workspaces, lifestyle utilities, and next-generation educational platforms.
+        </p>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/10 animate-fade-in-up stagger-2">
+        <div class="flex items-center gap-4 text-sm font-semibold tracking-wide uppercase text-gray-400">
+          <button class="text-white">All Apps</button>
+          <button class="hover:text-gray-200 transition-colors">Lifestyle</button>
+          <button class="hover:text-gray-200 transition-colors">Education</button>
+        </div>
+      </div>
+
+      <!-- Minimalist Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {apps.map((app, index) => (
+          <a href={app.url} class={`group relative p-8 rounded-2xl bg-[#111113] border border-white/10 hover:border-white/30 transition-all duration-500 hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)] animate-fade-in-up stagger-${(index % 4 + 1)}`}>
+            
+            <div class="flex justify-between items-start mb-12">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-gray-800 to-gray-700 flex items-center justify-center border border-white/10 overflow-hidden shadow-lg group-hover:scale-105 transition-transform">
+                <img src={app.icon} alt={app.name} class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'" />
+                {/* Fallback Icon if image fails */}
+                <svg class="absolute w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="z-index: -1"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M12 8v8M8 12h8"></path></svg>
+              </div>
+              <span class="text-[10px] uppercase tracking-widest font-bold px-2 py-1 rounded-md border border-white/10 text-gray-400">
+                {app.status}
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-white tracking-tight mb-2 group-hover:text-gray-200 transition-colors">{app.name}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                {app.description}
+              </p>
+            </div>
+
+            <div class="absolute bottom-8 left-8 flex items-center gap-2 text-sm font-medium text-gray-500 opacity-0 group-hover:opacity-100 group-hover:text-white transition-all transform translate-y-2 group-hover:translate-y-0">
+              Open App <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+            
+            <div class="absolute bottom-8 right-8 text-gray-600 group-hover:opacity-0 transition-opacity">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </main>
+</Layout>
