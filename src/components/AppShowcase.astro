@@ -2,31 +2,35 @@
 const apps = [
   {
     name: "Kite AI Workspace",
-    description: "The ultimate unified AI workspace. Access frontier models like GPT-4 and Claude 3 in one beautifully designed app.",
+    tagline: "The only AI workspace you need.",
+    description: "A beautifully designed, unified interface that gives you access to the world's most powerful frontier models like GPT-4 and Claude 3. Fast, private, and optimized for your daily workflows.",
     image: "/assets/chat_mockup.png",
     badge: "Core",
     actionUrl: "https://chat.tinykite.co",
     actionLabel: "Launch App"
   },
   {
-    name: "TinyKite Tools",
-    description: "A premium suite of completely free, privacy-first web utilities running natively in your browser via WebAssembly.",
-    image: "/assets/tools_mockup.png",
-    badge: "Utilities",
-    actionUrl: "https://tinykite-tools.pages.dev",
-    actionLabel: "Browse Tools"
-  },
-  {
     name: "TinyKite Router",
-    description: "The centralized hub for your family's AI usage. Manage access and API keys securely in one place.",
+    tagline: "Your family's central AI hub.",
+    description: "Manage access, set usage limits, and securely store API keys for your entire family in one centralized dashboard. Pay only for exactly what you use—no hidden fees, no redundant monthly subscriptions.",
     image: "/assets/router_mockup.png",
     badge: "Infrastructure",
     actionUrl: "/router",
     actionLabel: "Manage Hub"
   },
   {
+    name: "TinyKite Tools",
+    tagline: "Powerful utilities. Zero servers.",
+    description: "A premium suite of single-purpose web utilities running entirely natively in your browser. Remove backgrounds, compress images, and generate assets with 100% privacy and blazing speed.",
+    image: "/assets/tools_mockup.png",
+    badge: "Utilities",
+    actionUrl: "https://tinykite-tools.pages.dev",
+    actionLabel: "Browse Tools"
+  },
+  {
     name: "EasyLoops",
-    description: "Next-generation pedagogical learning agents leveraging advanced WebRTC mesh networks for interactive tutoring.",
+    tagline: "Interactive learning agents.",
+    description: "Next-generation pedagogical learning agents leveraging advanced WebRTC mesh networks for real-time, interactive tutoring designed to safely educate and empower your children.",
     image: "/assets/easyloops_mockup.png",
     badge: "Education",
     actionUrl: "/easyloops",
@@ -34,7 +38,8 @@ const apps = [
   },
   {
     name: "LearnLoop Curriculum",
-    description: "An immersive digital programming course led by Lumi the magical sprite, designed for intuitive learning.",
+    tagline: "Adventures in programming.",
+    description: "An immersive, beautifully illustrated digital curriculum led by Lumi the sprite. Master complex programming concepts through intuitive, story-driven learning.",
     image: "/assets/learnloop_mockup.png",
     badge: "Course",
     actionUrl: "/learnloop",
@@ -78,7 +83,8 @@ const apps = [
 
             <!-- Content Area -->
             <div class="p-8 flex flex-col flex-grow relative z-20 mt-[-2rem]">
-              <h3 class="text-2xl font-semibold tracking-tight mb-3 text-white">{app.name}</h3>
+              <h3 class="text-2xl font-semibold tracking-tight mb-1 text-white">{app.name}</h3>
+              <p class="text-gray-300 font-medium text-sm tracking-wide mb-4 uppercase">{app.tagline}</p>
               <p class="text-gray-400 text-[15px] leading-relaxed mb-8 flex-grow">
                 {app.description}
               </p>
