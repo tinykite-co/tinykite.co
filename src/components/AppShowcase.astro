@@ -19,13 +19,13 @@ const apps = [
     actionLabel: "Manage Hub"
   },
   {
-    name: "TinyKite Tools",
-    tagline: "Powerful utilities. Zero servers.",
-    description: "A premium suite of web utilities running entirely locally in your browser. Remove backgrounds, compress images, and process files with blazing speed. We never see your data.",
-    image: "/assets/tools_mockup.png",
-    badge: "Utilities",
-    actionUrl: "https://tinykite-tools.pages.dev",
-    actionLabel: "Browse Tools"
+    name: "Nesta",
+    tagline: "A calm family calendar.",
+    description: "A beautiful, local-first family calendar that syncs over your home WiFi. No cloud, no accounts, no fuss. Perfect for a wall display or your phone.",
+    image: "/assets/nesta_mockup.png",
+    badge: "Lifestyle",
+    actionUrl: "/nesta",
+    actionLabel: "Discover Nesta"
   }
 ];
 ---
@@ -37,12 +37,12 @@ const apps = [
         The TinyKite <span class="text-gray-500">Ecosystem</span>
       </h2>
       <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-        Explore our unified family of AI assistants, secure utilities, and educational platforms.
+        Explore our unified family of AI assistants, beautiful mobile apps, and secure infrastructure.
       </p>
     </div>
 
     <!-- Premium Grid Layout -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
       {apps.map((app, index) => (
         <div class={`animate-fade-in-up stagger-${(index % 4 + 1)}`}>
           <div class="group relative h-full bg-[#111113] rounded-3xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 flex flex-col hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
@@ -82,6 +82,21 @@ const apps = [
           </div>
         </div>
       ))}
+    </div>
+
+    <!-- SEO Tools Secondary Banner -->
+    <div class="max-w-4xl mx-auto text-center animate-fade-in-up stagger-4">
+      <div class="p-8 rounded-2xl bg-[#111113] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-left">
+          <h4 class="text-xl font-semibold text-white mb-2">Need a quick utility?</h4>
+          <p class="text-gray-400 text-sm">
+            Check out <strong class="text-gray-200">TinyKite Tools</strong>—our free, privacy-first web utilities. We never see your data.
+          </p>
+        </div>
+        <a href="https://tinykite-tools.pages.dev" class="shrink-0 px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-medium transition-colors border border-white/5">
+          Browse Tools
+        </a>
+      </div>
     </div>
   </div>
 </section>
