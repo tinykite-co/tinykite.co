@@ -1,0 +1,102 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const apps = [
+  {
+    name: "Kite AI Assistant",
+    tagline: "The only AI assistant you need.",
+    description: "A beautifully designed, unified assistant that gives you access to the world's most powerful frontier models like GPT-4 and Claude 3. Fast, private, and optimized to help you with your daily tasks.",
+    image: "/assets/chat_mockup.png",
+    badge: "Core",
+    actionUrl: "https://chat.tinykite.co",
+    actionLabel: "Launch App"
+  },
+  {
+    name: "Nesta",
+    tagline: "A calm family calendar.",
+    description: "A beautiful, local-first family calendar that syncs over your home WiFi. No cloud, no accounts, no fuss. Perfect for a wall display or your phone.",
+    image: "/assets/nesta_mockup.png",
+    badge: "Lifestyle",
+    actionUrl: "/nesta",
+    actionLabel: "Discover Nesta"
+  },
+  {
+    name: "LearnLoop",
+    tagline: "Adventures in programming.",
+    description: "An immersive, beautifully illustrated digital curriculum led by Lumi the sprite. Master complex programming concepts through intuitive, story-driven learning.",
+    image: "/assets/learnloop_mockup.png",
+    badge: "Education",
+    actionUrl: "/learnloop",
+    actionLabel: "View Course"
+  },
+  {
+    name: "EasyLoops",
+    tagline: "Interactive learning agents.",
+    description: "Next-generation pedagogical learning agents leveraging advanced WebRTC mesh networks for real-time, interactive tutoring designed to safely educate and empower your children.",
+    image: "/assets/easyloops_mockup.png",
+    badge: "Education",
+    actionUrl: "/easyloops",
+    actionLabel: "Learn More"
+  }
+];
+---
+
+<Layout title="Apps Directory | TinyKite" description="Explore the unified TinyKite ecosystem of apps.">
+  <main class="min-h-screen bg-[#09090b] pt-32 pb-24 relative overflow-hidden">
+    <div class="container mx-auto px-6 relative z-10">
+      
+      <div class="text-center mb-20 animate-fade-in-up">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
+          The App <span class="text-gray-500">Directory</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          Explore our unified family of AI assistants, beautiful mobile apps, and secure infrastructure.
+        </p>
+      </div>
+
+      <!-- Premium Grid Layout (Imported from AppShowcase) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+        {apps.map((app, index) => (
+          <div class={`animate-fade-in-up stagger-${(index % 4 + 1)}`}>
+            <div class="group relative h-full bg-[#111113] rounded-3xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 flex flex-col hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
+              
+              <!-- Image Area -->
+              <div class="relative aspect-[16/9] overflow-hidden bg-black/50">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#111113] to-transparent z-10"></div>
+                <img 
+                  src={app.image} 
+                  alt={app.name} 
+                  class="w-full h-full object-cover transform group-hover:scale-[1.03] transition duration-700 ease-out opacity-80 group-hover:opacity-100"
+                  onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop';"
+                />
+                <div class="absolute top-5 left-5 z-20">
+                  <span class="inline-block px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/10">
+                    {app.badge}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Content Area -->
+              <div class="p-8 flex flex-col flex-grow relative z-20 mt-[-2rem]">
+                <h3 class="text-2xl font-semibold tracking-tight mb-1 text-white">{app.name}</h3>
+                <p class="text-gray-300 font-medium text-sm tracking-wide mb-4 uppercase">{app.tagline}</p>
+                <p class="text-gray-400 text-[15px] leading-relaxed mb-8 flex-grow">
+                  {app.description}
+                </p>
+
+                <!-- Dynamic Action Links -->
+                <div class="mt-auto">
+                  <a href={app.actionUrl} class="inline-flex items-center gap-2 font-medium text-sm text-white hover:text-gray-300 transition-colors">
+                    {app.actionLabel}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </main>
+</Layout>
