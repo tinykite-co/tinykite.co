@@ -1,4 +1,6 @@
 ---
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Button } from "@refraction-ui/astro";
+
 const apps = [
   {
     name: "Kite AI Assistant",
@@ -30,26 +32,26 @@ const apps = [
 ];
 ---
 
-<section id="apps" class="py-32 bg-[#09090b] relative overflow-hidden border-t border-white/5">
+<section id="apps" class="py-32 bg-background relative overflow-hidden border-t border-border">
   <div class="container mx-auto px-6 relative z-10">
     <div class="text-center mb-20 animate-fade-in-up">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-        The TinyKite <span class="text-gray-500">Ecosystem</span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
+        The TinyKite <span class="text-muted-foreground">Ecosystem</span>
       </h2>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
         Explore our unified family of AI assistants, beautiful mobile apps, and secure infrastructure.
       </p>
     </div>
 
-    <!-- Premium Grid Layout -->
+    <!-- Premium Grid Layout with Refraction UI -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
       {apps.map((app, index) => (
-        <div class={`animate-fade-in-up stagger-${(index % 4 + 1)}`}>
-          <div class="group relative h-full bg-[#111113] rounded-3xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 flex flex-col hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
+        <div class={`animate-fade-in-up stagger-${(index % 4 + 1)} h-full`}>
+          <Card class="group h-full flex flex-col overflow-hidden bg-card hover:border-border/80 transition-all duration-500 hover:shadow-lg">
             
             <!-- Image Area -->
             <div class="relative aspect-[16/9] overflow-hidden bg-black/50">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#111113] to-transparent z-10"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-card to-transparent z-10"></div>
               <img 
                 src={app.image} 
                 alt={app.name} 
@@ -57,46 +59,47 @@ const apps = [
                 onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop';"
               />
               <div class="absolute top-5 left-5 z-20">
-                <span class="inline-block px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/10">
+                <Badge variant="secondary" class="bg-black/60 backdrop-blur-md text-white border-white/10">
                   {app.badge}
-                </span>
+                </Badge>
               </div>
             </div>
 
             <!-- Content Area -->
-            <div class="p-8 flex flex-col flex-grow relative z-20 mt-[-2rem]">
-              <h3 class="text-2xl font-semibold tracking-tight mb-1 text-white">{app.name}</h3>
-              <p class="text-gray-300 font-medium text-sm tracking-wide mb-4 uppercase">{app.tagline}</p>
-              <p class="text-gray-400 text-[15px] leading-relaxed mb-8 flex-grow">
+            <CardHeader class="relative z-20 mt-[-2rem] pb-2">
+              <CardTitle class="text-2xl tracking-tight mb-1">{app.name}</CardTitle>
+              <CardDescription class="font-medium text-sm tracking-wide uppercase">{app.tagline}</CardDescription>
+            </CardHeader>
+            <CardContent class="flex-grow pb-8">
+              <p class="text-muted-foreground text-[15px] leading-relaxed">
                 {app.description}
               </p>
+            </CardContent>
 
-              <!-- Dynamic Action Links -->
-              <div class="mt-auto">
-                <a href={app.actionUrl} class="inline-flex items-center gap-2 font-medium text-sm text-white hover:text-gray-300 transition-colors">
-                  {app.actionLabel}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </a>
-              </div>
-            </div>
-          </div>
+            <CardFooter class="mt-auto">
+              <a href={app.actionUrl} class="inline-flex items-center gap-2 font-medium text-sm text-foreground hover:text-muted-foreground transition-colors">
+                {app.actionLabel}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+            </CardFooter>
+          </Card>
         </div>
       ))}
     </div>
 
     <!-- SEO Tools Secondary Banner -->
     <div class="max-w-4xl mx-auto text-center animate-fade-in-up stagger-4">
-      <div class="p-8 rounded-2xl bg-[#111113] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <Card class="p-8 bg-card border-border flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="text-left">
-          <h4 class="text-xl font-semibold text-white mb-2">Need a quick utility?</h4>
-          <p class="text-gray-400 text-sm">
-            Check out <strong class="text-gray-200">TinyKite Tools</strong>—our free, privacy-first web utilities. We never see your data.
+          <h4 class="text-xl font-semibold text-foreground mb-2">Need a quick utility?</h4>
+          <p class="text-muted-foreground text-sm">
+            Check out <strong class="text-foreground">TinyKite Tools</strong>—our free, privacy-first web utilities. We never see your data.
           </p>
         </div>
-        <a href="https://tinykite.co/tools" class="shrink-0 px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-medium transition-colors border border-white/5">
-          Browse Tools
+        <a href="https://tinykite.co/tools" class="shrink-0">
+          <Button variant="outline" class="rounded-full">Browse Tools</Button>
         </a>
-      </div>
+      </Card>
     </div>
   </div>
 </section>
