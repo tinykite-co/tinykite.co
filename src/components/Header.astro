@@ -1,41 +1,39 @@
 ---
-import ThemeToggle from "./ThemeToggle.astro";
+import { Navbar, ThemeToggle } from "@refraction-ui/astro";
 ---
 
-<header id="site-header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl
-  rounded-full bg-background/80 dark:bg-black/50 backdrop-blur-md border border-border px-6 py-4 flex items-center justify-between transition-all duration-300 shadow-sm">
-  
-  <!-- Logo -->
-  <a href="/" class="flex items-center gap-2 group">
-    <img src="/icon.png" alt="tinykite Logo" class="w-8 h-8 rounded-lg" />
-    <span class="font-bold text-text text-xl tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
-  </a>
-
-  <!-- Desktop Navigation -->
-  <nav class="hidden md:flex items-center gap-8 text-gray-600 dark:text-gray-300 text-sm font-medium">
-    <a href="/apps" class="hover:text-primary transition-colors">Apps</a>
-    <a href="/tools" class="hover:text-primary transition-colors">Tools</a>
-    <a href="/router" class="hover:text-primary transition-colors">Router Hub</a>
-  </nav>
-
-  <!-- CTA & Theme Toggle -->
-  <div class="flex items-center gap-4">
-    <div class="hidden md:block">
-      <ThemeToggle />
-    </div>
-    <a href="https://chat.tinykite.co" class="hidden md:block px-5 py-2 bg-text text-background text-sm font-semibold rounded-full hover:opacity-80 transition-opacity">
-      Workspace
+<header id="site-header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl transition-all duration-300">
+  <Navbar 
+    variant="floating" 
+    class="rounded-full bg-background/80 dark:bg-black/50 backdrop-blur-md border border-border shadow-sm"
+    links={[
+      { href: '/apps', label: 'Apps' },
+      { href: '/tools', label: 'Tools' },
+      { href: '/router', label: 'Router Hub' }
+    ]}
+  >
+    <a slot="logo" href="/" class="flex items-center gap-2 group ml-2">
+      <img src="/icon.png" alt="tinykite Logo" class="w-8 h-8 rounded-lg" />
+      <span class="font-bold text-text text-xl tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
     </a>
-    
-    <!-- Mobile Menu Icon -->
-    <button id="menu-icon" class="md:hidden text-text focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-      </svg>
-    </button>
-  </div>
 
-  <!-- Mobile Menu -->
+    <div slot="actions" class="flex items-center gap-4">
+      <div class="hidden md:block">
+        <ThemeToggle />
+      </div>
+      <a href="https://chat.tinykite.co" class="hidden md:block px-5 py-2 bg-text text-background text-sm font-semibold rounded-full hover:opacity-80 transition-opacity">
+        Workspace
+      </a>
+      <!-- Mobile menu trigger would normally be handled by Refraction UI MobileNav component, keeping it simple for now -->
+      <button id="menu-icon" class="md:hidden text-text focus:outline-none mr-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </Navbar>
+
+  <!-- Mobile Menu fallback (can be upgraded to Refraction's MobileNav later) -->
   <div id="mobile-menu" class="hidden absolute top-full mt-4 right-0 w-full bg-white/95 dark:bg-black/90 border border-border rounded-2xl p-6 flex flex-col gap-4 text-center backdrop-blur-xl shadow-xl">
     <a href="/apps" class="text-gray-900 dark:text-gray-100 hover:text-primary text-lg font-medium">Apps</a>
     <a href="/tools" class="text-gray-900 dark:text-gray-100 hover:text-primary text-lg font-medium">Tools</a>

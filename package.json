@@ -18,6 +18,7 @@
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
+    "@refraction-ui/astro": "^0.4.13",
     "astro": "^5.15.3",
     "tailwindcss": "^3.4.18"
   },
