@@ -18,20 +18,61 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout tinykite.co
         uses: actions/checkout@v4
+        
+      - name: Checkout tools
+        uses: actions/checkout@v4
+        with:
+          repository: tinykite-co/tools
+          path: _tools
+          
+      - name: Checkout pro content
+        if: env.PRO_TOKEN != ''
+        env:
+          PRO_TOKEN: ${{ secrets.PRO_REPO_TOKEN }}
+        uses: actions/checkout@v4
+        with:
+          repository: tinykite-co/tinykite-tools-pro
+          token: ${{ secrets.PRO_REPO_TOKEN }}
+          path: _tools/_pro
+          persist-credentials: false
+          
+      - name: Inject pro templates and flows
+        run: |
+          cd _tools
+          mkdir -p apps/web/src/registry/templates/injected apps/web/src/registry/flows/injected
+          if [ -d "_pro/pro/templates" ]; then
+            rsync -a --delete _pro/pro/templates/ apps/web/src/registry/templates/injected/
+          fi
+          if [ -d "_pro/pro/flows" ]; then
+            rsync -a --delete _pro/pro/flows/ apps/web/src/registry/flows/injected/
+          fi
       
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          
+      - name: Install pnpm
+        run: npm install -g pnpm@9.15.2
       
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build with Astro
-        run: npm run build
+      - name: Build tinykite.co
+        run: |
+          npm ci
+          npm run build
+          
+      - name: Build tools
+        run: |
+          cd _tools
+          pnpm install
+          pnpm build
+          
+      - name: Merge tools into dist
+        run: |
+          mkdir -p dist/tools
+          cp -R _tools/apps/web/dist/* dist/tools/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
