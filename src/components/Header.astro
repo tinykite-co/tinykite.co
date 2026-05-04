@@ -2,8 +2,8 @@
 import ThemeToggle from "./ThemeToggle.astro";
 ---
 
-<header id="site-header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl
-  rounded-full bg-background/80 dark:bg-black/50 backdrop-blur-md border border-border px-6 py-4 flex items-center justify-between transition-all duration-300 shadow-sm">
+<header id="site-header" class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-border transition-all duration-300">
+  <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
   
   <!-- Logo -->
   <a href="/" class="flex items-center gap-2 group">
@@ -45,12 +45,12 @@ import ThemeToggle from "./ThemeToggle.astro";
     </div>
     <a href="https://chat.tinykite.co" class="text-primary font-medium">Workspace</a>
   </div>
+  </div>
 </header>
 
 <script>
   const menuIcon = document.getElementById("menu-icon");
   const mobileMenu = document.getElementById("mobile-menu");
-  const header = document.getElementById("site-header");
 
   if (menuIcon && mobileMenu) {
     menuIcon.addEventListener("click", () => {
@@ -63,18 +63,6 @@ import ThemeToggle from "./ThemeToggle.astro";
       link.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
       });
-    });
-  }
-
-  if (header) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 50) {
-        header.classList.add("shadow-lg", "bg-white/90", "dark:bg-black/90");
-        header.classList.remove("bg-background/80", "dark:bg-black/50");
-      } else {
-        header.classList.remove("shadow-lg", "bg-white/90", "dark:bg-black/90");
-        header.classList.add("bg-background/80", "dark:bg-black/50");
-      }
     });
   }
 </script>
