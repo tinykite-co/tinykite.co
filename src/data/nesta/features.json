@@ -1,14 +1,188 @@
-[
-  {"slug": "setup", "title": "Family Setup in Under 3 Minutes", "summary": "Create your family, add members, and pair devices with a PIN. No accounts, no passwords, no cloud.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "day-view", "title": "Day View — Your Family's Timeline", "summary": "A clean, vertical timeline grouped by category with completion tracking. The heart of Nesta.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "completion-toggle", "title": "The Satisfying Completion Toggle", "summary": "Per-member task completion with a delightful micro-animation, synced to every device instantly.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "quick-add", "title": "Quick Add — 3 Taps to Schedule", "summary": "Add items to the calendar faster than writing a sticky note. Title, time, done.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "recurrence", "title": "Smart Recurrence", "summary": "Visual recurrence picker with live preview of the next 5 occurrences. No more guessing.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "week-view", "title": "Week at a Glance", "summary": "Seven-day strip with completion dots and tap-to-view navigation for planning ahead.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "month-view", "title": "Month Overview", "summary": "Traditional month grid with dot indicators for busy days. The long lens for your family.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "family-management", "title": "Family Management", "summary": "Add, remove, and manage family members and paired devices as life evolves.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "night-mode", "title": "Night Mode — Calm in the Dark", "summary": "True black display with a warm clock — designed for OLED screens at night.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "sync", "title": "Seamless Local Sync", "summary": "Automatic device discovery and sub-second sync over your home WiFi. Zero cloud dependency.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "notifications", "title": "Gentle Notifications", "summary": "Configurable reminders, daily summaries, and quiet hours. Helpful, never intrusive.", "device": "ipad", "orientation": "portrait"},
-  {"slug": "display-mode", "title": "Display Mode — Dedicated Family Display", "summary": "Turn any device into a child-safe family command centre mounted on the kitchen wall.", "device": "ipad", "orientation": "portrait"}
-]
+{
+  "product": {
+    "name": "Nesta",
+    "tagline": "Your family's private messenger",
+    "dek": "Nesta is a private messenger for one household — no public feed, no strangers, no ads. Grown-ups hold the keys; children join with a parent-issued QR and never need an email or a password.",
+    "note": "Every feature below shows exactly where it lives in the app.",
+    "appUrl": "https://nesta.tinykite.co",
+    "icon": "/nesta/icon-512.png"
+  },
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/nesta-videos-v1/",
+  "parts": [
+    {
+      "kicker": "Part 1 · Set up the household",
+      "title": "From a blank phone to a family, in minutes",
+      "dek": "The setup path is deliberately short: one adult signs in and creates the household; everyone else joins through a grant — a QR, a link, or a short code.",
+      "features": [
+        {
+          "number": 1,
+          "title": "Install or open anywhere",
+          "summary": "Play Store, App Store/TestFlight, or the installable web app at nesta.tinykite.co. Nothing asks for an account until someone chooses to have one.",
+          "entry": "app launch → Welcome",
+          "video": null
+        },
+        {
+          "number": 2,
+          "title": "Adult sign-in",
+          "summary": "Email & password, Google, Apple, or passkeys in the native apps; the web app hands off to the central account hub and returns signed in. Forgot-password works from the screen or the emailed link.",
+          "entry": "Welcome → Sign in",
+          "video": "demo_adult-sign-in.mp4"
+        },
+        {
+          "number": 3,
+          "title": "Create a household",
+          "summary": "Name the family and yourself — you're the first admin and this device is active immediately. No code needed for the founder.",
+          "entry": "Welcome → Create a household",
+          "video": "demo_create-household.mp4"
+        },
+        {
+          "number": 4,
+          "title": "Add a child — first name only",
+          "summary": "Type their first name; Nesta provisions a hidden account and hands you the complete pass-along: a QR code, a shareable link, and a typed fallback code. No password is shown because none is needed.",
+          "entry": "⋮ → Household → Members → Add child",
+          "video": "demo_add-child.mp4"
+        },
+        {
+          "number": 5,
+          "title": "Child joins: confirm and you're in",
+          "summary": "Scan the QR, tap the link, or type the code — the grant already knows who it's for, so the child sees “Setting up Rohan's device?”, taps Yes, that's me, and lands in the family chat. Zero typing, zero credentials.",
+          "entry": "shared link / QR / Welcome → Join",
+          "video": "demo_passwordless-join.mp4"
+        },
+        {
+          "number": 6,
+          "title": "Links & QR codes open the app",
+          "summary": "The join link is a verified app link: with Nesta installed it opens the app directly (Android App Links, iOS Universal Links); without it, the web app takes over. The join screen also scans QR codes itself.",
+          "entry": "any shared join link",
+          "video": "demo_verified-links.mp4"
+        },
+        {
+          "number": 7,
+          "title": "Invite another adult",
+          "summary": "A one-time invite code for another grown-up, with their authority — member or co-admin — fixed at issue time.",
+          "entry": "Members → Invite an adult",
+          "video": "demo_invite-adult.mp4"
+        },
+        {
+          "number": 8,
+          "title": "Adult joins with an invite",
+          "summary": "Enter the code, sign in or create an account, pick a chat name — the device activates automatically and lands in chat.",
+          "entry": "Welcome → I was invited by my family",
+          "video": "demo_adult-join.mp4"
+        }
+      ]
+    },
+    {
+      "kicker": "Part 2 · Everyday use",
+      "title": "The family's day-to-day",
+      "dek": "A familiar messenger, scoped to one household.",
+      "features": [
+        {
+          "number": 9,
+          "title": "Chat home",
+          "summary": "All conversations with previews, timestamps, and unread badges. The household group chat exists from day one.",
+          "entry": "home",
+          "video": null
+        },
+        {
+          "number": 10,
+          "title": "Direct chats",
+          "summary": "Pick any family member to open a one-to-one conversation.",
+          "entry": "home → new chat",
+          "video": "demo_direct-chats.mp4"
+        },
+        {
+          "number": 11,
+          "title": "Messages with real delivery ticks",
+          "summary": "Pending, sent, delivered, read — plus date separators, an offline banner, and an outbox that retries failed sends or lets you discard them.",
+          "entry": "any conversation",
+          "video": "demo_family-chat.mp4"
+        },
+        {
+          "number": 12,
+          "title": "Photos, videos & files",
+          "summary": "Attach from the gallery, shoot with the camera, or send a document — rendered as media bubbles with download handling.",
+          "entry": "conversation → paperclip",
+          "video": "demo_media-and-voice.mp4"
+        },
+        {
+          "number": 13,
+          "title": "Voice notes",
+          "summary": "Hold the mic, watch the live level meter, slide to cancel; playback with waveform.",
+          "entry": "conversation → hold mic",
+          "video": null
+        },
+        {
+          "number": 14,
+          "title": "Notifications that respect privacy",
+          "summary": "A push says WHO wrote — never what. The relay stays content-blind; tapping the alert deep-links into that conversation. iOS APNs and Android FCM, registered the moment a device is in.",
+          "entry": "automatic after joining",
+          "video": "demo_notifications.mp4"
+        }
+      ]
+    },
+    {
+      "kicker": "Part 3 · Manage the household",
+      "title": "Parents hold the keys",
+      "dek": "Oversight is about devices and membership — never message content.",
+      "features": [
+        {
+          "number": 15,
+          "title": "Members roster",
+          "summary": "Active members only, no “kid” labels anywhere. Admins get per-member actions; everyone sees the family.",
+          "entry": "Household → Members",
+          "video": "demo_members-roster.mp4"
+        },
+        {
+          "number": 16,
+          "title": "Set up a device for anyone",
+          "summary": "Admins mint a short-lived, single-use device grant for any member — the same QR + link + code hand-off as add-child.",
+          "entry": "Members → member ⋮ → Set up a device",
+          "video": null
+        },
+        {
+          "number": 17,
+          "title": "Add your own devices",
+          "summary": "Any adult — admin or not — self-issues a grant for their tablet, browser, or next phone. Children always go through an adult (that's the security model, not a limitation).",
+          "entry": "Settings → Add another device",
+          "video": "demo_self-serve-devices.mp4"
+        },
+        {
+          "number": 18,
+          "title": "Approve & revoke devices",
+          "summary": "Every device is listed with its status; new web logins for kids wait for approval, and anything can be revoked instantly. The pending device waits on a friendly screen.",
+          "entry": "Household → Devices",
+          "video": "demo_device-control.mp4"
+        },
+        {
+          "number": 19,
+          "title": "Your name is yours",
+          "summary": "Everyone — kids included — edits how their own name appears. Renames re-label chats and the roster; admission and login are untouched.",
+          "entry": "Settings → profile card → edit",
+          "video": "demo_your-name-is-yours.mp4"
+        },
+        {
+          "number": 20,
+          "title": "Reset a child's password",
+          "summary": "Only for the rarely-needed credentials fallback — a new one-time password, shown exactly once.",
+          "entry": "Members → child ⋮ → Reset password",
+          "video": null
+        },
+        {
+          "number": 21,
+          "title": "Remove a member",
+          "summary": "Removes them entirely: devices stop being served, a child's hidden account is deleted, their name is freed — and past messages keep rendering under “old ‹name›”.",
+          "entry": "Members → member ⋮ → Remove from family",
+          "video": null
+        },
+        {
+          "number": 22,
+          "title": "Sign out",
+          "summary": "Confirms, revokes the session, and wipes this device's binding and local message mirror. Rejoining needs a fresh grant.",
+          "entry": "Settings → Sign out",
+          "video": "demo_sign-out.mp4"
+        }
+      ]
+    }
+  ]
+}
