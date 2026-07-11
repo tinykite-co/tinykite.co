@@ -49,8 +49,8 @@
         },
         {
           "number": 5,
-          "title": "Another word",
-          "summary": "One tap clears the session and returns to a clean home. No history in v1 \u2014 the job is to finish the moment and go back to the book.",
+          "title": "Another word (saved to your list)",
+          "summary": "One tap returns to a clean home. Each looked-up word is quietly saved to the active reader's local list \u2014 tap the bookmark to review or take a quiz.",
           "entry": "Meaning \u2192 Another word",
           "video": null,
           "screenshot": null
@@ -58,12 +58,43 @@
       ]
     },
     {
-      "kicker": "Part 2 \u00b7 Secondary paths",
+      "kicker": "Part 2 \u00b7 Readers & review",
+      "title": "Local profiles and quiz on words you've met",
+      "dek": "No accounts. Each reader on the device keeps their own word list and can quiz themselves from pictures.",
+      "features": [
+        {
+          "number": 6,
+          "title": "Who's reading? (local profiles)",
+          "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, \u2026). Profiles are device-local only \u2014 no email, no cloud. Each reader has a separate history.",
+          "entry": "home \u2192 avatar \u2192 Who's reading?",
+          "video": null,
+          "screenshot": "/gloss/screenshots/design/feat-profiles.png"
+        },
+        {
+          "number": 7,
+          "title": "Words you've met",
+          "summary": "The bookmark chip shows how many words this reader has looked up. Open the list to re-open any meaning. Empty state: \u201cNo words yet \u2014 look one up and it lands here for later.\u201d",
+          "entry": "home \u2192 bookmark \u2192 Words you've met",
+          "video": null,
+          "screenshot": null
+        },
+        {
+          "number": 8,
+          "title": "Quiz me",
+          "summary": "Needs at least 3 words in the list. Gloss shows POS media and asks \u201cWhich word?\u201d with three choices. Up to 5 questions, score screen, Play again. All offline from the reader's history.",
+          "entry": "Words you've met \u2192 Quiz me",
+          "video": null,
+          "screenshot": null
+        }
+      ]
+    },
+    {
+      "kicker": "Part 3 \u00b7 Secondary paths",
       "title": "Mic, miss states, and parent handoff",
       "dek": "Speech is delightful when it works; typing always works. Parents pin the app with the OS, not an in-app PIN.",
       "features": [
         {
-          "number": 6,
+          "number": 9,
           "title": "Say it out loud",
           "summary": "Tap the teal mic under the combo field to open a dedicated listening screen with pulse rings, live transcript, and Type instead. Mic never auto-starts \u2014 combo stays the default.",
           "entry": "What word? \u2192 mic",
@@ -71,7 +102,7 @@
           "screenshot": "/gloss/screenshots/design/design-adaptive.png"
         },
         {
-          "number": 7,
+          "number": 10,
           "title": "Not in the pack yet",
           "summary": "Unknown spellings land on a warm marigold card: \u201cHmm, not in our word pack yet.\u201d Try again with the combo field still available, or start another word. Index + curated seed keep this rare for common English.",
           "entry": "unknown word \u2192 skip line \u2192 not found",
@@ -79,7 +110,7 @@
           "screenshot": "/gloss/screenshots/app/06-not-found.png"
         },
         {
-          "number": 8,
+          "number": 11,
           "title": "About, privacy, hand to child",
           "summary": "The header \u201ci\u201d opens a bottom sheet: offline promise, speak/calm toggles, Privacy / Terms / Support links, and Hand to child \u2014 a guided tour of iOS Guided Access / Android Screen pinning. No in-app parent PIN.",
           "entry": "header i \u2192 About sheet",
@@ -89,20 +120,20 @@
       ]
     },
     {
-      "kicker": "Part 3 \u00b7 Design system",
+      "kicker": "Part 4 \u00b7 Design system",
       "title": "Sage & Honey \u00b7 seven POS templates",
       "dek": "One visual language across phone, tablet, and desktop \u2014 Refraction tokens from the design pack.",
       "features": [
         {
-          "number": 9,
+          "number": 12,
           "title": "Sage & Honey tokens",
           "summary": "Warm paper background, sage primary, teal accent, marigold honey for Speak. Lexend body + Baloo display. Light, dark, and Paper Night reading themes are defined in the design pack; v1 ships system light/dark via TinyKite + Refraction.",
           "entry": "theme tokens",
           "video": null,
-          "screenshot": "/gloss/screenshots/design/design-tokens.png"
+          "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
-          "number": 10,
+          "number": 13,
           "title": "Seven media templates by grammar",
           "summary": "Nouns = picture \u00b7 verbs = motion \u00b7 adjectives = before\u2192after stills \u00b7 adverbs = before\u2192after motion \u00b7 prepositions = spatial \u00b7 pronouns = picture + motion \u00b7 conjunctions = linked idea cards. Placeholders are honest when editorial art is still growing.",
           "entry": "Meaning media hero",
@@ -110,7 +141,7 @@
           "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
-          "number": 11,
+          "number": 14,
           "title": "Offline lexicon layers",
           "summary": "Curated seed JSON for kid definitions and media \u00b7 full English word index for combo \u00b7 synthesized POS-true stubs when a word is known but not yet editorial. Lookup never needs the network.",
           "entry": "local assets",
@@ -129,7 +160,11 @@
       "Not-found marigold card: \u201cHmm, not in our word pack yet.\u201d + Try again + grow-the-pack copy",
       "Info sheet: privacy promise, speak/calm toggles, Hand to child, Privacy/Terms/Support",
       "Sage & Honey paper background and teal primary field border when focused",
-      "Combo-first (mic does not auto-start); line step and meaning CTAs match design sizing intent"
+      "Combo-first (mic does not auto-start); line step and meaning CTAs match design sizing intent",
+      "Home header: bookmark count + profile avatar + info (design update)",
+      "Local profiles sheet: Who's reading?, add reader, colored initials",
+      "Words you've met list + Quiz me (\u22653 words)",
+      "Quiz: media hero \u2192 Which word? options \u2192 score"
     ],
     "gaps": [
       "Brand mark in header uses a book icon gradient tile; design uses the custom Gloss G monogram SVG",
@@ -197,6 +232,18 @@
         "Hand to child \u2014 pin this app",
         "Follow Guided Access / Screen pinning steps",
         "Child stays in Gloss until parent exits OS lock"
+      ]
+    },
+    {
+      "id": "profiles-quiz",
+      "name": "Profiles + quiz",
+      "steps": [
+        "Look up 3+ words as You",
+        "Tap bookmark \u2192 Words you've met",
+        "Tap Quiz me",
+        "Pick the word that matches the picture",
+        "See score \u00b7 Play again or Done",
+        "Tap avatar \u2192 Add / switch Reader"
       ]
     }
   ]
