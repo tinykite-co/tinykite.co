@@ -1,220 +1,219 @@
 {
   "product": {
     "name": "Gloss",
-    "tagline": "The word from your book \u2014 made clear in a breath",
-    "dek": "Gloss is a calm, offline-first reading companion. Type a few letters (or say the word), get one short meaning with a picture or motion, and get back to the book. No account, no ads, no tracking \u2014 everything stays on this device.",
-    "note": "Every step below is the real loop a child or parent meets \u2014 combo-first, mic secondary, line only when it helps, then review & quiz on words you've met.",
+    "tagline": "The word from your book — made clear in a breath",
+    "dek": "Gloss sits beside a real book. Type a few letters (or say the word), get one short meaning with a picture, and get back to reading. No account, no ads, no tracking — everything stays on this device.",
+    "note": "Below is what a child or parent actually meets, step by step — look up a word, keep a list of words you've met, and quiz yourself when you're ready.",
     "appUrl": "#feature-1",
     "icon": "/gloss/icon-512.png",
-    "platforms": "iOS \u00b7 Android \u00b7 Web \u00b7 macOS"
+    "platforms": "iPhone · Android · Web · Mac"
   },
   "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v1/",
-  "videoNote": "Videos are GitHub Release assets (never in git) — same as Nesta. features.video is the base name (demo_lookup-word.mp4); the page loads demo_lookup-word_android.mp4 / demo_lookup-word_ios.mp4 via the page-level Android/iPhone switcher. See docs/DEMO-VIDEOS.md.",
+  "videoNote": "Internal: GitHub Release assets only. See docs/DEMO-VIDEOS.md.",
   "parts": [
     {
-      "kicker": "Part 1 \u00b7 The reading loop",
+      "kicker": "Looking up a word",
       "title": "From a hard word to a clear meaning",
-      "dek": "The core product is a four-beat loop designed for a phone on the table while someone reads a physical book.",
+      "dek": "Phone on the table, book in hand. Find the word, skip anything you don't need, read the meaning, move on.",
       "features": [
         {
           "number": 1,
-          "title": "What word? (combo-first)",
-          "summary": "Home opens on a big \u201cWhat word?\u201d field. Type two or three letters; picture-tagged suggestions appear immediately. The header shows a bookmark (words met), the active reader\u2019s avatar, and About.",
-          "entry": "app open \u2192 What word?",
+          "title": "What word?",
+          "summary": "Home opens on a big “What word?” field. Type two or three letters and suggestions appear right away. The top bar shows how many words you've met, who's reading, and About.",
+          "entry": "Open Gloss → What word?",
           "video": "demo_lookup-word.mp4",
           "screenshot": "/gloss/screenshots/app/01-home.png"
         },
         {
           "number": 2,
-          "title": "Suggestions with part-of-speech color",
-          "summary": "Each suggestion shows a POS color square, the word in Baloo, and a kid label (Naming word, Doing word, Describing\u2026). Curated seed words rank above the broad English index.",
-          "entry": "What word? \u2192 type 2\u20134 letters",
+          "title": "Helpful suggestions as you type",
+          "summary": "Each suggestion shows a little color cue for the kind of word it is (a naming word, a doing word, a describing word…), the word itself, and a plain label a child can understand.",
+          "entry": "Type a few letters",
           "video": null,
           "screenshot": "/gloss/screenshots/app/02-suggestions.png"
         },
         {
           "number": 3,
-          "title": "Optional line from the book",
-          "summary": "After a word is chosen, Gloss asks for a line from the book \u2014 skippable. Multi-sense words can emphasize the line so the right meaning is picked.",
-          "entry": "word chosen \u2192 Any line from your book?",
+          "title": "A line from the book — optional",
+          "summary": "After you pick a word, Gloss can take a line from the page so the meaning matches the story. Skip it anytime; many words are clear without it.",
+          "entry": "Word chosen → optional line",
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-full-top.png"
         },
         {
           "number": 4,
-          "title": "Meaning: word largest, POS media, short sentence",
-          "summary": "Meaning lands with a POS chip, a huge word, a POS-true media hero, one kid-plain definition, and a honey Speak control. The word is quietly saved to the active reader\u2019s list.",
-          "entry": "Show meaning / No, just the word \u2192 Meaning",
+          "title": "One short meaning, with a picture",
+          "summary": "The word is large and easy to see, with a picture (or simple motion) and one kid-plain sentence. Tap Speak to hear it. The word is quietly saved to this reader's list.",
+          "entry": "Show meaning",
           "video": null,
           "screenshot": "/gloss/screenshots/design/paper-apple.png"
         },
         {
           "number": 5,
-          "title": "Another word (saved to your list)",
-          "summary": "One tap returns to a clean home. Each looked-up word is quietly saved to the active reader\u2019s local list \u2014 tap the bookmark to review or take a quiz.",
-          "entry": "Meaning \u2192 Another word",
+          "title": "Another word — and back to the book",
+          "summary": "One tap returns to a clean home. Every word you look up stays on this device for later review or a quiz.",
+          "entry": "Meaning → Another word",
           "video": null,
           "screenshot": null
         }
       ]
     },
     {
-      "kicker": "Part 2 \u00b7 Readers & review",
-      "title": "Local profiles and quiz on words you've met",
-      "dek": "No accounts. Each reader on the device keeps their own word list and can quiz themselves from pictures.",
+      "kicker": "Readers & practice",
+      "title": "Several readers on one device — no accounts",
+      "dek": "Siblings (or a parent and child) can each keep their own word list. No email, no cloud, no sign-in.",
       "features": [
         {
           "number": 6,
-          "title": "Who's reading? (local profiles)",
-          "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, \u2026). Profiles are device-local only \u2014 no email, no cloud. Each reader has a separate history.",
-          "entry": "home \u2192 avatar \u2192 Who's reading?",
+          "title": "Who's reading?",
+          "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, …). Lists stay separate on this phone or tablet.",
+          "entry": "Avatar → Who's reading?",
           "video": "demo_profiles.mp4",
           "screenshot": "/gloss/screenshots/design/feat-profiles.png"
         },
         {
           "number": 7,
           "title": "Words you've met",
-          "summary": "The bookmark chip shows how many words this reader has looked up. Open the list to re-open any meaning. Empty state: \u201cNo words yet \u2014 look one up and it lands here for later.\u201d",
-          "entry": "home \u2192 bookmark \u2192 Words you've met",
+          "summary": "The bookmark shows how many words this reader has looked up. Open the list to see a meaning again. Empty state: “No words yet — look one up and it lands here for later.”",
+          "entry": "Bookmark → Words you've met",
           "video": null,
           "screenshot": "/gloss/screenshots/design/feat-home.png"
         },
         {
           "number": 8,
           "title": "Quiz me",
-          "summary": "Needs at least 3 words in the list. Gloss shows POS media and asks \u201cWhich word?\u201d with three choices. Up to 5 questions, score screen, Play again. All offline from the reader's history.",
-          "entry": "Words you've met \u2192 Quiz me",
+          "summary": "Once there are at least three words, Gloss shows a picture and asks “Which word?” with three choices. A short quiz, a score, play again — all offline from words you've already met.",
+          "entry": "Words you've met → Quiz me",
           "video": "demo_quiz-me.mp4",
           "screenshot": null
         }
       ]
     },
     {
-      "kicker": "Part 3 \u00b7 Secondary paths",
-      "title": "Mic, miss states, and parent handoff",
-      "dek": "Speech is delightful when it works; typing always works. Parents pin the app with the OS, not an in-app PIN.",
+      "kicker": "Also handy",
+      "title": "Say the word, miss a spelling, hand the phone over",
+      "dek": "Typing always works. Speech is there when it helps. Parents use the phone's own pin tools — not a separate app password.",
       "features": [
         {
           "number": 9,
           "title": "Say it out loud",
-          "summary": "Tap the teal mic under the combo field to open a dedicated listening screen. Mic never auto-starts \u2014 combo stays the default.",
-          "entry": "What word? \u2192 mic",
+          "summary": "Tap the mic under the word field if speaking is easier. Listening only starts when you ask — typing stays the main way in.",
+          "entry": "What word? → mic",
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-adaptive.png"
         },
         {
           "number": 10,
-          "title": "Not in the pack yet",
-          "summary": "Unknown spellings land on a warm marigold card: \u201cHmm, not in our word pack yet.\u201d",
-          "entry": "unknown word \u2192 not found",
+          "title": "Not in our word pack yet",
+          "summary": "If a spelling isn't known yet, Gloss says so gently: “Hmm, not in our word pack yet.” Try again with another guess — no dead ends or ads.",
+          "entry": "Unknown spelling",
           "video": null,
           "screenshot": "/gloss/screenshots/app/06-not-found.png"
         },
         {
           "number": 11,
           "title": "About, privacy, hand to child",
-          "summary": "The header \u201ci\u201d opens a bottom sheet: offline promise, Privacy / Terms / Support, and Hand to child (Guided Access / Screen pinning).",
-          "entry": "header i \u2192 About sheet",
+          "summary": "The small “i” opens About: the offline promise, Privacy and Terms, Support, and simple steps to pin the app for a child (Guided Access on iPhone, screen pinning on Android).",
+          "entry": "Header i → About",
           "video": null,
           "screenshot": "/gloss/screenshots/app/07-info.png"
         }
       ]
     },
     {
-      "kicker": "Part 4 \u00b7 Design system",
-      "title": "Sage & Honey \u00b7 seven POS templates",
-      "dek": "One visual language across phone, tablet, and desktop \u2014 Refraction tokens from the design pack.",
+      "kicker": "How it feels",
+      "title": "Warm, calm, and clear on every screen",
+      "dek": "Soft paper colors, a gentle green, and meanings that show the right kind of picture for the word — a thing, an action, a before-and-after, and more.",
       "features": [
         {
           "number": 12,
-          "title": "Sage & Honey tokens",
-          "summary": "Warm paper background, sage primary, teal accent, marigold honey for Speak. Lexend body + Baloo display.",
-          "entry": "theme tokens",
+          "title": "Soft paper and quiet color",
+          "summary": "A warm paper background, soft green for the main actions, and a golden Speak button. Easy to look at next to a real book at the table.",
+          "entry": null,
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
           "number": 13,
-          "title": "Seven media templates by grammar",
-          "summary": "Nouns = picture \u00b7 verbs = motion \u00b7 adjectives = before\u2192after \u00b7 adverbs \u00b7 prepositions \u00b7 pronouns \u00b7 conjunctions.",
-          "entry": "Meaning media hero",
+          "title": "Pictures that match the kind of word",
+          "summary": "Naming words get a picture. Doing words can show motion. Describing words can show before and after. The goal is always: see it, get it, keep reading.",
+          "entry": null,
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
           "number": 14,
-          "title": "Offline lexicon layers",
-          "summary": "Curated seed \u00b7 English index \u00b7 synthesized POS-true stubs. Lookup never needs the network.",
-          "entry": "local assets",
+          "title": "Works without the internet",
+          "summary": "Words and meanings live on the device. Lookups don't need Wi‑Fi or a data plan — ideal on the sofa, in the car, or at a cabin.",
+          "entry": null,
           "video": null,
           "screenshot": null
         }
       ]
     }
   ],
-  "userflows": [
+  "journeys": [
     {
       "id": "happy-type",
-      "name": "Happy path \u2014 type + skip line",
+      "name": "Look up a word by typing",
       "steps": [
         "Open Gloss",
-        "Type \u201capp\u201d",
-        "Tap suggestion \u201capple\u201d",
-        "Tap \u201cNo, just the word\u201d",
-        "Read meaning / Speak",
-        "Tap \u201cAnother word\u201d"
+        "Type a few letters (for example “app”)",
+        "Tap a suggestion (for example “apple”)",
+        "Skip the line from the book if you don't need it",
+        "Read the meaning — or tap Speak",
+        "Tap Another word and go back to the book"
       ]
     },
     {
       "id": "line-context",
-      "name": "Disambiguate with a line",
+      "name": "Use a line from the book",
       "steps": [
-        "Type \u201cclean\u201d",
-        "Paste a line from the book",
-        "Tap \u201cShow meaning\u201d",
-        "See From your book callout"
+        "Type a word that can mean more than one thing",
+        "Add a short line from the page",
+        "Tap Show meaning",
+        "See how the meaning fits the story"
       ]
     },
     {
       "id": "mic-path",
-      "name": "Mic secondary path",
+      "name": "Say the word out loud",
       "steps": [
-        "Tap mic",
+        "Tap the mic",
         "Say the word",
-        "Tap stop",
-        "Optional line or skip",
-        "Meaning"
+        "Stop when you're done",
+        "Add a line or skip",
+        "Read the meaning"
       ]
     },
     {
       "id": "miss",
-      "name": "Unknown word",
+      "name": "When a spelling isn't known yet",
       "steps": [
-        "Type nonsense",
-        "Submit",
-        "See not-in-pack card",
-        "Try again"
+        "Type a guess that isn't in the pack",
+        "See a gentle “not yet” message",
+        "Try again with another spelling"
       ]
     },
     {
       "id": "handoff",
-      "name": "Parent handoff",
+      "name": "Hand the phone to a child",
       "steps": [
-        "Tap i",
-        "Hand to child",
-        "Follow OS pin steps"
+        "Tap the small i",
+        "Choose Hand to child",
+        "Follow the simple pin steps for your phone"
       ]
     },
     {
       "id": "profiles-quiz",
-      "name": "Profiles + quiz",
+      "name": "Practice words you've met",
       "steps": [
-        "Look up 3+ words",
-        "Tap bookmark \u2192 Words you've met",
+        "Look up a few words (at least three)",
+        "Open Words you've met",
         "Tap Quiz me",
-        "Pick the matching word",
-        "See score",
-        "Tap avatar \u2192 switch/add reader"
+        "Pick the word that matches the picture",
+        "See your score",
+        "Switch readers anytime with the avatar"
       ]
     }
   ]
