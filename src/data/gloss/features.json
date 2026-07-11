@@ -152,24 +152,6 @@
       ]
     }
   ],
-  "designVsApp": {
-    "title": "Design vs build \u2014 pixel audit",
-    "summary": "Compared Gloss.dc.html (including profiles/quiz update) against the Flutter app.",
-    "matches": [
-      "Home: wordmark, bookmark count, profile avatar, info",
-      "Local profiles sheet + per-reader history",
-      "Words you've met + Quiz me (\u22653)",
-      "Quiz media \u2192 Which word? \u2192 score",
-      "Combo field, POS suggestions, not-found card, meaning layout"
-    ],
-    "gaps": [
-      "Brand mark G monogram SVG not yet in Flutter header",
-      "Keyboard-open layout can overflow against the mic",
-      "Info toggles still visual-only",
-      "Paper Night theme not exposed as ThemeMode",
-      "POS media still placeholders until editorial packs"
-    ]
-  },
   "userflows": [
     {
       "id": "happy-type",
