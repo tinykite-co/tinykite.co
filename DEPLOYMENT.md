@@ -1,5 +1,12 @@
 # Deployment Guide
 
+## Demo videos (binding)
+
+Product feature demos are **GitHub Release assets**, never files under
+`public/` and never committed to git. See **[docs/DEMO-VIDEOS.md](docs/DEMO-VIDEOS.md)**
+for the full Nesta/Gloss workflow (`videoBase` →
+`…/releases/download/<app>-videos-vN/`).
+
 ## Deploy to GitHub Pages
 
 This TinyKite.co website is configured for deployment on GitHub Pages with automated builds via GitHub Actions.

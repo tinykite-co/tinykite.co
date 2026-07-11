@@ -8,7 +8,8 @@
     "icon": "/gloss/icon-512.png",
     "platforms": "iOS \u00b7 Android \u00b7 Web \u00b7 macOS"
   },
-  "videoBase": "",
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v1/",
+  "videoNote": "Videos are GitHub Release assets (never in git) — same as Nesta. features.video is the base name (demo_lookup-word.mp4); the page loads demo_lookup-word_android.mp4 / demo_lookup-word_ios.mp4 via the page-level Android/iPhone switcher. See docs/DEMO-VIDEOS.md.",
   "parts": [
     {
       "kicker": "Part 1 \u00b7 The reading loop",
@@ -20,7 +21,7 @@
           "title": "What word? (combo-first)",
           "summary": "Home opens on a big \u201cWhat word?\u201d field. Type two or three letters; picture-tagged suggestions appear immediately. The header shows a bookmark (words met), the active reader\u2019s avatar, and About.",
           "entry": "app open \u2192 What word?",
-          "video": null,
+          "video": "demo_lookup-word.mp4",
           "screenshot": "/gloss/screenshots/app/01-home.png"
         },
         {
@@ -67,7 +68,7 @@
           "title": "Who's reading? (local profiles)",
           "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, \u2026). Profiles are device-local only \u2014 no email, no cloud. Each reader has a separate history.",
           "entry": "home \u2192 avatar \u2192 Who's reading?",
-          "video": null,
+          "video": "demo_profiles.mp4",
           "screenshot": "/gloss/screenshots/design/feat-profiles.png"
         },
         {
@@ -83,7 +84,7 @@
           "title": "Quiz me",
           "summary": "Needs at least 3 words in the list. Gloss shows POS media and asks \u201cWhich word?\u201d with three choices. Up to 5 questions, score screen, Play again. All offline from the reader's history.",
           "entry": "Words you've met \u2192 Quiz me",
-          "video": null,
+          "video": "demo_quiz-me.mp4",
           "screenshot": null
         }
       ]
