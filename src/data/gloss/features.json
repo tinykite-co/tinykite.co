@@ -3,7 +3,7 @@
     "name": "Gloss",
     "tagline": "The word from your book \u2014 made clear in a breath",
     "dek": "Gloss is a calm, offline-first reading companion. Type a few letters (or say the word), get one short meaning with a picture or motion, and get back to the book. No account, no ads, no tracking \u2014 everything stays on this device.",
-    "note": "Every step below is the real loop a child or parent meets \u2014 combo-first, mic secondary, line only when it helps.",
+    "note": "Every step below is the real loop a child or parent meets \u2014 combo-first, mic secondary, line only when it helps, then review & quiz on words you've met.",
     "appUrl": "#feature-1",
     "icon": "/gloss/icon-512.png",
     "platforms": "iOS \u00b7 Android \u00b7 Web \u00b7 macOS"
@@ -18,7 +18,7 @@
         {
           "number": 1,
           "title": "What word? (combo-first)",
-          "summary": "Home opens on a big \u201cWhat word?\u201d field. Type two or three letters; picture-tagged suggestions appear immediately. Kids who cannot say a word they cannot read still reach the exact entry. Enter submits; the mic is only a secondary path under the field.",
+          "summary": "Home opens on a big \u201cWhat word?\u201d field. Type two or three letters; picture-tagged suggestions appear immediately. The header shows a bookmark (words met), the active reader\u2019s avatar, and About.",
           "entry": "app open \u2192 What word?",
           "video": null,
           "screenshot": "/gloss/screenshots/app/01-home.png"
@@ -26,7 +26,7 @@
         {
           "number": 2,
           "title": "Suggestions with part-of-speech color",
-          "summary": "Each suggestion shows a POS color square, the word in Baloo, and a kid label (Naming word, Doing word, Describing\u2026). Curated seed words rank above the broad English index so the best teaching content surfaces first.",
+          "summary": "Each suggestion shows a POS color square, the word in Baloo, and a kid label (Naming word, Doing word, Describing\u2026). Curated seed words rank above the broad English index.",
           "entry": "What word? \u2192 type 2\u20134 letters",
           "video": null,
           "screenshot": "/gloss/screenshots/app/02-suggestions.png"
@@ -34,7 +34,7 @@
         {
           "number": 3,
           "title": "Optional line from the book",
-          "summary": "After a word is chosen, Gloss asks for a line from the book \u2014 skippable. Multi-sense words can emphasize the line so the right meaning is picked; single-sense words push \u201cNo, just the word.\u201d Context is session-only.",
+          "summary": "After a word is chosen, Gloss asks for a line from the book \u2014 skippable. Multi-sense words can emphasize the line so the right meaning is picked.",
           "entry": "word chosen \u2192 Any line from your book?",
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-full-top.png"
@@ -42,15 +42,15 @@
         {
           "number": 4,
           "title": "Meaning: word largest, POS media, short sentence",
-          "summary": "Meaning lands with a POS chip, a huge word, a POS-true media hero (picture / motion / before\u2192after / spatial / linked ideas), one kid-plain definition, and a honey Speak control. Fuller detail is collapsed under \u201cMore about this word.\u201d",
+          "summary": "Meaning lands with a POS chip, a huge word, a POS-true media hero, one kid-plain definition, and a honey Speak control. The word is quietly saved to the active reader\u2019s list.",
           "entry": "Show meaning / No, just the word \u2192 Meaning",
           "video": null,
           "screenshot": "/gloss/screenshots/design/paper-apple.png"
         },
         {
           "number": 5,
-          "title": "Another word",
-          "summary": "One tap clears the session and returns to a clean home. No history in v1 \u2014 the job is to finish the moment and go back to the book.",
+          "title": "Another word (saved to your list)",
+          "summary": "One tap returns to a clean home. Each looked-up word is quietly saved to the active reader\u2019s local list \u2014 tap the bookmark to review or take a quiz.",
           "entry": "Meaning \u2192 Another word",
           "video": null,
           "screenshot": null
@@ -58,30 +58,61 @@
       ]
     },
     {
-      "kicker": "Part 2 \u00b7 Secondary paths",
+      "kicker": "Part 2 \u00b7 Readers & review",
+      "title": "Local profiles and quiz on words you've met",
+      "dek": "No accounts. Each reader on the device keeps their own word list and can quiz themselves from pictures.",
+      "features": [
+        {
+          "number": 6,
+          "title": "Who's reading? (local profiles)",
+          "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, \u2026). Profiles are device-local only \u2014 no email, no cloud. Each reader has a separate history.",
+          "entry": "home \u2192 avatar \u2192 Who's reading?",
+          "video": null,
+          "screenshot": "/gloss/screenshots/design/feat-profiles.png"
+        },
+        {
+          "number": 7,
+          "title": "Words you've met",
+          "summary": "The bookmark chip shows how many words this reader has looked up. Open the list to re-open any meaning. Empty state: \u201cNo words yet \u2014 look one up and it lands here for later.\u201d",
+          "entry": "home \u2192 bookmark \u2192 Words you've met",
+          "video": null,
+          "screenshot": "/gloss/screenshots/design/feat-home.png"
+        },
+        {
+          "number": 8,
+          "title": "Quiz me",
+          "summary": "Needs at least 3 words in the list. Gloss shows POS media and asks \u201cWhich word?\u201d with three choices. Up to 5 questions, score screen, Play again. All offline from the reader's history.",
+          "entry": "Words you've met \u2192 Quiz me",
+          "video": null,
+          "screenshot": null
+        }
+      ]
+    },
+    {
+      "kicker": "Part 3 \u00b7 Secondary paths",
       "title": "Mic, miss states, and parent handoff",
       "dek": "Speech is delightful when it works; typing always works. Parents pin the app with the OS, not an in-app PIN.",
       "features": [
         {
-          "number": 6,
+          "number": 9,
           "title": "Say it out loud",
-          "summary": "Tap the teal mic under the combo field to open a dedicated listening screen with pulse rings, live transcript, and Type instead. Mic never auto-starts \u2014 combo stays the default.",
+          "summary": "Tap the teal mic under the combo field to open a dedicated listening screen. Mic never auto-starts \u2014 combo stays the default.",
           "entry": "What word? \u2192 mic",
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-adaptive.png"
         },
         {
-          "number": 7,
+          "number": 10,
           "title": "Not in the pack yet",
-          "summary": "Unknown spellings land on a warm marigold card: \u201cHmm, not in our word pack yet.\u201d Try again with the combo field still available, or start another word. Index + curated seed keep this rare for common English.",
-          "entry": "unknown word \u2192 skip line \u2192 not found",
+          "summary": "Unknown spellings land on a warm marigold card: \u201cHmm, not in our word pack yet.\u201d",
+          "entry": "unknown word \u2192 not found",
           "video": null,
           "screenshot": "/gloss/screenshots/app/06-not-found.png"
         },
         {
-          "number": 8,
+          "number": 11,
           "title": "About, privacy, hand to child",
-          "summary": "The header \u201ci\u201d opens a bottom sheet: offline promise, speak/calm toggles, Privacy / Terms / Support links, and Hand to child \u2014 a guided tour of iOS Guided Access / Android Screen pinning. No in-app parent PIN.",
+          "summary": "The header \u201ci\u201d opens a bottom sheet: offline promise, Privacy / Terms / Support, and Hand to child (Guided Access / Screen pinning).",
           "entry": "header i \u2192 About sheet",
           "video": null,
           "screenshot": "/gloss/screenshots/app/07-info.png"
@@ -89,30 +120,30 @@
       ]
     },
     {
-      "kicker": "Part 3 \u00b7 Design system",
+      "kicker": "Part 4 \u00b7 Design system",
       "title": "Sage & Honey \u00b7 seven POS templates",
       "dek": "One visual language across phone, tablet, and desktop \u2014 Refraction tokens from the design pack.",
       "features": [
         {
-          "number": 9,
+          "number": 12,
           "title": "Sage & Honey tokens",
-          "summary": "Warm paper background, sage primary, teal accent, marigold honey for Speak. Lexend body + Baloo display. Light, dark, and Paper Night reading themes are defined in the design pack; v1 ships system light/dark via TinyKite + Refraction.",
+          "summary": "Warm paper background, sage primary, teal accent, marigold honey for Speak. Lexend body + Baloo display.",
           "entry": "theme tokens",
           "video": null,
-          "screenshot": "/gloss/screenshots/design/design-tokens.png"
+          "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
-          "number": 10,
+          "number": 13,
           "title": "Seven media templates by grammar",
-          "summary": "Nouns = picture \u00b7 verbs = motion \u00b7 adjectives = before\u2192after stills \u00b7 adverbs = before\u2192after motion \u00b7 prepositions = spatial \u00b7 pronouns = picture + motion \u00b7 conjunctions = linked idea cards. Placeholders are honest when editorial art is still growing.",
+          "summary": "Nouns = picture \u00b7 verbs = motion \u00b7 adjectives = before\u2192after \u00b7 adverbs \u00b7 prepositions \u00b7 pronouns \u00b7 conjunctions.",
           "entry": "Meaning media hero",
           "video": null,
           "screenshot": "/gloss/screenshots/design/design-pos-templates.png"
         },
         {
-          "number": 11,
+          "number": 14,
           "title": "Offline lexicon layers",
-          "summary": "Curated seed JSON for kid definitions and media \u00b7 full English word index for combo \u00b7 synthesized POS-true stubs when a word is known but not yet editorial. Lookup never needs the network.",
+          "summary": "Curated seed \u00b7 English index \u00b7 synthesized POS-true stubs. Lookup never needs the network.",
           "entry": "local assets",
           "video": null,
           "screenshot": null
@@ -122,26 +153,20 @@
   ],
   "designVsApp": {
     "title": "Design vs build \u2014 pixel audit",
-    "summary": "Compared Gloss.dc.html phone prototype (390pt) against the Flutter app on Android emulator and iOS simulator. Status as of this publish.",
+    "summary": "Compared Gloss.dc.html (including profiles/quiz update) against the Flutter app.",
     "matches": [
-      "Home structure: wordmark + info, What word? 34px, 66px combo field, mic secondary with \u201c\u2026or say it out loud\u201d",
-      "Suggestion list: POS color dots, Baloo word, kid POS label (Naming word / Doing word), radius 18 card",
-      "Not-found marigold card: \u201cHmm, not in our word pack yet.\u201d + Try again + grow-the-pack copy",
-      "Info sheet: privacy promise, speak/calm toggles, Hand to child, Privacy/Terms/Support",
-      "Sage & Honey paper background and teal primary field border when focused",
-      "Combo-first (mic does not auto-start); line step and meaning CTAs match design sizing intent"
+      "Home: wordmark, bookmark count, profile avatar, info",
+      "Local profiles sheet + per-reader history",
+      "Words you've met + Quiz me (\u22653)",
+      "Quiz media \u2192 Which word? \u2192 score",
+      "Combo field, POS suggestions, not-found card, meaning layout"
     ],
     "gaps": [
-      "Brand mark in header uses a book icon gradient tile; design uses the custom Gloss G monogram SVG",
-      "Mic/search use Material icons instead of SF Symbols from the design pack (same affordance)",
-      "Combo suggestion ranking on device: for prefix \u201capp\u201d, curated \u201capple\u201d is not always first (index noise over curated rank) \u2014 needs ranking fix",
-      "Keyboard-open home: suggestion list collides with the secondary mic (\u201cBOTTOM OVERFLOWED\u201d) \u2014 need to hide mic or compress list when IME is up",
-      "Speak/calm toggles on the info sheet are visual only (not yet bound to preferences)",
-      "Ambiguous multi-sense line emphasis is not yet driven by multi-sense lexicon data",
-      "Paper Night theme is defined in tokens but not exposed as a third ThemeMode",
-      "Desktop windowed companion chrome is not a separate shell",
-      "POS media still uses placeholders until editorial packs ship",
-      "Failed mic leaves a residual speech hint on the home subtitle until the next clear session"
+      "Brand mark G monogram SVG not yet in Flutter header",
+      "Keyboard-open layout can overflow against the mic",
+      "Info toggles still visual-only",
+      "Paper Night theme not exposed as ThemeMode",
+      "POS media still placeholders until editorial packs"
     ]
   },
   "userflows": [
@@ -161,10 +186,10 @@
       "id": "line-context",
       "name": "Disambiguate with a line",
       "steps": [
-        "Type \u201cclean\u201d (or any multi-sense word)",
+        "Type \u201cclean\u201d",
         "Paste a line from the book",
         "Tap \u201cShow meaning\u201d",
-        "See From your book callout on meaning"
+        "See From your book callout"
       ]
     },
     {
@@ -173,7 +198,7 @@
       "steps": [
         "Tap mic",
         "Say the word",
-        "Tap stop or wait for final",
+        "Tap stop",
         "Optional line or skip",
         "Meaning"
       ]
@@ -182,11 +207,10 @@
       "id": "miss",
       "name": "Unknown word",
       "steps": [
-        "Type a nonsense string",
-        "Submit / next",
-        "Skip line",
+        "Type nonsense",
+        "Submit",
         "See not-in-pack card",
-        "Try again with a real word"
+        "Try again"
       ]
     },
     {
@@ -194,9 +218,20 @@
       "name": "Parent handoff",
       "steps": [
         "Tap i",
-        "Hand to child \u2014 pin this app",
-        "Follow Guided Access / Screen pinning steps",
-        "Child stays in Gloss until parent exits OS lock"
+        "Hand to child",
+        "Follow OS pin steps"
+      ]
+    },
+    {
+      "id": "profiles-quiz",
+      "name": "Profiles + quiz",
+      "steps": [
+        "Look up 3+ words",
+        "Tap bookmark \u2192 Words you've met",
+        "Tap Quiz me",
+        "Pick the matching word",
+        "See score",
+        "Tap avatar \u2192 switch/add reader"
       ]
     }
   ]
