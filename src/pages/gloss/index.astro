@@ -1,8 +1,19 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import DeviceFrame from "../../components/DeviceFrame.astro";
 import catalog from "../../data/gloss/features.json";
 
-const { product, parts, designVsApp, userflows } = catalog;
+const { product, videoBase = "", parts, designVsApp, userflows } = catalog;
+
+/** Base name → platform file. demo_foo.mp4 + android → demo_foo_android.mp4 */
+function platformSrc(base: string, video: string, platform: "android" | "ios"): string {
+  const stem = video.replace(/\.mp4$/i, "");
+  return `${base}${stem}_${platform}.mp4`;
+}
+
+function hasVideo(video: unknown): boolean {
+  return typeof video === "string" && video.length > 0 && Boolean(videoBase);
+}
 ---
 
 <Layout
@@ -60,6 +71,36 @@ const { product, parts, designVsApp, userflows } = catalog;
           </p>
         </div>
 
+        <!-- Page-level platform switcher (same pattern as Nesta): swaps every
+             demo between the Android and iPhone captures. Defaults to the
+             visitor's phone OS; remembered in localStorage. -->
+        <div class="flex justify-center mb-12">
+          <div
+            role="tablist"
+            aria-label="Preview platform"
+            class="inline-flex rounded-full border border-gray-200 dark:border-white/[0.1] p-1 bg-white dark:bg-white/[0.03]"
+          >
+            <button
+              type="button"
+              role="tab"
+              data-platform="ios"
+              aria-selected="true"
+              class="gloss-platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
+            >
+              iPhone
+            </button>
+            <button
+              type="button"
+              role="tab"
+              data-platform="android"
+              aria-selected="false"
+              class="gloss-platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
+            >
+              Android
+            </button>
+          </div>
+        </div>
+
         {parts.map((part) => (
           <div class="mt-16">
             <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-2">
@@ -95,13 +136,46 @@ const { product, parts, designVsApp, userflows } = catalog;
                         </div>
                       </div>
                     </div>
-                    {feature.screenshot && (
-                      <img
-                        src={feature.screenshot}
-                        alt={feature.title}
-                        class="w-full sm:w-48 flex-shrink-0 rounded-xl border border-gray-100 dark:border-white/[0.06] bg-[var(--gloss-paper)] object-cover object-top max-h-80"
-                        loading="lazy"
-                      />
+                    {hasVideo(feature.video) ? (
+                      <div class="gloss-demo-slot w-full sm:w-56 flex-shrink-0">
+                        <div class="gloss-frame gloss-frame--ios" data-frame="ios">
+                          <DeviceFrame device="iphone" orientation="portrait">
+                            <video
+                              class="demo-video"
+                              controls
+                              playsinline
+                              preload="metadata"
+                              data-base={videoBase}
+                              data-video={feature.video as string}
+                              src={platformSrc(videoBase, feature.video as string, "ios")}
+                              title={`${feature.title} — iPhone`}
+                            ></video>
+                          </DeviceFrame>
+                        </div>
+                        <div class="gloss-frame gloss-frame--android" data-frame="android" hidden>
+                          <DeviceFrame device="android-phone" orientation="portrait">
+                            <video
+                              class="demo-video"
+                              controls
+                              playsinline
+                              preload="metadata"
+                              data-base={videoBase}
+                              data-video={feature.video as string}
+                              src={platformSrc(videoBase, feature.video as string, "android")}
+                              title={`${feature.title} — Android`}
+                            ></video>
+                          </DeviceFrame>
+                        </div>
+                      </div>
+                    ) : (
+                      feature.screenshot && (
+                        <img
+                          src={feature.screenshot}
+                          alt={feature.title}
+                          class="w-full sm:w-48 flex-shrink-0 rounded-xl border border-gray-100 dark:border-white/[0.06] bg-[var(--gloss-paper)] object-cover object-top max-h-80"
+                          loading="lazy"
+                        />
+                      )
                     )}
                   </div>
                 </article>
@@ -231,4 +305,59 @@ const { product, parts, designVsApp, userflows } = catalog;
     --gloss-honey: #e8a512;
     --gloss-paper: #f7f3ea;
   }
+
+  .gloss-platform-tab {
+    color: rgb(107 114 128);
+  }
+  .gloss-platform-tab.is-active {
+    background: var(--gloss-sage);
+    color: #fff;
+  }
+
+  .gloss-demo-slot :global(.device-frame) {
+    margin: 0 auto;
+    max-width: 240px;
+  }
 </style>
+
+<script is:inline>
+  (function () {
+    const KEY = "gloss-demo-platform";
+    const tabs = Array.from(document.querySelectorAll(".gloss-platform-tab"));
+    const frames = Array.from(document.querySelectorAll("[data-frame]"));
+
+    function detectDefault() {
+      const stored = localStorage.getItem(KEY);
+      if (stored === "ios" || stored === "android") return stored;
+      const ua = navigator.userAgent || "";
+      if (/Android/i.test(ua)) return "android";
+      if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+      if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) {
+        return "ios";
+      }
+      return "ios";
+    }
+
+    function apply(next) {
+      localStorage.setItem(KEY, next);
+      tabs.forEach((tab) => {
+        const active = tab.dataset.platform === next;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      frames.forEach((frame) => {
+        const match = frame.dataset.frame === next;
+        frame.hidden = !match;
+        if (!match) {
+          const video = frame.querySelector("video");
+          if (video && !video.paused) video.pause();
+        }
+      });
+    }
+
+    tabs.forEach((tab) =>
+      tab.addEventListener("click", () => apply(tab.dataset.platform)),
+    );
+    apply(detectDefault());
+  })();
+</script>
