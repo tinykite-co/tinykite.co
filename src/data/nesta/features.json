@@ -7,7 +7,7 @@
     "appUrl": "https://nesta.tinykite.co",
     "icon": "/nesta/icon-512.png"
   },
-  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/nesta-videos-v1/",
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/nesta-videos-v2/",
   "parts": [
     {
       "kicker": "Part 1 · Set up the household",

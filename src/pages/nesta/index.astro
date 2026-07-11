@@ -55,6 +55,35 @@ const { product, videoBase, parts } = catalog;
           </p>
         </div>
 
+        <!-- Platform switcher: swaps every demo video between the Android and
+             iPhone captures. -->
+        <div class="flex justify-center mb-12">
+          <div
+            role="tablist"
+            aria-label="Preview platform"
+            class="inline-flex rounded-full border border-gray-200 dark:border-white/[0.1] p-1 bg-white dark:bg-white/[0.03]"
+          >
+            <button
+              type="button"
+              role="tab"
+              data-platform="android"
+              aria-selected="true"
+              class="platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
+            >
+              Android
+            </button>
+            <button
+              type="button"
+              role="tab"
+              data-platform="ios"
+              aria-selected="false"
+              class="platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
+            >
+              iPhone
+            </button>
+          </div>
+        </div>
+
         {parts.map((part) => (
           <div class="mt-16">
             <p class="text-[var(--nesta-ember)] font-medium tracking-wide uppercase text-sm mb-2">
@@ -92,12 +121,14 @@ const { product, videoBase, parts } = catalog;
                     </div>
                     {feature.video && (
                       <video
-                        class="w-full sm:w-56 flex-shrink-0 rounded-xl border border-gray-100 dark:border-white/[0.06] bg-black"
+                        class="demo-video w-full sm:w-56 flex-shrink-0 rounded-xl border border-gray-100 dark:border-white/[0.06] bg-black"
                         controls
                         muted
                         playsinline
                         preload="metadata"
-                        src={`${videoBase}${feature.video}`}
+                        data-base={videoBase}
+                        data-video={feature.video}
+                        src={`${videoBase}android_${feature.video}`}
                       ></video>
                     )}
                   </div>
@@ -136,4 +167,49 @@ const { product, videoBase, parts } = catalog;
   .nesta-page {
     --nesta-ember: #e85d2f;
   }
+  .platform-tab {
+    color: rgb(107 114 128);
+  }
+  .platform-tab.is-active {
+    background: var(--nesta-ember);
+    color: #fff;
+  }
 </style>
+
+<script is:inline>
+  (function () {
+    const KEY = "nesta-demo-platform";
+    const tabs = Array.from(document.querySelectorAll(".platform-tab"));
+    const videos = Array.from(document.querySelectorAll("video.demo-video"));
+    const stored = localStorage.getItem(KEY);
+    function detectDefault() {
+      if (stored === "ios" || stored === "android") return stored;
+      const ua = navigator.userAgent || "";
+      if (/Android/i.test(ua)) return "android";
+      if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+      if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) return "ios";
+      return "android";
+    }
+    let platform = detectDefault();
+
+    function apply(next) {
+      platform = next;
+      localStorage.setItem(KEY, next);
+      tabs.forEach((tab) => {
+        const active = tab.dataset.platform === next;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      videos.forEach((video) => {
+        video.pause();
+        video.setAttribute("src", video.dataset.base + next + "_" + video.dataset.video);
+        video.load();
+      });
+    }
+
+    tabs.forEach((tab) =>
+      tab.addEventListener("click", () => apply(tab.dataset.platform)),
+    );
+    apply(platform);
+  })();
+</script>
