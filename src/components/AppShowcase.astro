@@ -1,28 +1,11 @@
 ---
 const apps = [
   {
-    name: "Kite AI Assistant",
-    tagline: "The only AI assistant you need.",
-    description: "A beautifully designed, unified assistant that gives you access to the world's most powerful frontier models like GPT-4 and Claude 3. Fast, private, and optimized to help you with your daily tasks.",
-    image: "/assets/chat_mockup.png",
-    badge: "Core",
-    actionUrl: "https://chat.tinykite.co",
-    actionLabel: "Launch App"
-  },
-  {
-    name: "TinyKite Router",
-    tagline: "Your family's central AI hub.",
-    description: "Manage access, set usage limits, and securely store API keys for your entire family in one centralized dashboard. Pay only for exactly what you use—no hidden fees, no redundant monthly subscriptions.",
-    image: "/assets/router_mockup.png",
-    badge: "Infrastructure",
-    actionUrl: "/router",
-    actionLabel: "Manage Hub"
-  },
-  {
     name: "Nesta",
     tagline: "Your family's private messenger.",
     description: "A private messenger for one household — no public feed, no strangers, no ads. Grown-ups hold the keys; children join with a parent-issued QR and never need an email or a password.",
-    image: "/assets/nesta_mockup.png",
+    icon: "/nesta/icon-512.png",
+    accent: "#e85d2f",
     badge: "Lifestyle",
     actionUrl: "/nesta",
     actionLabel: "Discover Nesta"
@@ -31,10 +14,21 @@ const apps = [
     name: "Gloss",
     tagline: "The word from your book — made clear in a breath.",
     description: "A calm, offline-first reading companion. Type a few letters (or say the word), get one short meaning with a picture or motion, and get back to the book. No account, no ads, no tracking.",
-    image: "/assets/gloss_mockup.png",
+    icon: "/gloss/icon-512.png",
+    accent: "#2f9e8f",
     badge: "Education",
     actionUrl: "/gloss",
     actionLabel: "Discover Gloss"
+  },
+  {
+    name: "TinyKite Router",
+    tagline: "Your family's central AI hub.",
+    description: "Manage access, set usage limits, and securely store API keys for your entire family in one centralized dashboard. Pay only for exactly what you use—no hidden fees, no redundant monthly subscriptions.",
+    icon: "/assets/router_icon.png",
+    accent: "#3b6ff5",
+    badge: "Infrastructure",
+    actionUrl: "/router",
+    actionLabel: "Manage Hub"
   }
 ];
 ---
@@ -56,14 +50,17 @@ const apps = [
         <div class={`animate-fade-in-up stagger-${(index % 4 + 1)}`}>
           <div class="group relative h-full bg-[#111113] rounded-3xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 flex flex-col hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
             
-            <!-- Image Area -->
-            <div class="relative aspect-[16/9] overflow-hidden bg-black/50">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#111113] to-transparent z-10"></div>
-              <img 
-                src={app.image} 
-                alt={app.name} 
-                class="w-full h-full object-cover transform group-hover:scale-[1.03] transition duration-700 ease-out opacity-80 group-hover:opacity-100"
-                onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop';"
+            <!-- Logo Area: the app's own icon on a branded glow -->
+            <div
+              class="relative aspect-[16/10] overflow-hidden flex items-center justify-center bg-[#0c0c0e]"
+              style={`background-image: radial-gradient(115% 90% at 50% 22%, ${app.accent}30, transparent 68%);`}
+            >
+              <img
+                src={app.icon}
+                alt={`${app.name} logo`}
+                width="120"
+                height="120"
+                class="w-[120px] h-[120px] rounded-[24%] shadow-2xl ring-1 ring-white/10 transform group-hover:scale-105 transition duration-500 ease-out"
               />
               <div class="absolute top-5 left-5 z-20">
                 <span class="inline-block px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/10">
@@ -73,7 +70,7 @@ const apps = [
             </div>
 
             <!-- Content Area -->
-            <div class="p-8 flex flex-col flex-grow relative z-20 mt-[-2rem]">
+            <div class="p-8 flex flex-col flex-grow relative z-20">
               <h3 class="text-2xl font-semibold tracking-tight mb-1 text-white">{app.name}</h3>
               <p class="text-gray-300 font-medium text-sm tracking-wide mb-4 uppercase">{app.tagline}</p>
               <p class="text-gray-400 text-[15px] leading-relaxed mb-8 flex-grow">
