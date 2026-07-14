@@ -32,7 +32,7 @@ import Layout from "../../layouts/Layout.astro";
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
           <a
             id="desktop-download-btn"
-            href="https://github.com/tinykite-co/monorepo/releases/latest"
+            href="https://github.com/tinykite-co/apps/releases/latest"
             class="inline-block px-8 py-3 bg-[var(--water-blue)] text-white font-semibold rounded-full hover:bg-[var(--water-dark-blue)] transition-colors text-sm w-full sm:w-auto"
           >
             Download for macOS
@@ -135,7 +135,7 @@ import Layout from "../../layouts/Layout.astro";
     }
 
     // Fetch the latest release assets from GitHub API
-    fetch("https://api.github.com/repos/tinykite-co/monorepo/releases/latest")
+    fetch("https://api.github.com/repos/tinykite-co/apps/releases/latest")
       .then(res => res.json())
       .then(data => {
         if (!data || !data.assets) return;
