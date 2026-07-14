@@ -1,0 +1,156 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Support Hub — tinykite"
+  description="Get support for Nesta, Gloss, Kite AI, and TinyKite Water."
+>
+  <main class="min-h-screen bg-background support-page">
+    <div class="absolute inset-0 bg-background z-0">
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
+
+    <div class="container mx-auto px-6 pt-32 pb-24 relative z-10 max-w-5xl">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
+          support<span class="text-primary">.</span>
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          How can we help you? Select a product below to contact our support team or file an issue.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Nesta Support Card -->
+        <div class="group relative bg-[#e85d2f]/10 text-[#e85d2f] hover:bg-[#e85d2f]/20 backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-primary/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="/nesta/icon-512.png"
+                alt="Nesta logo"
+                width="64"
+                height="64"
+                class="rounded-[22.5%] shadow-md bg-white dark:bg-black/20"
+              />
+              <div>
+                <h3 class="text-2xl font-bold text-text" style="font-family: 'Lora', serif;">Nesta</h3>
+                <p class="text-sm text-gray-500">Family Messenger</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Having trouble with QR codes, group calendars, or notifications? Reach out to our Nesta support team directly.
+            </p>
+          </div>
+          <a
+            href="mailto:hello@tinykite.co?subject=Nesta%20Support"
+            class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-primary hover:opacity-90 text-white font-semibold transition-all duration-200"
+          >
+            Email Nesta Support
+          </a>
+        </div>
+
+        <!-- Gloss Support Card -->
+        <div class="group relative bg-[#2a7a66]/10 text-[#2a7a66] hover:bg-[#2a7a66]/20 backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-[#2a7a66]/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="/gloss/icon-512.png"
+                alt="Gloss logo"
+                width="64"
+                height="64"
+                class="rounded-[22.5%] shadow-md bg-white dark:bg-black/20"
+              />
+              <div>
+                <h3 class="text-2xl font-bold text-text" style="font-family: 'Lora', serif;">Gloss</h3>
+                <p class="text-sm text-gray-500">Offline Reading Companion</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Need help setting up your reading profiles, using offline dictation, or configuring word cards? We're here to help.
+            </p>
+          </div>
+          <a
+            href="mailto:hello@tinykite.co?subject=Gloss%20Support"
+            class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-[var(--gloss-sage)] hover:opacity-90 text-white font-semibold transition-all duration-200"
+          >
+            Email Gloss Support
+          </a>
+        </div>
+
+        <!-- Kite AI Support Card -->
+        <div class="group relative bg-white/5 dark:bg-white/[0.03] backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-blue-500/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-[22.5%] bg-blue-500/10 flex items-center justify-center text-blue-500 text-3xl font-bold border border-blue-500/20 shadow-md">
+                🤖
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-text" style="font-family: 'Lora', serif;">Kite AI</h3>
+                <p class="text-sm text-gray-500">Bring Your Own Keys Chat</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Questions about model providers, local API key storage, or custom system instructions? Report issues on GitHub or contact support.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <a
+              href="https://github.com/tinykite-co/monorepo/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full border border-gray-300 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/[0.03] text-text font-semibold transition-all duration-200"
+            >
+              Open GitHub Issue
+            </a>
+            <a
+              href="mailto:hello@tinykite.co?subject=Kite%20AI%20Support"
+              class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors duration-200"
+            >
+              Email Support
+            </a>
+          </div>
+        </div>
+
+        <!-- Water Support Card -->
+        <div class="group relative bg-white/5 dark:bg-white/[0.03] backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-[#4dabf7]/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="/water/avatar.svg"
+                alt="TinyKite Water mascot"
+                width="64"
+                height="64"
+                class="rounded-[22.5%] shadow-md bg-sky-50 dark:bg-sky-950/20 p-1 border border-blue-200/20"
+              />
+              <div>
+                <h3 class="text-2xl font-bold text-text" style="font-family: 'Lora', serif;">TinyKite Water</h3>
+                <p class="text-sm text-gray-500">Desktop Hydration Buddy</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Having issues with macOS notification permissions, character animations, or customizable goals? Open an issue on GitHub.
+            </p>
+          </div>
+          <a
+            href="https://github.com/tinykite-co/monorepo/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-[var(--water-blue)] hover:bg-[var(--water-dark-blue)] text-white font-semibold transition-colors duration-200"
+          >
+            Open GitHub Issue
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .support-page {
+    --gloss-sage: #2a7a66;
+    --water-blue: #4dabf7;
+    --water-dark-blue: #1864ab;
+  }
+</style>

@@ -24,7 +24,7 @@ function hasVideo(video: unknown): boolean {
   <main class="min-h-screen bg-background gloss-page">
     <!-- Hero -->
     <section class="relative pt-32 pb-16 px-6 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-b from-[var(--gloss-sage)]/8 via-transparent to-transparent pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#2a7a66]/8 via-transparent to-transparent pointer-events-none"></div>
       <div class="container mx-auto max-w-4xl text-center relative z-10">
         <img
           src={product.icon}
@@ -120,7 +120,7 @@ function hasVideo(video: unknown): boolean {
                   <div class="flex flex-col sm:flex-row gap-6">
                     <div class="flex-1 min-w-0">
                       <div class="flex items-start gap-4">
-                        <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--gloss-sage)]/10 text-[var(--gloss-sage)] flex items-center justify-center text-sm font-bold">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-[#2a7a66]/10 text-[var(--gloss-sage)] flex items-center justify-center text-sm font-bold">
                           {feature.number.toString().padStart(2, "0")}
                         </span>
                         <div class="min-w-0">
@@ -189,7 +189,7 @@ function hasVideo(video: unknown): boolean {
     </section>
 
     <!-- Everyday moments -->
-    <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <section class="py-16 px-6 bg-[#f7f3ea]/40 dark:bg-white/[0.02]">
       <div class="container mx-auto max-w-5xl">
         <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">
           Everyday moments
@@ -204,7 +204,7 @@ function hasVideo(video: unknown): boolean {
               <ol class="space-y-2">
                 {journey.steps.map((step, i) => (
                   <li class="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--gloss-sage)]/10 text-[var(--gloss-sage)] text-xs font-bold flex items-center justify-center">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#2a7a66]/10 text-[var(--gloss-sage)] text-xs font-bold flex items-center justify-center">
                       {i + 1}
                     </span>
                     <span class="leading-relaxed pt-0.5">{step}</span>

@@ -1,0 +1,157 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="TinyKite Water — Your Desktop Hydration Buddy"
+  description="A delightful, beautifully animated macOS utility to make your day a little brighter and healthier."
+  image="/water/avatar.svg"
+>
+  <main class="min-h-screen bg-background water-page">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#4dabf7]/10 via-transparent to-transparent pointer-events-none"></div>
+      <div class="container mx-auto max-w-4xl text-center relative z-10">
+        <img
+          src="/water/avatar.svg"
+          alt="TinyKite Water app icon"
+          width="96"
+          height="96"
+          class="mx-auto mb-6 rounded-[22.5%] shadow-lg"
+        />
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
+          water<span class="text-[var(--water-blue)]">.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
+          Your friendly desktop and mobile hydration buddy.
+        </p>
+        <p class="text-gray-500 text-base max-w-xl mx-auto mb-10">
+          TinyKite Water lives quietly on your devices and walks across your screen to remind you to drink water. Fully customizable, beautifully animated, and guaranteed to bring a smile to your face.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
+          <a
+            id="desktop-download-btn"
+            href="https://github.com/tinykite-co/monorepo/releases/latest"
+            class="inline-block px-8 py-3 bg-[var(--water-blue)] text-white font-semibold rounded-full hover:bg-[var(--water-dark-blue)] transition-colors text-sm w-full sm:w-auto"
+          >
+            Download for macOS
+          </a>
+          <a
+            href="https://apps.apple.com/app/tinykite-water"
+            class="inline-block px-8 py-3 border border-gray-200 dark:border-gray-800 text-text font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors text-sm w-full sm:w-auto"
+          >
+            Download on iOS
+          </a>
+          <a
+            href="https://play.google.com/store/apps/details?id=co.tinykite.water"
+            class="inline-block px-8 py-3 border border-gray-200 dark:border-gray-800 text-text font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors text-sm w-full sm:w-auto"
+          >
+            Get it on Android
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-8 rounded-3xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.02]">
+            <div class="w-12 h-12 rounded-xl bg-[#4dabf7]/10 text-[var(--water-blue)] flex items-center justify-center mb-6 text-2xl">
+              💧
+            </div>
+            <h3 class="text-xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Stay Hydrated</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Set your daily water goal and interval. TinyKite tracks your progress throughout the day.
+            </p>
+          </div>
+          
+          <div class="p-8 rounded-3xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.02]">
+            <div class="w-12 h-12 rounded-xl bg-[#4dabf7]/10 text-[var(--water-blue)] flex items-center justify-center mb-6 text-2xl">
+              🚶
+            </div>
+            <h3 class="text-xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Fun Animations</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              A beautifully animated character literally walks onto your screen to check in on you.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.02]">
+            <div class="w-12 h-12 rounded-xl bg-[#4dabf7]/10 text-[var(--water-blue)] flex items-center justify-center mb-6 text-2xl">
+              ⚙️
+            </div>
+            <h3 class="text-xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Menu Bar Native</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Sits quietly out of the way. Quick log, tweak settings, or launch on startup natively.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support CTA -->
+    <section class="py-20 px-6">
+      <div class="container mx-auto max-w-2xl text-center">
+        <div class="p-8 rounded-3xl border border-gray-100 dark:border-white/[0.06] bg-panel">
+          <h3 class="text-2xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">
+            Support the project
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
+            TinyKite Water is built with love and offered for free. If it brightens your day, consider buying us a coffee!
+          </p>
+          <a
+            href="https://buymeacoffee.com/tinykite"
+            class="inline-block px-8 py-3 bg-[#FF813F] text-white font-semibold rounded-full hover:opacity-90 transition-opacity text-sm"
+          >
+            ☕ Buy me a coffee
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .water-page {
+    --water-blue: #4dabf7;
+    --water-dark-blue: #1864ab;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("desktop-download-btn");
+    if (!btn) return;
+
+    let os = "mac";
+    const ua = navigator.userAgent;
+    if (ua.indexOf("Win") !== -1) {
+      os = "win";
+      btn.textContent = "Download for Windows";
+    } else if (ua.indexOf("Mac") !== -1) {
+      os = "mac";
+      btn.textContent = "Download for macOS";
+    }
+
+    // Fetch the latest release assets from GitHub API
+    fetch("https://api.github.com/repos/tinykite-co/monorepo/releases/latest")
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.assets) return;
+        
+        let targetAsset = null;
+        if (os === "mac") {
+          targetAsset = data.assets.find(a => a.name.endsWith(".dmg"));
+        } else if (os === "win") {
+          targetAsset = data.assets.find(a => a.name.endsWith(".exe") || a.name.endsWith(".msi"));
+        }
+
+        if (targetAsset && targetAsset.browser_download_url) {
+          btn.href = targetAsset.browser_download_url;
+        }
+      })
+      .catch(err => console.error("Failed to fetch latest release:", err));
+  });
+</script>
+

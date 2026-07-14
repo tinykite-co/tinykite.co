@@ -483,3 +483,23 @@
   transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
 }
+
+/* Custom Typography Styles for Legal/MDX Pages */
+.prose {
+  h2 {
+    font-family: 'Lora', serif;
+    @apply text-2xl font-semibold mt-8 mb-4 text-text;
+  }
+  p {
+    @apply mb-4 leading-relaxed text-gray-600 dark:text-gray-300;
+  }
+  ul {
+    @apply list-disc pl-6 mb-4 space-y-2 text-gray-600 dark:text-gray-300;
+  }
+  li {
+    @apply leading-relaxed;
+  }
+  a {
+    @apply text-primary hover:underline;
+  }
+}

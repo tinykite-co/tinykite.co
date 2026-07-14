@@ -11,4 +11,8 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
+  redirects: {
+    '/tools': '/coming-soon',
+    '/router': '/coming-soon',
+  },
 });
