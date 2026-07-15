@@ -1,0 +1,62 @@
+---
+layout: ../../layouts/Layout.astro
+title: "TinyKite Water — Privacy Notice"
+---
+
+export const companyName = "TinyKite Ltd";
+export const companyNumber = "16825578";
+export const contactEmail = "support@tinykite.co";
+
+<main class="pt-32 pb-24 relative overflow-hidden">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-text">TinyKite Water — Privacy Notice</h1>
+    <p class="text-sm text-gray-500 mb-8">
+      App-specific disclosures for TinyKite Water on macOS, Windows, iOS, and Android.<br/>
+      This notice supplements the <a href="/privacy" class="text-primary hover:underline">TinyKite Privacy Policy</a>;
+      where they differ, this notice applies for TinyKite Water.<br/>
+      For company-wide policy (legal basis, your rights, contact, etc.), see the
+      <a href="/privacy" class="text-primary hover:underline">main TinyKite privacy policy</a>.
+    </p>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+      <p class="lead text-xl mb-8">
+        Last updated: 14 July 2026
+      </p>
+
+      **Publisher:** {companyName} (company number {companyNumber}, registered in England and Wales).
+
+      ## 1. What TinyKite Water is
+
+      TinyKite Water is a friendly hydration buddy. A little animated character lives quietly on your device and reminds you to drink water throughout the day. You set a daily goal and a reminder interval; the app tracks your progress.
+
+      ## 2. What data we collect
+
+      **{companyName} collects no personal data through TinyKite Water.** There is no account, no analytics, and no tracking. We run no backend server that receives or stores anything you do in the app.
+
+      ## 3. What stays on your device
+
+      Your settings and progress — reminder interval, daily goal, current count, reset time, and on-screen position — are saved locally on your device using the platform's local storage. This data stays on the device and is not transmitted to {companyName} or any third party.
+
+      ## 4. No analytics, ads, or tracking
+
+      TinyKite Water integrates no third-party analytics, crash-reporting, or advertising frameworks, and no tracking or telemetry libraries. We do not build a profile of you and we do not track you across apps or websites.
+
+      ## 5. Network use
+
+      TinyKite Water's reminder features run entirely on your device, and your settings and progress never leave it. The app has no backend and needs no account to do its job. Some buttons open external pages in your browser only when you tap them (for example, "Buy me a coffee," or reporting a bug on GitHub); these are ordinary links you choose to follow. The app's interface currently loads its display font from a third-party font service (Google Fonts) when it opens; that request can reveal your device's IP address to that service, but it carries none of your settings or usage data.
+
+      ## 6. Deleting your data
+
+      Because TinyKite Water stores everything locally and nothing on {companyName} servers, uninstalling the app removes all of its stored settings and progress. There is no account to delete and nothing held on our side.
+
+      ## 7. Your rights and contact
+
+      This notice supplements the <a href="/privacy" class="text-primary hover:underline">TinyKite Privacy Policy</a>, which describes your legal rights (access, correction, deletion, and more) and how to exercise them. Because we hold no personal data about your use of TinyKite Water, there is generally nothing on our side to retrieve or erase, but you can always reach us:<br/>
+      Email: <a href={`mailto:${contactEmail}`} class="text-primary hover:underline">{contactEmail}</a>
+
+      ## 8. Changes
+
+      We may update this notice as TinyKite Water evolves. Material changes will be reflected here with an updated "Last updated" date above. If we ever add optional features such as cloud sync, we will update this notice before enabling them.
+    </div>
+  </div>
+</main>
