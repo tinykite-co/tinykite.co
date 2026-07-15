@@ -122,61 +122,117 @@
       ]
     },
     {
-      "kicker": "Part 3 · Manage the household",
+      "kicker": "Part 3 · Say it your way",
+      "title": "Warm, expressive, familiar",
+      "dek": "The little touches that make a family chat feel like family — react, reply, and add a bit of personality, all in the messenger you already know how to use.",
+      "features": [
+        {
+          "number": 15,
+          "title": "Emoji that look the same everywhere",
+          "summary": "An emoji button opens a searchable picker with skin tones and a recents tab. Every emoji shows as the same friendly glyph on iPhone, Android, and the web — so what you send is exactly what everyone sees — and a message of just one to three emoji arrives large and gently animated.",
+          "entry": "conversation → emoji button",
+          "video": null
+        },
+        {
+          "number": 16,
+          "title": "React to a message",
+          "summary": "Long-press any message to react with an emoji; reactions gather into little animated chips with a count. One per person — tap your own to take it back.",
+          "entry": "long-press a message → react",
+          "video": null
+        },
+        {
+          "number": 17,
+          "title": "Reply and quote",
+          "summary": "Swipe right on a message — or long-press and choose Reply — to quote it above your answer; tap the quote to jump straight back to the original.",
+          "entry": "swipe right / long-press → Reply",
+          "video": null
+        },
+        {
+          "number": 18,
+          "title": "See when someone's typing",
+          "summary": "A gentle “Maya is typing…” appears right in the chat and in the chat list, so you know a reply is on its way. In a group it rolls up to “3 people are typing…”.",
+          "entry": "any conversation",
+          "video": null
+        },
+        {
+          "number": 19,
+          "title": "Fix a typo — edit a message",
+          "summary": "Long-press your own message and choose Edit within fifteen minutes of sending; the message keeps a small “edited” label so nothing ever feels hidden.",
+          "entry": "long-press your message → Edit",
+          "video": null
+        },
+        {
+          "number": 20,
+          "title": "Delete a message",
+          "summary": "“Delete for everyone” takes your message back for the whole family within two days — and a household admin can remove any message — while “Delete for me” simply tidies it away on your own device.",
+          "entry": "long-press a message → Delete",
+          "video": null
+        },
+        {
+          "number": 21,
+          "title": "Animated stickers",
+          "summary": "A sticker button opens a tray of big, playful animated stickers. The first pack is Nesta's own family-friendly set, built right in — no third-party service in the loop.",
+          "entry": "conversation → sticker button",
+          "video": null
+        }
+      ]
+    },
+    {
+      "kicker": "Part 4 · Manage the household",
       "title": "Parents hold the keys",
       "dek": "Oversight is about devices and membership — never message content.",
       "features": [
         {
-          "number": 15,
+          "number": 22,
           "title": "Members roster",
           "summary": "Active members only, no “kid” labels anywhere. Admins get per-member actions; everyone sees the family.",
           "entry": "Household → Members",
           "video": "demo_members-roster.mp4"
         },
         {
-          "number": 16,
+          "number": 23,
           "title": "Set up a device for anyone",
           "summary": "Admins mint a short-lived, single-use device grant for any member — the same QR + link + code hand-off as add-child.",
           "entry": "Members → member ⋮ → Set up a device",
           "video": null
         },
         {
-          "number": 17,
+          "number": 24,
           "title": "Add your own devices",
           "summary": "Any adult — admin or not — self-issues a grant for their tablet, browser, or next phone. Children always go through an adult (that's the security model, not a limitation).",
           "entry": "Settings → Add another device",
           "video": "demo_self-serve-devices.mp4"
         },
         {
-          "number": 18,
+          "number": 25,
           "title": "Approve & revoke devices",
           "summary": "Every device is listed with its status; new web logins for kids wait for approval, and anything can be revoked instantly. The pending device waits on a friendly screen.",
           "entry": "Household → Devices",
           "video": "demo_device-control.mp4"
         },
         {
-          "number": 19,
+          "number": 26,
           "title": "Your name is yours",
           "summary": "Everyone — kids included — edits how their own name appears. Renames re-label chats and the roster; admission and login are untouched.",
           "entry": "Settings → profile card → edit",
           "video": "demo_your-name-is-yours.mp4"
         },
         {
-          "number": 20,
+          "number": 27,
           "title": "Reset a child's password",
           "summary": "Only for the rarely-needed credentials fallback — a new one-time password, shown exactly once.",
           "entry": "Members → child ⋮ → Reset password",
           "video": null
         },
         {
-          "number": 21,
+          "number": 28,
           "title": "Remove a member",
           "summary": "Removes them entirely: devices stop being served, a child's hidden account is deleted, their name is freed — and past messages keep rendering under “old ‹name›”.",
           "entry": "Members → member ⋮ → Remove from family",
           "video": null
         },
         {
-          "number": 22,
+          "number": 29,
           "title": "Sign out",
           "summary": "Confirms, revokes the session, and wipes this device's binding and local message mirror. Rejoining needs a fresh grant.",
           "entry": "Settings → Sign out",
