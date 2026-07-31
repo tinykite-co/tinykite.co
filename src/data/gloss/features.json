@@ -2,11 +2,11 @@
   "product": {
     "name": "Gloss",
     "tagline": "The word from your book — made clear in a breath",
-    "dek": "Gloss sits beside a real book. Type a few letters (or say the word), get one short meaning with a picture, and get back to reading. No account, no ads, no tracking — everything stays on this device.",
+    "dek": "Gloss sits beside a real book. Type a few letters, get one short meaning in words a child can read, and get back to reading. No account, no ads, no tracking — everything stays on this device.",
     "note": "Below is what a child or parent actually meets, step by step — look up a word, keep a list of words you've met, and quiz yourself when you're ready.",
     "appUrl": "#feature-1",
     "icon": "/gloss/icon-512.png",
-    "platforms": "iPhone · Android · Web · Mac"
+    "platforms": "iPhone · Android"
   },
   "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v1/",
   "videoNote": "Internal: GitHub Release assets only. See docs/DEMO-VIDEOS.md.",
@@ -33,17 +33,9 @@
           "screenshot": "/gloss/screenshots/app/02-suggestions.png"
         },
         {
-          "number": 3,
-          "title": "A line from the book — optional",
-          "summary": "After you pick a word, Gloss can take a line from the page so the meaning matches the story. Skip it anytime; many words are clear without it.",
-          "entry": "Word chosen → optional line",
-          "video": null,
-          "screenshot": "/gloss/screenshots/design/design-full-top.png"
-        },
-        {
           "number": 4,
           "title": "One short meaning, with a picture",
-          "summary": "The word is large and easy to see, with a picture (or simple motion) and one kid-plain sentence. Tap Speak to hear it. The word is quietly saved to this reader's list.",
+          "summary": "The word is large and easy to see, with one kid-plain sentence at four depths — pictures arriving word by word. Tap the speaker to hear it. The word is quietly saved to this reader's list.",
           "entry": "Show meaning",
           "video": null,
           "screenshot": "/gloss/screenshots/design/paper-apple.png"
@@ -94,14 +86,6 @@
       "title": "Say the word, miss a spelling, hand the phone over",
       "dek": "Typing always works. Speech is there when it helps. Parents use the phone's own pin tools — not a separate app password.",
       "features": [
-        {
-          "number": 9,
-          "title": "Say it out loud",
-          "summary": "Tap the mic under the word field if speaking is easier. Listening only starts when you ask — typing stays the main way in.",
-          "entry": "What word? → mic",
-          "video": null,
-          "screenshot": "/gloss/screenshots/design/design-adaptive.png"
-        },
         {
           "number": 10,
           "title": "Not in our word pack yet",
