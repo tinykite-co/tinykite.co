@@ -74,7 +74,7 @@
   <p>Gloss does not embed advertising, analytics or crash-reporting SDKs, and sends no data to third parties. The two signals in section&nbsp;5 go to TinyKite’s own service only.</p>
 
   <h2>9. International users</h2>
-  <p>Gloss is published from the United Kingdom. Word lookups are processed on-device; the only data TinyKite receives are the two anonymous signals in section&nbsp;5. They are stored with our infrastructure provider, Cloudflare, on its global network, and reviewed by TinyKite from the United Kingdom. Standard connection data (such as an IP address) is processed transiently by Cloudflare to deliver the request; TinyKite's queue stores only the fields listed in section&nbsp;5.</p>
+  <p>Gloss is published from the United Kingdom. Word lookups are processed on-device; the only data TinyKite receives are the two anonymous signals in section&nbsp;5. They are stored with our infrastructure provider, Cloudflare, on its global network, and reviewed by TinyKite from the United Kingdom. Standard connection data (such as an IP address) is processed transiently by Cloudflare to deliver the request; TinyKite's queue stores only the fields listed in section&nbsp;5, plus a short-lived abuse counter keyed to a one-way hash — never the address itself — that deletes itself within minutes.</p>
 
   <h2>10. Changes</h2>
   <p>If we add cloud features, accounts, or analytics, we will update this page and the date above before those features ship.</p>
