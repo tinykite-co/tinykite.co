@@ -83,8 +83,8 @@
     },
     {
       "kicker": "Also handy",
-      "title": "Say the word, miss a spelling, hand the phone over",
-      "dek": "Typing always works. Speech is there when it helps. Parents use the phone's own pin tools — not a separate app password.",
+      "title": "Miss a spelling, hand the phone over",
+      "dek": "Typing always works — the suggestions catch a missed letter. Parents use the phone's own pin tools — not a separate app password.",
       "features": [
         {
           "number": 10,
@@ -144,30 +144,8 @@
         "Open Gloss",
         "Type a few letters (for example “app”)",
         "Tap a suggestion (for example “apple”)",
-        "Skip the line from the book if you don't need it",
         "Read the meaning — or tap Speak",
         "Tap Another word and go back to the book"
-      ]
-    },
-    {
-      "id": "line-context",
-      "name": "Use a line from the book",
-      "steps": [
-        "Type a word that can mean more than one thing",
-        "Add a short line from the page",
-        "Tap Show meaning",
-        "See how the meaning fits the story"
-      ]
-    },
-    {
-      "id": "mic-path",
-      "name": "Say the word out loud",
-      "steps": [
-        "Tap the mic",
-        "Say the word",
-        "Stop when you're done",
-        "Add a line or skip",
-        "Read the meaning"
       ]
     },
     {
