@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout
   title="Support Hub — tinykite"
-  description="Get support for Nesta, Gloss, Kite AI, and TinyKite Water."
+  description="Get support for Nesta, Gloss, Hold, Kite AI, and TinyKite Water."
 >
   <main class="min-h-screen bg-background support-page">
     <div class="absolute inset-0 bg-background z-0">
@@ -79,6 +79,34 @@ import Layout from "../layouts/Layout.astro";
           </a>
         </div>
 
+        <!-- Hold Support Card -->
+        <div class="group relative bg-[#c67139]/10 text-[#c67139] hover:bg-[#c67139]/20 backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-[#c67139]/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="/hold/icon-512.png"
+                alt="Hold logo"
+                width="64"
+                height="64"
+                class="rounded-[22.5%] shadow-md bg-white dark:bg-black/20"
+              />
+              <div>
+                <h3 class="text-2xl font-bold text-text" style="font-family: 'Lora', serif;">Hold</h3>
+                <p class="text-sm text-gray-500">Third-Trimester Companion</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Questions about movement counting, the pattern card, or Labor Mode's 5-1-1 timing? Reach out to our Hold support team directly.
+            </p>
+          </div>
+          <a
+            href="mailto:hello@tinykite.co?subject=Hold%20Support"
+            class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full bg-[var(--hold-terracotta)] hover:opacity-90 text-white font-semibold transition-all duration-200"
+          >
+            Email Hold Support
+          </a>
+        </div>
+
         <!-- Kite AI Support Card -->
         <div class="group relative bg-white/5 dark:bg-white/[0.03] backdrop-blur-lg p-8 rounded-3xl border border-gray-200/50 dark:border-white/10 hover:border-blue-500/50 transition-all duration-300 flex flex-col justify-between shadow-xl">
           <div>
@@ -150,6 +178,7 @@ import Layout from "../layouts/Layout.astro";
 <style>
   .support-page {
     --gloss-sage: #2a7a66;
+    --hold-terracotta: #c67139;
     --water-blue: #4dabf7;
     --water-dark-blue: #1864ab;
   }

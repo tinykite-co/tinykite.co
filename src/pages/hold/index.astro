@@ -1,0 +1,250 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DeviceFrame from "../../components/DeviceFrame.astro";
+import catalog from "../../data/hold/features.json";
+
+const { product, videoBase, screenshotBase, parts, trust, closing } = catalog;
+
+function videoSrc(video: string): string {
+  return `${videoBase}${video}`;
+}
+
+function screenshotSrc(screenshot: string): string {
+  return `${screenshotBase}${screenshot}`;
+}
+---
+
+<Layout
+  title={`${product.name} — ${product.tagline}`}
+  description={product.dek}
+  image={product.icon}
+>
+  <main class="min-h-screen hold-page">
+    <!-- Hero -->
+    <section class="relative pt-32 pb-16 px-6 overflow-hidden">
+      <div class="container mx-auto max-w-4xl text-center relative z-10">
+        <img
+          src={product.icon}
+          alt="Hold app icon"
+          width="96"
+          height="96"
+          class="mx-auto mb-6 rounded-[22.5%] shadow-lg"
+        />
+        <h1 class="hold-display text-5xl md:text-7xl mb-6">
+          {product.name.toLowerCase()}<span class="text-[var(--hold-terracotta)]">.</span>
+        </h1>
+        <p class="text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed mb-4 hold-ink-muted">
+          {product.tagline}
+        </p>
+        <p class="text-base max-w-2xl mx-auto mb-8 hold-ink-muted">
+          {product.dek}
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={product.appUrl}
+            class="inline-block px-8 py-3 rounded-full bg-[var(--hold-terracotta)] text-white font-semibold hover:opacity-90 transition-opacity"
+          >
+            See how it works
+          </a>
+          <span class="text-sm px-3 py-1 rounded-full border hold-pill">
+            {product.platforms}
+          </span>
+        </div>
+        <p class="text-sm mt-4 hold-ink-muted">
+          Works offline · no account required · your pregnancy data never leaves your phone
+        </p>
+      </div>
+    </section>
+
+    <!-- Feature catalog -->
+    <section class="py-12 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <div class="text-center mb-12">
+          <h2 class="hold-display text-3xl md:text-4xl mb-4">
+            Everything Hold does, in the order you meet it
+          </h2>
+          <p class="text-lg max-w-xl mx-auto hold-ink-muted">
+            {product.note}
+          </p>
+        </div>
+
+        {parts.map((part) => (
+          <div class="mt-16">
+            <p class="hold-kicker font-medium tracking-wide uppercase text-sm mb-2">
+              {part.kicker}
+            </p>
+            <h3 class="hold-display text-2xl md:text-3xl mb-2">
+              {part.title}
+            </h3>
+            <p class="max-w-2xl mb-8 hold-ink-muted">{part.dek}</p>
+
+            <div class="flex flex-col gap-6">
+              {part.features.map((feature) => (
+                <article id={`feature-${feature.number}`} class="hold-card rounded-2xl border p-6">
+                  <div class="flex flex-col sm:flex-row gap-6">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start gap-4">
+                        <span class="hold-number flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold">
+                          {feature.number.toString().padStart(2, "0")}
+                        </span>
+                        <div class="min-w-0">
+                          <h4 class="font-semibold text-lg mb-2 leading-snug">
+                            {feature.title}
+                          </h4>
+                          <p class="text-sm leading-relaxed mb-3 hold-ink-muted">
+                            {feature.summary}
+                          </p>
+                          {feature.entry && (
+                            <p class="hold-tag inline-block text-xs px-2.5 py-1 rounded-full">
+                              {feature.entry}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {feature.video ? (
+                      <div class="w-full sm:w-56 flex-shrink-0">
+                        <DeviceFrame device="iphone" orientation="portrait">
+                          <video
+                            class="demo-video"
+                            controls
+                            playsinline
+                            preload="metadata"
+                            src={videoSrc(feature.video)}
+                            title={feature.title}
+                          ></video>
+                        </DeviceFrame>
+                      </div>
+                    ) : (
+                      feature.screenshot && (
+                        <img
+                          src={screenshotSrc(feature.screenshot)}
+                          alt={feature.title}
+                          class="hold-shot w-full sm:w-48 flex-shrink-0 rounded-xl border object-cover object-top max-h-80"
+                          loading="lazy"
+                        />
+                      )
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Privacy & medical honesty -->
+    <section class="py-16 px-6 hold-trust-section">
+      <div class="container mx-auto max-w-5xl grid md:grid-cols-2 gap-10">
+        <div>
+          <h2 class="hold-display text-2xl md:text-3xl mb-4">{trust.privacyHeading}</h2>
+          <div class="flex flex-col gap-4">
+            {trust.privacyParagraphs.map((paragraph) => (
+              <p class="leading-relaxed hold-ink-muted">{paragraph}</p>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2 class="hold-display text-2xl md:text-3xl mb-4">{trust.medicalHeading}</h2>
+          <div class="flex flex-col gap-4">
+            {trust.medicalParagraphs.map((paragraph) => (
+              <p class="leading-relaxed hold-ink-muted">{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="py-20 px-6 text-center">
+      <div class="container mx-auto max-w-2xl">
+        <h2 class="hold-display text-3xl mb-4">
+          {closing.heading}
+        </h2>
+        <p class="mb-8 hold-ink-muted">
+          {closing.body}
+        </p>
+        <a
+          href={product.appUrl}
+          class="inline-block px-8 py-3 rounded-full bg-[var(--hold-terracotta)] text-white font-semibold hover:opacity-90 transition-opacity"
+        >
+          Explore the features
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* Hold's "Quickening" tokens (mobile-apps/contraction-tracker/lib/theme/hold_theme.dart):
+     Caprasimo display face, Figtree body face, cream ground, terracotta accent,
+     sage second accent, radii 8/16/28. Scoped to this page so site-wide tokens
+     stay untouched — the same approach Gloss and Nesta use for their own accents. */
+  @import url("https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;500;600;700;800&display=swap");
+
+  .hold-page {
+    --hold-cream: #f5ead8;
+    --hold-surface: #ebddc5;
+    --hold-ink: #201e1d;
+    --hold-ink-muted: #645c50;
+    --hold-terracotta: #c67139;
+    --hold-sage: #7a8a5e;
+    --hold-hairline: #dcd3c4;
+
+    background: var(--hold-cream);
+    color: var(--hold-ink);
+    font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .hold-display {
+    font-family: "Caprasimo", Georgia, serif;
+    font-weight: 400;
+    color: var(--hold-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .hold-ink-muted {
+    color: var(--hold-ink-muted);
+  }
+
+  .hold-kicker {
+    color: var(--hold-terracotta);
+  }
+
+  .hold-card {
+    background: #fff;
+    border-color: var(--hold-hairline);
+    border-radius: 16px;
+  }
+
+  .hold-shot {
+    border-color: var(--hold-hairline);
+    background: var(--hold-surface);
+    border-radius: 16px;
+  }
+
+  .hold-number {
+    background: color-mix(in srgb, var(--hold-terracotta) 14%, transparent);
+    color: var(--hold-terracotta);
+  }
+
+  .hold-tag {
+    background: var(--hold-surface);
+    color: var(--hold-ink-muted);
+  }
+
+  .hold-pill {
+    border-color: var(--hold-hairline);
+    color: var(--hold-ink-muted);
+  }
+
+  .hold-trust-section {
+    background: var(--hold-surface);
+  }
+
+  .hold-page :global(.device-frame) {
+    margin: 0 auto;
+    max-width: 240px;
+  }
+</style>
