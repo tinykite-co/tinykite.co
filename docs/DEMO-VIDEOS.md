@@ -19,11 +19,11 @@ regeneration, and break the Nesta workflow.
 1. **Record + produce** in the monorepo (hermetic demos + logo intro/outro + synthesized music).
 2. **Upload** finished cuts as assets on a versioned release tag:
    - Nesta: `nesta-videos-v1` (bump to `v2` when the whole set is re-cut)
-   - Gloss: `gloss-videos-v1`
+   - Gloss: `gloss-videos-v2`
 3. **Point the site** at that release with `videoBase` in `src/data/<app>/features.json`:
 
 ```json
-"videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v1/"
+"videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v2/"
 ```
 
 4. Each feature lists only a **base filename** (or dual-platform base):

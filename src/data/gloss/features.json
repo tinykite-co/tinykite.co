@@ -8,7 +8,7 @@
     "icon": "/gloss/icon-512.png",
     "platforms": "iPhone · Android"
   },
-  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v1/",
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/gloss-videos-v2/",
   "videoNote": "Internal: GitHub Release assets only. See docs/DEMO-VIDEOS.md.",
   "parts": [
     {
@@ -38,7 +38,7 @@
           "summary": "The word is large and easy to see, with one kid-plain sentence at four depths — pictures arriving word by word. Tap the speaker to hear it. The word is quietly saved to this reader's list.",
           "entry": "Show meaning",
           "video": null,
-          "screenshot": "/gloss/screenshots/design/paper-apple.png"
+          "screenshot": "/gloss/screenshots/app/03-duck-article.png"
         },
         {
           "number": 5,
@@ -61,7 +61,7 @@
           "summary": "Tap the colored avatar to switch readers or add another (You, Reader 2, …). Lists stay separate on this phone or tablet.",
           "entry": "Avatar → Who's reading?",
           "video": "demo_profiles.mp4",
-          "screenshot": "/gloss/screenshots/design/feat-profiles.png"
+          "screenshot": "/gloss/screenshots/app/11-profile-sheet.png"
         },
         {
           "number": 7,
@@ -69,7 +69,7 @@
           "summary": "The bookmark shows how many words this reader has looked up. Open the list to see a meaning again. Empty state: “No words yet — look one up and it lands here for later.”",
           "entry": "Bookmark → Words you've met",
           "video": null,
-          "screenshot": "/gloss/screenshots/design/feat-home.png"
+          "screenshot": "/gloss/screenshots/app/08-words-met.png"
         },
         {
           "number": 8,
