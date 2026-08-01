@@ -8,8 +8,8 @@
     "icon": "/hold/icon-512.png",
     "platforms": "iPhone · Android"
   },
-  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/hold-videos-v1/",
-  "videoNote": "Internal: GitHub Release assets only. See docs/DEMO-VIDEOS.md. Recorded from a seeded demo build — Ofcom drama-range numbers on screen, nothing dials a real person.",
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/hold-videos-v2/",
+  "videoNote": "Recorded from the 2.2.0 build (Quickening design). The kicks-only clip was retired with the opt-in counting change; journey + contractions cover the story.",
   "screenshotBase": "/hold/screenshots/states/",
   "screenshotNote": "Captured from the 2.2.0 build (Quickening design). Regenerate with tool/capture_demo_states.sh in the app repo.",
   "parts": [
@@ -31,7 +31,7 @@
           "title": "A proper count: ten movements",
           "summary": "Sit down at a time your baby is usually active and log each movement as you feel it. Hold times how long the ten takes — not against a universal target, but against your own history, so a change is the thing to notice.",
           "entry": "Today → Count 10 movements",
-          "video": "hold-kicks.mp4",
+          "video": "hold-journey.mp4",
           "screenshot": null
         }
       ]
