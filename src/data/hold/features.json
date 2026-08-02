@@ -1,38 +1,46 @@
 {
   "product": {
     "name": "Hold",
-    "tagline": "Your baby's own pattern, built one tap at a time",
-    "dek": "Hold is a companion for the third trimester: log a movement in one tap, watch your baby's own pattern build over the days, and when labour starts, time contractions with 5-1-1 guidance. It runs on your phone, and it works with the screen off just as well as on.",
-    "note": "Below is what a pregnant parent actually meets, step by step — log a movement, watch the pattern build, and get ready for labour.",
+    "tagline": "One circle. Tap for a kick, hold for a session.",
+    "dek": "Hold is a companion for the third trimester: tap the circle to log a movement, hold it to start a real session, and watch your baby's own pattern build in minutes, not tallies. There's a plain-language report ready whenever you have an appointment, one alert if a quiet stretch runs long, and Hold can still time contractions against 5-1-1 once labour starts. It runs on your phone, and it works with the screen off just as well as on.",
+    "note": "Below is what a pregnant parent actually meets in the 2.3.0 rebuild — the circle, the pattern it builds, the one alert, and everything else Hold does that isn't about counting.",
     "appUrl": "#feature-1",
     "icon": "/hold/icon-512.png",
     "platforms": "iPhone · Android"
   },
-  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/hold-videos-v2/",
-  "videoNote": "Recorded from the 2.2.0 build (Quickening design). The kicks-only clip was retired with the opt-in counting change; journey + contractions cover the story.",
+  "videoBase": "https://github.com/tinykite-co/tinykite.co/releases/download/hold-videos-v3/",
+  "videoNote": "Recorded from the 2.3.0 build (the V2 interaction model). hold-movements.mp4 and hold-concern.mp4 join the release for the first time — a capture-script bug had silently dropped both from v2 even though the driver recorded them; the fix now copies every standalone clip it makes. The kicks-only clip stays retired.",
   "screenshotBase": "/hold/screenshots/states/",
-  "screenshotNote": "Captured from the 2.2.0 build (Quickening design). Regenerate with tool/capture_demo_states.sh in the app repo.",
+  "screenshotNote": "Captured from the 2.3.0 build (the V2 interaction model — one circle, four tabs: Home, Patterns, Calm, You). Regenerate with tool/capture_demo_states.sh and tool/capture_extra_states.sh in the app repo.",
   "parts": [
     {
       "kicker": "Every day, from the third trimester",
-      "title": "Log a movement in one tap",
-      "dek": "No form, no timer to start. Feel something, tap the button, get on with your day — or sit down for a few minutes and let Hold time a proper count.",
+      "title": "One circle: tap for a kick, hold for a session",
+      "dek": "No form, no menu. Feel something, tap the circle and get on with your day — or hold it to start a proper session. The two hint pills underneath stay on screen permanently, because the gesture is the one thing this design asks you to learn.",
       "features": [
         {
           "number": 1,
-          "title": "One tap, any time",
-          "summary": "The big button on the Today tab logs that you felt a movement, right now. Nothing is debounced here — two felt movements are two taps, even a second apart. Say what you were doing afterwards if you want to; Hold never asks first.",
-          "entry": "Today → I felt a movement",
+          "title": "Tap for one kick",
+          "summary": "The circle on Home logs one movement the instant you tap it — nothing is debounced, two felt movements are two taps. A quiet confirmation offers to add what you were doing, but Hold never asks first.",
+          "entry": "Home → tap the circle",
           "video": null,
-          "screenshot": "06-today-established.png"
+          "screenshot": "06-home-established.png"
         },
         {
           "number": 2,
-          "title": "A proper count: ten movements",
-          "summary": "Sit down at a time your baby is usually active and log each movement as you feel it. Hold times how long the ten takes — not against a universal target, but against your own history, so a change is the thing to notice.",
-          "entry": "Today → Count 10 movements",
-          "video": "hold-journey.mp4",
+          "title": "Hold for a session",
+          "summary": "Press and hold and the ring fills, the circle swells, and a full counting screen opens — the rhythm of your taps drawn live underneath, and the whole screen is the tap target, so you can count in the dark without aiming.",
+          "entry": "Home → hold the circle",
+          "video": "hold-movements.mp4",
           "screenshot": null
+        },
+        {
+          "number": 3,
+          "title": "Your own words for context",
+          "summary": "Tap a verb — Ate, Drank, Lay down, Did, Listened, Read, Watched — then type your own noun once. Hold remembers it as a chip from then on. The same sheet appears from Home's context row and again when a session ends.",
+          "entry": "Home → More (or a session's end)",
+          "video": null,
+          "screenshot": "15-what-set-it-off.png"
         }
       ]
     },
@@ -42,118 +50,162 @@
       "dek": "Hold will not name a usual time of day from a handful of taps — that would teach you the wrong normal. It waits for real evidence, and shows its working the whole way there.",
       "features": [
         {
-          "number": 3,
+          "number": 4,
           "title": "Nothing to say yet",
-          "summary": "Open the Pattern tab before logging anything and the card is already there, already carrying its own caveat — “Still learning the pattern” — and states plainly what it's waiting for: at least 20 movements across at least 3 days.",
-          "entry": "Pattern tab, day one",
+          "summary": "Open the Patterns tab before logging anything and the card is already there, already carrying its own caveat — “Still learning the pattern” — and states plainly what it's waiting for: at least 20 movements across at least 3 days.",
+          "entry": "Patterns tab, day one",
           "video": null,
           "screenshot": "02-pattern-nil.png"
         },
         {
-          "number": 4,
+          "number": 5,
           "title": "Real data, not a rhythm yet",
-          "summary": "Two days in, the bars have height and the counts are real — but Hold still won't name a busiest time. Two days isn't a rhythm, and naming one here would be a guess dressed up as a fact.",
-          "entry": "Pattern tab, day two",
+          "summary": "A couple of days in, the bars have height and the counts are real — but Hold still won't name a busiest time. Two days isn't a rhythm, and naming one here would be a guess dressed up as a fact.",
+          "entry": "Patterns tab, day two",
           "video": null,
           "screenshot": "03-pattern-not-enough-evidence.png"
         },
         {
-          "number": 5,
+          "number": 6,
           "title": "The pattern speaks for the first time",
-          "summary": "The moment Hold crosses its own threshold, the card changes from “still learning” to a claim — “usually active in the evening” — with the clock range and the context that keeps turning up, phrased as what you logged, never as a cause.",
-          "entry": "Pattern tab, day five",
+          "summary": "The moment Hold crosses its own threshold, the card changes from “still learning” to a claim — a busiest stretch of the day, phrased as what you logged, never as a cause.",
+          "entry": "Patterns tab, building",
           "video": null,
           "screenshot": "04-pattern-building.png"
         },
         {
-          "number": 6,
-          "title": "Pattern established, with context",
-          "summary": "Two weeks of logging later, the same card is built on 188 movements instead of 59 — same shape, sturdier evidence. This is the view the feature exists for: your baby's own rhythm, in one glance.",
-          "entry": "Pattern tab, two weeks in",
+          "number": 7,
+          "title": "Minutes of movement, against your own usual",
+          "summary": "Two weeks of logging later, Patterns draws a bar of minutes for every day against a marker at your own 21-day average, plus a card that says what tends to come before a session — always with the reminder that these are counts of what you tapped, not causes.",
+          "entry": "Patterns tab, two weeks in",
           "video": null,
           "screenshot": "05-pattern-established.png"
         },
         {
-          "number": 7,
+          "number": 8,
           "title": "A card built to share",
-          "summary": "Screenshot the card, or tap Share — it exports as an image carrying the week and the caveat with it, so a partner or midwife gets the whole picture in one message, not a screenshot missing the context underneath.",
-          "entry": "Pattern → Share this card",
+          "summary": "Screenshot the card, or tap Share — it exports as an image carrying the week and the caveat with it, so a partner or midwife gets the whole picture in one message.",
+          "entry": "Patterns → Share this pattern",
           "video": null,
           "screenshot": "05-pattern-established.png"
+        },
+        {
+          "number": 9,
+          "title": "Notes live inside Patterns now",
+          "summary": "There's no separate Notes tab any more — a note is always about a session, a day or the pregnancy, so it lives beside the thing it describes. Filter by All, Sessions, Days or Overall, search by a food you tagged, and pin the ones worth keeping at the top.",
+          "entry": "Patterns → Notes",
+          "video": null,
+          "screenshot": "11-notes.png"
+        },
+        {
+          "number": 10,
+          "title": "Every movement you've logged",
+          "summary": "The full list underneath the pattern, for anyone who wants to check the raw log rather than the summary of it.",
+          "entry": "Patterns → Every movement you have logged",
+          "video": null,
+          "screenshot": "12-history.png"
+        }
+      ]
+    },
+    {
+      "kicker": "For your appointment",
+      "title": "A one-page report, in plain language",
+      "dek": "No charts to interpret: typical day, most active, quietest, days below your usual, and any note you flagged — worded the way you'd say it out loud.",
+      "features": [
+        {
+          "number": 11,
+          "title": "The week report",
+          "summary": "One tap builds a plain-language page from this pregnancy's own numbers, ready to share, print, or show on screen at the appointment.",
+          "entry": "Patterns → the week report",
+          "video": null,
+          "screenshot": "14-week-report.png"
+        }
+      ]
+    },
+    {
+      "kicker": "The one alert",
+      "title": "Opt-in, against your own baseline, never reassurance",
+      "dek": "If a quiet stretch runs much longer than yours usually does, Hold can say so once, with the number to ring. It's off unless you turn it on, it's measured against your own pattern rather than a fixed threshold, and it never says everything is fine.",
+      "features": [
+        {
+          "number": 12,
+          "title": "Quieter than your usual",
+          "summary": "States what was observed and why a stretch this long is worth a call, not a wait — and it stays on screen until you call or say you've felt movement since. It never disappears on its own.",
+          "entry": "The one alert, when it fires",
+          "video": null,
+          "screenshot": "16-quiet-notice.png"
+        }
+      ]
+    },
+    {
+      "kicker": "When it isn't about counting",
+      "title": "Calm, with your own audio",
+      "dek": "Breathe with the circle, or bring in a voice memo, a playlist, or a recording of a heartbeat from your own phone — 5, 10, 20 minutes or open-ended. Nothing is uploaded; Hold only remembers where the file is.",
+      "features": [
+        {
+          "number": 13,
+          "title": "Calm",
+          "summary": "Box breathing with a circle to follow, your own audio underneath it, and one steadying line that doesn't reassure about the baby — only about the person holding the phone.",
+          "entry": "Calm tab",
+          "video": null,
+          "screenshot": "08-calm.png"
+        }
+      ]
+    },
+    {
+      "kicker": "When something feels different",
+      "title": "The call comes first",
+      "dek": "No chart, no count, no reassurance. The phone call is the only thing on this screen that outranks everything else, because delay is the harm reduced-movement guidance warns about.",
+      "features": [
+        {
+          "number": 14,
+          "title": "Trust that feeling",
+          "summary": "One tap to the saved triage number, self-help notes while you wait, and a gentle note if this is the second time this week — phrased as help with the call, never as a reason to hesitate.",
+          "entry": "Home → Something feels different",
+          "video": "hold-concern.mp4",
+          "screenshot": null
         }
       ]
     },
     {
       "kicker": "From week 37",
-      "title": "When labour comes",
-      "dek": "Labor Mode doesn't exist before term, and it isn't hidden behind a menu once it does — the app changes with you.",
+      "title": "Contraction timing, and 5-1-1",
+      "dek": "Hold can still time contractions and check them against the standard 5-1-1 guide — about five minutes apart, about a minute long, kept up for about an hour — in a screen that stays strictly dark regardless of your phone's own theme, because this one gets read at 3am.",
       "features": [
         {
-          "number": 8,
-          "title": "The transition at 37 weeks",
-          "summary": "The same Today screen, now reading 37 weeks, 0 days. Nothing else has changed — until you scroll.",
-          "entry": "Today tab, from 37+0",
-          "video": null,
-          "screenshot": "07-today-term-transition.png"
-        },
-        {
-          "number": 9,
-          "title": "The invitation into Labor Mode",
-          "summary": "Pinned lower on that same screen, and nowhere earlier: before 37+0 this banner doesn't exist, so Hold never suggests timing contractions to someone who is thirty weeks along.",
-          "entry": "Today → Enter Labor Mode",
-          "video": null,
-          "screenshot": "07-today-term-transition.png"
-        },
-        {
-          "number": 10,
-          "title": "Timing a contraction",
-          "summary": "Strict dark theme regardless of your phone's own setting, because this screen gets read at 3am. Start and stop by hand; the last ten contractions list their lengths and the time between them.",
-          "entry": "Labor Mode → Start contraction",
+          "number": 15,
+          "title": "5-1-1 met — time to call",
+          "summary": "An hour of contractions about five minutes apart and about a minute long satisfies the rule: all three checks tick, and one tap dials your saved triage number.",
+          "entry": "Labor Mode, 5-1-1 matched",
           "video": "hold-contractions.mp4",
           "screenshot": null
-        },
-        {
-          "number": 11,
-          "title": "5-1-1 met — time to call",
-          "summary": "An hour of contractions about five minutes apart and about a minute long satisfies the rule: the banner turns red, all three checks tick, and one tap dials your saved triage number.",
-          "entry": "Labor Mode, 5-1-1 matched",
-          "video": null,
-          "screenshot": "10-concern.png"
         }
       ]
     },
     {
-      "kicker": "Also in Hold",
-      "title": "Calm, and everything for your midwife",
-      "dek": "The parts of the app that aren't about counting anything.",
+      "kicker": "You",
+      "title": "Profile, care team, and every setting",
+      "dek": "Personalise how the session screen looks, choose your default tap, manage your own words, care-team numbers with tap-to-call, dark theme, and the plain-text way to end a pregnancy record.",
       "features": [
         {
-          "number": 12,
-          "title": "Calm",
-          "summary": "Paced breathing — box breathing or 4-7-8 — with a circle to follow, one steadying line a day, and freeform notes. The copy here reassures about you, not the baby.",
-          "entry": "Calm tab",
+          "number": 16,
+          "title": "The You tab",
+          "summary": "Every setting lives here now, in rows rather than a flat list — most show the current choice and open a screen to change it. Ending a pregnancy record deletes everything Hold has recorded immediately and stops the app asking anything else.",
+          "entry": "You tab",
           "video": null,
-          "screenshot": "08-calm.png"
-        },
-        {
-          "number": 13,
-          "title": "Care team, and a report for your midwife",
-          "summary": "Dates, the care-team numbers with tap-to-call, and a PDF report — last 4 hours or last 7 days — built on your phone and shared through the normal share sheet. Reporting a pregnancy loss here deletes everything immediately and stops the app asking anything else.",
-          "entry": "Settings",
-          "video": null,
-          "screenshot": "09-settings.png"
+          "screenshot": "09-you.png"
         }
       ]
     },
     {
       "kicker": "Start to finish",
       "title": "The whole third trimester, in one clip",
-      "dek": "An almost-empty log at week 28, the pattern refusing to speak and then speaking, the transition at term, and Labor Mode with 5-1-1 firing.",
+      "dek": "An almost-empty log at week 27, the pattern refusing to speak and then speaking, the transition at term, and labour with 5-1-1 firing.",
       "features": [
         {
-          "number": 14,
+          "number": 17,
           "title": "The full journey",
-          "summary": "Week 28 through to labour: taps accumulating, the two evidence gates being crossed, the 37-week transition, and a contraction pattern that meets 5-1-1.",
+          "summary": "Week 27 through to labour: taps accumulating, the two evidence gates being crossed, the transition at term, and a contraction pattern that meets 5-1-1.",
           "entry": "the whole arc",
           "video": "hold-journey.mp4",
           "screenshot": null
@@ -166,8 +218,8 @@
     "privacyParagraphs": [
       "No account needed — Hold works fully without one. If you choose to sign in with a TinyKite account, only your email identifies you to us; your pregnancy data (movements, contractions, notes) stays on your phone and is never uploaded.",
       "Every tap, every counting session, every contraction is stored in a database on your device, not on our servers. There's no cloud sync, no ads, and no analytics reading over your shoulder.",
-      "The PDF report for your midwife is built on your phone and only leaves it when you choose to share or print it — through your phone's own share sheet, the same way you'd share a photo.",
-      "Reporting a pregnancy loss in Settings deletes everything Hold has recorded from your phone immediately, and the app stops asking you anything else."
+      "The plain-language report and the full clinical report are both built on your phone and only leave it when you choose to share or print them — through your phone's own share sheet, the same way you'd share a photo.",
+      "Ending a pregnancy record in the You tab deletes everything Hold has recorded from your phone immediately, and the app stops asking you anything else."
     ],
     "medicalHeading": "Hold is not a medical device",
     "medicalParagraphs": [
@@ -178,6 +230,6 @@
   },
   "closing": {
     "heading": "Built for the person who just wants to know",
-    "body": "No universal number, no diagnosis, no account required — just your baby's own pattern, timed on your own phone, and a plan for when labour starts."
+    "body": "No universal number, no diagnosis, no account required — just your baby's own pattern, timed in minutes on your own phone, and a plan for when labour starts."
   }
 }
