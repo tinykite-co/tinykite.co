@@ -25,11 +25,11 @@
 <main>
   <p class="muted"><a href="/">← Gloss</a> · TinyKite</p>
   <h1>Privacy Policy</h1>
-  <p class="muted">Gloss by TinyKite · Last updated: 29 July 2026</p>
+  <p class="muted">Gloss by TinyKite · Last updated: 3 August 2026</p>
 
   <div class="card">
     <h2>Summary</h2>
-    <p><strong>Gloss is local-first.</strong> Word meanings come from a dictionary packed inside the app. We do not require an account. We do not run ads. We do not sell data. Two small, anonymous signals leave the device so we can improve the dictionary: a word we could not answer, and a problem you chose to report — nothing that identifies you or your device travels with either (see section&nbsp;5).</p>
+    <p><strong>Gloss is local-first.</strong> Word meanings come from a dictionary packed inside the app. We do not require an account. We do not run ads. We do not sell data. Three small, anonymous signals leave the device so we can improve the dictionary: a word we could not answer, a problem you chose to report, and counts of which dictionary words were looked up — nothing that identifies you or your device travels with any of them (see section&nbsp;5).</p>
   </div>
 
   <h2>1. Who we are</h2>
@@ -41,45 +41,49 @@
   <h2>3. Data we process on your device</h2>
   <ul>
     <li><strong>Words you type</strong> — looked up on the device, in the moment. There are no accounts and no sync; nothing you type is stored in a TinyKite cloud account.</li>
-    <li><strong>Words you have looked up</strong> — kept on the device for the “words you’ve met” list and the quiz. They never leave the device, and uninstalling the app removes them.</li>
+    <li><strong>Words you have looked up</strong> — kept on the device for the “words you’ve met” list and the quiz, in the order you met them. That list never leaves the device, and uninstalling the app removes it. Separately, the app keeps a plain count of how many times each dictionary word was opened — a word and a number, with no times and no order — which is the only part that can be sent, and only if you said yes (see section&nbsp;5).</li>
     <li><strong>Reader profiles</strong> — a name you choose for each reader and, if you answer the optional first-run question, the year that reader was born. The year is used only to pick a starting reading level, and the question can be skipped. Both stay on the device, never leave it, and are removed by uninstalling the app.</li>
   </ul>
 
   <h2>4. What we do not collect</h2>
   <ul>
     <li>No account and no email is required to use the app — every reading feature works without signing in</li>
-    <li>No advertising identifiers, no analytics SDKs, no crash-reporting SDKs in v1</li>
+    <li>No advertising identifiers, no third-party analytics SDKs, no crash-reporting SDKs — the anonymous counts described in section&nbsp;5 go to TinyKite’s own service, carry no identifier of any kind, and are never used to build a picture of a person</li>
     <li>No microphone access — Gloss does not ask for the microphone and does not record or process audio</li>
     <li>No sale of personal data</li>
     <li>No tracking across other companies’ apps or websites</li>
   </ul>
 
-  <h2>5. Network access, and the two things Gloss sends us</h2>
-  <p>Looking up words does <strong>not</strong> require the internet — every meaning is preloaded on the device. Gloss uses the network for exactly two anonymous signals, both sent to TinyKite’s own service and to no one else:</p>
+  <h2>5. Network access, and the three things Gloss sends us</h2>
+  <p>Looking up words does <strong>not</strong> require the internet — every meaning is preloaded on the device. Gloss uses the network for exactly three anonymous signals, all sent to TinyKite’s own service and to no one else:</p>
   <ul>
     <li><strong>A word we could not answer.</strong> If you search for a word and Gloss has no entry, the app sends the word and which dictionary it was typed into (for example <code>en-GB</code>), so our editors can write it. Nothing else is sent: no account, no name, no device or advertising identifier, no location, no timestamps. Only single words or short phrases are ever sent — typed sentences never leave the device — and none of this happens unless you said yes to &ldquo;Help grow the word pack&rdquo; — asked on first run, changeable in Settings, and off until answered.</li>
     <li><strong>A problem you report.</strong> If you tap “report a problem” on an entry, the app sends which entry and which of five fixed categories you picked — nothing else. There is no free-text field: a report cannot carry anything you type, and this includes reports that were written by an older version and sent after updating. (App versions before 0.2.4 had an optional note box; a report sent from one of those older installs may still carry its note until that device updates.)</li>
+    <li><strong>Counts of which dictionary words were looked up.</strong> So that the words readers actually use are the ones we improve first, the app counts how many times each dictionary word was opened on the device and sends that list in a single batch, at most once a day. Each line is a word, the dictionary it came from, and a number — nothing else.
+      <br />What is <em>not</em> sent, and cannot be: no account, no name, no device, install or advertising identifier, no location, no reader profile, no times of day and no order. The list says <em>how many</em>, never <em>when</em> or <em>in what sequence</em>, and there is nothing in it that could tie two words to the same reader or the same sitting. Only words that are already in Gloss’s dictionary can appear, because what is counted is an entry the app <em>showed</em> — nothing you typed that Gloss did not recognise can be in this list (a word we could not answer is the separate signal above, with its own rules).
+      <br />Counts are grouped by week when they reach us, using our clock rather than your device’s, and delete themselves 180 days later. None of this happens unless you said yes to “Help grow the word pack” — the same single answer that covers the missing words above, asked on first run with “Not now” preselected, and changeable at any time in Settings. Turning it off stops the sending immediately; anything already counted stays on the device and is only ever sent if you turn it back on. You can also ask us to delete counts we already hold (section&nbsp;7).</li>
   </ul>
-  <p>Both signals exist only to fix the dictionary. We keep them only as an editorial work queue, we do not use them for advertising or profiling, and if the device is offline they wait on the device and are sent later. Everything else in Gloss stays on the device.</p>
+  <p>All three signals exist only to improve the dictionary. We keep them only as an editorial work list, we do not use them for advertising or profiling and never build a profile of a reader from them, and if the device is offline they wait on the device and are sent later. Everything else in Gloss stays on the device.</p>
 
   <h2>5a. A TinyKite account (optional, for grown-ups)</h2>
   <p>Gloss works fully without any account, and always will. Some TinyKite apps offer an optional sign-in with a <strong>TinyKite account</strong> — one account shared across TinyKite apps. If a version of Gloss offers this, it is for parents and caregivers, it is always skippable, and signing in adds exactly one thing to what TinyKite holds: the account itself (your email address and sign-in credentials, kept by our identity service). What you read and look up in Gloss stays on the device as described above — signing in does not upload it.</p>
   <p>The account is managed at <a href="https://account.tinykite.co">account.tinykite.co</a>: download the data the account holds, change your password, or delete the account (a 30-day grace period applies, and deleting it removes your sign-in from every TinyKite app that uses it). Children are never asked to create an account in Gloss.</p>
 
   <h2>6. Children</h2>
-  <p>Gloss is designed to be usable by young readers with a parent or caregiver nearby. Reader profiles (a chosen name, an optional birth year for the starting reading level) live on the device only — TinyKite never receives them, builds no profile of any child, and collects no personal information from children for marketing. The app asks for no device permissions beyond network access. The two signals in section&nbsp;5 carry no identifiers. The only reader-typed text that can ever leave the device is a searched word Gloss had no entry for — sent only if &ldquo;Help grow the word pack&rdquo; was switched on, and only when it is shaped like a word (a typed sentence never leaves the device). Problem reports carry no typed text at all.</p>
+  <p>Gloss is designed to be usable by young readers with a parent or caregiver nearby. Reader profiles (a chosen name, an optional birth year for the starting reading level) live on the device only — TinyKite never receives them, builds no profile of any child, and collects no personal information from children for marketing. The app asks for no device permissions beyond network access. The three signals in section&nbsp;5 carry no identifiers, and none of them carries a time, so nothing we receive can be arranged into what one child did on one day. The only reader-typed text that can ever leave the device is a searched word Gloss had no entry for — sent only if &ldquo;Help grow the word pack&rdquo; was switched on, and only when it is shaped like a word (a typed sentence never leaves the device). The lookup counts carry words from Gloss’s own dictionary — the entry that was opened, not the letters a child typed to reach it — and no free text of any kind. Problem reports carry no typed text at all.</p>
 
   <h2>7. Your choices</h2>
   <ul>
     <li>Uninstall the app — removes local app data from the device.</li>
-    <li>Ask us to delete a signal — email <a href="mailto:support@tinykite.co">support@tinykite.co</a> quoting the word or the report and we will remove it from our queue. Rows also delete themselves automatically 180 days after we last received them.</li>
+    <li>Turn off &ldquo;Help grow the word pack&rdquo; in Settings — nothing in section&nbsp;5 is sent after that, for any of the three signals.</li>
+    <li>Ask us to delete a signal — email <a href="mailto:support@tinykite.co">support@tinykite.co</a> quoting the word, the report, or the counted word and week, and we will remove it. Rows also delete themselves automatically 180 days after we last received them.</li>
   </ul>
 
   <h2>8. Third parties</h2>
-  <p>Gloss does not embed advertising, analytics or crash-reporting SDKs, and sends no data to third parties. The two signals in section&nbsp;5 go to TinyKite’s own service only.</p>
+  <p>Gloss does not embed advertising, analytics or crash-reporting SDKs, and sends no data to third parties. The three signals in section&nbsp;5 go to TinyKite’s own service only.</p>
 
   <h2>9. International users</h2>
-  <p>Gloss is published from the United Kingdom. Word lookups are processed on-device; the only data TinyKite receives are the two anonymous signals in section&nbsp;5. They are stored with our infrastructure provider, Cloudflare, on its global network, and reviewed by TinyKite from the United Kingdom. Standard connection data (such as an IP address) is processed transiently by Cloudflare to deliver the request; TinyKite's queue stores only the fields listed in section&nbsp;5, plus a short-lived abuse counter keyed to a one-way hash — never the address itself — that deletes itself within minutes.</p>
+  <p>Gloss is published from the United Kingdom. Word lookups are processed on-device; the only data TinyKite receives are the three anonymous signals in section&nbsp;5. They are stored with our infrastructure provider, Cloudflare, on its global network, and reviewed by TinyKite from the United Kingdom. Standard connection data (such as an IP address) is processed transiently by Cloudflare to deliver the request; TinyKite's queue stores only the fields listed in section&nbsp;5, plus a short-lived abuse counter keyed to a one-way hash — never the address itself — that deletes itself within minutes.</p>
 
   <h2>10. Changes</h2>
   <p>If we add cloud features or analytics, or switch on the optional account described in section&nbsp;5a, we will update this page and the date above before those features ship, and the store listings' data declarations with it. The commitments that do not change: reading data stays on the device, nothing is sold, nothing tracks you across other companies' apps, and anything optional stays optional.</p>
