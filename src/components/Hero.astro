@@ -4,13 +4,12 @@
 <section id="hero" class="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden bg-brand-cream">
   <!-- Painterly sky: layered warm washes on cream -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute inset-0 bg-brand-cream z-0"></div>
-
-    <!-- Soft gradient washes (parallax on scroll via #hero-washes) -->
+    <!-- Painted sky — identical to the preloader's box, so the intro opens seamlessly -->
+    <div class="absolute inset-0 z-0" style="background: linear-gradient(180deg, #f0ebdf 0%, #faf4e8 45%, #f7f4ee 100%);"></div>
     <div id="hero-washes" class="absolute inset-0" style="will-change: transform;">
-      <div id="hero-bg-orb-1" class="absolute w-[900px] h-[900px] rounded-full blur-[160px] opacity-75 mix-blend-multiply transition-transform duration-[1200ms] ease-out top-[-25%] right-[-15%]" style="background: radial-gradient(circle, #ffe3b3 0%, transparent 70%);"></div>
-      <div id="hero-bg-orb-2" class="absolute w-[700px] h-[700px] rounded-full blur-[140px] opacity-60 mix-blend-multiply transition-transform duration-[800ms] ease-out bottom-[-20%] left-[-10%]" style="background: radial-gradient(circle, #bfe0d8 0%, transparent 70%);"></div>
-      <div id="hero-bg-orb-3" class="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-55 mix-blend-multiply transition-transform duration-[1500ms] ease-out top-[5%] left-[10%]" style="background: radial-gradient(circle, #ccd6ef 0%, transparent 70%);"></div>
+      <div id="hero-bg-orb-1" class="absolute inset-0 transition-transform duration-[1200ms] ease-out" style="background: radial-gradient(60% 55% at 78% 12%, rgba(255,227,179,0.5) 0%, transparent 70%), radial-gradient(50% 40% at 50% 100%, rgba(255,214,150,0.45) 0%, transparent 70%);"></div>
+      <div id="hero-bg-orb-2" class="absolute inset-0 transition-transform duration-[800ms] ease-out" style="background: radial-gradient(ellipse 32% 18% at 20% 64%, rgba(255,253,248,0.7) 0%, transparent 70%), radial-gradient(ellipse 55% 50% at 15% 92%, rgba(204,214,239,0.35) 0%, transparent 70%);"></div>
+      <div id="hero-bg-orb-3" class="absolute inset-0 transition-transform duration-[1500ms] ease-out" style="background: radial-gradient(ellipse 24% 14% at 80% 26%, rgba(255,253,248,0.65) 0%, transparent 70%);"></div>
     </div>
 
     <!-- Floating dust motes (populated by the flight script) -->
@@ -80,15 +79,6 @@
   <!-- Kite flight layer (above content, click-through) -->
   <svg id="hero-kite-layer" class="absolute inset-0 z-40 w-full h-full pointer-events-none" aria-hidden="true">
     <defs>
-      <linearGradient id="kite-body-grad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#232f55" />
-        <stop offset="45%" stop-color="#141b33" />
-        <stop offset="100%" stop-color="#0b1020" />
-      </linearGradient>
-      <linearGradient id="kite-glass-grad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f7f4ee" stop-opacity="0.35" />
-        <stop offset="100%" stop-color="#f7f4ee" stop-opacity="0.02" />
-      </linearGradient>
       <linearGradient id="kite-rim-grad" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#ffb23c" stop-opacity="0.95" />
         <stop offset="55%" stop-color="#ffb23c" stop-opacity="0.35" />
@@ -96,8 +86,8 @@
       </linearGradient>
       <linearGradient id="kite-ribbon-grad" gradientUnits="userSpaceOnUse" x1="0" y1="88" x2="0" y2="215">
         <stop offset="0%" stop-color="#ffb23c" stop-opacity="0.9" />
-        <stop offset="55%" stop-color="#0b1020" stop-opacity="0.5" />
-        <stop offset="100%" stop-color="#0b1020" stop-opacity="0" />
+        <stop offset="60%" stop-color="#ffb23c" stop-opacity="0.45" />
+        <stop offset="100%" stop-color="#ffb23c" stop-opacity="0" />
       </linearGradient>
       <linearGradient id="kite-trail-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stop-color="#ffb23c" stop-opacity="0" />
@@ -106,9 +96,6 @@
       </linearGradient>
       <filter id="kite-glow-blur" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="14" />
-      </filter>
-      <filter id="kite-soft-blur" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="5" />
       </filter>
       <filter id="kite-trail-blur" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="6" />
@@ -128,25 +115,20 @@
       <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
             fill="#0b1020" opacity="0.18" filter="url(#kite-glow-blur)" transform="scale(1.12) translate(-4,-6)" />
       <!-- body -->
+      <!-- flat elegant body, matching the intro kite -->
       <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
-            fill="url(#kite-body-grad)" />
-      <!-- facets -->
-      <path d="M0,-110 L-66,-8 L0,-8 Z" fill="#f7f4ee" opacity="0.10" />
-      <path d="M0,-110 L66,-8 L0,-8 Z" fill="#f7f4ee" opacity="0.05" />
-      <path d="M-66,-8 L0,-8 L0,88 Z" fill="#000000" opacity="0.22" />
-      <path d="M66,-8 L0,-8 L0,88 Z" fill="#2aa48f" opacity="0.12" />
+            fill="#141b33" />
+      <!-- subtle facet tones -->
+      <path d="M0,-110 L-66,-8 L0,-8 Z" fill="#f7f4ee" opacity="0.08" />
+      <path d="M-66,-8 L0,-8 L0,88 Z" fill="#000000" opacity="0.18" />
+      <path d="M66,-8 L0,-8 L0,88 Z" fill="#2aa48f" opacity="0.10" />
       <line x1="0" y1="-110" x2="0" y2="88" stroke="#ffb23c" stroke-opacity="0.5" stroke-width="1" />
-      <line x1="-66" y1="-8" x2="66" y2="-8" stroke="#ffb23c" stroke-opacity="0.35" stroke-width="1" />
-      <!-- inset pane -->
-      <path d="M0,-82.3 L47.5,-8.8 L0,60.3 L-47.5,-8.8 Z" fill="url(#kite-glass-grad)" opacity="0.5" />
-      <!-- specular highlight -->
-      <ellipse cx="-16" cy="-58" rx="30" ry="15" fill="#f7f4ee" opacity="0.22" filter="url(#kite-soft-blur)" transform="rotate(-24 -16 -58)" />
+      <line x1="-66" y1="-10" x2="66" y2="-10" stroke="#ffb23c" stroke-opacity="0.35" stroke-width="1" />
       <!-- gold rim light -->
       <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
             fill="none" stroke="url(#kite-rim-grad)" stroke-width="1.8" stroke-linejoin="round" />
-      <!-- silk ribbons + gold beads (positioned per-frame) -->
-      <path id="kite-ribbon-1" fill="none" stroke="url(#kite-ribbon-grad)" stroke-width="3" stroke-linecap="round" />
-      <path id="kite-ribbon-2" fill="none" stroke="#0b1020" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round" />
+      <!-- single silk tail + gold beads (positioned per-frame) -->
+      <path id="kite-ribbon-1" fill="none" stroke="url(#kite-ribbon-grad)" stroke-width="2.4" stroke-linecap="round" />
       <g id="kite-beads" style="filter: drop-shadow(0 0 3px rgba(255,178,60,0.8));"></g>
       <!-- orbiting sparkles -->
       <g id="kite-sparkles" fill="#ffb23c">
@@ -168,7 +150,6 @@
       const section = document.getElementById('hero');
       const kite = document.getElementById('kite');
       const ribbon1 = document.getElementById('kite-ribbon-1');
-      const ribbon2 = document.getElementById('kite-ribbon-2');
       const beadsGroup = document.getElementById('kite-beads');
       const sparkles = document.getElementById('kite-sparkles');
       const trailGlow = document.getElementById('kite-trail-glow') as unknown as SVGPathElement | null;
@@ -176,7 +157,7 @@
       const trailSparks = document.getElementById('kite-trail-sparks');
       const trailGrad = document.getElementById('kite-trail-grad') as unknown as SVGLinearGradientElement | null;
       const motesGroup = document.getElementById('hero-motes-g');
-      if (!section || !kite || !ribbon1 || !ribbon2 || !beadsGroup || !sparkles || !trailGlow || !trailCore || !trailSparks || !trailGrad || !motesGroup) return;
+      if (!section || !kite || !ribbon1 || !beadsGroup || !sparkles || !trailGlow || !trailCore || !trailSparks || !trailGrad || !motesGroup) return;
 
       const SVG_NS = 'http://www.w3.org/2000/svg';
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -199,11 +180,11 @@
         motesGroup.appendChild(m);
       }
 
-      // Ribbon beads + trail sparkles, reused every frame
+      // Tail beads + trail sparkles, reused every frame
       const beads: SVGCircleElement[] = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
         const b = document.createElementNS(SVG_NS, 'circle');
-        b.setAttribute('r', (2.5 - i * 0.35).toFixed(2));
+        b.setAttribute('r', (2.4 - i * 0.4).toFixed(2));
         b.setAttribute('fill', i % 2 ? '#0b1020' : '#ffb23c');
         beadsGroup.appendChild(b);
         beads.push(b);
@@ -233,15 +214,14 @@
       const isMobile = section.clientWidth < 768;
 
       if (reduced) {
-        // Static scene: kite parked beside the headline, ribbons draped
+        // Static scene: kite parked beside the headline, tail draped
         const w = section.clientWidth;
         const h = section.clientHeight;
         kite.setAttribute('opacity', '0.95');
         kite.setAttribute('transform', `translate(${w * (isMobile ? 0.76 : 0.74)}, ${h * (isMobile ? 0.24 : 0.3)}) rotate(10) scale(${isMobile ? 0.5 : 0.85})`);
         ribbon1.setAttribute('d', 'M0,88 Q10,125 -8,160 T4,206');
-        ribbon2.setAttribute('d', 'M0,88 Q-9,118 6,150 T-3,184');
         beads.forEach((b, i) => {
-          const pos = [[6, 112], [-5, 142], [2, 172], [4, 198]][i];
+          const pos = [[6, 116], [-5, 150], [3, 186]][i];
           b.setAttribute('cx', String(pos[0]));
           b.setAttribute('cy', String(pos[1]));
         });
@@ -277,20 +257,24 @@
         const idleX = ax + 16 * Math.sin(t * 0.83 + 1.7) + 8 * Math.sin(t * 1.97);
         const idleY = ay + 14 * Math.sin(t * 1.13) + 7 * Math.sin(t * 2.3 + 0.6);
 
-        // Entry: bezier sweep from below-left, blending into the idle motion
-        const entryU = clamp(t / 2.6, 0, 1);
-        const e = easeOutCubic(entryU);
-        const ix = lerp(lerp(-0.12 * w, 0.3 * w, e), lerp(0.3 * w, w * 0.72, e), e);
-        const iy = lerp(lerp(1.12 * h, 0.62 * h, e), lerp(0.62 * h, h * 0.31, e), e);
-        const blend = smooth(clamp((t - 1.6) / 1.2, 0, 1));
+        // Entry: take over from the preloader kite at its exact measured
+        // position, then glide to the first anchor (velocity ramps from zero)
+        const entryU = clamp(t / 1.8, 0, 1);
+        const e = smooth(entryU);
+        const sx = entryFrom ? entryFrom.x : w * 0.5;
+        const sy0 = entryFrom ? entryFrom.y - rect.top : h * 0.4;
+        const ix = lerp(sx, w * 0.72, e);
+        const iy = lerp(sy0, h * 0.31, e);
+        const blend = smooth(clamp((t - 1.0) / 0.9, 0, 1));
         let x = lerp(ix, idleX, blend);
         let y = lerp(iy, idleY, blend);
 
-        // Banking from horizontal velocity + soft sway
+        // Banking from horizontal velocity + soft sway. Scale and opacity stay
+        // constant through the takeover — the intro kite simply keeps flying.
         const vx = (x - prevX) * 60;
         prevX = x;
         const bank = clamp(vx * 0.09, -22, 22) + 4 * Math.sin(t * 1.4);
-        const scale = base * (0.5 + 0.5 * easeOutCubic(clamp(t / 1.4, 0, 1))) * (1 + 0.06 * Math.sin(t * 0.66));
+        const scale = base * (1 + 0.06 * Math.sin(t * 0.66));
 
         // Scroll: kite rises faster than the page and fades out
         const sy = window.scrollY;
@@ -301,7 +285,7 @@
         parX += ((mouseX - 0.5) * 26 - parX) * 0.045;
         parY += ((mouseY - 0.5) * 16 - parY) * 0.045;
 
-        const opacity = clamp(t / 0.9, 0, 1) * 0.97 * scrollFade;
+        const opacity = 0.97 * scrollFade;
         kite.setAttribute('opacity', opacity.toFixed(3));
         kite.setAttribute('transform', `translate(${(x + parX).toFixed(1)}, ${(y + parY).toFixed(1)}) rotate(${bank.toFixed(1)}) scale(${scale.toFixed(3)})`);
 
@@ -309,20 +293,16 @@
         motesGroup.setAttribute('transform', `translate(${(-parX * 0.4).toFixed(1)}, ${(-sy * 0.1 - parY * 0.4).toFixed(1)})`);
         if (washes) washes.style.transform = `translateY(${(sy * 0.18).toFixed(1)}px)`;
 
-        // Silk ribbons + beads
+        // Silk tail + beads
         let d1 = '';
-        let d2 = '';
         for (let i = 0; i <= 8; i++) {
           const s = i / 8;
           const p1 = ribbonPoint(s, t, 0, 118, 10);
-          const p2 = ribbonPoint(s, t, 1.9, 96, 8);
           d1 += `${i === 0 ? 'M' : 'L'}${p1.x.toFixed(1)},${p1.y.toFixed(1)} `;
-          d2 += `${i === 0 ? 'M' : 'L'}${p2.x.toFixed(1)},${p2.y.toFixed(1)} `;
         }
         ribbon1.setAttribute('d', d1);
-        ribbon2.setAttribute('d', d2);
         beads.forEach((b, i) => {
-          const p = ribbonPoint(0.28 + i * 0.2, t, 0, 118, 10);
+          const p = ribbonPoint(0.32 + i * 0.24, t, 0, 118, 10);
           b.setAttribute('cx', p.x.toFixed(1));
           b.setAttribute('cy', p.y.toFixed(1));
         });
@@ -374,9 +354,12 @@
         requestAnimationFrame(animate);
       };
 
-      // If the intro preloader is playing, hold the kite's clock until it exits
+      // If the intro preloader is playing, hold the kite's clock until it exits,
+      // then take over from the intro kite's exact measured position
+      let entryFrom: { x: number; y: number } | null = null;
       if (document.documentElement.classList.contains('tk-intro-running')) {
-        window.addEventListener('tk:intro-done', () => {
+        window.addEventListener('tk:intro-done', (ev) => {
+          entryFrom = (ev as CustomEvent).detail || null;
           start = performance.now();
           requestAnimationFrame(animate);
         }, { once: true });
