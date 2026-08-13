@@ -1,65 +1,65 @@
+@import 'lenis/dist/lenis.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Modern Tech Theme - Sleek & Futuristic */
-    /* Light Mode */
-    --color-bg: #f8fafc;
-    /* Slate-50 */
-    --color-text: #0f172a;
-    /* Slate-900 */
-    --color-text-muted: #64748b;
-    /* Slate-500 */
-    --color-primary: #2563eb;
-    /* Blue-600 */
-    --color-secondary: #7c3aed;
-    /* Violet-600 */
-    --color-accent: #06b6d4;
-    /* Cyan-500 */
+    /* TinyKite Brand Theme — Light (Warm Cream) */
+    --color-bg: #f7f4ee;
+    /* Warm Cream */
+    --color-text: #0b1020;
+    /* Deep Navy */
+    --color-text-muted: #667085;
+    /* Slate */
+    --color-primary: #0b1020;
+    /* Deep Navy */
+    --color-secondary: #2aa48f;
+    /* Teal */
+    --color-accent: #ffb23c;
+    /* Kite Gold */
 
     --color-panel-bg: #ffffff;
     /* White */
-    --color-border: #e2e8f0;
-    /* Slate-200 */
+    --color-border: #e7e8eb;
+    /* Mist */
 
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-highlight: 0 10px 15px -3px rgba(37, 99, 235, 0.1), 0 4px 6px -2px rgba(37, 99, 235, 0.05);
+    --shadow-card: 0 4px 6px -1px rgba(11, 16, 32, 0.08), 0 2px 4px -1px rgba(11, 16, 32, 0.05);
+    --shadow-highlight: 0 10px 15px -3px rgba(255, 178, 60, 0.15), 0 4px 6px -2px rgba(11, 16, 32, 0.05);
 
-    /* Default Gradient */
-    --gradient-from: #2563eb;
-    --gradient-via: #7c3aed;
-    --gradient-to: #06b6d4;
+    /* Brand Gradient */
+    --gradient-from: #0b1020;
+    --gradient-via: #2aa48f;
+    --gradient-to: #ffb23c;
   }
 
   :root[class~="dark"] {
-    /* Dark Mode */
-    --color-bg: #020617;
-    /* Slate-950 */
-    --color-text: #f8fafc;
-    /* Slate-50 */
-    --color-text-muted: #94a3b8;
-    /* Slate-400 */
-    --color-primary: #3b82f6;
-    /* Blue-500 */
-    --color-secondary: #8b5cf6;
-    /* Violet-500 */
-    --color-accent: #22d3ee;
-    /* Cyan-400 */
+    /* TinyKite Brand Theme — Dark (Deep Navy) */
+    --color-bg: #0b1020;
+    /* Deep Navy */
+    --color-text: #f7f4ee;
+    /* Warm Cream */
+    --color-text-muted: #98a2b3;
+    /* Slate light */
+    --color-primary: #ffb23c;
+    /* Kite Gold (readable on navy) */
+    --color-secondary: #2aa48f;
+    /* Teal */
+    --color-accent: #ffb23c;
+    /* Kite Gold */
 
-    --color-panel-bg: #0f172a;
-    /* Slate-900 */
-    --color-border: #1e293b;
-    /* Slate-800 */
+    --color-panel-bg: #141b33;
+    /* Navy light */
+    --color-border: rgba(255, 255, 255, 0.08);
 
     --shadow-card: none;
-    --shadow-highlight: 0 0 20px rgba(59, 130, 246, 0.2);
+    --shadow-highlight: 0 0 20px rgba(255, 178, 60, 0.15);
 
-    /* Default Dark Gradient */
-    --gradient-from: #60a5fa;
-    --gradient-via: #a78bfa;
-    --gradient-to: #22d3ee;
+    /* Brand Dark Gradient */
+    --gradient-from: #ffb23c;
+    --gradient-via: #2aa48f;
+    --gradient-to: #f7f4ee;
   }
 
   /* Ocean Theme (Pastel) */
@@ -271,10 +271,9 @@
   }
 
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Satoshi', system-ui, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
-    scroll-behavior: smooth;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
@@ -484,11 +483,78 @@
   will-change: transform;
 }
 
+/* Intro preloader holds the hero choreography until it exits */
+.tk-intro-running .animate-fade-in-up,
+.tk-intro-running .animate-bounce {
+  animation-play-state: paused;
+}
+
+/* App marquee (landing) */
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marqueeScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Hero ambient animations (kite scene) */
+@keyframes kiteStarTwinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.kite-star {
+  animation: kiteStarTwinkle 3.6s ease-in-out infinite;
+}
+
+@keyframes heroNebulaDrift {
+  from {
+    transform: translate(-3%, -2%) scale(1);
+  }
+  to {
+    transform: translate(4%, 3%) scale(1.08);
+  }
+}
+
+.hero-nebula {
+  animation: heroNebulaDrift 36s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kite-star,
+  .hero-nebula {
+    animation: none;
+  }
+}
+
 /* Custom Typography Styles for Legal/MDX Pages */
 .prose {
   h2 {
-    font-family: 'Lora', serif;
-    @apply text-2xl font-semibold mt-8 mb-4 text-text;
+    font-family: 'Satoshi', system-ui, sans-serif;
+    @apply text-2xl font-bold mt-8 mb-4 text-text;
   }
   p {
     @apply mb-4 leading-relaxed text-gray-600 dark:text-gray-300;

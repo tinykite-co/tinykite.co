@@ -1,22 +1,28 @@
 ---
 ---
 
-<section id="hero" class="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden bg-[#000]">
-  <!-- Dynamic Mesh Background (Apple/Stripe aesthetic) -->
+<section id="hero" class="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden bg-brand-cream">
+  <!-- Painterly sky: layered warm washes on cream -->
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <!-- Base deep black -->
-    <div class="absolute inset-0 bg-black z-0"></div>
-    
-    <!-- Refined Gradient Orbs -->
-    <div id="hero-bg-orb-1" class="absolute w-[800px] h-[800px] rounded-full blur-[140px] opacity-40 bg-[#1e1b4b] mix-blend-screen transition-transform duration-[1200ms] ease-out top-[-20%] left-[-10%]"></div>
-    <div id="hero-bg-orb-2" class="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-50 bg-[#312e81] mix-blend-screen transition-transform duration-[800ms] ease-out bottom-[-10%] right-[-10%]"></div>
-    <div id="hero-bg-orb-3" class="absolute w-[500px] h-[500px] rounded-full blur-[100px] opacity-30 bg-[#4c1d95] mix-blend-screen transition-transform duration-[1500ms] ease-out top-[20%] right-[20%]"></div>
+    <div class="absolute inset-0 bg-brand-cream z-0"></div>
 
-    <!-- Soft ambient noise overlay -->
-    <div class="absolute inset-0 opacity-[0.03] z-10" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
-    
+    <!-- Soft gradient washes (parallax on scroll via #hero-washes) -->
+    <div id="hero-washes" class="absolute inset-0" style="will-change: transform;">
+      <div id="hero-bg-orb-1" class="absolute w-[900px] h-[900px] rounded-full blur-[160px] opacity-75 mix-blend-multiply transition-transform duration-[1200ms] ease-out top-[-25%] right-[-15%]" style="background: radial-gradient(circle, #ffe3b3 0%, transparent 70%);"></div>
+      <div id="hero-bg-orb-2" class="absolute w-[700px] h-[700px] rounded-full blur-[140px] opacity-60 mix-blend-multiply transition-transform duration-[800ms] ease-out bottom-[-20%] left-[-10%]" style="background: radial-gradient(circle, #bfe0d8 0%, transparent 70%);"></div>
+      <div id="hero-bg-orb-3" class="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-55 mix-blend-multiply transition-transform duration-[1500ms] ease-out top-[5%] left-[10%]" style="background: radial-gradient(circle, #ccd6ef 0%, transparent 70%);"></div>
+    </div>
+
+    <!-- Floating dust motes (populated by the flight script) -->
+    <svg id="hero-motes" class="absolute inset-0 z-[5] w-full h-full" aria-hidden="true">
+      <g id="hero-motes-g"></g>
+    </svg>
+
+    <!-- Film grain -->
+    <div class="absolute inset-0 opacity-[0.05] z-10" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+
     <!-- Fade to bottom -->
-    <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black to-transparent z-20"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-brand-cream to-transparent z-20"></div>
   </div>
 
   <script>
@@ -31,10 +37,10 @@
           const rect = section.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width;
           const y = (e.clientY - rect.top) / rect.height;
-          
-          orb1.style.transform = `translate(${x * 80 - 40}px, ${y * 80 - 40}px)`;
-          orb2.style.transform = `translate(${-(x * 120 - 60)}px, ${-(y * 120 - 60)}px)`;
-          orb3.style.transform = `translate(${x * 50 - 25}px, ${-(y * 50 - 25)}px)`;
+
+          orb1.style.transform = `translate(${x * 60 - 30}px, ${y * 60 - 30}px)`;
+          orb2.style.transform = `translate(${-(x * 90 - 45)}px, ${-(y * 90 - 45)}px)`;
+          orb3.style.transform = `translate(${x * 40 - 20}px, ${-(y * 40 - 20)}px)`;
         });
       });
     }
@@ -42,33 +48,347 @@
 
   <!-- Content -->
   <div class="relative z-30 container mx-auto px-6 text-center mt-[-5vh]">
+    <div class="animate-fade-in-up stagger-1 mb-8">
+      <span class="inline-block px-4 py-1.5 rounded-full border border-brand-navy/15 bg-white/60 backdrop-blur-sm text-brand-slate text-sm font-medium tracking-wide">
+        A privacy-first product studio
+      </span>
+    </div>
     <div class="mb-8">
-      <h1 class="text-6xl md:text-[7rem] font-bold tracking-tighter leading-[1.1]">
-        <span class="block text-white animate-fade-in-up stagger-1 drop-shadow-2xl">We</span>
-        <span class="block text-white animate-fade-in-up stagger-2 drop-shadow-2xl">build</span>
-        <span class="block animate-fade-in-up stagger-3 bg-gradient-to-r from-gray-100 to-gray-500 bg-clip-text text-transparent pb-4 drop-shadow-2xl">tomorrow.</span>
+      <h1 class="text-6xl md:text-[7rem] font-black tracking-tighter leading-[1.05] text-brand-navy">
+        <span class="block animate-fade-in-up stagger-1 drop-shadow-sm">We</span>
+        <span class="block animate-fade-in-up stagger-2 drop-shadow-sm">build</span>
+        <span class="block animate-fade-in-up stagger-3 pb-4 drop-shadow-sm">tomorrow<span class="text-brand-gold -ml-2 md:-ml-4">.</span></span>
       </h1>
     </div>
-    
+
     <div class="animate-fade-in-up stagger-4">
-      <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 font-light leading-relaxed tracking-tight">
+      <p class="text-xl md:text-2xl text-brand-slate max-w-3xl mx-auto mb-12 font-light leading-relaxed tracking-tight">
         TinyKite is a product studio crafting a unified ecosystem of privacy-first AI workspaces, free web utilities, and powerful educational tools.
       </p>
     </div>
 
     <div class="animate-fade-in-up stagger-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a href="#apps" class="px-8 py-4 bg-white text-black rounded-full font-medium text-lg hover:scale-105 active:scale-95 transition-all duration-200 shadow-[0_0_40px_rgba(255,255,255,0.15)]">
+      <a href="#apps" class="magnetic-btn px-8 py-4 bg-brand-navy text-brand-cream rounded-full font-bold text-lg transition-shadow duration-200 shadow-[0_8px_30px_rgba(11,16,32,0.25)] hover:shadow-[0_8px_44px_rgba(255,178,60,0.4)]">
         Explore the Ecosystem
       </a>
-      <a href="/nesta" class="px-8 py-4 bg-transparent border border-gray-700 text-white rounded-full font-medium text-lg hover:bg-white/10 transition-colors duration-200 backdrop-blur-sm">
+      <a href="/nesta" class="magnetic-btn px-8 py-4 bg-white/50 border border-brand-navy/15 text-brand-navy rounded-full font-bold text-lg hover:bg-white/80 transition-colors duration-200 backdrop-blur-sm">
         Discover Nesta
       </a>
     </div>
   </div>
 
+  <!-- Kite flight layer (above content, click-through) -->
+  <svg id="hero-kite-layer" class="absolute inset-0 z-40 w-full h-full pointer-events-none" aria-hidden="true">
+    <defs>
+      <linearGradient id="kite-body-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#232f55" />
+        <stop offset="45%" stop-color="#141b33" />
+        <stop offset="100%" stop-color="#0b1020" />
+      </linearGradient>
+      <linearGradient id="kite-glass-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f7f4ee" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="#f7f4ee" stop-opacity="0.02" />
+      </linearGradient>
+      <linearGradient id="kite-rim-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffb23c" stop-opacity="0.95" />
+        <stop offset="55%" stop-color="#ffb23c" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="#ffb23c" stop-opacity="0.08" />
+      </linearGradient>
+      <linearGradient id="kite-ribbon-grad" gradientUnits="userSpaceOnUse" x1="0" y1="88" x2="0" y2="215">
+        <stop offset="0%" stop-color="#ffb23c" stop-opacity="0.9" />
+        <stop offset="55%" stop-color="#0b1020" stop-opacity="0.5" />
+        <stop offset="100%" stop-color="#0b1020" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="kite-trail-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#ffb23c" stop-opacity="0" />
+        <stop offset="60%" stop-color="#ffb23c" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="#ffd28a" stop-opacity="0.95" />
+      </linearGradient>
+      <filter id="kite-glow-blur" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="14" />
+      </filter>
+      <filter id="kite-soft-blur" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
+      <filter id="kite-trail-blur" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="6" />
+      </filter>
+    </defs>
+
+    <!-- Flight trail (gold ribbon glow + bright core + sparkles) -->
+    <g id="kite-trail">
+      <path id="kite-trail-glow" fill="none" stroke="#ffb23c" stroke-width="8" stroke-linecap="round" opacity="0" filter="url(#kite-trail-blur)" />
+      <path id="kite-trail-core" fill="none" stroke="url(#kite-trail-grad)" stroke-width="3" stroke-linecap="round" opacity="0" />
+      <g id="kite-trail-sparks"></g>
+    </g>
+
+    <!-- The brand kite (nose up at 0,-110) -->
+    <g id="kite" opacity="0">
+      <!-- aura -->
+      <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
+            fill="#0b1020" opacity="0.18" filter="url(#kite-glow-blur)" transform="scale(1.12) translate(-4,-6)" />
+      <!-- body -->
+      <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
+            fill="url(#kite-body-grad)" />
+      <!-- facets -->
+      <path d="M0,-110 L-66,-8 L0,-8 Z" fill="#f7f4ee" opacity="0.10" />
+      <path d="M0,-110 L66,-8 L0,-8 Z" fill="#f7f4ee" opacity="0.05" />
+      <path d="M-66,-8 L0,-8 L0,88 Z" fill="#000000" opacity="0.22" />
+      <path d="M66,-8 L0,-8 L0,88 Z" fill="#2aa48f" opacity="0.12" />
+      <line x1="0" y1="-110" x2="0" y2="88" stroke="#ffb23c" stroke-opacity="0.5" stroke-width="1" />
+      <line x1="-66" y1="-8" x2="66" y2="-8" stroke="#ffb23c" stroke-opacity="0.35" stroke-width="1" />
+      <!-- inset pane -->
+      <path d="M0,-82.3 L47.5,-8.8 L0,60.3 L-47.5,-8.8 Z" fill="url(#kite-glass-grad)" opacity="0.5" />
+      <!-- specular highlight -->
+      <ellipse cx="-16" cy="-58" rx="30" ry="15" fill="#f7f4ee" opacity="0.22" filter="url(#kite-soft-blur)" transform="rotate(-24 -16 -58)" />
+      <!-- gold rim light -->
+      <path d="M-6.5,-99.9 Q0,-110 6.5,-99.9 L59.5,-18.1 Q66,-8 59.2,1.9 L6.8,78.1 Q0,88 -6.8,78.1 L-59.2,1.9 Q-66,-8 -59.5,-18.1 Z"
+            fill="none" stroke="url(#kite-rim-grad)" stroke-width="1.8" stroke-linejoin="round" />
+      <!-- silk ribbons + gold beads (positioned per-frame) -->
+      <path id="kite-ribbon-1" fill="none" stroke="url(#kite-ribbon-grad)" stroke-width="3" stroke-linecap="round" />
+      <path id="kite-ribbon-2" fill="none" stroke="#0b1020" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round" />
+      <g id="kite-beads" style="filter: drop-shadow(0 0 3px rgba(255,178,60,0.8));"></g>
+      <!-- orbiting sparkles -->
+      <g id="kite-sparkles" fill="#ffb23c">
+        <path d="M0,-7 Q1.4,-1.4 7,0 Q1.4,1.4 0,7 Q-1.4,1.4 -7,0 Q-1.4,-1.4 0,-7 Z" transform="translate(-74,-46)" />
+        <path d="M0,-5 Q1,-1 5,0 Q1,1 0,5 Q-1,1 -5,0 Q-1,-1 0,-5 Z" transform="translate(64,-72)" />
+        <path d="M0,-4 Q0.8,-0.8 4,0 Q0.8,0.8 0,4 Q-0.8,0.8 -4,0 Q-0.8,-0.8 0,-4 Z" transform="translate(48,52)" />
+      </g>
+    </g>
+  </svg>
+
+  <script>
+    // Kite flight choreography (see trajectory.ai for the reference feel):
+    // 1. Entry — the kite sweeps in from below-left along a bezier, gold trail drawing behind it.
+    // 2. Idle — slow glides between two anchors flanking the headline, gentle bob,
+    //    banking from velocity, and a soft depth-scale "breath".
+    // 3. Ambient — floating dust motes, silk tail ribbons, orbiting gold sparkles, mouse parallax.
+    // 4. Scroll — the kite rises faster than the page and fades; motes drift slower (depth).
+    (() => {
+      const section = document.getElementById('hero');
+      const kite = document.getElementById('kite');
+      const ribbon1 = document.getElementById('kite-ribbon-1');
+      const ribbon2 = document.getElementById('kite-ribbon-2');
+      const beadsGroup = document.getElementById('kite-beads');
+      const sparkles = document.getElementById('kite-sparkles');
+      const trailGlow = document.getElementById('kite-trail-glow') as unknown as SVGPathElement | null;
+      const trailCore = document.getElementById('kite-trail-core') as unknown as SVGPathElement | null;
+      const trailSparks = document.getElementById('kite-trail-sparks');
+      const trailGrad = document.getElementById('kite-trail-grad') as unknown as SVGLinearGradientElement | null;
+      const motesGroup = document.getElementById('hero-motes-g');
+      if (!section || !kite || !ribbon1 || !ribbon2 || !beadsGroup || !sparkles || !trailGlow || !trailCore || !trailSparks || !trailGrad || !motesGroup) return;
+
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
+      const lerp = (a: number, b: number, u: number) => a + (b - a) * u;
+      const easeOutCubic = (u: number) => 1 - Math.pow(1 - u, 3);
+      const smooth = (u: number) => u * u * (3 - 2 * u);
+
+      // Dust motes: gold / teal / slate, each with its own twinkle phase
+      const MOTE_FILL = ['#ffb23c', '#2aa48f', '#667085'];
+      for (let i = 0; i < 34; i++) {
+        const m = document.createElementNS(SVG_NS, 'circle');
+        m.setAttribute('cx', `${(Math.random() * 100).toFixed(2)}%`);
+        m.setAttribute('cy', `${(Math.random() * 100).toFixed(2)}%`);
+        m.setAttribute('r', (0.7 + Math.random() * 1.3).toFixed(2));
+        m.setAttribute('fill', MOTE_FILL[i % 3]);
+        m.setAttribute('class', 'kite-star');
+        m.style.animationDuration = `${(3 + Math.random() * 3.5).toFixed(2)}s`;
+        m.style.animationDelay = `${(-Math.random() * 6).toFixed(2)}s`;
+        motesGroup.appendChild(m);
+      }
+
+      // Ribbon beads + trail sparkles, reused every frame
+      const beads: SVGCircleElement[] = [];
+      for (let i = 0; i < 4; i++) {
+        const b = document.createElementNS(SVG_NS, 'circle');
+        b.setAttribute('r', (2.5 - i * 0.35).toFixed(2));
+        b.setAttribute('fill', i % 2 ? '#0b1020' : '#ffb23c');
+        beadsGroup.appendChild(b);
+        beads.push(b);
+      }
+      const SPARKS = 8;
+      const sparks: SVGCircleElement[] = [];
+      for (let i = 0; i < SPARKS; i++) {
+        const c = document.createElementNS(SVG_NS, 'circle');
+        c.setAttribute('fill', i % 3 === 0 ? '#2aa48f' : '#ffb23c');
+        trailSparks.appendChild(c);
+        sparks.push(c);
+      }
+      const history: { x: number; y: number }[] = [];
+      const HISTORY_MAX = 46;
+      const sparkleEls = Array.from(sparkles.children) as SVGPathElement[];
+      const sparkleHomes = sparkleEls.map((el) => {
+        const m = /translate\((-?[\d.]+),(-?[\d.]+)\)/.exec(el.getAttribute('transform') || '');
+        return { x: m ? +m[1] : 0, y: m ? +m[2] : 0 };
+      });
+
+      // Silk ribbon wave in kite-local coordinates; s in [0,1] along the ribbon
+      const ribbonPoint = (s: number, t: number, phase: number, len: number, amp: number) => ({
+        x: Math.sin(t * 2.6 + phase + s * 4.2) * amp * s + Math.sin(t * 1.3 + phase + s * 1.8) * amp * 0.5 * s,
+        y: 88 + s * len,
+      });
+
+      const isMobile = section.clientWidth < 768;
+
+      if (reduced) {
+        // Static scene: kite parked beside the headline, ribbons draped
+        const w = section.clientWidth;
+        const h = section.clientHeight;
+        kite.setAttribute('opacity', '0.95');
+        kite.setAttribute('transform', `translate(${w * (isMobile ? 0.76 : 0.74)}, ${h * (isMobile ? 0.24 : 0.3)}) rotate(10) scale(${isMobile ? 0.5 : 0.85})`);
+        ribbon1.setAttribute('d', 'M0,88 Q10,125 -8,160 T4,206');
+        ribbon2.setAttribute('d', 'M0,88 Q-9,118 6,150 T-3,184');
+        beads.forEach((b, i) => {
+          const pos = [[6, 112], [-5, 142], [2, 172], [4, 198]][i];
+          b.setAttribute('cx', String(pos[0]));
+          b.setAttribute('cy', String(pos[1]));
+        });
+        return;
+      }
+
+      let mouseX = 0.5;
+      let mouseY = 0.5;
+      let parX = 0;
+      let parY = 0;
+      section.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        mouseX = (e.clientX - rect.left) / rect.width;
+        mouseY = (e.clientY - rect.top) / rect.height;
+      });
+
+      const washes = document.getElementById('hero-washes');
+      let start = performance.now();
+      let prevX = 0;
+
+      const animate = (now: number) => {
+        const t = (now - start) / 1000;
+        const rect = section.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+        const mobile = w < 768;
+        const base = mobile ? 0.5 : 0.85;
+
+        // Idle: glide between two anchors flanking the headline, plus a soft bob
+        const u = smooth(0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 46 - Math.PI / 2));
+        const ax = lerp(w * (mobile ? 0.74 : 0.72), w * (mobile ? 0.26 : 0.3), u);
+        const ay = lerp(h * (mobile ? 0.24 : 0.31), h * (mobile ? 0.28 : 0.4), u);
+        const idleX = ax + 16 * Math.sin(t * 0.83 + 1.7) + 8 * Math.sin(t * 1.97);
+        const idleY = ay + 14 * Math.sin(t * 1.13) + 7 * Math.sin(t * 2.3 + 0.6);
+
+        // Entry: bezier sweep from below-left, blending into the idle motion
+        const entryU = clamp(t / 2.6, 0, 1);
+        const e = easeOutCubic(entryU);
+        const ix = lerp(lerp(-0.12 * w, 0.3 * w, e), lerp(0.3 * w, w * 0.72, e), e);
+        const iy = lerp(lerp(1.12 * h, 0.62 * h, e), lerp(0.62 * h, h * 0.31, e), e);
+        const blend = smooth(clamp((t - 1.6) / 1.2, 0, 1));
+        let x = lerp(ix, idleX, blend);
+        let y = lerp(iy, idleY, blend);
+
+        // Banking from horizontal velocity + soft sway
+        const vx = (x - prevX) * 60;
+        prevX = x;
+        const bank = clamp(vx * 0.09, -22, 22) + 4 * Math.sin(t * 1.4);
+        const scale = base * (0.5 + 0.5 * easeOutCubic(clamp(t / 1.4, 0, 1))) * (1 + 0.06 * Math.sin(t * 0.66));
+
+        // Scroll: kite rises faster than the page and fades out
+        const sy = window.scrollY;
+        const scrollFade = clamp(1 - sy / (h * 0.7), 0, 1);
+        y -= sy * 0.35;
+
+        // Mouse parallax, eased
+        parX += ((mouseX - 0.5) * 26 - parX) * 0.045;
+        parY += ((mouseY - 0.5) * 16 - parY) * 0.045;
+
+        const opacity = clamp(t / 0.9, 0, 1) * 0.97 * scrollFade;
+        kite.setAttribute('opacity', opacity.toFixed(3));
+        kite.setAttribute('transform', `translate(${(x + parX).toFixed(1)}, ${(y + parY).toFixed(1)}) rotate(${bank.toFixed(1)}) scale(${scale.toFixed(3)})`);
+
+        // Motes drift slower than scroll for depth; sky washes parallax gently
+        motesGroup.setAttribute('transform', `translate(${(-parX * 0.4).toFixed(1)}, ${(-sy * 0.1 - parY * 0.4).toFixed(1)})`);
+        if (washes) washes.style.transform = `translateY(${(sy * 0.18).toFixed(1)}px)`;
+
+        // Silk ribbons + beads
+        let d1 = '';
+        let d2 = '';
+        for (let i = 0; i <= 8; i++) {
+          const s = i / 8;
+          const p1 = ribbonPoint(s, t, 0, 118, 10);
+          const p2 = ribbonPoint(s, t, 1.9, 96, 8);
+          d1 += `${i === 0 ? 'M' : 'L'}${p1.x.toFixed(1)},${p1.y.toFixed(1)} `;
+          d2 += `${i === 0 ? 'M' : 'L'}${p2.x.toFixed(1)},${p2.y.toFixed(1)} `;
+        }
+        ribbon1.setAttribute('d', d1);
+        ribbon2.setAttribute('d', d2);
+        beads.forEach((b, i) => {
+          const p = ribbonPoint(0.28 + i * 0.2, t, 0, 118, 10);
+          b.setAttribute('cx', p.x.toFixed(1));
+          b.setAttribute('cy', p.y.toFixed(1));
+        });
+
+        // Orbiting sparkles twinkle around the kite
+        sparkleEls.forEach((el, i) => {
+          const home = sparkleHomes[i];
+          const tw = 0.35 + 0.65 * Math.abs(Math.sin(t * 1.8 + i * 2.1));
+          const orbit = 6 * Math.sin(t * 0.9 + i * 2.4);
+          el.setAttribute('transform', `translate(${home.x + orbit}, ${home.y + 5 * Math.cos(t * 1.1 + i)}) scale(${tw.toFixed(2)})`);
+          el.setAttribute('opacity', tw.toFixed(2));
+        });
+
+        // Trail ribbon through recent positions
+        history.unshift({ x: x + parX, y: y + parY });
+        if (history.length > HISTORY_MAX) history.length = HISTORY_MAX;
+        const trailAlpha = blend * scrollFade;
+        if (history.length > 6 && trailAlpha > 0.02) {
+          let td = '';
+          for (let i = history.length - 1; i >= 0; i--) {
+            td += `${i === history.length - 1 ? 'M' : 'L'}${history[i].x.toFixed(1)},${history[i].y.toFixed(1)} `;
+          }
+          trailGlow.setAttribute('d', td);
+          trailCore.setAttribute('d', td);
+          trailGlow.setAttribute('opacity', (0.3 * trailAlpha).toFixed(3));
+          trailCore.setAttribute('opacity', (0.85 * trailAlpha).toFixed(3));
+          // Fade the gradient along the trail direction (oldest -> newest)
+          const newest = history[0];
+          const oldest = history[history.length - 1];
+          trailGrad.setAttribute('x1', String(oldest.x));
+          trailGrad.setAttribute('y1', String(oldest.y));
+          trailGrad.setAttribute('x2', String(newest.x));
+          trailGrad.setAttribute('y2', String(newest.y));
+          for (let i = 0; i < SPARKS; i++) {
+            const p = history[Math.min(i * 5, history.length - 1)];
+            const f = 1 - i / SPARKS;
+            const twinkle = 0.5 + 0.5 * Math.sin(t * 5.5 + i * 1.9);
+            sparks[i].setAttribute('cx', String(p.x));
+            sparks[i].setAttribute('cy', String(p.y));
+            sparks[i].setAttribute('r', (1 + 1.8 * f).toFixed(2));
+            sparks[i].setAttribute('opacity', (f * 0.75 * twinkle * trailAlpha).toFixed(3));
+          }
+        } else {
+          trailGlow.setAttribute('opacity', '0');
+          trailCore.setAttribute('opacity', '0');
+          sparks.forEach((s) => s.setAttribute('opacity', '0'));
+        }
+
+        requestAnimationFrame(animate);
+      };
+
+      // If the intro preloader is playing, hold the kite's clock until it exits
+      if (document.documentElement.classList.contains('tk-intro-running')) {
+        window.addEventListener('tk:intro-done', () => {
+          start = performance.now();
+          requestAnimationFrame(animate);
+        }, { once: true });
+      } else {
+        requestAnimationFrame(animate);
+      }
+    })();
+  </script>
+
   <!-- Scroll Indicator -->
   <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce z-30">
-    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-6 h-6 text-brand-slate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
   </div>

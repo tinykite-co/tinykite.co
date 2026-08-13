@@ -1,14 +1,60 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
 import Hero from "../components/Hero.astro";
 import AppShowcase from "../components/AppShowcase.astro";
+import Principles from "../components/Principles.astro";
 import About from "../components/About.astro";
 ---
 
 <Layout title="TinyKite - We build tomorrow.">
-  <main class="bg-background min-h-screen text-white selection:bg-blue-500 selection:text-white">
+  <Preloader />
+  <main class="bg-brand-cream min-h-screen text-brand-navy selection:bg-brand-gold selection:text-brand-navy">
     <Hero />
     <AppShowcase />
+    <Principles />
     <About />
+
+    <!-- Scroll progress rail (trajectory-style section dots) -->
+    <nav id="scroll-rail" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-center gap-3 bg-white/50 dark:bg-white/10 backdrop-blur-md px-2.5 py-4 rounded-full border border-brand-navy/10" aria-label="Section navigation">
+      <a href="#hero" data-rail="hero" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="Top"></a>
+      <a href="#apps" data-rail="apps" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="Apps"></a>
+      <a href="#principles" data-rail="principles" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="One Account"></a>
+      <a href="#about" data-rail="about" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="About"></a>
+    </nav>
+
+    <script>
+      // Highlight the rail dot for the section currently in view
+      (() => {
+        const dots = Array.from(document.querySelectorAll('.rail-dot')) as HTMLElement[];
+        const sections = dots
+          .map((d) => document.getElementById(d.dataset.rail || ''))
+          .filter((el): el is HTMLElement => !!el);
+        if (!dots.length || !sections.length) return;
+
+        let ticking = false;
+        const update = () => {
+          ticking = false;
+          const mid = window.scrollY + window.innerHeight * 0.4;
+          let active = 0;
+          sections.forEach((s, i) => {
+            if (s.offsetTop <= mid) active = i;
+          });
+          dots.forEach((d, i) => {
+            const on = i === active;
+            d.style.backgroundColor = on ? '#ffb23c' : '';
+            d.style.transform = on ? 'scale(1.6)' : '';
+            d.classList.toggle('bg-brand-navy/25', !on);
+          });
+        };
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        }, { passive: true });
+        update();
+      })();
+    </script>
   </main>
 </Layout>

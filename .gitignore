@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Astro
 .astro/
+
+# Scratch (local tooling, videos)
+.tmp-anim-study/

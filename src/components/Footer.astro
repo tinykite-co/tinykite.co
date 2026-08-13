@@ -3,52 +3,56 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-background border-t border-border py-12">
-  <div class="container mx-auto px-6">
+<footer class="relative bg-brand-navy text-brand-cream py-16 overflow-hidden">
+  <!-- Brand dot pattern -->
+  <div class="absolute inset-0 opacity-[0.35] pointer-events-none" style="background-image: radial-gradient(rgba(255,178,60,0.14) 1.2px, transparent 1.2px); background-size: 26px 26px;"></div>
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"></div>
+
+  <div class="container mx-auto px-6 relative">
     <div class="grid md:grid-cols-4 gap-8 mb-12">
       <div class="col-span-1 md:col-span-2">
-        <a href="/" class="flex items-center gap-2 mb-4">
-          <img src="/icon.png" alt="tinykite Logo" class="w-8 h-8 rounded-lg" />
-          <span class="font-bold text-text text-xl tracking-tight" style="font-family: 'Nunito', sans-serif;">tinykite</span>
+        <a href="/" class="flex items-center gap-2.5 mb-4 group w-fit">
+          <img src="/brand/k-tile-cream.svg" alt="tinykite logo" class="w-8 h-8 rounded-[9px] transition-transform duration-300 group-hover:-rotate-6" />
+          <span class="font-black text-brand-cream text-xl tracking-tight">tinykite<span class="text-brand-gold">.</span></span>
         </a>
-        <p class="text-gray-600 dark:text-gray-400 text-sm max-w-xs">
+        <p class="text-brand-cream/60 text-sm max-w-xs leading-relaxed">
           Building the future of digital interaction. Simple, elegant, and powerful tools for the modern world.
         </p>
       </div>
-      
+
       <div>
-        <h3 class="font-bold text-text mb-4">Product</h3>
-        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-          <li><a href="/#apps" class="hover:text-primary transition-colors">Apps</a></li>
-          <li><a href="/nesta" class="hover:text-primary transition-colors">Nesta</a></li>
-          <li><a href="/gloss" class="hover:text-primary transition-colors">Gloss</a></li>
-          <li><a href="/hold" class="hover:text-primary transition-colors">Hold</a></li>
-          <li><a href="/coming-soon" class="hover:text-primary transition-colors">Waitlist</a></li>
+        <h3 class="font-bold text-brand-cream mb-4">Product</h3>
+        <ul class="space-y-2 text-sm text-brand-cream/60">
+          <li><a href="/#apps" class="hover:text-brand-gold transition-colors">Apps</a></li>
+          <li><a href="/nesta" class="hover:text-brand-gold transition-colors">Nesta</a></li>
+          <li><a href="/gloss" class="hover:text-brand-gold transition-colors">Gloss</a></li>
+          <li><a href="/hold" class="hover:text-brand-gold transition-colors">Hold</a></li>
+          <li><a href="/coming-soon" class="hover:text-brand-gold transition-colors">Waitlist</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="font-bold text-text mb-4">Company</h3>
-        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-          <li><a href="/#about" class="hover:text-primary transition-colors">About</a></li>
-          <li><a href="/contact" class="hover:text-primary transition-colors">Contact</a></li>
-          <li><a href="/support" class="hover:text-primary transition-colors">Support</a></li>
+        <h3 class="font-bold text-brand-cream mb-4">Company</h3>
+        <ul class="space-y-2 text-sm text-brand-cream/60">
+          <li><a href="/#about" class="hover:text-brand-gold transition-colors">About</a></li>
+          <li><a href="/contact" class="hover:text-brand-gold transition-colors">Contact</a></li>
+          <li><a href="/support" class="hover:text-brand-gold transition-colors">Support</a></li>
           {import.meta.env.DEV && (
-            <li><a href="/branding" class="hover:text-primary transition-colors">Brand Assets</a></li>
+            <li><a href="/branding" class="hover:text-brand-gold transition-colors">Brand Assets</a></li>
           )}
         </ul>
       </div>
     </div>
 
-    <div class="border-t border-gray-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-brand-cream/50">
       <div class="flex flex-col md:flex-row gap-4 items-center">
         <p>&copy; {currentYear} tinykite Ltd. All rights reserved.</p>
-        <span class="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
+        <span class="hidden md:inline text-brand-cream/20">|</span>
         <p>Company No. 16825578</p>
       </div>
       <div class="flex gap-6">
-        <a href="/privacy" class="hover:text-primary transition-colors">Privacy Policy</a>
-        <a href="/terms" class="hover:text-primary transition-colors">Terms of Service</a>
+        <a href="/privacy" class="hover:text-brand-gold transition-colors">Privacy Policy</a>
+        <a href="/terms" class="hover:text-brand-gold transition-colors">Terms of Service</a>
       </div>
     </div>
   </div>

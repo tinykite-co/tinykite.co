@@ -1,0 +1,87 @@
+---
+// Preloader.astro — the branded opening sequence (landing page only).
+// Navy frame, k. mark draws in, wordmark follows, then the whole frame
+// zooms through into the hero. Shown once per session; skipped for reduced motion.
+---
+
+<div id="tk-preloader" class="fixed inset-0 z-[100] bg-brand-navy flex items-center justify-center" aria-hidden="true">
+  <!-- faint brand dot pattern -->
+  <div class="absolute inset-0 opacity-30 pointer-events-none" style="background-image: radial-gradient(rgba(255,178,60,0.12) 1.2px, transparent 1.2px); background-size: 26px 26px;"></div>
+
+  <div class="relative text-center">
+    <div class="pre-mark w-24 h-24 mx-auto mb-6 rounded-[22px] overflow-hidden shadow-[0_0_80px_rgba(255,178,60,0.25)]">
+      <img src="/brand/k-tile-cream.svg" alt="" class="w-full h-full" />
+    </div>
+    <div class="pre-word font-black text-brand-cream text-4xl tracking-tight">tinykite<span class="text-brand-gold">.</span></div>
+    <div class="pre-tag text-brand-cream/50 text-sm font-medium tracking-[0.25em] uppercase mt-3">We build tomorrow</div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const pre = document.getElementById('tk-preloader');
+    if (!pre) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const seen = sessionStorage.getItem('tk-intro-seen') === '1';
+
+    const finish = () => {
+      pre.remove();
+      document.documentElement.classList.remove('tk-intro-running');
+      window.dispatchEvent(new CustomEvent('tk:intro-done'));
+    };
+
+    if (reduced || seen) {
+      // No show — hero animations start immediately
+      finish();
+      return;
+    }
+
+    // Pause the hero's entrance choreography while the intro plays
+    document.documentElement.classList.add('tk-intro-running');
+    sessionStorage.setItem('tk-intro-seen', '1');
+
+    // Timeline: mark in (0.7s) -> word/tag (1.2s) -> hold -> zoom-through exit
+    setTimeout(() => pre.classList.add('pre-exit'), 2100);
+    setTimeout(finish, 2900);
+  })();
+</script>
+
+<style>
+  .pre-mark {
+    opacity: 0;
+    transform: scale(0.55) rotate(-14deg);
+    animation: preMarkIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  }
+  .pre-word {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: preRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+  }
+  .pre-tag {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: preRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+  }
+  #tk-preloader.pre-exit {
+    animation: preZoomThrough 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  }
+  @keyframes preMarkIn {
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+  @keyframes preRise {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes preZoomThrough {
+    to {
+      opacity: 0;
+      transform: scale(1.12);
+    }
+  }
+</style>

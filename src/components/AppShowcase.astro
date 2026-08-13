@@ -51,15 +51,33 @@ const apps = [
     actionLabel: "Discover Water"
   }
 ];
+
+const marqueeItems = [...apps.map((a) => a.name), "TinyKite Tools"];
 ---
 
-<section id="apps" class="py-32 bg-[#09090b] relative overflow-hidden border-t border-white/5">
-  <div class="container mx-auto px-6 relative z-10">
-    <div class="text-center mb-20 animate-fade-in-up">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-        The TinyKite <span class="text-gray-500">Ecosystem</span>
+<section id="apps" class="bg-brand-cream relative overflow-hidden border-t border-brand-mist">
+  <!-- App marquee -->
+  <div class="border-b border-brand-mist py-5 overflow-hidden marquee" aria-hidden="true">
+    <div class="marquee-track flex items-center gap-8 w-max">
+      {[0, 1].map(() => (
+        <div class="flex items-center gap-8 shrink-0">
+          {marqueeItems.map((name) => (
+            <span class="flex items-center gap-8">
+              <span class="text-brand-navy/70 font-bold text-sm tracking-[0.2em] uppercase whitespace-nowrap">{name}</span>
+              <span class="w-2 h-2 rounded-full bg-brand-gold shrink-0"></span>
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="container mx-auto px-6 relative z-10 py-32">
+    <div class="text-center mb-20 reveal-on-scroll">
+      <h2 class="text-4xl md:text-5xl font-black mb-6 text-brand-navy tracking-tight">
+        The TinyKite <span class="text-brand-slate">Ecosystem</span>
       </h2>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+      <p class="text-brand-slate text-lg max-w-2xl mx-auto leading-relaxed">
         Explore our unified family of AI assistants, beautiful mobile apps, and secure infrastructure.
       </p>
     </div>
@@ -67,23 +85,23 @@ const apps = [
     <!-- Premium Grid Layout -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
       {apps.map((app, index) => (
-        <div class={`animate-fade-in-up stagger-${(index % 4 + 1)}`}>
-          <div class="group relative h-full bg-[#111113] rounded-3xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 flex flex-col hover:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
-            
+        <div class="reveal-on-scroll" style={`transition-delay: ${(index % 3) * 0.15}s`}>
+          <div class="spotlight-card group relative h-full bg-white rounded-3xl border border-brand-mist overflow-hidden hover:border-brand-navy/25 transition-all duration-500 flex flex-col hover:shadow-[0_16px_48px_rgba(11,16,32,0.1)]">
+
             <!-- Logo Area: the app's own icon on a branded glow -->
             <div
-              class="relative aspect-[16/10] overflow-hidden flex items-center justify-center bg-[#0c0c0e]"
-              style={`background-image: radial-gradient(115% 90% at 50% 22%, ${app.accent}30, transparent 68%);`}
+              class="relative aspect-[16/10] overflow-hidden flex items-center justify-center bg-brand-cream/60"
+              style={`background-image: radial-gradient(115% 90% at 50% 22%, ${app.accent}26, transparent 68%);`}
             >
               <img
                 src={app.icon}
                 alt={`${app.name} logo`}
                 width="120"
                 height="120"
-                class="w-[120px] h-[120px] rounded-[24%] shadow-2xl ring-1 ring-white/10 transform group-hover:scale-105 transition duration-500 ease-out"
+                class="w-[120px] h-[120px] rounded-[24%] shadow-xl ring-1 ring-brand-navy/10 transform group-hover:scale-105 group-hover:-rotate-2 transition duration-500 ease-out"
               />
               <div class="absolute top-5 left-5 z-20">
-                <span class="inline-block px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/10">
+                <span class="inline-block px-3 py-1 rounded-full bg-white/80 backdrop-blur-md text-brand-navy text-xs font-bold border border-brand-mist">
                   {app.badge}
                 </span>
               </div>
@@ -91,17 +109,17 @@ const apps = [
 
             <!-- Content Area -->
             <div class="p-8 flex flex-col flex-grow relative z-20">
-              <h3 class="text-2xl font-semibold tracking-tight mb-1 text-white">{app.name}</h3>
-              <p class="text-gray-300 font-medium text-sm tracking-wide mb-4 uppercase">{app.tagline}</p>
-              <p class="text-gray-400 text-[15px] leading-relaxed mb-8 flex-grow">
+              <h3 class="text-2xl font-bold tracking-tight mb-1 text-brand-navy">{app.name}</h3>
+              <p class="text-brand-slate font-bold text-xs tracking-wider mb-4 uppercase">{app.tagline}</p>
+              <p class="text-brand-slate text-[15px] leading-relaxed mb-8 flex-grow">
                 {app.description}
               </p>
 
               <!-- Dynamic Action Links -->
               <div class="mt-auto">
-                <a href={app.actionUrl} class="inline-flex items-center gap-2 font-medium text-sm text-white hover:text-gray-300 transition-colors">
+                <a href={app.actionUrl} class="inline-flex items-center gap-2 font-bold text-sm text-brand-navy hover:text-brand-gold transition-colors">
                   {app.actionLabel}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </a>
               </div>
             </div>
@@ -111,15 +129,15 @@ const apps = [
     </div>
 
     <!-- SEO Tools Secondary Banner -->
-    <div class="max-w-4xl mx-auto text-center animate-fade-in-up stagger-4">
-      <div class="p-8 rounded-2xl bg-[#111113] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="max-w-4xl mx-auto text-center reveal-on-scroll">
+      <div class="p-8 rounded-2xl bg-white border border-brand-mist flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_8px_30px_rgba(11,16,32,0.06)]">
         <div class="text-left">
-          <h4 class="text-xl font-semibold text-white mb-2">Need a quick utility?</h4>
-          <p class="text-gray-400 text-sm">
-            Check out <strong class="text-gray-200">TinyKite Tools</strong>—our free, privacy-first web utilities. We never see your data.
+          <h4 class="text-xl font-bold text-brand-navy mb-2">Need a quick utility?</h4>
+          <p class="text-brand-slate text-sm">
+            Check out <strong class="text-brand-navy">TinyKite Tools</strong>—our free, privacy-first web utilities. We never see your data.
           </p>
         </div>
-        <a href="https://tinykite.co/tools" class="shrink-0 px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-medium transition-colors border border-white/5">
+        <a href="https://tinykite.co/tools" class="shrink-0 px-6 py-3 bg-brand-navy hover:bg-brand-navy-light text-brand-cream rounded-full text-sm font-bold transition-colors">
           Browse Tools
         </a>
       </div>

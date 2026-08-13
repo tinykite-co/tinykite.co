@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Satoshi', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'var(--color-bg)',
@@ -16,6 +16,16 @@ export default {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
         accent: 'var(--color-accent)',
+        brand: {
+          navy: '#0B1020',
+          'navy-light': '#141B33',
+          cream: '#F7F4EE',
+          gold: '#FFB23C',
+          'gold-soft': '#FFD28A',
+          teal: '#2AA48F',
+          slate: '#667085',
+          mist: '#E7E8EB',
+        },
       },
     },
   },
