@@ -1,0 +1,434 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import catalog from "../../data/gloss/features.json";
+
+const { product } = catalog;
+
+/**
+ * Numbers in `stats` are checked against the monorepo (mobile-apps/gloss):
+ * docs/releases.md 0.12.0 and docs/decision-log.md (2026-10-08) for the
+ * re-screened word count, the 0.11.x headword index for suggestions, and the
+ * gloss-content export for pictures. Change them only from those sources.
+ */
+const SUPPORT_EMAIL = "support@tinykite.co";
+const TESTFLIGHT_URL = "https://testflight.apple.com/join/f796KSxZ";
+const PLAY_TESTING_URL = "https://play.google.com/apps/testing/co.tinykite.gloss";
+
+const dollars = (amount: number) => `$${amount.toLocaleString("en-US")}`;
+
+/**
+ * One crowdfunding goal per language edition. Each runs as its own
+ * all-or-nothing campaign, so a language is built only if its own backers
+ * fund it, and nobody pays for an edition that doesn't happen.
+ * TODO(owner): set each `pledgeUrl` when that campaign goes live. While it is
+ * empty the button renders as a disabled placeholder, never a dead link.
+ * TODO(owner): the `buys` lines are scoped from estimates, not quotes;
+ * confirm them against the Vertex AI bill and reviewer rates before launch.
+ */
+const editions = [
+  {
+    id: "uk",
+    name: "British English",
+    who: "UK parents and schools",
+    goal: 10000,
+    buys: [
+      "Pictures for the 5,000 words children look up most",
+      "Paid UK teachers and parents checking those words, pictures and sounds",
+      "A year of servers for the British edition",
+    ],
+    pledgeUrl: "",
+  },
+  {
+    id: "us",
+    name: "American English",
+    who: "US parents and schools",
+    goal: 10000,
+    buys: [
+      "American spellings and pronunciation (color, tomato, schedule)",
+      "American meanings where they differ: pants, football, chips, fall",
+      "Paid US teachers and parents checking the edition",
+    ],
+    pledgeUrl: "",
+  },
+  {
+    id: "hinglish",
+    name: "Hinglish",
+    who: "Hindi-speaking families",
+    goal: 10000,
+    buys: [
+      "Meanings for the 5,000 most-read words, explained the way your family talks: Hindi and English mixed",
+      "Pictures redrawn where the British one doesn’t fit: food, clothes, homes, festivals",
+      "Paid native-speaker parents and teachers checking every entry",
+    ],
+    pledgeUrl: "",
+  },
+  {
+    id: "tenglish",
+    name: "Tenglish",
+    who: "Telugu-speaking families",
+    goal: 10000,
+    buys: [
+      "Meanings for the 5,000 most-read words in Telugu and English mixed",
+      "Culturally right pictures where the British one doesn’t fit",
+      "Paid native-speaker parents and teachers checking every entry",
+    ],
+    pledgeUrl: "",
+  },
+  {
+    id: "tanglish",
+    name: "Tanglish",
+    who: "Tamil-speaking families",
+    goal: 10000,
+    buys: [
+      "Meanings for the 5,000 most-read words in Tamil and English mixed",
+      "Culturally right pictures where the British one doesn’t fit",
+      "Paid native-speaker parents and teachers checking every entry",
+    ],
+    pledgeUrl: "",
+  },
+];
+
+const stats = [
+  { value: "65,019", label: "words in the live dictionary, every one re-checked for young readers on 8 October 2026" },
+  { value: "63,265", label: "words offered as suggestions while a child types" },
+  { value: "1,200+", label: "words with a picture or short clip so far" },
+  { value: "0", label: "ads or trackers, now or ever" },
+];
+
+/** Reward tiers, the same in every edition. `now` arrives the day you pledge; `later` at launch. */
+const rewards = [
+  {
+    price: 10,
+    title: "Early backer",
+    featured: true,
+    now: ["Test your edition first, batch by batch, before it ships", "Vote on which words get pictures first", "Backer updates: what we drew, fixed and spent"],
+    later: ["A year of Gloss Plus for your family", "Your family’s name in the credits"],
+  },
+  {
+    price: 25,
+    title: "Lifetime family",
+    now: ["Everything in Early backer"],
+    later: ["Gloss Plus for your whole household, for life"],
+  },
+  {
+    price: 50,
+    title: "Classroom",
+    now: ["Everything in Early backer", "A call with us about how your class reads"],
+    later: ["Gloss Plus for 30 readers for two years"],
+  },
+  {
+    price: 100,
+    title: "Picture a word",
+    limited: "Limited to 100 per edition",
+    now: ["Everything in Lifetime family", "Choose a word and approve its picture before it ships"],
+    later: ["Credited on that word’s page"],
+  },
+  {
+    price: 500,
+    title: "School patron",
+    now: ["Everything in Picture a word", "Your school or company named as a patron"],
+    later: ["Gloss Plus for a whole school for two years"],
+  },
+];
+
+/**
+ * Starter allowance (no charge, to try Gloss) vs Gloss Plus. Proposals
+ * pending owner sign-off;
+ * the app does not enforce these yet.
+ */
+const allowances = [
+  { feature: "New words looked up", starter: "10 a day", plus: "Unlimited" },
+  { feature: "Words you’ve already looked up", starter: "Always open", plus: "Always open" },
+  { feature: "Hearing a word said aloud", starter: "10 a day", plus: "Unlimited" },
+  { feature: "Flashcards", starter: "1 round a day", plus: "Unlimited" },
+  { feature: "Quizzes", starter: "1 a day", plus: "Unlimited" },
+  { feature: "Readers in the family", starter: "1", plus: "Up to 6" },
+  { feature: "Words synced across phones", starter: "—", plus: "Yes" },
+];
+
+const plusPrices = [
+  { label: "Monthly", price: "$1.99 / £1.99" },
+  { label: "Yearly", price: "$14.99 / £14.99" },
+  { label: "Lifetime, whole family", price: "$29.99 / £29.99" },
+];
+
+const faqs = [
+  {
+    question: "Why is Gloss a paid app?",
+    answer: "Because a good answer costs money every time. Every picture costs image-generation credits, every meaning is checked by a paid person, and the servers run every day. Gloss has no ads and sells no data, so the families who use it are the ones who pay for it. Starter lets a child try it first.",
+  },
+  {
+    question: "Why not £1 or $1 a month?",
+    answer: "We looked at it. After tax and the app stores’ cut, $0.99 leaves us about 70 cents, and refunds and support use most of that. $14.99 a year is about $1.25 a month and pays for far more.",
+  },
+  {
+    question: "What does my child see at the daily limit?",
+    answer: "A plain message that says they’ve used today’s new words and when they come back. No countdowns, no pressure, and no prices. Upgrades are only offered to grown-ups, behind a parental check.",
+  },
+  {
+    question: "What if my language doesn’t reach its goal?",
+    answer: "Each edition is its own all-or-nothing campaign. If it doesn’t reach its goal, nobody who backed it is charged, and we’ll tell you how close it got.",
+  },
+  {
+    question: "What do Hinglish, Tenglish and Tanglish meanings look like?",
+    answer: "The word stays English, because that’s what’s in the book. The meaning is written the way many families actually talk, mixing English with Hindi, Telugu or Tamil, so a child gets it first time. Every entry is written and checked by native speakers, not just translated by a model.",
+  },
+  {
+    question: "Are the pictures made by AI?",
+    answer: "Yes, and we say so. They’re drawn by an image model, checked by a second model, and the doubtful ones go to a person. Every edition pays people to check the words, because a model alone isn’t good enough for children.",
+  },
+  {
+    question: "How will my lifetime plan work on both phones?",
+    answer: "A grown-up redeems the backer code on their TinyKite account, then links readers from the Grown-ups area. The plan follows the account on iPhone and Android. Children never see a code or a price.",
+  },
+  {
+    question: "Is it safe for children?",
+    answer: "Every meaning of every word is checked against a mature-content guide, and grown-up meanings are never shown. Google Play rates Gloss for all ages.",
+  },
+];
+
+const milestones = [
+  { version: "0.2", title: "First test build", body: "Type a word, read one short meaning. Report a problem with one tap." },
+  { version: "0.3", title: "Words you’ve met", body: "A list of the words a reader has met, turned into flashcards." },
+  { version: "0.7", title: "Pictures that are checked", body: "Every picture drawn, checked by a second model, and sent to a person if it still fails." },
+  { version: "0.9", title: "A real dictionary", body: "British-English pronunciation, so read sounds like REED in one meaning and RED in another." },
+  { version: "0.12", title: "Ready for outside testers", body: "All 65,019 live words re-screened for children." },
+];
+---
+
+<Layout
+  title="Back Gloss — TinyKite"
+  description="Back Gloss, the children's picture dictionary with no ads and no tracking. Fund the edition for your family's language: British or American English, Hinglish, Tenglish or Tanglish."
+  image={product.icon}
+>
+  <main class="min-h-screen bg-background gloss-page">
+    <!-- Hero -->
+    <section class="relative pt-32 pb-12 px-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#2a7a66]/8 via-transparent to-transparent pointer-events-none"></div>
+      <div class="container mx-auto max-w-3xl text-center relative z-10">
+        <a href="/gloss/" class="inline-block mb-6">
+          <img src={product.icon} alt="Gloss" width="72" height="72" class="mx-auto rounded-[22.5%] shadow-lg" />
+        </a>
+        <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-3">Back Gloss</p>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
+          Every word a child reads, explained their way<span class="text-[var(--gloss-honey)]">.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8">
+          Gloss is a picture dictionary for children reading real books. The app is built and in beta on iPhone and Android. Only two things stand between it and launch: expensive image-generation credits, and paid people to check every word. Back the edition for your family’s language. From {dollars(rewards[0].price)} you test it first and get a year of Gloss Plus.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a href="#editions" class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
+            Choose your language
+          </a>
+          <a href="#rewards" class="inline-block px-8 py-3 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] font-semibold hover:bg-[#2a7a66]/5 transition-colors">
+            See the rewards
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proof it exists -->
+    <section class="py-10 px-6">
+      <div class="container mx-auto max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-4">
+        {stats.map((stat) => (
+          <div class="rounded-2xl border p-5 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06]">
+            <p class="text-3xl font-bold text-[var(--gloss-sage)] mb-1" style="font-family: 'Lora', serif;">{stat.value}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-snug">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+      <p class="container mx-auto max-w-5xl text-sm text-gray-600 dark:text-gray-400 mt-6">
+        65,019 words, and only about 1,200 pictures. That gap is what you’d be funding.
+      </p>
+    </section>
+
+    <!-- Editions -->
+    <section id="editions" class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Fund your family’s language</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-2xl">
+          A child in Leeds, Ohio or Hyderabad reads the same English word and needs a different explanation. Each edition has its own goal of {dollars(editions[0].goal)}, and each one is built only when its own backers fund it.
+        </p>
+        <p class="text-sm text-gray-500 mb-8 max-w-2xl">
+          <strong class="text-[var(--gloss-honey)]">Scopes are estimates, not quotes.</strong> Backers get a report of what we actually spent.
+        </p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {editions.map((edition) => (
+            <article class="rounded-2xl border p-6 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06] flex flex-col">
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">{edition.who}</p>
+              <div class="flex items-baseline justify-between mb-3">
+                <h3 class="font-semibold text-text text-xl">{edition.name}</h3>
+                <p class="font-bold text-[var(--gloss-sage)]">{dollars(edition.goal)}</p>
+              </div>
+              <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-5">
+                {edition.buys.map((line) => <li>· {line}</li>)}
+              </ul>
+              <div class="mt-auto">
+                {edition.pledgeUrl ? (
+                  <a href={edition.pledgeUrl} class="inline-block px-6 py-2 rounded-full bg-[var(--gloss-sage)] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                    Back {edition.name}
+                  </a>
+                ) : (
+                  <span
+                    class="inline-block px-6 py-2 rounded-full bg-[var(--gloss-sage)]/40 text-white text-sm font-semibold cursor-not-allowed"
+                    aria-disabled="true"
+                    data-todo={`owner: set pledgeUrl for ${edition.id}`}
+                  >
+                    Opens soon
+                  </span>
+                )}
+              </div>
+            </article>
+          ))}
+          <article class="rounded-2xl border border-dashed border-[#2a7a66]/30 p-6 flex flex-col">
+            <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">Your language next?</p>
+            <h3 class="font-semibold text-text text-xl mb-3">Kanglish, Manglish, Benglish…</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">
+              If enough families ask, we’ll open an edition for it. Native speakers who’d write or check entries are especially welcome.
+            </p>
+            <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("A Gloss edition for my language")}`} class="mt-auto text-sm font-semibold text-[var(--gloss-sage)] hover:underline">
+              Ask for your language →
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rewards -->
+    <section id="rewards" class="py-16 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">What backers get</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-10 max-w-2xl">
+          The same rewards in every edition. Some arrive the day you pledge, because the app already works. The rest arrive at launch.
+        </p>
+        <div class="grid md:grid-cols-3 gap-5">
+          {rewards.map((reward) => (
+            <article class={`rounded-2xl border p-6 bg-white dark:bg-white/[0.03] flex flex-col ${reward.featured ? "border-[var(--gloss-sage)] ring-2 ring-[#2a7a66]/20" : "border-gray-100 dark:border-white/[0.06]"}`}>
+              <p class="text-3xl font-bold text-text mb-1" style="font-family: 'Lora', serif;">{dollars(reward.price)}</p>
+              <h3 class="font-semibold text-text text-lg mb-1">{reward.title}</h3>
+              {reward.limited && <p class="text-xs text-[#8a6208] dark:text-[#f2c75c] mb-2">{reward.limited}</p>}
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mt-3 mb-1">Right away</p>
+              <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-3">
+                {reward.now.map((perk) => <li>· {perk}</li>)}
+              </ul>
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">At launch</p>
+              <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                {reward.later.map((perk) => <li>· {perk}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <p class="text-sm text-gray-500 mt-6 max-w-2xl">
+          We credit grown-ups and families, never a child’s full name.
+        </p>
+      </div>
+    </section>
+
+    <!-- Billing model -->
+    <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Gloss Plus, with a small daily taste first.</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-10 max-w-2xl">
+          The campaigns pay to make the pictures and meanings once. Servers cost money every month, so Gloss is a paid app. At launch, Starter lets a child try a few words a day at no charge, and Gloss Plus is the full dictionary. These are the limits we plan to launch with.
+        </p>
+        <div class="overflow-x-auto rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+          <table class="w-full text-sm text-left">
+            <thead>
+              <tr class="border-b border-gray-100 dark:border-white/[0.06]">
+                <th class="p-4 font-semibold text-text"></th>
+                <th class="p-4 font-semibold text-text">Starter</th>
+                <th class="p-4 font-semibold text-[var(--gloss-sage)]">Gloss Plus</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allowances.map((row) => (
+                <tr class="border-b last:border-0 border-gray-100 dark:border-white/[0.06]">
+                  <td class="p-4 text-gray-600 dark:text-gray-400">{row.feature}</td>
+                  <td class="p-4 text-text">{row.starter}</td>
+                  <td class="p-4 text-text">{row.plus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+          {plusPrices.map((plan) => (
+            <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
+              <p class="text-sm text-gray-500">{plan.label}</p>
+              <p class="text-xl font-bold text-[var(--gloss-sage)]" style="font-family: 'Lora', serif;">{plan.price}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-sm text-gray-500 mt-4 max-w-2xl">
+          Local prices in India will be set in rupees. Every backer from {dollars(rewards[0].price)} gets at least a year of Plus.
+        </p>
+      </div>
+    </section>
+
+    <!-- Built so far -->
+    <section class="py-16 px-6">
+      <div class="container mx-auto max-w-3xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Already built</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-10">
+          You’re not backing an idea. Gloss is at version 0.12, and you can try it before you pledge:
+          <a href={TESTFLIGHT_URL} class="text-[var(--gloss-sage)] hover:underline">iPhone beta</a>
+          · <span data-play-url={PLAY_TESTING_URL}>Android beta (UK, coming soon)</span>.
+          {/* TODO(owner): link PLAY_TESTING_URL once Google approves open testing. */}
+        </p>
+        <ol class="relative border-l-2 border-[#2a7a66]/20 ml-3 space-y-8">
+          {milestones.map((milestone) => (
+            <li class="pl-6 relative">
+              <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[var(--gloss-sage)] ring-4 ring-white dark:ring-[#141414]"></span>
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">Version {milestone.version}</p>
+              <h3 class="font-semibold text-text text-lg mb-1">{milestone.title}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{milestone.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-3xl">
+        <h2 class="text-3xl font-bold text-text mb-8" style="font-family: 'Lora', serif;">Questions</h2>
+        <div class="space-y-3">
+          {faqs.map((faq) => (
+            <details class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
+              <summary class="font-semibold text-text cursor-pointer">{faq.question}</summary>
+              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mt-3">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-20 px-6 text-center">
+      <div class="container mx-auto max-w-2xl">
+        <h2 class="text-3xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">Schools, publishers, sponsors</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">
+          Want to sponsor an edition outright, review words as a teacher or native speaker, or bring Gloss to a whole school? A real person reads every email.
+        </p>
+        <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Backing Gloss")}`} class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
+          {SUPPORT_EMAIL}
+        </a>
+        <p class="text-sm text-gray-500 mt-6">
+          <a href="/gloss/" class="hover:underline">About Gloss</a> ·
+          <a href="/gloss/privacy/" class="hover:underline">Privacy</a> ·
+          <a href="/gloss/support/" class="hover:underline">Help</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* Sage & Honey accent, the same tokens as /gloss/. */
+  .gloss-page {
+    --gloss-sage: #2a7a66;
+    --gloss-teal: #387a88;
+    --gloss-honey: #e8a512;
+    --gloss-paper: #f7f3ea;
+  }
+</style>
