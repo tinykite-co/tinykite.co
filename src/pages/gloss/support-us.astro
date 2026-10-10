@@ -1,0 +1,275 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import catalog from "../../data/gloss/features.json";
+
+const { product } = catalog;
+
+/**
+ * Numbers on this page are checked against the monorepo (mobile-apps/gloss):
+ * docs/releases.md 0.12.0 for the re-screened word count, the 0.11.x
+ * headword index for suggestions, and the gloss-content export for pictures.
+ * Change them only from those sources.
+ */
+const SUPPORT_EMAIL = "support@tinykite.co";
+const TESTFLIGHT_URL = "https://testflight.apple.com/join/f796KSxZ";
+const PLAY_TESTING_URL = "https://play.google.com/apps/testing/co.tinykite.gloss";
+
+// TODO(owner): choose the payment provider (Stripe Payment Link, GitHub
+// Sponsors, Open Collective or Ko-fi), then set this to its URL. While it is
+// empty the button renders as a disabled placeholder, never a dead link.
+const DONATE_URL = "";
+
+const mailto = (subject: string) =>
+  `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+
+const stats = [
+  { value: "65,019", label: "words in the live dictionary, every one re-checked for young readers on 8 October 2026" },
+  { value: "63,265", label: "words offered as suggestions while a child types" },
+  { value: "1,200+", label: "words with a picture or short clip so far (out of about 65,000)" },
+  { value: "0", label: "ads, trackers or accounts needed to read" },
+];
+
+const milestones = [
+  { version: "0.2", title: "First test build", body: "On iPhone and Android for invited testers. Type a word, read one short meaning. Report a problem with one tap, without typing anything." },
+  { version: "0.3", title: "Words you’ve met", body: "Gloss keeps a list of the words a reader has met, on the phone, and turns them into flashcards to practise." },
+  { version: "0.4", title: "Optional grown-up sign-in", body: "A grown-up can link a reader to the family, one child at a time, only if they choose to. Reading never needs an account." },
+  { version: "0.7", title: "Pictures that are checked", body: "A rebuilt picture pipeline. Every picture is drawn, then checked by a second model for mistakes, and anything it can’t fix goes to a person." },
+  { version: "0.9", title: "A real dictionary", body: "From a few hundred words to about 15,800, with narrated British-English pronunciation. So read sounds like REED in one meaning and RED in another." },
+  { version: "0.11", title: "Every word as you type", body: "Suggestions cover the whole dictionary, offline too. Words with a grown-up meaning are never suggested." },
+  { version: "0.12", title: "Ready for outside testers", body: "All 65,019 live words re-screened for children. Withdrawn words leave the phone, and deleting an account erases every linked reader’s words first." },
+];
+
+/**
+ * What the money pays for. The scope numbers are real. The costs are
+ * deliberately marked as estimates: the repo has no cost record for the
+ * picture pipeline.
+ * TODO(owner): replace each `estimate` with figures from the Google Cloud
+ * (Vertex AI) bill and the reviewer rate before this page goes live.
+ */
+const budget = [
+  {
+    item: "Pictures for the most-read words",
+    scope: "The 5,000 words children look up most. Each everyday meaning gets a picture or a 4-second clip.",
+    how: "Drawn, checked by a second model, redrawn up to three times. Anything still failing goes to a person.",
+    estimate: "Rough estimate: £3,000–£8,000",
+  },
+  {
+    item: "People reviewing entries",
+    scope: "Teachers, parents and linguists read the most-read entries and their pictures, and fix or flag them.",
+    how: "Paid review sessions, starting with the words children meet first.",
+    estimate: "Rough estimate: £20 per hour; about 50 entries an hour",
+  },
+  {
+    item: "Pictures for the rest of the dictionary",
+    scope: "Every remaining meaning a picture can honestly show. Abstract words like because get a short scene or keep their words-only page.",
+    how: "Same pipeline, in batches, most-read words first.",
+    estimate: "To be estimated once the first 5,000 are costed",
+  },
+];
+
+const ways = [
+  {
+    kind: "donate",
+    title: "Give money",
+    body: "One-off or monthly. Money raised here pays for pictures and review, and we’ll publish what it was spent on.",
+  },
+  {
+    kind: "sponsor",
+    title: "Sponsor our model bill",
+    body: "Gloss’s entries, pictures and safety checks are made with AI models we pay for through Google Cloud and Microsoft Azure. Unused AI credits can’t be handed over to us. Anthropic’s credit terms, for example, don’t allow transfers. If your company can sponsor a month of that bill directly, or has a credits programme we could apply to, please email us.",
+    cta: { label: "Talk to us about sponsoring", href: mailto("Sponsoring the Gloss model bill") },
+  },
+  {
+    kind: "review",
+    title: "Review words or pictures",
+    body: "Are you a teacher, a parent, a speech and language therapist or a linguist? Help us check meanings and pictures in short sessions. Tell us what you’d like to review.",
+    cta: { label: "Volunteer as a reviewer", href: mailto("Volunteering to review Gloss words") },
+  },
+  {
+    kind: "beta",
+    title: "Test the beta",
+    body: "Use Gloss with a real book and tell us what a child got stuck on.",
+  },
+];
+---
+
+<Layout
+  title="Support Gloss — TinyKite"
+  description="Help Gloss, the free children's dictionary with no ads and no tracking, give every word a picture and have its entries checked by people."
+  image={product.icon}
+>
+  <main class="min-h-screen bg-background gloss-page">
+    <!-- Hero -->
+    <section class="relative pt-32 pb-12 px-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#2a7a66]/8 via-transparent to-transparent pointer-events-none"></div>
+      <div class="container mx-auto max-w-3xl text-center relative z-10">
+        <a href="/gloss/" class="inline-block mb-6">
+          <img src={product.icon} alt="Gloss" width="72" height="72" class="mx-auto rounded-[22.5%] shadow-lg" />
+        </a>
+        <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-3">Support Gloss</p>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
+          Help every word get a picture<span class="text-[var(--gloss-honey)]">.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8">
+          Gloss is a free dictionary for children. A child types a few letters of a word from a real book and gets one short meaning they can read. It has no ads, no tracking, and needs no account. We want it to stay that way, and we need help to finish it.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          {DONATE_URL ? (
+            <a href={DONATE_URL} class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
+              Give to Gloss
+            </a>
+          ) : (
+            <span
+              class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)]/40 text-white font-semibold cursor-not-allowed"
+              aria-disabled="true"
+              title="Donations open soon"
+              data-todo="owner: set DONATE_URL"
+            >
+              Donations open soon
+            </span>
+          )}
+          <a href="#ways-to-help" class="inline-block px-8 py-3 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] font-semibold hover:bg-[#2a7a66]/5 transition-colors">
+            Other ways to help
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where things stand -->
+    <section class="py-10 px-6">
+      <div class="container mx-auto max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-4">
+        {stats.map((stat) => (
+          <div class="rounded-2xl border p-5 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06]">
+            <p class="text-3xl font-bold text-[var(--gloss-sage)] mb-1" style="font-family: 'Lora', serif;">{stat.value}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-snug">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+      <p class="container mx-auto max-w-5xl text-xs text-gray-500 mt-3">
+        Picture count taken from our content export of 11 September 2026.
+      </p>
+    </section>
+
+    <!-- What has been built -->
+    <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-3xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">What we’ve built so far</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-10">
+          Gloss is in beta on iPhone and Android, at version 0.12. These are the steps that got it here, taken from our release notes.
+        </p>
+        <ol class="relative border-l-2 border-[#2a7a66]/20 ml-3 space-y-8">
+          {milestones.map((milestone) => (
+            <li class="pl-6 relative">
+              <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[var(--gloss-sage)] ring-4 ring-[var(--gloss-paper)] dark:ring-[#141414]"></span>
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">Version {milestone.version}</p>
+              <h3 class="font-semibold text-text text-lg mb-1">{milestone.title}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{milestone.body}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="mt-10 rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6">
+          <h3 class="font-semibold text-text mb-2">Kept safe for children</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Every meaning of every word is checked against a mature-content guide. Grown-up meanings are held back and never shown, so “wine” is a colour and “gun” is a glue gun. Google Play rates Gloss for all ages. We’re also applying to Google Play’s Teacher Approved programme.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What the money funds -->
+    <section class="py-16 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">What your support pays for</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-2xl">
+          Two things, both for children. A picture for every word a picture can show, because a young reader understands “heron” faster from a heron than from a sentence. And people checking the words, because a model can be confident and wrong.
+        </p>
+        <p class="text-sm text-gray-500 mb-8 max-w-2xl">
+          <strong class="text-[var(--gloss-honey)]">These costs are early estimates, not quotes.</strong> We’ll replace them with real figures from our bills and publish what we spend.
+        </p>
+        <div class="grid md:grid-cols-3 gap-5">
+          {budget.map((line) => (
+            <article class="rounded-2xl border p-6 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06] flex flex-col">
+              <h3 class="font-semibold text-text text-lg mb-2">{line.item}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-2">{line.scope}</p>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">{line.how}</p>
+              <p class="mt-auto inline-block self-start text-xs px-2.5 py-1 rounded-full bg-[#e8a512]/15 text-[#8a6208] dark:text-[#f2c75c]">
+                {line.estimate}
+              </p>
+            </article>
+          ))}
+        </div>
+        <p class="text-sm text-gray-500 mt-6 max-w-2xl">
+          What money will never buy: ads, tracking, a say over what a word means, or a paywall in front of a word.
+        </p>
+      </div>
+    </section>
+
+    <!-- Ways to help -->
+    <section id="ways-to-help" class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-text mb-10" style="font-family: 'Lora', serif;">Ways to help</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          {ways.map((way) => (
+            <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6">
+              <h3 class="font-semibold text-text text-lg mb-2">{way.title}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">{way.body}</p>
+              {way.cta && (
+                <a href={way.cta.href} class="text-sm font-semibold text-[var(--gloss-sage)] hover:underline">
+                  {way.cta.label} →
+                </a>
+              )}
+              {way.kind === "donate" && (
+                DONATE_URL ? (
+                  <a href={DONATE_URL} class="text-sm font-semibold text-[var(--gloss-sage)] hover:underline">Give to Gloss →</a>
+                ) : (
+                  <p class="text-sm text-gray-500" data-todo="owner: set DONATE_URL">
+                    Donations open soon. Until then, email <a href={mailto("Supporting Gloss")} class="text-[var(--gloss-sage)] hover:underline">{SUPPORT_EMAIL}</a>.
+                  </p>
+                )
+              )}
+              {way.kind === "beta" && (
+                <ul class="space-y-2 text-sm">
+                  <li>
+                    <a href={TESTFLIGHT_URL} class="font-semibold text-[var(--gloss-sage)] hover:underline">iPhone: join the TestFlight beta →</a>
+                  </li>
+                  <li class="text-gray-500" data-play-url={PLAY_TESTING_URL}>
+                    Android: open testing on Google Play is coming soon.
+                    {/* TODO(owner): link PLAY_TESTING_URL once open testing is live. */}
+                  </li>
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-20 px-6 text-center">
+      <div class="container mx-auto max-w-2xl">
+        <h2 class="text-3xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">Questions, or a bigger idea?</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">
+          Schools, publishers, libraries and companies are welcome to get in touch. A real person reads every email.
+        </p>
+        <a href={mailto("Supporting Gloss")} class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
+          {SUPPORT_EMAIL}
+        </a>
+        <p class="text-sm text-gray-500 mt-6">
+          <a href="/gloss/" class="hover:underline">About Gloss</a> ·
+          <a href="/gloss/privacy/" class="hover:underline">Privacy</a> ·
+          <a href="/gloss/support/" class="hover:underline">Help</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* Sage & Honey accent, the same tokens as /gloss/. */
+  .gloss-page {
+    --gloss-sage: #2a7a66;
+    --gloss-teal: #387a88;
+    --gloss-honey: #e8a512;
+    --gloss-paper: #f7f3ea;
+  }
+</style>
