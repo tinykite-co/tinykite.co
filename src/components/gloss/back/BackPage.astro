@@ -1,0 +1,38 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import catalog from "../../../data/gloss/features.json";
+import { BACK_HUB_PATH, BACKER_PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from "../../../lib/gloss/campaign";
+
+/** The frame every backing page shares: layout, Gloss colours, footer links. */
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const { product } = catalog;
+---
+
+<Layout title={title} description={description} image={product.icon}>
+  <main class="min-h-screen bg-background gloss-page">
+    <slot />
+    <footer class="py-12 px-6 text-center text-sm text-gray-500">
+      <a href="/gloss/" class="hover:underline">About Gloss</a> ·
+      <a href={BACK_HUB_PATH} class="hover:underline">All languages</a> ·
+      <a href={TERMS_PATH} class="hover:underline">Terms</a> ·
+      <a href="/gloss/privacy/" class="hover:underline">Privacy</a> ·
+      <a href={BACKER_PRIVACY_PATH} class="hover:underline">Backer privacy</a> ·
+      <a href={`mailto:${SUPPORT_EMAIL}`} class="hover:underline">{SUPPORT_EMAIL}</a>
+    </footer>
+  </main>
+</Layout>
+
+<style is:global>
+  /* Sage & Honey accent, the same tokens as /gloss/. */
+  .gloss-page {
+    --gloss-sage: #2a7a66;
+    --gloss-teal: #387a88;
+    --gloss-honey: #e8a512;
+    --gloss-paper: #f7f3ea;
+  }
+</style>

@@ -1,0 +1,349 @@
+{
+  "campaignId": "gloss-languages-2026",
+  "currency": "usd",
+  "siteBaseUrl": "https://tinykite.co",
+  "closesOn": null,
+  "tiers": [
+    {
+      "id": "early-backer",
+      "price": 10,
+      "title": "Early backer",
+      "limitPerLanguage": null,
+      "now": [
+        "A thank-you email with the iPhone and Android beta links",
+        "A vote on which words we do first",
+        "A monthly update: what we drew, what we checked, what it cost"
+      ],
+      "later": [
+        "A year of Gloss Plus for your family",
+        "Your family’s name in the app’s thank-you list, if you want it there"
+      ]
+    },
+    {
+      "id": "lifetime-family",
+      "price": 25,
+      "title": "Lifetime family",
+      "limitPerLanguage": null,
+      "now": [
+        "Everything in Early backer"
+      ],
+      "later": [
+        "Gloss Plus for everyone in your household, for life"
+      ]
+    },
+    {
+      "id": "classroom",
+      "price": 50,
+      "title": "Classroom",
+      "limitPerLanguage": null,
+      "now": [
+        "Everything in Early backer",
+        "A call with us about how your class reads"
+      ],
+      "later": [
+        "Gloss Plus for 30 children for two years"
+      ]
+    },
+    {
+      "id": "picture-a-word",
+      "price": 100,
+      "title": "Choose a word",
+      "limitPerLanguage": 50,
+      "now": [
+        "Everything in Lifetime family",
+        "Pick a word, and see and approve its picture before anyone else"
+      ],
+      "later": [
+        "Your family thanked on that word’s page"
+      ]
+    },
+    {
+      "id": "patron",
+      "price": 500,
+      "title": "Patron",
+      "limitPerLanguage": null,
+      "now": [
+        "Everything in Choose a word",
+        "Your school, company or family named as a patron of this language"
+      ],
+      "later": [
+        "Gloss Plus for a whole school for two years"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "slug": "british-english",
+      "name": "British English",
+      "who": "For families in the UK",
+      "goal": 10000,
+      "promise": "Finish the dictionary British children already use: a checked picture for every word a child looks up most.",
+      "roots": null,
+      "forFun": null,
+      "builtIntro": "This is the part of Gloss that already works best.",
+      "built": [
+        {
+          "title": "65,019 words, each one checked for children",
+          "body": "On 8 October 2026 we re-checked every word against a guide for what is suitable for children. Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+        },
+        {
+          "title": "Nearly every word can be heard",
+          "body": "A British pronunciation for each way a word is said, stored on the phone so it plays offline. “Read” says REED in one meaning and RED in another."
+        },
+        {
+          "title": "One meaning at four depths",
+          "body": "Simple, More, Deeper and All. A six-year-old and a ten-year-old both get a meaning they can read."
+        },
+        {
+          "title": "Suggestions as you type, offline",
+          "body": "Type two letters and Gloss suggests from 63,265 words, without internet."
+        }
+      ],
+      "samplesIntro": "Pictures are the gap. 1,200 words have one. A child understands “heron” faster from a heron than from a sentence.",
+      "samples": [],
+      "buys": [
+        "A checked picture for each of the 5,000 words British children look up most",
+        "UK teachers and parents, paid to check those words, their pictures and their sounds",
+        "A year of servers for the British dictionary"
+      ],
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "classroom": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "screenshot": {
+        "src": "/gloss/screenshots/app/03-duck-article.png",
+        "alt": "Gloss showing the word duck: a picture, a short meaning, the Hindi word बतख़, and four depths of meaning"
+      }
+    },
+    {
+      "slug": "american-english",
+      "name": "American English",
+      "who": "For families in the US",
+      "goal": 10000,
+      "promise": "Gloss speaks British English today. Fund the American dictionary: American spellings, an American voice, and American meanings.",
+      "roots": null,
+      "forFun": "An American child reading Roald Dahl or Harry Potter meets jumper, torch and biscuit. With both dictionaries, Gloss explains the British word in American terms.",
+      "builtIntro": "Everything in the British dictionary already works on an American phone. What’s missing is America.",
+      "built": [
+        {
+          "title": "65,019 words, each one checked for children",
+          "body": "Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+        },
+        {
+          "title": "Nearly every word can be heard",
+          "body": "In a British voice today. The American dictionary gets an American one."
+        },
+        {
+          "title": "One meaning at four depths",
+          "body": "Simple, More, Deeper and All, so every age gets a meaning they can read."
+        }
+      ],
+      "samplesIntro": "The same word can mean something else in each country. Today, an American child gets the British answer.",
+      "samples": [
+        {
+          "word": "pants",
+          "lines": [
+            "British: underwear.",
+            "American: trousers."
+          ]
+        },
+        {
+          "word": "chips",
+          "lines": [
+            "British: hot fried potato sticks, what Americans call fries.",
+            "American: thin, crunchy potato slices, what the British call crisps."
+          ]
+        },
+        {
+          "word": "color",
+          "lines": [
+            "American spelling. Today Gloss knows it as colour."
+          ]
+        }
+      ],
+      "buys": [
+        "American spellings and an American voice for the most-read 5,000 words",
+        "American meanings wherever they differ from British ones",
+        "US teachers and parents, paid to check the American dictionary"
+      ],
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "classroom": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "screenshot": null
+    },
+    {
+      "slug": "hinglish",
+      "name": "Hinglish",
+      "who": "For families who speak Hindi, in India and around the world",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained the way your family talks, with the Hindi word beside them.",
+      "roots": "Your child reads “uncle” at school. At home there’s chacha, mama, tau, and more. Gloss shows the English word and the Hindi ones together, so the words from Dadi’s house aren’t lost to a school book.",
+      "forFun": "A child in Leeds whose best friend speaks Hindi can tap “duck”, see बतख़, read it as batakh, and hear it said by a Hindi voice. One new word a day, for fun.",
+      "builtIntro": "Hindi already works in Gloss, on a small set of test words. This is what it does today:",
+      "built": [
+        {
+          "title": "The Hindi word, beside the English one",
+          "body": "Open “duck” and a Hindi chip shows बतख़. Tap it for the Hindi page, written in Devanagari with Roman spelling (batakh)."
+        },
+        {
+          "title": "Said by a Hindi voice",
+          "body": "बतख़ is said in Hindi and duck in English, from recordings stored on the phone, so they play offline."
+        },
+        {
+          "title": "Words English doesn’t have",
+          "body": "“Uncle” shows five Hindi words, each saying which uncle: चाचा, मामा and more. जुगाड़ gets an explanation, because English has no word for it."
+        }
+      ],
+      "samplesIntro": "Today’s Hindi was written by a model and hasn’t been checked by native speakers yet. This campaign pays for that check, and for meanings written in Hinglish. Here is the kind of entry we mean:",
+      "samples": [
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest matlab fasal kaatna. Jab khet mein gehun pak jaata hai, kisaan use kaat kar ghar laate hain.",
+            "Baisakhi aur Lohri harvest ke tyohaar hain."
+          ],
+          "picture": "A wheat field at Baisakhi, not an English combine harvester."
+        },
+        {
+          "word": "uncle",
+          "lines": [
+            "Papa ke chhote bhai: chacha (चाचा). Mummy ke bhai: mama (मामा)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Hindi speakers, paid to check every Hindi word and recording already in Gloss",
+        "Hinglish meanings for the 5,000 words children look up most",
+        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+      ],
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "classroom": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "screenshot": {
+        "src": "/gloss/screenshots/app/03-duck-article.png",
+        "alt": "Gloss showing the word duck, with a chip for the Hindi word बतख़"
+      }
+    },
+    {
+      "slug": "tenglish",
+      "name": "Tenglish",
+      "who": "For families who speak Telugu, in India and around the world",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained the way your family talks, with the Telugu word beside them.",
+      "roots": "Your child reads “uncle” at school. At home there’s babai, mamayya, and more. With Tenglish, Gloss will show the English word and the Telugu ones together, so the words from Ammamma’s house aren’t lost to a school book.",
+      "forFun": "A child in Leeds whose best friend speaks Telugu can tap “duck”, see బాతు, and hear it said by a Telugu voice. One new word a day, for fun.",
+      "builtIntro": "Telugu already works in Gloss, on a few test words. This is what it does today:",
+      "built": [
+        {
+          "title": "The Telugu word, beside the English one",
+          "body": "Open “duck”, open its translations, and tap బాతు for the Telugu page, with Roman spelling."
+        },
+        {
+          "title": "Said by a Telugu voice",
+          "body": "Many phones can’t speak Telugu at all, so Gloss stores the recording on the phone. It plays offline."
+        }
+      ],
+      "samplesIntro": "Today’s Telugu was written by a model and hasn’t been checked by native speakers yet. This campaign pays for that check, and for meanings written in Tenglish. Here is the kind of entry we mean:",
+      "samples": [
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest ante panta koyyadam. Polam lo vari pandaaka, raitulu daanni kosi intiki teestaaru.",
+            "Sankranti mana harvest pandaga."
+          ],
+          "picture": "Paddy fields at Sankranti, not an English wheat field."
+        },
+        {
+          "word": "uncle",
+          "lines": [
+            "Nanna tammudu: babai (బాబాయ్). Amma tammudu: mamayya (మామయ్య)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Telugu speakers, paid to check every Telugu word and recording already in Gloss",
+        "Tenglish meanings for the 5,000 words children look up most",
+        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+      ],
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "classroom": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "screenshot": null
+    },
+    {
+      "slug": "tanglish",
+      "name": "Tanglish",
+      "who": "For families who speak Tamil, in India and around the world",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained the way your family talks, with the Tamil word beside them.",
+      "roots": "Your child reads “uncle” at school. At home there’s chithappa, maama, and more. With Tanglish, Gloss will show the English word and the Tamil ones together, so the words from Paati’s house aren’t lost to a school book.",
+      "forFun": "With Tanglish, a child in Leeds whose best friend speaks Tamil will be able to tap “duck”, see வாத்து, and hear it said in Tamil. One new word a day, for fun.",
+      "builtIntro": "Tamil is the least built of the three. Gloss has only a couple of Tamil words today. What is ready is everything around them:",
+      "built": [
+        {
+          "title": "Tamil as a reader’s language",
+          "body": "A reader can choose Tamil, and Gloss keeps Tamil and English words apart, so a grandparent can read in Tamil and a child in English on the same phone."
+        },
+        {
+          "title": "Recordings on the phone",
+          "body": "Many phones can’t speak Tamil, so Gloss is built to store each word’s recording on the phone. This campaign pays for the recordings."
+        }
+      ],
+      "samplesIntro": "Gloss has almost no Tamil yet. This campaign pays native speakers to write it, with meanings in Tanglish. Here is the kind of entry we mean:",
+      "samples": [
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest na aruvadai. Vayal la nel vilanjadhum, vivasaayigal adha aruthu veetukku kondu varuvaanga.",
+            "Pongal namma aruvadai thiruvizha."
+          ],
+          "picture": "Paddy fields and a Pongal pot, not an English wheat field."
+        },
+        {
+          "word": "uncle",
+          "lines": [
+            "Appa voda thambi: chithappa (சித்தப்பா). Amma voda thambi: maama (மாமா)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Tamil speakers, paid to write and check the Tamil words Gloss doesn’t have yet",
+        "Tanglish meanings for the 5,000 words children look up most",
+        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+      ],
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "classroom": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "screenshot": null
+    }
+  ]
+}

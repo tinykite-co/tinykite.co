@@ -1,0 +1,49 @@
+---
+import { dollars, pledgeLink, SUPPORT_EMAIL, type Language, type Tier } from "../../../lib/gloss/campaign";
+
+/**
+ * The reward tiers for one language. A tier's button is a real link only when
+ * Stripe has a pledge link for it and the campaign has a closing date; until
+ * then it says so plainly and offers an email instead of a dead button.
+ */
+interface Props {
+  language: Language;
+  tiers: Tier[];
+  closesOn: string | null;
+}
+
+const { language, tiers, closesOn } = Astro.props;
+const notifyHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Tell me when ${language.name} opens`)}`;
+---
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+  {tiers.map((tier, index) => {
+    const href = pledgeLink(language, tier.id, closesOn);
+    return (
+      <article class={`rounded-2xl border p-6 bg-white dark:bg-white/[0.03] flex flex-col ${index === 0 ? "border-[var(--gloss-sage)] ring-2 ring-[#2a7a66]/20" : "border-gray-100 dark:border-white/[0.06]"}`}>
+        <p class="text-3xl font-bold text-text mb-1" style="font-family: 'Lora', serif;">{dollars(tier.price)}</p>
+        <h3 class="font-semibold text-text text-lg mb-1">{tier.title}</h3>
+        {tier.limitPerLanguage && <p class="text-xs text-[#8a6208] dark:text-[#f2c75c]">Only {tier.limitPerLanguage} for {language.name}</p>}
+        <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mt-4 mb-1">Straight away</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-3">
+          {tier.now.map((perk) => <li>· {perk}</li>)}
+        </ul>
+        <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">When Gloss launches</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-6">
+          {tier.later.map((perk) => <li>· {perk}</li>)}
+        </ul>
+        <div class="mt-auto">
+          {href ? (
+            <a href={href} class="inline-block px-6 py-2 rounded-full bg-[var(--gloss-sage)] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+              Back with {dollars(tier.price)}
+            </a>
+          ) : (
+            <a href={notifyHref} class="inline-block px-6 py-2 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] text-sm font-semibold hover:bg-[#2a7a66]/5 transition-colors">
+              Tell me when it opens
+            </a>
+          )}
+        </div>
+      </article>
+    );
+  })}
+</div>

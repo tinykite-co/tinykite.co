@@ -1,0 +1,185 @@
+---
+import BackPage from "../../../components/gloss/back/BackPage.astro";
+import BackingRules from "../../../components/gloss/back/BackingRules.astro";
+import GoalProgress from "../../../components/gloss/back/GoalProgress.astro";
+import PlusPlans from "../../../components/gloss/back/PlusPlans.astro";
+import { campaign, dollars, languagePath, PLAY_TESTING_URL, SUPPORT_EMAIL, TESTFLIGHT_URL } from "../../../lib/gloss/campaign";
+
+/**
+ * The hub for the language campaigns. Numbers are checked against the
+ * monorepo (mobile-apps/gloss): docs/releases.md 0.12.0 and
+ * docs/decision-log.md (2026-10-08) for the re-checked word count, the
+ * headword index for suggestions, and the gloss-content export for pictures.
+ * Change them only from those sources.
+ */
+const DUCK_SCREENSHOT = "/gloss/screenshots/app/03-duck-article.png";
+
+const { languages, tiers, closesOn } = campaign;
+const lowestPrice = Math.min(...tiers.map((tier) => tier.price));
+
+const proof = [
+  { value: "65,019", label: "words, each re-checked for children on 8 October 2026" },
+  { value: "63,265", label: "words suggested as a child types, offline" },
+  { value: "1,200+", label: "words with a picture so far" },
+  { value: "0", label: "ads or trackers" },
+];
+
+const highlights = [
+  { title: "“Read” says REED, and RED", body: "Each meaning has its own pronunciation, so a child hears the one that fits the sentence." },
+  { title: "Only the meanings a child should see", body: "“Wine” is a colour. “Gun” is a glue gun. Adult meanings never show." },
+  { title: "The family’s word beside the English one", body: "“Duck” shows बतख़ (batakh), said by a Hindi voice. “Uncle” shows which uncle: चाचा or मामा." },
+];
+
+const faqs = [
+  {
+    question: "Why should I pay for a dictionary?",
+    answer: "Because each good answer costs money. Pictures cost image-generation credits, every meaning is checked by a paid person, and the servers run every day. Gloss has no ads and sells no data, so the families who use it pay for it.",
+  },
+  {
+    question: "Why one campaign per language?",
+    answer: "A child in Leeds, Ohio or Hyderabad reads the same English word and needs a different explanation. Each language is built only if its own families fund it, and nobody pays for one that doesn’t happen.",
+  },
+  {
+    question: "What are Hinglish, Tenglish and Tanglish meanings?",
+    answer: "The word stays English, because that’s what’s in the book. The meaning is written the way many families talk at home, mixing English with Hindi, Telugu or Tamil, so a child understands it first time.",
+  },
+  {
+    question: "Are the pictures made by AI?",
+    answer: "Yes. An image model draws them, a second model checks them, and doubtful ones go to a person. Most of what you fund is people: native speakers and teachers who check the words.",
+  },
+  {
+    question: "How do I get Gloss Plus as a reward?",
+    answer: "We email the grown-up who backed. They sign in to their TinyKite account in the app’s Grown-ups area, and Plus follows that account on iPhone and Android. Children never see a code or a price.",
+  },
+];
+---
+
+<BackPage
+  title="Back Gloss — TinyKite"
+  description="Gloss is a picture dictionary for children reading real books. Back the language your family reads in: British or American English, Hinglish, Tenglish or Tanglish."
+>
+  <!-- Hero -->
+  <section class="relative pt-32 pb-12 px-6">
+    <div class="container mx-auto max-w-5xl grid md:grid-cols-[1fr_16rem] gap-10 items-center">
+      <div>
+        <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-3">Back Gloss</p>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
+          A child taps a word and understands it<span class="text-[var(--gloss-honey)]">.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+          Gloss is a picture dictionary for children reading real books. It works today on iPhone and Android. Help us finish it in the language your family reads in. Backing starts at {dollars(lowestPrice)}.
+        </p>
+        <a href="#languages" class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">Choose a language</a>
+      </div>
+      <figure>
+        <img src={DUCK_SCREENSHOT} alt="Gloss showing the word duck: a picture, a short meaning, and the Hindi word बतख़" width="1170" height="2532" class="w-full max-w-[16rem] mx-auto rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-lg" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- What already works -->
+  <section class="py-12 px-6">
+    <div class="container mx-auto max-w-5xl">
+      <h2 class="text-3xl font-bold text-text mb-6" style="font-family: 'Lora', serif;">What already works</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {proof.map((stat) => (
+          <div class="rounded-2xl border p-5 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06]">
+            <p class="text-3xl font-bold text-[var(--gloss-sage)] mb-1" style="font-family: 'Lora', serif;">{stat.value}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-snug">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {highlights.map((item) => (
+          <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6">
+            <h3 class="font-semibold text-text mb-2">{item.title}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 mt-8">
+        Try it before you back it: <a href={TESTFLIGHT_URL} class="text-[var(--gloss-sage)] font-semibold hover:underline">iPhone beta</a> ·
+        <a href={PLAY_TESTING_URL} class="text-[var(--gloss-sage)] font-semibold hover:underline">Android beta (UK)</a>.
+        What’s missing is pictures for most words, and people paid to check every word in every language.
+      </p>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class="container mx-auto max-w-5xl grid md:grid-cols-2 gap-5">
+      <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6">
+        <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">For families far from home</p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Children of immigrant families learn to read in English at school. The words from home slip away a little each year. Gloss puts the family’s word beside the English one. For Hindi it already does: a child reading “uncle” sees चाचा and मामा. Backing brings that to Telugu and Tamil: babai, chithappa.</p>
+      </div>
+      <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6">
+        <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">For everyone else</p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">A child whose best friend speaks Telugu can learn బాతు means duck, and hear it said. A word a day from a friend’s language, picked up from books they’re already reading.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Languages -->
+  <section id="languages" class="py-16 px-6">
+    <div class="container mx-auto max-w-5xl">
+      <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">Choose a language</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">Each language has its own goal. If it isn’t reached, everyone who backed it gets their money back.</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {languages.map((language) => (
+          <a href={languagePath(language)} class="group rounded-2xl border p-6 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06] hover:border-[var(--gloss-sage)] transition-colors flex flex-col">
+            <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">{language.who}</p>
+            <h3 class="font-semibold text-text text-xl mb-2">{language.name}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">{language.promise}</p>
+            <div class="mt-auto">
+              <GoalProgress language={language} closesOn={closesOn} />
+              <p class="text-sm font-semibold text-[var(--gloss-sage)] mt-4 group-hover:underline">See {language.name} →</p>
+            </div>
+          </a>
+        ))}
+        <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("A Gloss campaign for my language")}`} class="rounded-2xl border border-dashed border-[#2a7a66]/30 p-6 flex flex-col">
+          <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-1">Your language next?</p>
+          <h3 class="font-semibold text-text text-xl mb-2">Kannada, Malayalam, Bengali…</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">If enough families ask, we’ll open it. Native speakers who would check words are especially welcome.</p>
+          <p class="mt-auto text-sm font-semibold text-[var(--gloss-sage)]">Ask for your language →</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rules -->
+  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class="text-3xl font-bold text-text mb-6" style="font-family: 'Lora', serif;">How backing works</h2>
+      <BackingRules />
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="py-16 px-6">
+    <div class="container mx-auto max-w-5xl">
+      <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">What Gloss will cost</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
+        Backing pays to make the pictures and meanings once. Running Gloss costs money every month, so after the beta it’s a paid app. Starter lets a child try a few words a day at no charge. Gloss Plus is the whole dictionary. Every backer gets at least a year of Plus.
+      </p>
+      <PlusPlans />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class="text-3xl font-bold text-text mb-8" style="font-family: 'Lora', serif;">Questions</h2>
+      <div class="space-y-3">
+        {faqs.map((faq) => (
+          <details class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
+            <summary class="font-semibold text-text cursor-pointer">{faq.question}</summary>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mt-3">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 mt-8">
+        Schools, publishers or sponsors who’d like to fund a whole language: <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Sponsoring a Gloss language")}`} class="text-[var(--gloss-sage)] font-semibold hover:underline">{SUPPORT_EMAIL}</a>. A real person reads every email.
+      </p>
+    </div>
+  </section>
+</BackPage>

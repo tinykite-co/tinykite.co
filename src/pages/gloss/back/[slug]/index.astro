@@ -1,0 +1,149 @@
+---
+import BackPage from "../../../../components/gloss/back/BackPage.astro";
+import BackingRules from "../../../../components/gloss/back/BackingRules.astro";
+import GoalProgress from "../../../../components/gloss/back/GoalProgress.astro";
+import PledgeTiers from "../../../../components/gloss/back/PledgeTiers.astro";
+import { BACK_HUB_PATH, campaign, dollars, isOpen, type Language } from "../../../../lib/gloss/campaign";
+
+/** One page per language campaign, generated from campaigns.json. */
+export function getStaticPaths() {
+  return campaign.languages.map((language) => ({ params: { slug: language.slug }, props: { language } }));
+}
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const { tiers, closesOn } = campaign;
+const open = isOpen(language, closesOn);
+const otherLanguages = campaign.languages.filter((other) => other.slug !== language.slug);
+const sectionTitle = "text-3xl font-bold text-text mb-3";
+const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
+---
+
+<BackPage
+  title={`Back ${language.name} in Gloss — TinyKite`}
+  description={`${language.promise} Goal ${dollars(language.goal)}. If it isn’t reached, every backer is refunded.`}
+>
+  <!-- Hero -->
+  <section class="relative pt-32 pb-12 px-6">
+    <div class="container mx-auto max-w-3xl">
+      <a href={BACK_HUB_PATH} class="text-sm text-[var(--gloss-sage)] hover:underline">← All languages</a>
+      <p class="text-[var(--gloss-teal)] font-medium tracking-wide uppercase text-sm mt-6 mb-2">{language.who}</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-5 text-text" style="font-family: 'Lora', serif;">
+        Back {language.name}<span class="text-[var(--gloss-honey)]">.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">{language.promise}</p>
+      <div class={card}>
+        <GoalProgress language={language} closesOn={closesOn} />
+        <a href="#back" class="inline-block mt-5 px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
+          {open ? `Back ${language.name}` : "See the rewards"}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it matters -->
+  {(language.roots || language.forFun) && (
+    <section class="py-12 px-6">
+      <div class="container mx-auto max-w-3xl">
+        <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Why it matters</h2>
+        <div class="grid md:grid-cols-2 gap-5 mt-6">
+          {language.roots && (
+            <div class={card}>
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">Keep your family’s words</p>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{language.roots}</p>
+            </div>
+          )}
+          {language.forFun && (
+            <div class={card}>
+              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">Or learn one for fun</p>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{language.forFun}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Already built -->
+  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class={`container mx-auto ${language.screenshot ? "max-w-5xl grid md:grid-cols-[1fr_16rem] gap-10 items-start" : "max-w-3xl"}`}>
+      <div>
+        <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Already working</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">{language.builtIntro}</p>
+        <div class="space-y-4">
+          {language.built.map((item) => (
+            <div class={card}>
+              <h3 class="font-semibold text-text mb-1">{item.title}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {language.screenshot && (
+        <figure>
+          <img src={language.screenshot.src} alt={language.screenshot.alt} width="1170" height="2532" loading="lazy" class="w-full rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-lg" />
+          <figcaption class="text-xs text-gray-500 mt-2 text-center">Gloss 0.12 on iPhone</figcaption>
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <!-- What's missing, with samples -->
+  <section class="py-12 px-6">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">What your money adds</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">{language.samplesIntro}</p>
+      {language.samples.length > 0 && (
+        <div class="space-y-4 mb-8">
+          {language.samples.map((sample) => (
+            <div class={card}>
+              <p class="text-xl font-semibold text-text mb-2" style="font-family: 'Lora', serif;">{sample.word}</p>
+              {sample.lines.map((line) => <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{line}</p>)}
+              {sample.picture && <p class="text-sm text-gray-500 mt-3">Picture: {sample.picture}</p>}
+            </div>
+          ))}
+          <p class="text-xs text-gray-500">Examples written by us to show the idea. Native speakers will check and rewrite them before anything ships.</p>
+        </div>
+      )}
+      <p class="font-semibold text-text mb-2">{dollars(language.goal)} pays for:</p>
+      <ul class="text-gray-600 dark:text-gray-400 space-y-1">
+        {language.buys.map((line) => <li>· {line}</li>)}
+      </ul>
+      <p class="text-sm text-gray-500 mt-4">These are estimates, not quotes. Every backer gets a report of what we actually spent.</p>
+    </div>
+  </section>
+
+  <!-- Rewards -->
+  <section id="back" class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class="container mx-auto max-w-5xl">
+      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Back {language.name}</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
+        Some rewards arrive the day you back, because Gloss already works. The rest arrive when Gloss launches. We thank grown-ups and families by name, never a child.
+      </p>
+      <PledgeTiers language={language} tiers={tiers} closesOn={closesOn} />
+    </div>
+  </section>
+
+  <!-- Rules -->
+  <section class="py-12 px-6">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">How backing works</h2>
+      <div class="mt-6"><BackingRules /></div>
+    </div>
+  </section>
+
+  <!-- Other languages -->
+  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+    <div class="container mx-auto max-w-3xl">
+      <h2 class="text-2xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">Other languages</h2>
+      <p class="flex flex-wrap gap-3">
+        {otherLanguages.map((other) => (
+          <a href={`${BACK_HUB_PATH}${other.slug}/`} class="px-4 py-2 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] text-sm font-semibold hover:bg-[#2a7a66]/5">{other.name}</a>
+        ))}
+      </p>
+    </div>
+  </section>
+</BackPage>
