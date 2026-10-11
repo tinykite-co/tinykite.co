@@ -35,6 +35,62 @@ export interface TierName {
   meaning?: string;
 }
 
+/** A published source a page cites; every number on a page names one. */
+export interface Citation {
+  label: string;
+  url: string;
+}
+
+/** How many words in one chapter a child of [age] does not know yet. */
+export interface ChapterRow {
+  age: number;
+  /** Median across the books measured. */
+  unknownWords: number;
+  /** The book with the fewest such words, and the most. */
+  low: number;
+  high: number;
+  /** Share of a chapter's running words a child of this age already knows. */
+  knownPercent: number;
+}
+
+/**
+ * Our own measurement of new words per chapter, shared by every page that
+ * tells the reading story so the numbers live in one place. Story text
+ * refers to it with placeholders such as `{unknownWordsAt9}`.
+ */
+export interface ReadingEvidence {
+  method: string;
+  rows: ChapterRow[];
+  notes: string[];
+  caveat: string;
+  citations: Citation[];
+}
+
+export interface StorySection {
+  title: string;
+  body: string;
+  citations?: Citation[];
+}
+
+export interface ComparisonRow {
+  traditional: string;
+  gloss: string;
+}
+
+/**
+ * The reading story an English page tells, in order: the moment a child
+ * meets a word, the risk of handing over a phone, why a traditional
+ * dictionary doesn't serve a child, pictures, depths, and practice.
+ */
+export interface Story {
+  moment: StorySection;
+  risk: StorySection;
+  dictionary: StorySection & { rows: ComparisonRow[] };
+  pictures: StorySection;
+  depths: StorySection;
+  practice: { title: string; today: string[]; next: string[] };
+}
+
 export interface Language {
   slug: string;
   name: string;
@@ -51,9 +107,23 @@ export interface Language {
   screenshot: Screenshot | null;
   /** Per-tier names for this language; a tier without one uses its generic title. */
   tierNames?: Record<string, TierName>;
+  /** The reading story; languages without one show only the campaign sections. */
+  story?: Story;
   pledgeLinks: Record<string, string>;
   raised: number;
   backers: number;
+}
+
+/**
+ * The language whose real build is the basis for every other language's cost
+ * estimate. It is the only language another language's page may name.
+ */
+export interface CostReference {
+  slug: string;
+  /** What that language already has, in one sentence. */
+  built: string;
+  /** What has gone into it so far; null until the owner states it, and then nothing is shown. */
+  investedUsd: number | null;
 }
 
 export interface Campaign {
@@ -64,6 +134,8 @@ export interface Campaign {
   closesOn: string | null;
   tiers: Tier[];
   languages: Language[];
+  costReference: CostReference;
+  readingEvidence: ReadingEvidence;
 }
 
 export const BACK_HUB_PATH = "/gloss/back/";
@@ -87,10 +159,77 @@ export function validateCampaign(campaign: Campaign): Campaign {
       if (link && !link.startsWith("https://")) throw new Error(`${language.slug}: pledge link must be https`);
     }
   }
+  validateCostReference(campaign);
+  validateReadingEvidence(campaign.readingEvidence);
+  for (const language of campaign.languages) {
+    if (language.story) validateStory(language.slug, language.story, campaign.readingEvidence);
+  }
   if (campaign.closesOn && Number.isNaN(Date.parse(campaign.closesOn))) {
     throw new Error(`closesOn is not a date: ${campaign.closesOn}`);
   }
   return campaign;
+}
+
+function validateCostReference(campaign: Campaign): void {
+  const { slug, investedUsd } = campaign.costReference;
+  if (!campaign.languages.some((language) => language.slug === slug)) {
+    throw new Error(`costReference: unknown language ${slug}`);
+  }
+  if (investedUsd !== null && investedUsd <= 0) throw new Error("costReference: investedUsd must be positive");
+}
+
+function validateReadingEvidence(evidence: ReadingEvidence): void {
+  if (evidence.rows.length === 0) throw new Error("readingEvidence: no rows");
+  for (const row of evidence.rows) {
+    if (!(row.low <= row.unknownWords && row.unknownWords <= row.high)) {
+      throw new Error(`readingEvidence: age ${row.age} median is outside its range`);
+    }
+    if (row.knownPercent <= 0 || row.knownPercent > 100) {
+      throw new Error(`readingEvidence: age ${row.age} known percent must be in (0, 100]`);
+    }
+  }
+  validateCitations("readingEvidence", evidence.citations);
+}
+
+function validateCitations(where: string, citations: Citation[] = []): void {
+  for (const citation of citations) {
+    if (!citation.url.startsWith("https://")) throw new Error(`${where}: citation ${citation.label} must be https`);
+  }
+}
+
+/** Every story string must fill: a typo'd placeholder fails the build, not the page. */
+function validateStory(slug: string, story: Story, evidence: ReadingEvidence): void {
+  const sections = [story.moment, story.risk, story.dictionary, story.pictures, story.depths];
+  const texts = [
+    ...sections.flatMap((section) => [section.title, section.body]),
+    ...story.dictionary.rows.flatMap((row) => [row.traditional, row.gloss]),
+    story.practice.title,
+    ...story.practice.today,
+    ...story.practice.next,
+  ];
+  for (const text of texts) fillEvidence(text, evidence);
+  for (const section of sections) validateCitations(slug, section.citations);
+}
+
+const EVIDENCE_PLACEHOLDER = /\{(unknownWords|knownPercent)At(\d+)\}/g;
+
+/**
+ * Replaces `{unknownWordsAt9}` / `{knownPercentAt7}` with the measured
+ * number for that age. Throws on an age with no row or any other `{…}`.
+ */
+export function fillEvidence(text: string, evidence: ReadingEvidence): string {
+  const filled = text.replace(EVIDENCE_PLACEHOLDER, (_match, field: "unknownWords" | "knownPercent", age: string) => {
+    const row = evidence.rows.find((candidate) => candidate.age === Number(age));
+    if (!row) throw new Error(`readingEvidence has no row for age ${age}`);
+    return String(row[field]);
+  });
+  if (/[{}]/.test(filled)) throw new Error(`unknown placeholder in: ${text}`);
+  return filled;
+}
+
+/** Every language but the reference is priced from the reference, and says so. */
+export function isPricedFromReference(language: Language, campaign: Campaign): boolean {
+  return language.slug !== campaign.costReference.slug;
 }
 
 /** What this language calls a tier: its own name if it has one, else the generic title. */

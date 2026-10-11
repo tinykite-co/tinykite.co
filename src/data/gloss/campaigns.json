@@ -77,33 +77,26 @@
       "name": "British English",
       "who": "For families in the UK",
       "goal": 10000,
-      "promise": "Finish the dictionary British children already use: a checked picture for every word a child looks up most.",
+      "promise": "The safe dictionary for the words in your child’s books: a checked picture, a voice, and an explanation they can read.",
       "roots": null,
       "forFun": null,
-      "builtIntro": "This is the part of Gloss that already works best.",
+      "builtIntro": "Gloss is in public testing on iPhone and Android, and the British dictionary is the part that works best.",
       "built": [
         {
-          "title": "65,019 words, each one checked for children",
-          "body": "On 8 October 2026 we re-checked every word against a guide for what is suitable for children. Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+          "title": "Works without the internet",
+          "body": "Every word, its sounds, and suggestions from 63,265 words as your child types are on the phone, so Gloss works on a plane or a train with no signal."
         },
         {
-          "title": "Nearly every word can be heard",
-          "body": "A British pronunciation for each way a word is said, stored on the phone so it plays offline. “Read” says REED in one meaning and RED in another."
-        },
-        {
-          "title": "One meaning at four depths",
-          "body": "Simple, More, Deeper and All. A six-year-old and a ten-year-old both get a meaning they can read."
-        },
-        {
-          "title": "Suggestions as you type, offline",
-          "body": "Type two letters and Gloss suggests from 63,265 words, without internet."
+          "title": "Checked again on 8 October 2026",
+          "body": "We re-checked all 65,019 words against a guide for what is suitable for children."
         }
       ],
-      "samplesIntro": "Pictures are the gap. 1,200 words have one. A child understands “heron” faster from a heron than from a sentence.",
+      "samplesIntro": "Pictures are the gap: 1,200 words have one. Your backing pays for the next 5,000, and for the games that bring words back.",
       "samples": [],
       "buys": [
         "A checked picture for each of the 5,000 words British children look up most",
         "UK teachers and parents, paid to check those words, their pictures and their sounds",
+        "A crossword and a letter-tile game built from each child’s own words",
         "A year of servers for the British dictionary"
       ],
       "pledgeLinks": {
@@ -117,7 +110,7 @@
       "backers": 0,
       "screenshot": {
         "src": "/gloss/screenshots/app/03-duck-article.png",
-        "alt": "Gloss showing the word duck: a picture, a short meaning, the Hindi word बतख़, and four depths of meaning"
+        "alt": "Gloss showing the word duck: a picture, a short meaning, and four depths of meaning"
       },
       "tierNames": {
         "early-backer": {
@@ -135,6 +128,89 @@
         "patron": {
           "name": "Patron"
         }
+      },
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} times a chapter, a nine-year-old meets a word they don’t know yet",
+          "body": "“What does bewilderment mean?” It is in the first chapter of The Secret Garden, with dozens like it. A seven-year-old meets about {unknownWordsAt7} in a chapter. A child who skips them loses the story. A child who has to stop and ask, again and again, often stops reading."
+        },
+        "risk": {
+          "title": "So you hand over the phone",
+          "body": "A child who won’t open a paper dictionary will happily type into a search box. Then come image results, videos and adverts that were never made for them. In a 2022 survey of American teenagers, 15% said they first saw pornography online at 10 or younger, and 58% of those who had seen it said they had come across it by accident. Gloss is the screen you can hand over instead: 65,019 words checked for children, no adverts, no web results, and it shows you how to lock the tablet to Gloss with the phone’s own Guided Access or screen pinning.",
+          "citations": [
+            {
+              "label": "Common Sense Media, Teens and Pornography (survey of 1,358 US teens aged 13–17, September 2022)",
+              "url": "https://www.commonsensemedia.org/press-releases/new-report-reveals-truths-about-how-teens-engage-with-pornography"
+            }
+          ]
+        },
+        "dictionary": {
+          "title": "Dictionaries were made for grown-ups",
+          "body": "The first English dictionary, Robert Cawdrey’s Table Alphabeticall of 1604, explained “hard usual English words” to adult readers. Dictionaries written for children came much later — the Thorndike-Century Junior Dictionary of 1935, built on a count of the words children actually meet, is one of the best known — and they made the words simpler. The form stayed the same: a list of written definitions, at one level, for everybody. Our own children, and their friends, didn’t open it. This is what changes when a dictionary is built for a child from the start.",
+          "citations": [
+            {
+              "label": "Cawdrey’s Table Alphabeticall (1604), University of Toronto notes on early English dictionaries",
+              "url": "https://cpercy.artsci.utoronto.ca/courses/EarlyModernEnglishDictionaries.htm"
+            },
+            {
+              "label": "The Thorndike-Century Junior Dictionary (1935), Indiana University Lilly Library",
+              "url": "https://blogs.libraries.indiana.edu/lilly/2023/10/19/just-say-the-word/"
+            }
+          ],
+          "rows": [
+            {
+              "traditional": "Explains a word with harder words",
+              "gloss": "Explains it in words easier than the word itself"
+            },
+            {
+              "traditional": "Pronunciation in symbols a child can’t read",
+              "gloss": "Tap to hear it — the right sound for each meaning: “read” is REED or RED"
+            },
+            {
+              "traditional": "Every meaning, including the grown-up ones",
+              "gloss": "Grown-up meanings never shown: “wine” is a colour"
+            },
+            {
+              "traditional": "One level for everyone",
+              "gloss": "Four depths: Simple, More, Deeper and All"
+            },
+            {
+              "traditional": "A few line drawings, if any",
+              "gloss": "A checked picture for the meaning your child is reading"
+            },
+            {
+              "traditional": "Stays on the shelf",
+              "gloss": "Remembers every word your child looked up, and brings it back to practise"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A picture isn’t a shortcut",
+          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and cricket bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships. 1,200 words have one today; this campaign pays for 5,000.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        },
+        "depths": {
+          "title": "Easy explanations, and the hard ones too",
+          "body": "Simple, More, Deeper and All: the same meaning written four ways. A seven-year-old who finds reading hard starts at Simple. A confident eleven-year-old opens All and meets the full grown-up definition, safely. Every child starts where they are and steps up when they are ready — that is how the muscle builds."
+        },
+        "practice": {
+          "title": "Looking a word up is only half the job",
+          "today": [
+            "Every word your child looks up is saved to their own reader, on the phone",
+            "Flashcards: turn it over, say “Knew it” or “Still learning”, and the stumbles come first",
+            "A picture quiz: see the picture, pick the word",
+            "No streaks and no timers, so there is nothing to lose by taking a month off"
+          ],
+          "next": [
+            "A crossword built only from the words your child already knows",
+            "A letter-tile word game that plays with your child’s own words"
+          ]
+        }
       }
     },
     {
@@ -142,51 +218,48 @@
       "name": "American English",
       "who": "For families in the US",
       "goal": 10000,
-      "promise": "Gloss speaks British English today. Fund the American dictionary: American spellings, an American voice, and American meanings.",
+      "promise": "The safe dictionary for the words in your kid’s books — in American English, with an American voice.",
       "roots": null,
-      "forFun": "An American child reading Roald Dahl or Harry Potter meets jumper, torch and biscuit. With both dictionaries, Gloss explains the British word in American terms.",
-      "builtIntro": "Everything in the British dictionary already works on an American phone. What’s missing is America.",
+      "forFun": "Harry Potter gets a hand-knitted jumper for Christmas. British books are full of words like it — biscuit, torch, rubber, queue — and Gloss will explain each one in words an American kid already knows: sweater, cookie, flashlight, eraser, line.",
+      "builtIntro": "Gloss is in public testing on iPhone and Android. It learned English in Britain, so this is what an American kid sees today:",
       "built": [
         {
-          "title": "65,019 words, each one checked for children",
-          "body": "Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+          "title": "Works without the internet",
+          "body": "Every word, its sounds, and suggestions as your kid types are on the phone, so Gloss works with no signal."
         },
         {
-          "title": "Nearly every word can be heard",
-          "body": "In a British voice today. The American dictionary gets an American one."
-        },
-        {
-          "title": "One meaning at four depths",
-          "body": "Simple, More, Deeper and All, so every age gets a meaning they can read."
+          "title": "A British voice and British spelling",
+          "body": "Every word can be heard today, in a British voice. This campaign adds an American one."
         }
       ],
-      "samplesIntro": "The same word can mean something else in each country. Today, an American child gets the British answer.",
+      "samplesIntro": "Some words change when they cross the Atlantic, and Gloss doesn’t know that yet:",
       "samples": [
         {
           "word": "pants",
           "lines": [
-            "British: underwear.",
-            "American: trousers."
+            "In America: trousers.",
+            "Gloss today: underwear."
           ]
         },
         {
           "word": "chips",
           "lines": [
-            "British: hot fried potato sticks, what Americans call fries.",
-            "American: thin, crunchy potato slices, what the British call crisps."
+            "In America: thin, crunchy potato slices.",
+            "Gloss today: hot fries."
           ]
         },
         {
           "word": "color",
           "lines": [
-            "American spelling. Today Gloss knows it as colour."
+            "Gloss today only knows it spelled colour."
           ]
         }
       ],
       "buys": [
         "American spellings and an American voice for the most-read 5,000 words",
-        "American meanings wherever they differ from British ones",
-        "US teachers and parents, paid to check the American dictionary"
+        "American meanings for every word where America means something else",
+        "US teachers and parents, paid to check the American dictionary",
+        "A crossword and a letter-tile game built from each kid’s own words"
       ],
       "pledgeLinks": {
         "early-backer": "",
@@ -213,6 +286,85 @@
         },
         "patron": {
           "name": "Patron"
+        }
+      },
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} times a chapter, a 4th grader meets a word they don’t know yet",
+          "body": "“What does bewilderment mean?” It is in the first chapter of The Secret Garden, with dozens like it. A 2nd grader meets about {unknownWordsAt7} in a chapter. A kid who skips them loses the story. A kid who has to stop and ask, again and again, often stops reading."
+        },
+        "risk": {
+          "title": "So you hand over the phone",
+          "body": "A kid who won’t open a paper dictionary will happily type into a search box. Then come image results, videos and ads that were never made for them. In a 2022 survey of US teens, 15% said they first saw pornography online at 10 or younger, and 58% of those who had seen it said they had come across it by accident. Gloss is the screen you can hand over instead: 65,019 words checked for kids, no ads, no web results, and it shows you how to lock the tablet to Gloss with the phone’s own Guided Access or screen pinning.",
+          "citations": [
+            {
+              "label": "Common Sense Media, Teens and Pornography (survey of 1,358 US teens aged 13–17, September 2022)",
+              "url": "https://www.commonsensemedia.org/press-releases/new-report-reveals-truths-about-how-teens-engage-with-pornography"
+            }
+          ]
+        },
+        "dictionary": {
+          "title": "Dictionaries were made for grown-ups",
+          "body": "Noah Webster’s American Dictionary of 1828 was written for adults, like the English dictionaries before it. Dictionaries written for kids came a century later — the Thorndike-Century Junior Dictionary of 1935, built on a count of the words kids actually meet and a fixture of American classrooms for decades, is one of the best known — and they made the words simpler. The form stayed the same: a list of written definitions, at one level, for everybody. Our own kids, and their friends, didn’t open it. This is what changes when a dictionary is built for a kid from the start.",
+          "citations": [
+            {
+              "label": "The Thorndike-Century Junior Dictionary (1935), Indiana University Lilly Library",
+              "url": "https://blogs.libraries.indiana.edu/lilly/2023/10/19/just-say-the-word/"
+            }
+          ],
+          "rows": [
+            {
+              "traditional": "Explains a word with harder words",
+              "gloss": "Explains it in words easier than the word itself"
+            },
+            {
+              "traditional": "Pronunciation in symbols a kid can’t read",
+              "gloss": "Tap to hear it — the right sound for each meaning: “read” is REED or RED"
+            },
+            {
+              "traditional": "Every meaning, including the grown-up ones",
+              "gloss": "Grown-up meanings never shown: “wine” is a color"
+            },
+            {
+              "traditional": "One level for everyone",
+              "gloss": "Four depths: Simple, More, Deeper and All"
+            },
+            {
+              "traditional": "A few line drawings, if any",
+              "gloss": "A checked picture for the meaning your kid is reading"
+            },
+            {
+              "traditional": "Stays on the shelf",
+              "gloss": "Remembers every word your kid looked up, and brings it back to practice"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A picture isn’t a shortcut",
+          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and baseball bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        },
+        "depths": {
+          "title": "Easy explanations, and the hard ones too",
+          "body": "Simple, More, Deeper and All: the same meaning written four ways. A 2nd grader who finds reading hard starts at Simple. A confident 6th grader opens All and meets the full grown-up definition, safely. Every kid starts where they are and steps up when they are ready — that is how the muscle builds."
+        },
+        "practice": {
+          "title": "Looking a word up is only half the job",
+          "today": [
+            "Every word your kid looks up is saved to their own reader, on the phone",
+            "Flashcards: flip it, tap “Knew it” or “Still learning”, and the stumbles come first",
+            "A picture quiz: see the picture, pick the word",
+            "No streaks and no timers, so there is nothing to lose by taking a month off"
+          ],
+          "next": [
+            "A crossword built only from the words your child already knows",
+            "A letter-tile word game that plays with your child’s own words"
+          ]
         }
       }
     },
@@ -259,7 +411,7 @@
       "buys": [
         "Native Hindi speakers, paid to check every Hindi word and recording already in Gloss",
         "Hinglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "Pictures redrawn wherever today’s picture doesn’t fit your family’s home: food, clothes, homes, festivals"
       ],
       "pledgeLinks": {
         "early-backer": "",
@@ -336,7 +488,7 @@
       "buys": [
         "Native Telugu speakers, paid to check every Telugu word and recording already in Gloss",
         "Tenglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "Pictures redrawn wherever today’s picture doesn’t fit your family’s home: food, clothes, homes, festivals"
       ],
       "pledgeLinks": {
         "early-backer": "",
@@ -379,7 +531,7 @@
       "promise": "English words from your child’s books, explained the way your family talks, with the Tamil word beside them.",
       "roots": "Your child reads “uncle” at school. At home there’s chithappa, maama, and more. With Tanglish, Gloss will show the English word and the Tamil ones together, so the words from Paati’s house aren’t lost to a school book.",
       "forFun": "With Tanglish, a child in Leeds whose best friend speaks Tamil will be able to tap “duck”, see வாத்து, and hear it said in Tamil. One new word a day, for fun.",
-      "builtIntro": "Tamil is the least built of the three. Gloss has only a couple of Tamil words today. What is ready is everything around them:",
+      "builtIntro": "Tamil is just starting in Gloss, with only a couple of Tamil words today. What is ready is everything around them:",
       "built": [
         {
           "title": "Tamil as a reader’s language",
@@ -410,7 +562,7 @@
       "buys": [
         "Native Tamil speakers, paid to write and check the Tamil words Gloss doesn’t have yet",
         "Tanglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "Pictures redrawn wherever today’s picture doesn’t fit your family’s home: food, clothes, homes, festivals"
       ],
       "pledgeLinks": {
         "early-backer": "",
@@ -445,5 +597,60 @@
         }
       }
     }
-  ]
+  ],
+  "costReference": {
+    "slug": "british-english",
+    "built": "We built British English first: 65,019 words checked for children, nearly every word spoken, 63,265 words suggested offline, and 1,200 pictures.",
+    "investedUsd": null
+  },
+  "readingEvidence": {
+    "method": "We took ten children’s novels anyone can read for free — Alice’s Adventures in Wonderland, Peter Pan, The Secret Garden, The Jungle Book, Black Beauty, The Wonderful Wizard of Oz, The Railway Children, Anne of Green Gables, Pollyanna and The Wind in the Willows — cut each into chapters of 2,500 words, and counted the words in each chapter that most children learn only after a given age.",
+    "rows": [
+      {
+        "age": 7,
+        "unknownWords": 131,
+        "low": 103,
+        "high": 226,
+        "knownPercent": 91
+      },
+      {
+        "age": 9,
+        "unknownWords": 47,
+        "low": 31,
+        "high": 103,
+        "knownPercent": 97
+      },
+      {
+        "age": 11,
+        "unknownWords": 16,
+        "low": 7,
+        "high": 37,
+        "knownPercent": 99
+      }
+    ],
+    "notes": [
+      "To follow a story on your own, you need to know about 98% of its words; at 95% there is a stranger every 20 words (Hu & Nation, 2000).",
+      "The middle child in a study of ten- and eleven-year-olds read books for 4.6 minutes a day — about 282,000 words a year. The child at the top tenth read 21.1 minutes, about 1.8 million words (Anderson, Wilson & Fielding, 1988).",
+      "Our own rough sum: 282,000 words is about 113 chapters, and at {unknownWordsAt9} new words a chapter that is some 5,000 times a year a child stops at a word."
+    ],
+    "caveat": "Each number is the middle book; the range is the easiest and the hardest. These are older books, and modern ones may have fewer hard words. The ages are adults’ ratings of when they learned each word, so they are averages, not tests of your child. Names are not counted, and a word counts once per chapter.",
+    "citations": [
+      {
+        "label": "Kuperman, Stadthagen-González & Brysbaert (2012), age-of-acquisition ratings for 30,000 English words",
+        "url": "https://doi.org/10.3758/s13428-012-0210-4"
+      },
+      {
+        "label": "The books, from Project Gutenberg",
+        "url": "https://www.gutenberg.org/"
+      },
+      {
+        "label": "Hu & Nation (2000) on 98% coverage, summarised in a replication study",
+        "url": "https://aila2021.dryfta.com/program/abstract-archive/abstract/public/416/unknown-vocabulary-density-reading-comprehension-and-the-98-coverage-figure-replicating-hu-nation-2000"
+      },
+      {
+        "label": "Anderson, Wilson & Fielding (1988), Reading Research Quarterly 23 — table via Corwin",
+        "url": "https://resources.corwin.com/sites/default/files/Figure_6.2_0.pdf"
+      }
+    ]
+  }
 }

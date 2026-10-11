@@ -3,7 +3,8 @@ import BackPage from "../../../../components/gloss/back/BackPage.astro";
 import BackingRules from "../../../../components/gloss/back/BackingRules.astro";
 import GoalProgress from "../../../../components/gloss/back/GoalProgress.astro";
 import PledgeTiers from "../../../../components/gloss/back/PledgeTiers.astro";
-import { BACK_HUB_PATH, campaign, dollars, isOpen, type Language } from "../../../../lib/gloss/campaign";
+import ReadingStory from "../../../../components/gloss/back/ReadingStory.astro";
+import { BACK_HUB_PATH, campaign, dollars, isOpen, isPricedFromReference, type Language } from "../../../../lib/gloss/campaign";
 
 /** One page per language campaign, generated from campaigns.json. */
 export function getStaticPaths() {
@@ -18,7 +19,8 @@ const { language } = Astro.props;
 const { tiers, closesOn } = campaign;
 const open = isOpen(language, closesOn);
 const hasTranslatedTierNames = Object.values(language.tierNames ?? {}).some((named) => named.meaning);
-const otherLanguages =campaign.languages.filter((other) => other.slug !== language.slug);
+const { costReference, readingEvidence } = campaign;
+const pricedFromReference = isPricedFromReference(language, campaign);
 const sectionTitle = "text-3xl font-bold text-text mb-3";
 const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
 ---
@@ -44,6 +46,8 @@ const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-whi
       </div>
     </div>
   </section>
+
+  {language.story && <ReadingStory story={language.story} evidence={readingEvidence} />}
 
   <!-- Why it matters -->
   {(language.roots || language.forFun) && (
@@ -114,6 +118,15 @@ const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-whi
         {language.buys.map((line) => <li>· {line}</li>)}
       </ul>
       <p class="text-sm text-gray-500 mt-4">These are estimates, not quotes. Every backer gets a report of what we actually spent.</p>
+      {pricedFromReference && (
+        <div class={`${card} mt-8`}>
+          <h3 class="font-semibold text-text mb-2">How we priced this</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            {costReference.built} What that took is how we estimated what {language.name} will cost.
+            {costReference.investedUsd !== null && ` So far we have put ${dollars(costReference.investedUsd)} into it.`}
+          </p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -139,15 +152,4 @@ const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-whi
     </div>
   </section>
 
-  <!-- Other languages -->
-  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
-    <div class="container mx-auto max-w-3xl">
-      <h2 class="text-2xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">Other languages</h2>
-      <p class="flex flex-wrap gap-3">
-        {otherLanguages.map((other) => (
-          <a href={`${BACK_HUB_PATH}${other.slug}/`} class="px-4 py-2 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] text-sm font-semibold hover:bg-[#2a7a66]/5">{other.name}</a>
-        ))}
-      </p>
-    </div>
-  </section>
 </BackPage>
