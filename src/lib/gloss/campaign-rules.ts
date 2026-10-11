@@ -29,6 +29,12 @@ export interface Screenshot {
   alt: string;
 }
 
+/** A tier's name in one language's campaign, with its English meaning when it isn't English. */
+export interface TierName {
+  name: string;
+  meaning?: string;
+}
+
 export interface Language {
   slug: string;
   name: string;
@@ -43,6 +49,8 @@ export interface Language {
   samples: Sample[];
   buys: string[];
   screenshot: Screenshot | null;
+  /** Per-tier names for this language; a tier without one uses its generic title. */
+  tierNames?: Record<string, TierName>;
   pledgeLinks: Record<string, string>;
   raised: number;
   backers: number;
@@ -72,7 +80,7 @@ export function validateCampaign(campaign: Campaign): Campaign {
   const tierIds = new Set(campaign.tiers.map((tier) => tier.id));
   for (const language of campaign.languages) {
     if (language.goal <= 0) throw new Error(`${language.slug}: goal must be positive`);
-    for (const tierId of Object.keys(language.pledgeLinks)) {
+    for (const tierId of [...Object.keys(language.pledgeLinks), ...Object.keys(language.tierNames ?? {})]) {
       if (!tierIds.has(tierId)) throw new Error(`${language.slug}: unknown tier ${tierId}`);
     }
     for (const link of Object.values(language.pledgeLinks)) {
@@ -83,6 +91,11 @@ export function validateCampaign(campaign: Campaign): Campaign {
     throw new Error(`closesOn is not a date: ${campaign.closesOn}`);
   }
   return campaign;
+}
+
+/** What this language calls a tier: its own name if it has one, else the generic title. */
+export function tierName(language: Language, tier: Tier): TierName {
+  return language.tierNames?.[tier.id] ?? { name: tier.title };
 }
 
 export function dollars(amount: number): string {

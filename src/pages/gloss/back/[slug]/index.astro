@@ -17,7 +17,8 @@ interface Props {
 const { language } = Astro.props;
 const { tiers, closesOn } = campaign;
 const open = isOpen(language, closesOn);
-const otherLanguages = campaign.languages.filter((other) => other.slug !== language.slug);
+const hasTranslatedTierNames = Object.values(language.tierNames ?? {}).some((named) => named.meaning);
+const otherLanguages =campaign.languages.filter((other) => other.slug !== language.slug);
 const sectionTitle = "text-3xl font-bold text-text mb-3";
 const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
 ---
@@ -124,6 +125,9 @@ const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-whi
         Some rewards arrive the day you back, because Gloss already works. The rest arrive when Gloss launches. We thank grown-ups and families by name, never a child.
       </p>
       <PledgeTiers language={language} tiers={tiers} closesOn={closesOn} />
+      {hasTranslatedTierNames && (
+        <p class="text-xs text-gray-500 mt-4">Reward names are written the way your family would say them, with the English meaning beside them. Native speakers will check them, along with every other word.</p>
+      )}
     </div>
   </section>
 

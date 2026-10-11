@@ -22,26 +22,26 @@
     {
       "id": "lifetime-family",
       "price": 25,
-      "title": "Lifetime family",
+      "title": "Family for life",
       "limitPerLanguage": null,
       "now": [
-        "Everything in Early backer"
+        "Everything in the $10 reward"
       ],
       "later": [
         "Gloss Plus for everyone in your household, for life"
       ]
     },
     {
-      "id": "classroom",
+      "id": "gift-a-family",
       "price": 50,
-      "title": "Classroom",
+      "title": "Gift a family",
       "limitPerLanguage": null,
       "now": [
-        "Everything in Early backer",
-        "A call with us about how your class reads"
+        "Everything in the $10 reward"
       ],
       "later": [
-        "Gloss Plus for 30 children for two years"
+        "Gloss Plus for life for your household",
+        "And for one more family you choose: grandchildren abroad, cousins back home, a friend’s child"
       ]
     },
     {
@@ -50,7 +50,7 @@
       "title": "Choose a word",
       "limitPerLanguage": 50,
       "now": [
-        "Everything in Lifetime family",
+        "Everything in the $50 reward",
         "Pick a word, and see and approve its picture before anyone else"
       ],
       "later": [
@@ -63,11 +63,11 @@
       "title": "Patron",
       "limitPerLanguage": null,
       "now": [
-        "Everything in Choose a word",
-        "Your school, company or family named as a patron of this language"
+        "Everything in the $100 reward",
+        "Your family named as a patron of this language, in the app and on this page"
       ],
       "later": [
-        "Gloss Plus for a whole school for two years"
+        "Gloss Plus for life for up to 10 families you choose"
       ]
     }
   ],
@@ -109,7 +109,7 @@
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
-        "classroom": "",
+        "gift-a-family": "",
         "picture-a-word": "",
         "patron": ""
       },
@@ -118,6 +118,23 @@
       "screenshot": {
         "src": "/gloss/screenshots/app/03-duck-article.png",
         "alt": "Gloss showing the word duck: a picture, a short meaning, the Hindi word बतख़, and four depths of meaning"
+      },
+      "tierNames": {
+        "early-backer": {
+          "name": "First reader"
+        },
+        "lifetime-family": {
+          "name": "Family for life"
+        },
+        "gift-a-family": {
+          "name": "Gift a family"
+        },
+        "picture-a-word": {
+          "name": "Name a word"
+        },
+        "patron": {
+          "name": "Patron"
+        }
       }
     },
     {
@@ -174,13 +191,30 @@
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
-        "classroom": "",
+        "gift-a-family": "",
         "picture-a-word": "",
         "patron": ""
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": null
+      "screenshot": null,
+      "tierNames": {
+        "early-backer": {
+          "name": "First reader"
+        },
+        "lifetime-family": {
+          "name": "Family for life"
+        },
+        "gift-a-family": {
+          "name": "Gift a family"
+        },
+        "picture-a-word": {
+          "name": "Name a word"
+        },
+        "patron": {
+          "name": "Patron"
+        }
+      }
     },
     {
       "slug": "hinglish",
@@ -230,7 +264,7 @@
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
-        "classroom": "",
+        "gift-a-family": "",
         "picture-a-word": "",
         "patron": ""
       },
@@ -239,6 +273,28 @@
       "screenshot": {
         "src": "/gloss/screenshots/app/03-duck-article.png",
         "alt": "Gloss showing the word duck, with a chip for the Hindi word बतख़"
+      },
+      "tierNames": {
+        "early-backer": {
+          "name": "Dost",
+          "meaning": "Friend"
+        },
+        "lifetime-family": {
+          "name": "Parivaar",
+          "meaning": "Family"
+        },
+        "gift-a-family": {
+          "name": "Tohfa",
+          "meaning": "Gift"
+        },
+        "picture-a-word": {
+          "name": "Apna shabd",
+          "meaning": "Your own word"
+        },
+        "patron": {
+          "name": "Shubhchintak",
+          "meaning": "Well-wisher"
+        }
       }
     },
     {
@@ -285,13 +341,35 @@
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
-        "classroom": "",
+        "gift-a-family": "",
         "picture-a-word": "",
         "patron": ""
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": null
+      "screenshot": null,
+      "tierNames": {
+        "early-backer": {
+          "name": "Nestham",
+          "meaning": "Friend"
+        },
+        "lifetime-family": {
+          "name": "Kutumbam",
+          "meaning": "Family"
+        },
+        "gift-a-family": {
+          "name": "Kaanuka",
+          "meaning": "Gift"
+        },
+        "picture-a-word": {
+          "name": "Mee maata",
+          "meaning": "Your word"
+        },
+        "patron": {
+          "name": "Shreyobhilaashi",
+          "meaning": "Well-wisher"
+        }
+      }
     },
     {
       "slug": "tanglish",
@@ -337,13 +415,35 @@
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
-        "classroom": "",
+        "gift-a-family": "",
         "picture-a-word": "",
         "patron": ""
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": null
+      "screenshot": null,
+      "tierNames": {
+        "early-backer": {
+          "name": "Nanban",
+          "meaning": "Friend"
+        },
+        "lifetime-family": {
+          "name": "Kudumbam",
+          "meaning": "Family"
+        },
+        "gift-a-family": {
+          "name": "Parisu",
+          "meaning": "Gift"
+        },
+        "picture-a-word": {
+          "name": "Ungal sol",
+          "meaning": "Your word"
+        },
+        "patron": {
+          "name": "Nalam virumbi",
+          "meaning": "Well-wisher"
+        }
+      }
     }
   ]
 }
