@@ -1,5 +1,5 @@
 ---
-import { dollars, pledgeLink, SUPPORT_EMAIL, type Language, type Tier } from "../../../lib/gloss/campaign";
+import { dollars, pledgeLink, SUPPORT_EMAIL, tierName, type Language, type Tier } from "../../../lib/gloss/campaign";
 
 /**
  * The reward tiers for one language. A tier's button is a real link only when
@@ -19,10 +19,14 @@ const notifyHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Tell m
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
   {tiers.map((tier, index) => {
     const href = pledgeLink(language, tier.id, closesOn);
+    const named = tierName(language, tier);
     return (
       <article class={`rounded-2xl border p-6 bg-white dark:bg-white/[0.03] flex flex-col ${index === 0 ? "border-[var(--gloss-sage)] ring-2 ring-[#2a7a66]/20" : "border-gray-100 dark:border-white/[0.06]"}`}>
         <p class="text-3xl font-bold text-text mb-1" style="font-family: 'Lora', serif;">{dollars(tier.price)}</p>
-        <h3 class="font-semibold text-text text-lg mb-1">{tier.title}</h3>
+        <h3 class="font-semibold text-text text-lg mb-1">
+          {named.name}
+          {named.meaning && <span class="font-normal text-gray-500 text-base"> · {named.meaning}</span>}
+        </h3>
         {tier.limitPerLanguage && <p class="text-xs text-[#8a6208] dark:text-[#f2c75c]">Only {tier.limitPerLanguage} for {language.name}</p>}
         <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mt-4 mb-1">Straight away</p>
         <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-3">

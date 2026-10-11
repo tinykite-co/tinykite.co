@@ -6,6 +6,7 @@ import {
   isOpen,
   percentRaised,
   pledgeLink,
+  tierName,
   validateCampaign,
   type Campaign,
   type Language,
@@ -89,7 +90,22 @@ test("validation accepts the shape the pages use", () => {
 });
 
 test("validation rejects a link for a tier that doesn't exist", () => {
-  assert.throws(() => validateCampaign(campaignWith([language({ pledgeLinks: { classroom: LINK } })])), /unknown tier/);
+  assert.throws(() => validateCampaign(campaignWith([language({ pledgeLinks: { "school-bundle": LINK } })])), /unknown tier/);
+});
+
+test("validation rejects a name for a tier that doesn't exist", () => {
+  assert.throws(() => validateCampaign(campaignWith([language({ tierNames: { classroom: { name: "Class" } } })])), /unknown tier/);
+});
+
+const EARLY_BACKER = { id: "early-backer", price: 10, title: "Early backer", limitPerLanguage: null, now: [], later: [] };
+
+test("a tier uses the language's own name and meaning", () => {
+  const hinglish = language({ tierNames: { "early-backer": { name: "Dost", meaning: "Friend" } } });
+  assert.deepEqual(tierName(hinglish, EARLY_BACKER), { name: "Dost", meaning: "Friend" });
+});
+
+test("a tier without a language name falls back to its title", () => {
+  assert.deepEqual(tierName(language(), EARLY_BACKER), { name: "Early backer" });
 });
 
 test("validation rejects a non-https link", () => {
