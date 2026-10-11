@@ -1,18 +1,20 @@
 ---
-import { fillEvidence, type Citation, type ReadingEvidence, type Story } from "../../../lib/gloss/campaign";
+import { DEFAULT_VERSUS, fillEvidence, type ReadingEvidence, type ResolvedStory } from "../../../lib/gloss/campaign";
 
 /**
- * The reading story on an English backing page: the moment a child meets a
- * word, our measured new-words-per-chapter, the risk of handing over a phone,
- * a traditional dictionary beside Gloss, pictures, depths and practice. Every
- * number names its source.
+ * The reading story on a backing page: the moment a child meets a word, our
+ * measured new-words-per-chapter, the risk of handing over a phone, the
+ * dictionary this family would otherwise use beside Gloss, pictures, depths
+ * and practice. Every number names its source.
  */
 interface Props {
-  story: Story;
+  story: ResolvedStory;
   evidence: ReadingEvidence;
+  /** False while the page's words in other languages are ours, not yet a native speaker's. */
+  nativeReviewed: boolean;
 }
 
-const { story, evidence } = Astro.props;
+const { story, evidence, nativeReviewed } = Astro.props;
 const fill = (text: string) => fillEvidence(text, evidence);
 const sectionTitle = "text-3xl font-bold text-text mb-3";
 const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
@@ -24,6 +26,9 @@ const prose = "text-gray-700 dark:text-gray-300 leading-relaxed";
   <div class="container mx-auto max-w-3xl">
     <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.moment.title)}</h2>
     <p class={prose}>{fill(story.moment.body)}</p>
+    {!nativeReviewed && (
+      <p class="text-xs text-gray-500 mt-3">The examples on this page are ours. A native speaker will check them before anything ships.</p>
+    )}
 
     <div class={`${card} mt-8`}>
       <h3 class="font-semibold text-text mb-3">New words in one chapter, by age</h3>
@@ -84,7 +89,7 @@ const prose = "text-gray-700 dark:text-gray-300 leading-relaxed";
     <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.dictionary.title)}</h2>
     <p class={`${prose} mb-6`}>{fill(story.dictionary.body)}</p>
     <div class="grid grid-cols-2 gap-px rounded-2xl overflow-hidden border border-gray-100 dark:border-white/[0.06] bg-gray-100 dark:bg-white/[0.06] text-sm">
-      <div class="bg-white dark:bg-neutral-900 p-3 font-semibold text-gray-500">A traditional dictionary</div>
+      <div class="bg-white dark:bg-neutral-900 p-3 font-semibold text-gray-500">{story.dictionary.versus ?? DEFAULT_VERSUS}</div>
       <div class="bg-white dark:bg-neutral-900 p-3 font-semibold text-[var(--gloss-sage)]">Gloss</div>
       {story.dictionary.rows.map((row) => (
         <Fragment>

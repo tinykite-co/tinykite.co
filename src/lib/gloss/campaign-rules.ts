@@ -77,23 +77,55 @@ export interface ComparisonRow {
   gloss: string;
 }
 
-/**
- * The reading story an English page tells, in order: the moment a child
- * meets a word, the risk of handing over a phone, why a traditional
- * dictionary doesn't serve a child, pictures, depths, and practice.
- */
-export interface Story {
-  moment: StorySection;
-  risk: StorySection;
-  dictionary: StorySection & { rows: ComparisonRow[] };
-  pictures: StorySection;
-  depths: StorySection;
-  practice: { title: string; today: string[]; next: string[] };
+export interface PracticeSection {
+  title: string;
+  today: string[];
+  next: string[];
 }
+
+/** The old way set beside Gloss; `versus` names it for this audience. */
+export interface DictionarySection extends StorySection {
+  versus?: string;
+  rows: ComparisonRow[];
+}
+
+/** The parts of the story that are the same product facts on every page. */
+export interface StoryDefaults {
+  risk: StorySection;
+  depths: StorySection;
+  practice: PracticeSection;
+}
+
+/**
+ * The story a page tells, in order: the moment a child meets a word, the
+ * risk of handing over a phone, why the dictionary they'd otherwise use
+ * doesn't serve a child, pictures, depths, and practice. Each page writes
+ * its own moment, dictionary and pictures for its own audience; the rest
+ * falls back to the campaign's `storyDefaults`.
+ */
+export interface Story extends Partial<StoryDefaults> {
+  moment: StorySection;
+  dictionary: DictionarySection;
+  pictures: StorySection;
+}
+
+export type ResolvedStory = Required<Story>;
+
+/** How the directory and each page's footer group the languages, in order. */
+export const LANGUAGE_GROUPS = [
+  { id: "english", title: "English, the way your country speaks it" },
+  { id: "indian", title: "Indian languages" },
+  { id: "world", title: "World languages" },
+] as const;
+
+export type LanguageGroup = (typeof LANGUAGE_GROUPS)[number]["id"];
+
+export const DEFAULT_VERSUS = "A traditional dictionary";
 
 export interface Language {
   slug: string;
   name: string;
+  group: LanguageGroup;
   who: string;
   goal: number;
   promise: string;
@@ -107,8 +139,10 @@ export interface Language {
   screenshot: Screenshot | null;
   /** Per-tier names for this language; a tier without one uses its generic title. */
   tierNames?: Record<string, TierName>;
-  /** The reading story; languages without one show only the campaign sections. */
-  story?: Story;
+  /** The page's own story, pitched only to this language's families. */
+  story: Story;
+  /** False until a native speaker has checked this page's words; the page says so. */
+  nativeReviewed: boolean;
   pledgeLinks: Record<string, string>;
   raised: number;
   backers: number;
@@ -136,6 +170,7 @@ export interface Campaign {
   languages: Language[];
   costReference: CostReference;
   readingEvidence: ReadingEvidence;
+  storyDefaults: StoryDefaults;
 }
 
 export const BACK_HUB_PATH = "/gloss/back/";
@@ -150,8 +185,10 @@ export const REFUND_DAYS = 14;
 /** Throws at build time, so a malformed campaign file never ships. */
 export function validateCampaign(campaign: Campaign): Campaign {
   const tierIds = new Set(campaign.tiers.map((tier) => tier.id));
+  const groupIds = new Set<string>(LANGUAGE_GROUPS.map((group) => group.id));
   for (const language of campaign.languages) {
     if (language.goal <= 0) throw new Error(`${language.slug}: goal must be positive`);
+    if (!groupIds.has(language.group)) throw new Error(`${language.slug}: unknown group ${language.group}`);
     for (const tierId of [...Object.keys(language.pledgeLinks), ...Object.keys(language.tierNames ?? {})]) {
       if (!tierIds.has(tierId)) throw new Error(`${language.slug}: unknown tier ${tierId}`);
     }
@@ -162,8 +199,9 @@ export function validateCampaign(campaign: Campaign): Campaign {
   validateCostReference(campaign);
   validateReadingEvidence(campaign.readingEvidence);
   for (const language of campaign.languages) {
-    if (language.story) validateStory(language.slug, language.story, campaign.readingEvidence);
+    validateStory(language.slug, resolveStory(language, campaign), campaign.readingEvidence);
   }
+  validateDistinctStories(campaign.languages);
   if (campaign.closesOn && Number.isNaN(Date.parse(campaign.closesOn))) {
     throw new Error(`closesOn is not a date: ${campaign.closesOn}`);
   }
@@ -197,8 +235,31 @@ function validateCitations(where: string, citations: Citation[] = []): void {
   }
 }
 
+/** A language's story with the campaign's shared sections filled in where it has none of its own. */
+export function resolveStory(language: Language, campaign: Pick<Campaign, "storyDefaults">): ResolvedStory {
+  return { ...campaign.storyDefaults, ...language.story };
+}
+
+/**
+ * Each page is read alone by its own families, so its own words must be its
+ * own: a story copied from another language with the names swapped fails the
+ * build. Shared product facts live in `storyDefaults`, which this skips.
+ */
+function validateDistinctStories(languages: Language[]): void {
+  const seen = new Map<string, string>();
+  for (const language of languages) {
+    const { moment, dictionary, pictures } = language.story;
+    const own = [moment.title, moment.body, dictionary.title, dictionary.body, pictures.title, pictures.body, language.promise];
+    for (const text of own.concat(language.roots ?? [], language.forFun ?? [])) {
+      const owner = seen.get(text);
+      if (owner && owner !== language.slug) throw new Error(`${language.slug}: repeats ${owner}'s text: ${text}`);
+      seen.set(text, language.slug);
+    }
+  }
+}
+
 /** Every story string must fill: a typo'd placeholder fails the build, not the page. */
-function validateStory(slug: string, story: Story, evidence: ReadingEvidence): void {
+function validateStory(slug: string, story: ResolvedStory, evidence: ReadingEvidence): void {
   const sections = [story.moment, story.risk, story.dictionary, story.pictures, story.depths];
   const texts = [
     ...sections.flatMap((section) => [section.title, section.body]),
@@ -271,4 +332,19 @@ export function percentRaised(language: Language): number {
 
 export function languagePath(language: Language): string {
   return `${BACK_HUB_PATH}${language.slug}/`;
+}
+
+export interface GroupOfLanguages {
+  id: LanguageGroup;
+  title: string;
+  languages: Language[];
+}
+
+/** The languages by group, in campaign order, leaving out `exceptSlug` (the page being read) and empty groups. */
+export function languagesByGroup(languages: Language[], exceptSlug?: string): GroupOfLanguages[] {
+  return LANGUAGE_GROUPS.map((group) => ({
+    id: group.id,
+    title: group.title,
+    languages: languages.filter((language) => language.group === group.id && language.slug !== exceptSlug),
+  })).filter((group) => group.languages.length > 0);
 }
