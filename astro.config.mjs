@@ -14,5 +14,7 @@ export default defineConfig({
   redirects: {
     '/tools': '/coming-soon',
     '/router': '/coming-soon',
+    // The single funding page became one page per language (PR #34).
+    '/gloss/support-us': '/gloss/back/',
   },
 });

@@ -1,0 +1,53 @@
+---
+import BackPage from "../../../../components/gloss/back/BackPage.astro";
+import {
+  BACK_HUB_PATH,
+  campaign,
+  PLAY_TESTING_URL,
+  REFUND_DAYS,
+  SUPPORT_EMAIL,
+  TESTFLIGHT_URL,
+  type Language,
+} from "../../../../lib/gloss/campaign";
+
+/**
+ * Where Stripe sends a backer after paying (scripts/gloss/pledge_links.py,
+ * THANKS_PATH_FORMAT). Reaching it proves nothing, so it promises nothing
+ * that depends on the payment: Stripe's receipt email is the record.
+ */
+export function getStaticPaths() {
+  return campaign.languages.map((language) => ({ params: { slug: language.slug }, props: { language } }));
+}
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const languagePage = `${BACK_HUB_PATH}${language.slug}/`;
+---
+
+<BackPage title={`Thank you for backing ${language.name} — Gloss`} description={`Thank you for backing ${language.name} in Gloss.`}>
+  <section class="pt-32 pb-16 px-6">
+    <div class="container mx-auto max-w-2xl">
+      <h1 class="text-4xl md:text-5xl font-bold mb-5 text-text" style="font-family: 'Lora', serif;">
+        Thank you<span class="text-[var(--gloss-honey)]">.</span>
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+        You’ve backed {language.name}. Stripe will email your receipt. Within two working days we’ll email you too, from {SUPPORT_EMAIL}, with your rewards.
+      </p>
+      <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6 mb-8">
+        <h2 class="font-semibold text-text text-lg mb-3">Try Gloss now</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">The beta is open. Install it on the phone your child reads with.</p>
+        <p class="flex flex-wrap gap-3">
+          <a href={TESTFLIGHT_URL} class="px-5 py-2 rounded-full bg-[var(--gloss-sage)] text-white text-sm font-semibold hover:opacity-90">iPhone beta</a>
+          <a href={PLAY_TESTING_URL} class="px-5 py-2 rounded-full border border-[var(--gloss-sage)] text-[var(--gloss-sage)] text-sm font-semibold hover:bg-[#2a7a66]/5">Android beta (UK)</a>
+        </p>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+        If {language.name} doesn’t reach its goal, we refund you in full within {REFUND_DAYS} days of its closing date. Until it reaches its goal, email us any time for a full refund.
+      </p>
+      <p class="mt-6"><a href={languagePage} class="text-[var(--gloss-sage)] font-semibold hover:underline">← Back to {language.name}</a></p>
+    </div>
+  </section>
+</BackPage>

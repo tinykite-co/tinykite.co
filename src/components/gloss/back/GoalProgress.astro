@@ -1,0 +1,25 @@
+---
+import { closingDateText, dollars, percentRaised, type Language } from "../../../lib/gloss/campaign";
+
+/** How far one language is towards its goal, and when it closes. */
+interface Props {
+  language: Language;
+  closesOn: string | null;
+}
+
+const { language, closesOn } = Astro.props;
+const percent = percentRaised(language);
+---
+
+<div>
+  <div class="flex items-baseline justify-between text-sm mb-2">
+    <p class="text-text"><strong class="text-lg">{dollars(language.raised)}</strong> of {dollars(language.goal)}</p>
+    <p class="text-gray-500">{language.backers} {language.backers === 1 ? "backer" : "backers"}</p>
+  </div>
+  <div class="h-2 rounded-full bg-[#2a7a66]/10 overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={percent} aria-label={`${language.name}: ${percent}% of its goal`}>
+    <div class="h-full rounded-full bg-[var(--gloss-sage)]" style={`width: ${percent}%`}></div>
+  </div>
+  <p class="text-xs text-gray-500 mt-2">
+    {closesOn ? `Closes ${closingDateText(closesOn)}` : "Not open yet. The closing date is set when backing opens."}
+  </p>
+</div>

@@ -1,0 +1,56 @@
+---
+/**
+ * What Gloss will cost at launch: a small Starter allowance to try it, and
+ * Gloss Plus. These are plans, not live prices: the app does not sell or
+ * enforce them yet, and the terms promise an update before anything is sold.
+ */
+const allowances = [
+  { feature: "New words looked up", starter: "10 a day", plus: "No limit" },
+  { feature: "Words already looked up", starter: "Always open", plus: "Always open" },
+  { feature: "Hearing a word said", starter: "10 a day", plus: "No limit" },
+  { feature: "Flashcards", starter: "1 round a day", plus: "No limit" },
+  { feature: "Quizzes", starter: "1 a day", plus: "No limit" },
+  { feature: "Readers in the family", starter: "1", plus: "Up to 6" },
+  { feature: "Words kept in step across phones", starter: "No", plus: "Yes" },
+];
+
+const plusPrices = [
+  { label: "Monthly", price: "$1.99 / £1.99" },
+  { label: "Yearly", price: "$14.99 / £14.99" },
+  { label: "For life, whole family", price: "$29.99 / £29.99" },
+];
+---
+
+<div>
+  <div class="overflow-x-auto rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03]">
+    <table class="w-full text-sm text-left">
+      <thead>
+        <tr class="border-b border-gray-100 dark:border-white/[0.06]">
+          <th class="p-4 font-semibold text-text"><span class="sr-only">Feature</span></th>
+          <th class="p-4 font-semibold text-text">Starter, no charge</th>
+          <th class="p-4 font-semibold text-[var(--gloss-sage)]">Gloss Plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        {allowances.map((row) => (
+          <tr class="border-b last:border-0 border-gray-100 dark:border-white/[0.06]">
+            <td class="p-4 text-gray-600 dark:text-gray-400">{row.feature}</td>
+            <td class="p-4 text-text">{row.starter}</td>
+            <td class="p-4 text-text">{row.plus}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+    {plusPrices.map((plan) => (
+      <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
+        <p class="text-sm text-gray-500">{plan.label}</p>
+        <p class="text-xl font-bold text-[var(--gloss-sage)]" style="font-family: 'Lora', serif;">{plan.price}</p>
+      </div>
+    ))}
+  </div>
+  <p class="text-sm text-gray-500 mt-4 max-w-2xl">
+    Planned prices. The beta costs nothing, and nobody is moved onto a paid plan without choosing it. Prices in India will be set in rupees. Children never see a price: only a grown-up can buy, behind a check in the Grown-ups area.
+  </p>
+</div>
