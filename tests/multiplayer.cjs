@@ -41,10 +41,11 @@ const assert = require('assert');
   console.log('   ✓ Handshake test PASSED');
 
   // 2. Start Race on Tab 1
-  console.log('4. Starting Race on Tab 1 and Tab 2...');
+  console.log('4. Starting Race on Tab 1 (Awaiting Ready... Set... GO! countdown)...');
   await page1.click('#btn-start-race-now');
-  await page2.click('#btn-start-race-now');
-  await page1.waitForTimeout(400);
+  await page1.waitForFunction(() => !document.getElementById('typing-input').disabled, { timeout: 6000 });
+  await page2.waitForFunction(() => !document.getElementById('typing-input').disabled, { timeout: 6000 });
+  await page1.waitForTimeout(200);
 
   // Tab 1 types first 4 words
   const wordsTab1 = await page1.$$eval('#passage-display .tr-word-current, #passage-display .tr-word-upcoming', els => els.map(e => e.textContent.trim()));

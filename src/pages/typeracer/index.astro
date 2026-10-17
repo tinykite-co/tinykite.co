@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { PASSAGES } from '../../data/typeracer/passages';
 
-const pageTitle = "11+ TypeRacer & Typing Academy | Project Gutenberg Literature | TinyKite";
-const pageDescription = "100% ad-free TypeRacer and Free Typing Academy built for 11+ English preparation. Race against live peers and dynamic bots on classic literature, master newline Q&A drills, and learn touch typing.";
+const pageTitle = "TypeRacer & Touch Typing Academy | Master Typing Speed | TinyKite";
+const pageDescription = "100% ad-free TypeRacer and Touch Typing Academy. Speed-race against live peers and AI racers on classic literature, master ergonomic touch typing with animated hand guides, and level up your typing speed.";
 
 const initialPassage = PASSAGES[0];
 const initialWords = initialPassage.text.split(' ');
@@ -238,6 +238,26 @@ const KEYBOARD_ROWS = [
       border-bottom-color: #22d3ee;
     }
 
+    /* Animated Hands & Finger Guides (Typing.com Inspiration) */
+    .finger-group {
+      transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.18s ease;
+      transform-origin: center bottom;
+    }
+    .finger-group.active-finger {
+      transform: translateY(-8px);
+      filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.95));
+    }
+    .finger-group.active-finger rect,
+    .finger-group.active-finger path {
+      fill: #f59e0b !important;
+      stroke: #b45309 !important;
+    }
+    .dark .finger-group.active-finger rect,
+    .dark .finger-group.active-finger path {
+      fill: #fbbf24 !important;
+      stroke: #f59e0b !important;
+    }
+
     /* Error Shake Animation for Target Char in Academy */
     @keyframes char-error-shake {
       0%, 100% { transform: translateX(0); }
@@ -337,13 +357,13 @@ const KEYBOARD_ROWS = [
       <!-- HERO / BRAND INTRO (Matches Nesta & Gloss Class) -->
       <header class="text-center mb-6 pt-2">
         <p class="text-amber-800 dark:text-brand-gold font-bold tracking-widest uppercase text-[11px] mb-2 flex items-center justify-center gap-1.5">
-          <span>✨</span> Project Gutenberg 11+ Classic Literature & Academy
+          <span>✨</span> Multiplayer TypeRacer & Touch Typing Academy
         </p>
         <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy dark:text-brand-cream mb-2.5 font-serif-literary">
           typeracer<span class="text-brand-gold">.</span>
         </h1>
         <p class="text-sm md:text-base text-slate-700 dark:text-gray-300 max-w-xl mx-auto leading-relaxed">
-          The 100% ad-free typing arena and academy. Speed-type authentic classic literature extracts, race against live peers or dynamic AI bots, and master touch typing with our Refraction keyboard guide.
+          The 100% ad-free typing arena and academy. Speed-type authentic classic literature extracts, race against live peers or dynamic AI bots, and master touch typing with our animated hand guides.
         </p>
 
         <!-- TOP APP NAVIGATION TABS (WCAG Accessible Tablist) -->
@@ -371,7 +391,7 @@ const KEYBOARD_ROWS = [
               type="button"
               class="px-5 py-2 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-gray-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             >
-              ⌨️ Free Typing Academy
+              ⌨️ Typing Academy
             </button>
             <button
               id="tab-btn-library"
@@ -381,7 +401,7 @@ const KEYBOARD_ROWS = [
               type="button"
               class="px-5 py-2 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-gray-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             >
-              📚 18 Classic Books
+              📚 Story Library
             </button>
           </div>
         </div>
@@ -407,7 +427,7 @@ const KEYBOARD_ROWS = [
                     {initialPassage.difficulty}
                   </span>
                   <span id="race-mode-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-brand-gold/25 text-amber-950 dark:text-amber-200">
-                    📖 11+ Context (Passage + Q&A)
+                    📖 Story Drill (Passage + Q&A)
                   </span>
                 </div>
                 <p id="passage-author" class="text-xs text-slate-600 dark:text-gray-300 truncate">
@@ -421,18 +441,15 @@ const KEYBOARD_ROWS = [
                 <span>💡</span> Vocab (<span id="vocab-count">{initialPassage.vocabulary.length}</span>)
               </button>
               <button id="btn-next-passage" type="button" class="refraction-btn px-3 py-1.5 text-xs font-bold rounded-xl bg-slate-900 dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 active:scale-95 transition-all flex items-center gap-1 shadow-sm">
-                <span>🎲 Next Book</span>
+                <span>🎲 Next Story</span>
               </button>
-              <a id="passage-gutenberg-link" href={initialPassage.gutenbergUrl} target="_blank" rel="noopener noreferrer" class="refraction-btn px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-white/70 dark:bg-white/10 text-slate-800 dark:text-slate-200 hover:text-amber-700 dark:hover:text-amber-300 transition-colors inline-flex items-center gap-1 border border-black/[0.08] dark:border-white/[0.1]" title="Read on Project Gutenberg">
-                <span>#{initialPassage.gutenbergId}</span> ↗
-              </a>
             </div>
           </div>
 
           <!-- Vocabulary Drawer -->
           <div id="vocab-drawer" class="mb-4 bg-amber-50/60 dark:bg-white/5 border border-amber-200/50 dark:border-white/[0.08] rounded-2xl p-3.5 text-xs">
             <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-1.5 font-serif-literary">
-              <span>✨</span> 11+ Classical Vocabulary in this Passage:
+              <span>✨</span> Key Vocabulary in this Passage:
             </h4>
             <div id="vocab-list" class="grid sm:grid-cols-3 gap-2">
               {initialPassage.vocabulary.map(v => (
@@ -470,8 +487,31 @@ const KEYBOARD_ROWS = [
               </div>
             </div>
 
-            <!-- 4-Lane Track Circuit -->
-            <div class="tr-circuit-track p-3 space-y-2 overflow-hidden mb-4">
+            <!-- Race Track & Active Typing Area (with Ready-Set-GO Countdown Overlay) -->
+            <div class="relative">
+
+              <!-- Ready... Set... GO! Countdown Overlay -->
+              <div
+                id="race-countdown-overlay"
+                class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-950/85 backdrop-blur-md rounded-2xl transition-all duration-300"
+                role="alert"
+                aria-live="assertive"
+              >
+                <div class="flex items-center gap-3 mb-2">
+                  <span id="countdown-light-red" class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/50 transition-all duration-200"></span>
+                  <span id="countdown-light-amber" class="w-4 h-4 rounded-full bg-amber-500/20 border border-amber-500/50 transition-all duration-200"></span>
+                  <span id="countdown-light-green" class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/50 transition-all duration-200"></span>
+                </div>
+                <div id="countdown-display-text" class="text-5xl sm:text-7xl font-black font-mono tracking-widest text-white drop-shadow-xl scale-100 transition-transform duration-200">
+                  READY
+                </div>
+                <p id="countdown-sub-text" class="text-xs text-slate-300 mt-3 font-medium tracking-wide">
+                  Place fingers on home row keys (F & J)...
+                </p>
+              </div>
+
+              <!-- 4-Lane Track Circuit -->
+              <div class="tr-circuit-track p-3 space-y-2 overflow-hidden mb-4">
               <div class="tr-finish-line"></div>
 
               <!-- LANE 0: YOU (Player) -->
@@ -595,7 +635,7 @@ const KEYBOARD_ROWS = [
           </div>
 
           <!-- ============================================ -->
-          <!-- PHASE 2: 11+ CONTEXT Q&A TYPING FOLLOW-UP    -->
+          <!-- PHASE 2: STORY COMPREHENSION Q&A FOLLOW-UP   -->
           <!-- ============================================ -->
           <div id="qa-followup-view">
             <div class="mb-4 bg-amber-400/15 border border-amber-400/40 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
@@ -620,7 +660,7 @@ const KEYBOARD_ROWS = [
             <div class="bg-white dark:bg-slate-900 border-2 border-amber-400/70 rounded-2xl p-5 sm:p-6 shadow-sm">
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-brand-gold flex items-center gap-1.5">
-                  <span>✨</span> 11+ Literary Context & Formatting Drill
+                  <span>✨</span> Literary Context & Comprehension Drill
                 </span>
                 <span id="qa-newline-cue" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900 dark:bg-teal-950/50 dark:text-teal-300">
                   ⌨️ Type Question, then press Enter ↵
@@ -654,7 +694,7 @@ const KEYBOARD_ROWS = [
               <!-- Context Note Card -->
               <div id="qa-context-reveal" class="hidden mt-4 p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/30 rounded-2xl text-xs text-emerald-950 dark:text-emerald-200">
                 <div class="font-black text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <span>🎓</span> 11+ Context Explanation:
+                  <span>🎓</span> Story Context Explanation:
                 </div>
                 <p id="qa-context-note-text" class="italic leading-relaxed text-sm"></p>
               </div>
@@ -704,7 +744,7 @@ const KEYBOARD_ROWS = [
                 <span class="text-2xl">🎓</span>
                 <div>
                   <h4 class="font-bold text-xs text-slate-900 dark:text-slate-100 mb-0.5">
-                    Save Your Progress & 11+ Achievements
+                    Save Your Progress & Achievements
                   </h4>
                   <p class="text-xs text-slate-600 dark:text-gray-400">
                     100% Free forever · Sync typing speed, lesson stars & certificates across devices.
@@ -759,10 +799,10 @@ const KEYBOARD_ROWS = [
                 <span>⌨️</span> Free Touch Typing Curriculum
               </p>
               <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-serif-literary">
-                11+ Touch Typing Academy
+                Touch Typing Academy
               </h2>
               <p class="text-xs text-slate-600 dark:text-gray-300">
-                12 step-by-step ergonomic lessons. Build muscle memory on home row anchors, shift capitalization, and dialogue newlines.
+                12 step-by-step ergonomic lessons. Build muscle memory on home row anchors, shift capitalization, and dialogue transitions.
               </p>
             </div>
             <div class="flex items-center gap-2">
@@ -791,38 +831,6 @@ const KEYBOARD_ROWS = [
             <p id="lesson-instruction-tip" class="text-xs text-slate-600 dark:text-gray-300 mb-3 italic">
               Rest index fingers on the tactile bumps. No Spacebar in this first drill—pure F & J muscle memory!
             </p>
-
-            <!-- ERGONOMIC HANDS & FINGER GUIDANCE HUD -->
-            <div class="mb-4 p-3 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
-              <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
-                <!-- Left Hand -->
-                <div class="flex items-center gap-1.5 flex-wrap" aria-label="Left hand finger guide">
-                  <span class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">Left Hand:</span>
-                  <span id="finger-chip-left-pinky" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Pinky</span>
-                  <span id="finger-chip-left-ring" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Ring</span>
-                  <span id="finger-chip-left-middle" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Middle</span>
-                  <span id="finger-chip-left-index" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Index (F)</span>
-                  <span id="finger-chip-left-thumb" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Thumb</span>
-                </div>
-
-                <!-- Center Active Key Target Pill -->
-                <div class="flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-950 dark:text-amber-200">
-                  <span class="text-[10px] font-black uppercase tracking-wider">Next Key:</span>
-                  <strong id="hud-target-key-pill" class="px-2 py-0.5 rounded bg-brand-gold text-slate-950 font-black text-sm font-mono shadow-sm">F</strong>
-                  <span id="hud-target-finger-desc" class="text-xs font-bold text-amber-950 dark:text-amber-200">Left Index (Home Bump)</span>
-                </div>
-
-                <!-- Right Hand -->
-                <div class="flex items-center gap-1.5 flex-wrap" aria-label="Right hand finger guide">
-                  <span id="finger-chip-right-thumb" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Thumb</span>
-                  <span id="finger-chip-right-index" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Index (J)</span>
-                  <span id="finger-chip-right-middle" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Middle</span>
-                  <span id="finger-chip-right-ring" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Ring</span>
-                  <span id="finger-chip-right-pinky" class="px-2 py-0.5 rounded-md text-[10px] font-bold border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 transition-all">Pinky</span>
-                  <span class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">Right Hand</span>
-                </div>
-              </div>
-            </div>
 
             <!-- Target Lesson Drill Display Box -->
             <div
@@ -909,6 +917,102 @@ const KEYBOARD_ROWS = [
               </div>
             </div>
 
+            <!-- ERGONOMIC ANIMATED HANDS GRAPHIC (Typing.com Inspiration) -->
+            <div id="academy-hands-graphic" class="mt-4 p-4 sm:p-5 bg-white/95 dark:bg-slate-900/90 border border-black/[0.08] dark:border-white/[0.12] rounded-2xl shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-3 text-xs font-bold text-slate-600 dark:text-gray-300 mb-3 px-1">
+                <span class="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                  <span class="text-amber-500 text-sm">✋</span> Hand & Finger Guide
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">Active Key:</span>
+                  <span id="hud-target-key-pill" class="px-2.5 py-0.5 rounded-lg bg-brand-gold text-slate-950 font-black text-sm font-mono shadow-sm">F</span>
+                  <span id="hud-target-finger-desc" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Left Index (F Bump)</span>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-14 py-2">
+                <!-- LEFT HAND SVG -->
+                <div class="flex flex-col items-center">
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Left Hand</span>
+                  <svg id="hand-svg-left" viewBox="0 0 220 180" class="w-44 sm:w-56 h-auto select-none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Left hand finger guide">
+                    <!-- Palm Base -->
+                    <path d="M 35 110 C 35 75, 175 75, 175 110 C 175 155, 150 175, 105 175 C 60 175, 35 155, 35 110 Z" class="fill-slate-100 dark:fill-slate-800/80 stroke-slate-300 dark:stroke-slate-700 stroke-2" />
+                    
+                    <!-- Pinky (Rose) -->
+                    <g id="finger-svg-left-pinky" data-finger="left-pinky" class="finger-group cursor-pointer">
+                      <rect x="22" y="55" width="22" height="65" rx="11" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="33" y="75" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">A</text>
+                    </g>
+
+                    <!-- Ring (Orange) -->
+                    <g id="finger-svg-left-ring" data-finger="left-ring" class="finger-group cursor-pointer">
+                      <rect x="52" y="30" width="24" height="90" rx="12" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="64" y="50" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">S</text>
+                    </g>
+
+                    <!-- Middle (Amber) -->
+                    <g id="finger-svg-left-middle" data-finger="left-middle" class="finger-group cursor-pointer">
+                      <rect x="84" y="15" width="26" height="105" rx="13" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="97" y="35" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">D</text>
+                    </g>
+
+                    <!-- Index (Emerald) - Tactile Home Bump on F -->
+                    <g id="finger-svg-left-index" data-finger="left-index" data-active="true" class="finger-group active-finger cursor-pointer">
+                      <rect x="118" y="28" width="26" height="92" rx="13" class="fill-amber-400 dark:fill-brand-gold stroke-amber-500 dark:stroke-amber-300 stroke-2" />
+                      <text x="131" y="48" text-anchor="middle" class="text-[11px] font-black fill-slate-900 pointer-events-none">F</text>
+                      <circle cx="131" cy="58" r="2.5" class="fill-slate-900 pointer-events-none" />
+                    </g>
+
+                    <!-- Thumb (Blue) -->
+                    <g id="finger-svg-left-thumb" data-finger="thumb" class="finger-group cursor-pointer">
+                      <path d="M 152 115 C 160 100, 185 105, 192 120 C 196 130, 185 145, 170 145 C 158 145, 150 130, 152 115 Z" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="175" y="132" text-anchor="middle" class="text-[9px] font-bold fill-slate-500 pointer-events-none">␣</text>
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- RIGHT HAND SVG -->
+                <div class="flex flex-col items-center">
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Right Hand</span>
+                  <svg id="hand-svg-right" viewBox="0 0 220 180" class="w-44 sm:w-56 h-auto select-none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Right hand finger guide">
+                    <!-- Palm Base -->
+                    <path d="M 45 110 C 45 75, 185 75, 185 110 C 185 155, 160 175, 115 175 C 70 175, 45 155, 45 110 Z" class="fill-slate-100 dark:fill-slate-800/80 stroke-slate-300 dark:stroke-slate-700 stroke-2" />
+
+                    <!-- Thumb (Blue) -->
+                    <g id="finger-svg-right-thumb" data-finger="thumb" class="finger-group cursor-pointer">
+                      <path d="M 68 115 C 60 100, 35 105, 28 120 C 24 130, 35 145, 50 145 C 62 145, 70 130, 68 115 Z" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="45" y="132" text-anchor="middle" class="text-[9px] font-bold fill-slate-500 pointer-events-none">␣</text>
+                    </g>
+
+                    <!-- Index (Teal) - Tactile Home Bump on J -->
+                    <g id="finger-svg-right-index" data-finger="right-index" class="finger-group cursor-pointer">
+                      <rect x="76" y="28" width="26" height="92" rx="13" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="89" y="48" text-anchor="middle" class="text-[11px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">J</text>
+                      <circle cx="89" cy="58" r="2.5" class="fill-slate-400 dark:fill-slate-400 pointer-events-none" />
+                    </g>
+
+                    <!-- Middle (Indigo) -->
+                    <g id="finger-svg-right-middle" data-finger="right-middle" class="finger-group cursor-pointer">
+                      <rect x="110" y="15" width="26" height="105" rx="13" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="123" y="35" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">K</text>
+                    </g>
+
+                    <!-- Ring (Purple) -->
+                    <g id="finger-svg-right-ring" data-finger="right-ring" class="finger-group cursor-pointer">
+                      <rect x="144" y="30" width="24" height="90" rx="12" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="156" y="50" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">L</text>
+                    </g>
+
+                    <!-- Pinky (Fuchsia) -->
+                    <g id="finger-svg-right-pinky" data-finger="right-pinky" class="finger-group cursor-pointer">
+                      <rect x="176" y="55" width="22" height="65" rx="11" class="fill-slate-200 dark:fill-slate-700/60 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+                      <text x="187" y="75" text-anchor="middle" class="text-[10px] font-bold fill-slate-500 pointer-events-none">;</text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <!-- 12 Lessons Syllabus Curriculum Grid -->
@@ -923,7 +1027,7 @@ const KEYBOARD_ROWS = [
       </section>
 
       <!-- ======================================================== -->
-      <!-- SECTION 3: 18 GUTENBERG CLASSIC BOOKS LIBRARY            -->
+      <!-- SECTION 3: CLASSIC STORY LIBRARY                         -->
       <!-- ======================================================== -->
       <section id="tab-library-view" role="tabpanel" aria-labelledby="tab-btn-library" class="hidden">
         <div class="refraction-panel p-5 sm:p-7 relative overflow-hidden">
@@ -931,7 +1035,7 @@ const KEYBOARD_ROWS = [
 
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] dark:border-white/[0.08] pb-4 mb-4 pt-1">
             <div>
-              <p class="text-amber-800 dark:text-brand-gold font-bold text-xs uppercase tracking-wider">Project Gutenberg 11+ Library</p>
+              <p class="text-amber-800 dark:text-brand-gold font-bold text-xs uppercase tracking-wider">Classic Story Library</p>
               <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-serif-literary">
                 18 Classic Literature Extracts
               </h2>
@@ -1097,6 +1201,26 @@ const KEYBOARD_ROWS = [
           });
         } catch (e) {}
       }
+
+      playCountdownBeep(isGo = false) {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = isGo ? 'triangle' : 'sine';
+          const freq = isGo ? 880 : 440;
+          const dur = isGo ? 0.35 : 0.15;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + dur);
+        } catch (e) {}
+      }
     }
 
     const sound = new SoundEngine();
@@ -1152,7 +1276,7 @@ const KEYBOARD_ROWS = [
     }
 
     const botAvatars = ['🏎️', '🚗', '🚕', '🚙', '🚀', '⚡', '🚴'];
-    const botNames = ['Grammar_Hero', 'Pip_Gargery', 'Elizabeth_B', 'Sherlock_H', 'Eyre_Typist', 'Classic_Cadence', '11Plus_Scholar', 'Speedy_Scrooge', 'Alice_Liddell'];
+    const botNames = ['Grammar_Hero', 'Pip_Gargery', 'Elizabeth_B', 'Sherlock_H', 'Eyre_Typist', 'Classic_Cadence', 'Oxford_Scholar', 'Speedy_Scrooge', 'Alice_Liddell'];
 
     function randomizeBots() {
       for (let i = 1; i <= 3; i++) {
@@ -1243,6 +1367,8 @@ const KEYBOARD_ROWS = [
         }
 
         updateLobbyPeerCount(2);
+      } else if (data.type === 'START_COUNTDOWN') {
+        initiateRaceCountdown(false);
       } else if (data.type === 'PROGRESS') {
         if (!activePeerId) {
           activePeerId = data.senderId;
@@ -1437,7 +1563,7 @@ const KEYBOARD_ROWS = [
 
       if (raceModeBadge) {
         if (currentRaceHasQA) {
-          raceModeBadge.textContent = '📖 11+ Context (Passage + Q&A)';
+          raceModeBadge.textContent = '📖 Story Quest (Passage + Q&A)';
           raceModeBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-brand-gold/25 text-amber-950 dark:text-amber-200';
         } else {
           raceModeBadge.textContent = '⚡ Speed Sprint (Passage Only)';
@@ -1469,6 +1595,7 @@ const KEYBOARD_ROWS = [
       if (hudTimerInterval) clearInterval(hudTimerInterval);
       if (botSimulationInterval) clearInterval(botSimulationInterval);
       if (lobbyCountdownInterval) clearInterval(lobbyCountdownInterval);
+      clearRaceCountdown();
 
       if (typingRaceView) typingRaceView.style.display = 'block';
       if (qaFollowupView) qaFollowupView.style.display = 'none';
@@ -1478,18 +1605,18 @@ const KEYBOARD_ROWS = [
       if (passageTitle) passageTitle.textContent = currentPassage.title;
       if (passageAuthor) passageAuthor.textContent = 'by ' + currentPassage.author + ' (' + currentPassage.year + ') • ' + currentPassage.chapter;
       if (passageDifficulty) {
-        passageDifficulty.textContent = currentPassage.difficulty;
-        if (currentPassage.difficulty === 'Foundation') {
+        const cleanDiff = currentPassage.difficulty;
+        passageDifficulty.textContent = cleanDiff;
+        if (cleanDiff === 'Foundation') {
           passageDifficulty.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-300';
-        } else if (currentPassage.difficulty === 'Standard 11+') {
+        } else if (cleanDiff === 'Standard') {
           passageDifficulty.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-300';
         } else {
           passageDifficulty.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-100 text-purple-900 dark:bg-purple-900/40 dark:text-purple-300';
         }
       }
       if (passageGutenbergLink) {
-        passageGutenbergLink.href = currentPassage.gutenbergUrl;
-        passageGutenbergLink.innerHTML = '<span>#' + currentPassage.gutenbergId + '</span> ↗';
+        passageGutenbergLink.style.display = 'none';
       }
 
       if (vocabCount) vocabCount.textContent = currentPassage.vocabulary.length.toString();
@@ -1527,9 +1654,6 @@ const KEYBOARD_ROWS = [
         typingInput.disabled = false;
         typingInput.placeholder = "Click here and type to race...";
         typingInput.classList.remove('border-rose-500', 'bg-rose-50/50', 'dark:bg-rose-950/20');
-        try {
-          typingInput.focus({ preventScroll: true });
-        } catch (e) {}
       }
       if (typingErrorTag) typingErrorTag.style.display = 'none';
 
@@ -1558,7 +1682,7 @@ const KEYBOARD_ROWS = [
         if (timerEl) timerEl.textContent = lobbyCountdownSeconds.toString();
 
         if (lobbyCountdownSeconds <= 0) {
-          endLobbyCountdown();
+          initiateRaceCountdown(true);
         }
       }, 1000);
     }
@@ -1570,12 +1694,7 @@ const KEYBOARD_ROWS = [
 
     if (btnStartRaceNow) {
       btnStartRaceNow.addEventListener('click', function() {
-        endLobbyCountdown();
-        if (typingInput) {
-          try {
-            typingInput.focus({ preventScroll: true });
-          } catch (e) {}
-        }
+        initiateRaceCountdown(true);
       });
     }
 
@@ -1636,11 +1755,112 @@ const KEYBOARD_ROWS = [
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    // --- Countdown Mechanism (Get... Set... GO!) ---
+    let isRaceCountingDown = false;
+    let countdownTimeoutIds = [];
+
+    function clearRaceCountdown() {
+      countdownTimeoutIds.forEach(id => clearTimeout(id));
+      countdownTimeoutIds = [];
+      isRaceCountingDown = false;
+      const overlay = document.getElementById('race-countdown-overlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    function initiateRaceCountdown(broadcastP2P = true) {
+      if (isRaceCountingDown || isRaceActive || isRaceFinished) return;
+      isRaceCountingDown = true;
+
+      if (lobbyCountdownInterval) {
+        clearInterval(lobbyCountdownInterval);
+        lobbyCountdownInterval = null;
+      }
+
+      if (broadcastP2P) {
+        sendP2PMessage({ type: 'START_COUNTDOWN' });
+      }
+
+      const overlay = document.getElementById('race-countdown-overlay');
+      const lightRed = document.getElementById('countdown-light-red');
+      const lightAmber = document.getElementById('countdown-light-amber');
+      const lightGreen = document.getElementById('countdown-light-green');
+      const displayText = document.getElementById('countdown-display-text');
+      const subText = document.getElementById('countdown-sub-text');
+
+      if (typingInput) {
+        typingInput.value = '';
+        typingInput.disabled = true;
+        typingInput.placeholder = 'Ready... Set... Wait for GO!';
+      }
+
+      if (overlay) {
+        overlay.classList.remove('hidden');
+      }
+
+      // Step 1: READY (0ms)
+      sound.playCountdownBeep(false);
+      if (displayText) {
+        displayText.textContent = 'READY';
+        displayText.className = 'text-5xl sm:text-7xl font-black font-mono tracking-widest text-rose-500 drop-shadow-xl scale-110 transition-transform duration-200';
+      }
+      if (subText) subText.textContent = 'Place fingers on home row keys (F & J)...';
+      if (lightRed) lightRed.className = 'w-4 h-4 rounded-full bg-rose-500 shadow-lg shadow-rose-500/80 transition-all duration-200';
+      if (lightAmber) lightAmber.className = 'w-4 h-4 rounded-full bg-amber-500/20 border border-amber-500/50 transition-all duration-200';
+      if (lightGreen) lightGreen.className = 'w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/50 transition-all duration-200';
+
+      // Step 2: SET (800ms)
+      const t1 = setTimeout(function() {
+        sound.playCountdownBeep(false);
+        if (displayText) {
+          displayText.textContent = 'SET';
+          displayText.className = 'text-5xl sm:text-7xl font-black font-mono tracking-widest text-amber-400 drop-shadow-xl scale-110 transition-transform duration-200';
+        }
+        if (subText) subText.textContent = 'Eyes on the screen... Ready your keys!';
+        if (lightRed) lightRed.className = 'w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/50 transition-all duration-200';
+        if (lightAmber) lightAmber.className = 'w-4 h-4 rounded-full bg-amber-400 shadow-lg shadow-amber-400/80 transition-all duration-200';
+      }, 800);
+      countdownTimeoutIds.push(t1);
+
+      // Step 3: GO! (1600ms)
+      const t2 = setTimeout(function() {
+        sound.playCountdownBeep(true);
+        if (displayText) {
+          displayText.textContent = 'GO!';
+          displayText.className = 'text-6xl sm:text-8xl font-black font-mono tracking-widest text-emerald-400 drop-shadow-2xl scale-125 transition-transform duration-200 animate-pulse';
+        }
+        if (subText) subText.textContent = 'RACE STARTED! TYPE FAST!';
+        if (lightAmber) lightAmber.className = 'w-4 h-4 rounded-full bg-amber-500/20 border border-amber-500/50 transition-all duration-200';
+        if (lightGreen) lightGreen.className = 'w-4 h-4 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/80 transition-all duration-200';
+
+        if (typingInput) {
+          typingInput.disabled = false;
+          typingInput.placeholder = 'Type here to race!';
+          typingInput.focus();
+        }
+        startRace();
+      }, 1600);
+      countdownTimeoutIds.push(t2);
+
+      // Step 4: Hide Overlay (2400ms)
+      const t3 = setTimeout(function() {
+        if (overlay) overlay.classList.add('hidden');
+        isRaceCountingDown = false;
+      }, 2400);
+      countdownTimeoutIds.push(t3);
+    }
+
     // --- Race Arena Typing Handler (BACKSPACE REQUIRED ON ERROR) ---
     if (typingInput) {
       typingInput.addEventListener('keydown', function(e) {
-        if (!isRaceActive && !isRaceFinished && e.key.length === 1) {
-          startRace();
+        if (!isRaceActive && !isRaceFinished && !isRaceCountingDown && e.key.length === 1) {
+          e.preventDefault();
+          initiateRaceCountdown(true);
+          return;
+        }
+
+        if (isRaceCountingDown) {
+          e.preventDefault();
+          return;
         }
 
         if (e.key === ' ' && isRaceActive) {
@@ -1667,9 +1887,7 @@ const KEYBOARD_ROWS = [
       });
 
       typingInput.addEventListener('input', function() {
-        if (!isRaceActive && !isRaceFinished && typingInput.value.length > 0) {
-          startRace();
-        }
+        if (!isRaceActive) return;
 
         currentInput = typingInput.value;
         const currentTargetWord = words[currentWordIndex] || '';
@@ -2003,7 +2221,7 @@ const KEYBOARD_ROWS = [
             }
 
             if (qaNewlineCue) {
-              qaNewlineCue.textContent = '✓ 11+ Context Complete!';
+              qaNewlineCue.textContent = '✓ Story Context Complete!';
               qaNewlineCue.className = 'text-xs font-black px-2.5 py-0.5 rounded-full bg-emerald-600 text-white';
             }
 
@@ -2036,7 +2254,7 @@ const KEYBOARD_ROWS = [
       }
       if (finalTime) finalTime.textContent = totalElapsedSec + 's';
 
-      let rankTitle = '🥉 11+ Race Contender';
+      let rankTitle = '🥉 Swift Contender';
       let rankIcon = '🎖️';
       if (rank === 1) {
         rankTitle = '🏆 1st Place Champion!';
@@ -2101,7 +2319,7 @@ const KEYBOARD_ROWS = [
 
     if (btnShareScore) {
       btnShareScore.addEventListener('click', function() {
-        const text = '🏁 TinyKite 11+ TypeRacer\n📖 Book: ' + currentPassage.title + ' (' + currentPassage.author + ')\n🏆 Finish: ' + (racers[0].rank || 1) + 'st Place / 4 Racers\n⚡ Speed: ' + racers[0].currentWpm + ' WPM\nTry it 100% ad-free: https://tinykite.co/typeracer';
+        const text = '🏁 TinyKite TypeRacer\n📖 Passage: ' + currentPassage.title + ' (' + currentPassage.author + ')\n🏆 Finish: ' + (racers[0].rank || 1) + 'st Place / 4 Racers\n⚡ Speed: ' + racers[0].currentWpm + ' WPM\nTry it 100% ad-free: https://tinykite.co/typeracer';
         if (navigator.clipboard) {
           navigator.clipboard.writeText(text).then(function() {
             if (shareBtnText) shareBtnText.textContent = 'Copied to Clipboard!';
@@ -2170,7 +2388,7 @@ const KEYBOARD_ROWS = [
         id: 'lesson-6',
         level: 'Level 1: Home Row',
         title: 'Home Row English Word Mastery',
-        tip: 'Type authentic 11+ English words formed exclusively on the home row without looking down.',
+        tip: 'Type authentic English words formed exclusively on the home row without looking down.',
         text: 'ask lad fall salad flask dad alas all fall flash slash salads',
         finger: 'All 8 Home Row Fingers Working in Harmony'
       },
@@ -2219,8 +2437,8 @@ const KEYBOARD_ROWS = [
       {
         id: 'lesson-12',
         level: 'Level 3: Classical Mastery',
-        title: '11+ Dialogue Punctuation & Enter ↵ Transitions',
-        tip: 'Speech quotes, commas, exclamation marks, and Enter ↵ paragraph transitions from Victorian classics.',
+        title: 'Dialogue Punctuation & Enter ↵ Transitions',
+        tip: 'Speech quotes, commas, exclamation marks, and Enter ↵ paragraph transitions from classical prose.',
         text: '"Look there!" cried Alice. "Who goes there?" asked Darcy.',
         finger: 'Right Pinky on Quotes & Enter ↵ Carriage Return'
       }
@@ -2415,6 +2633,27 @@ const KEYBOARD_ROWS = [
           chip.className = 'px-2 py-0.5 rounded-md text-[10px] font-black border border-amber-500 bg-brand-gold text-slate-950 shadow-md ring-2 ring-amber-300 scale-105 transition-all';
         }
       }
+
+      // Reset all SVG hands finger highlights
+      const allFingerSvgs = document.querySelectorAll('.finger-group');
+      allFingerSvgs.forEach(fg => {
+        fg.classList.remove('active-finger');
+        fg.setAttribute('data-active', 'false');
+      });
+
+      // Highlight target finger(s) on hands SVG
+      if (fingerKey === 'thumb') {
+        const leftThumb = document.getElementById('finger-svg-left-thumb');
+        const rightThumb = document.getElementById('finger-svg-right-thumb');
+        if (leftThumb) { leftThumb.classList.add('active-finger'); leftThumb.setAttribute('data-active', 'true'); }
+        if (rightThumb) { rightThumb.classList.add('active-finger'); rightThumb.setAttribute('data-active', 'true'); }
+      } else if (fingerKey) {
+        const targetFingerSvg = document.getElementById('finger-svg-' + fingerKey);
+        if (targetFingerSvg) {
+          targetFingerSvg.classList.add('active-finger');
+          targetFingerSvg.setAttribute('data-active', 'true');
+        }
+      }
     }
 
     // --- Strict Academy Typing Mechanics (WRONG KEY DOES NOT ADVANCE; NO BACKSPACE REQUIRED) ---
@@ -2587,7 +2826,7 @@ const KEYBOARD_ROWS = [
     };
 
     // ========================================================
-    // SECTION 3: 18 GUTENBERG BOOKS DIRECT LIBRARY
+    // SECTION 3: 18 CLASSIC STORIES DIRECT LIBRARY
     // ========================================================
     const libraryFullGrid = document.getElementById('library-full-grid');
     const libraryDirectSearch = document.getElementById('library-direct-search');
@@ -2621,8 +2860,8 @@ const KEYBOARD_ROWS = [
             '<button type="button" class="refraction-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 active:scale-95 transition-all shadow-sm" onclick="window.__selectBookFromLibrary(' + origIdx + ')">' +
               (isCurrent ? 'Racing Now' : 'Race This Book') +
             '</button>' +
-            '<a href="' + p.gutenbergUrl + '" target="_blank" rel="noopener noreferrer" class="refraction-btn px-2.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-white/10 text-slate-800 dark:text-slate-200 border border-black/[0.08] dark:border-white/[0.1] hover:text-amber-700 transition-colors inline-flex items-center gap-1" title="Read on Project Gutenberg">' +
-              '#' + p.gutenbergId + ' ↗' +
+            '<a href="' + p.gutenbergUrl + '" target="_blank" rel="noopener noreferrer" class="refraction-btn px-2.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-white/10 text-slate-800 dark:text-slate-200 border border-black/[0.08] dark:border-white/[0.1] hover:text-amber-700 transition-colors inline-flex items-center gap-1" title="Read full original story">' +
+              'Full Text ↗' +
             '</a>' +
           '</div>' +
         '</div>';

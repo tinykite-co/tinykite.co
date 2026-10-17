@@ -27,7 +27,7 @@ export interface Passage {
   gutenbergId: number;
   gutenbergUrl: string;
   chapter: string;
-  difficulty: 'Foundation' | 'Standard 11+' | 'Advanced 11+';
+  difficulty: 'Foundation' | 'Standard' | 'Advanced';
   tags: string[];
   text: string;
   vocabulary: VocabularyItem[];
@@ -83,7 +83,7 @@ questions: [
         hint: "Starts with 't' (5 letters)",
         answer: 'trill',
         acceptableAnswers: ['trill', 'a trill'],
-        explanation: "A 'trill' is a rapid alternation between notes, frequently used in 11+ comprehensions to describe birdsong."
+        explanation: "A 'trill' is a rapid alternation between notes, frequently used in literary prose to describe birdsong."
       }
     ]
   },
@@ -146,7 +146,7 @@ questions: [
     gutenbergId: 120,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/120',
     chapter: 'Chapter 1: The Old Sea-dog at the Admiral Benbow',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Adventure', 'Pirates', 'Character Description'],
     text: "I remember him as if it were yesterday, as he came plodding to the inn door, his sea-chest following behind him in a hand-barrow; a tall, strong, heavy, nut-brown man; his tarry pigtail falling over the shoulders of his soiled blue coat; his hands ragged and scarred, with black, broken nails.",
     vocabulary: [
@@ -198,7 +198,7 @@ questions: [
     gutenbergId: 289,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/289',
     chapter: 'Chapter 1: The River Bank',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Animals', 'Pastoral', 'Humour'],
     text: "The Mole had been working very hard all the morning, spring-cleaning his little home. First with brooms, then with dusters; then on ladders and steps and chairs, with a brush and a pail of whitewash; till he had dust in his throat and eyes, and splashes of whitewash all over his black fur.",
     vocabulary: [
@@ -249,7 +249,7 @@ questions: [
     gutenbergId: 730,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/730',
     chapter: 'Chapter 2: Treats of Oliver Twist’s Growth and Education',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Victorian', 'Social Critique', 'Dramatic'],
     text: "The room in which the boys were fed was a large stone hall, with a copper at one end; out of which the master, dressed in an apron for the purpose, and assisted by one or two women, ladled the gruel at meal-times. Of this festive composition each boy had one porringer, and no more.",
     vocabulary: [
@@ -402,7 +402,7 @@ questions: [
     gutenbergId: 46,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/46',
     chapter: 'Stave 1: Marley’s Ghost',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Ghost Story', 'Moral', 'Victorian London'],
     text: "Marley was dead, to begin with. There is no doubt whatever about that. The register of his burial was signed by the clergyman, the clerk, the undertaker, and the chief mourner. Scrooge signed it. And Scrooge's name was good upon 'Change for anything he chose to put his hand to.",
     vocabulary: [
@@ -504,7 +504,7 @@ questions: [
     gutenbergId: 236,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/236',
     chapter: 'Mowgli’s Brothers',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Wild Animals', 'India', 'Adventure'],
     text: "It was seven o'clock of a very warm evening in the Seeonee hills when Father Wolf woke up from his day's rest, scratched himself, yawned, and spread out his paws one after the other to get rid of the sleepy feeling in their tips. Mother Wolf lay with her big gray nose dropped across her four tumbling, squealing cubs.",
     vocabulary: [
@@ -555,7 +555,7 @@ questions: [
     gutenbergId: 74,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/74',
     chapter: 'Chapter 2: The Glorious Whitewasher',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Americana', 'Humour', 'Youth'],
     text: "Saturday morning was come, and all the summer world was bright and fresh, and brimming with life. There was a song in every heart; and if the heart was young the music issued at the lips. There was cheer in every face and a spring in every step.",
     vocabulary: [
@@ -627,7 +627,7 @@ questions: [
         hint: "Starts with 'd' (8 letters)",
         answer: 'dreadful',
         acceptableAnswers: ['dreadful'],
-        explanation: "'Dreadful' is a classic 11+ vocabulary word expressing strong dismay."
+        explanation: "'Dreadful' is a classic literary vocabulary word expressing strong dismay."
       },
       {
         id: 'lw-q2',
@@ -657,7 +657,7 @@ questions: [
     gutenbergId: 419,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/419',
     chapter: 'Chapter 1: The Tempest',
-    difficulty: 'Standard 11+',
+    difficulty: 'Standard',
     tags: ['Survival', 'Shipwreck', 'Nautical'],
     text: "For many days we had been tempest-tossed. Six times had the darkness closed over a wild and terrific scene, and each morning we approached only nearer to shipwreck and disaster. The raging sea tore away our sails, and the ship groaned with every shock of the furious waves.",
     vocabulary: [
@@ -708,7 +708,7 @@ questions: [
     gutenbergId: 1661,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/1661',
     chapter: 'A Scandal in Bohemia',
-    difficulty: 'Advanced 11+',
+    difficulty: 'Advanced',
     tags: ['Detective', 'Intellect', 'Mystery'],
     text: "To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind.",
     vocabulary: [
@@ -730,7 +730,7 @@ questions: [
         hint: "Starts with 'a' (9 letters)",
         answer: 'abhorrent',
         acceptableAnswers: ['abhorrent'],
-        explanation: "'Abhorrent' is a premier 11+ vocabulary test word denoting profound aversion."
+        explanation: "'Abhorrent' is a premier vocabulary word denoting profound aversion."
       },
       {
         id: 'sh-q2',
@@ -760,7 +760,7 @@ questions: [
     gutenbergId: 910,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/910',
     chapter: 'Part 1, Chapter 1: The Trail of the Meat',
-    difficulty: 'Advanced 11+',
+    difficulty: 'Advanced',
     tags: ['Wilderness', 'Yukon', 'Atmosphere'],
     text: "Dark spruce forest frowned on either side the frozen waterway. The trees had been stripped by a recent wind of their white covering of frost, and they seemed to lean towards each other, black and ominous, in the fading light. A vast silence reigned over the land.",
     vocabulary: [
@@ -781,7 +781,7 @@ questions: [
         hint: "Starts with 'o' (7 letters)",
         answer: 'ominous',
         acceptableAnswers: ['ominous'],
-        explanation: "'Ominous' is a classic 11+ comprehension word used to create a threatening mood."
+        explanation: "'Ominous' is a classic literary word used to create a threatening mood."
       },
       {
         id: 'wf-q2',
@@ -811,7 +811,7 @@ questions: [
     gutenbergId: 103,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/103',
     chapter: 'Chapter 1: In Which Phileas Fogg and Passepartout Accept Each Other',
-    difficulty: 'Advanced 11+',
+    difficulty: 'Advanced',
     tags: ['Precision', 'Travel', 'Gentleman'],
     text: "Mr. Phileas Fogg was one of those mathematically exact people, who, never hurried and always prepared, are economical with their steps and their motions. He never took one step too many, and always went to his destination by the shortest route. He made no superfluous gestures, and was never seen to be moved or agitated.",
     vocabulary: [
@@ -862,7 +862,7 @@ questions: [
     gutenbergId: 1260,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/1260',
     chapter: 'Chapter 1: Gateshead Hall',
-    difficulty: 'Advanced 11+',
+    difficulty: 'Advanced',
     tags: ['Gothic', 'Winter', 'Atmosphere'],
     text: "There was no possibility of taking a walk that day. We had been wandering, indeed, in the leafless shrubbery an hour in the morning; but since dinner the cold winter wind had brought with it clouds so sombre, and a rain so penetrating, that further outdoor exercise was now out of the question.",
     vocabulary: [
@@ -913,7 +913,7 @@ questions: [
     gutenbergId: 35,
     gutenbergUrl: 'https://www.gutenberg.org/ebooks/35',
     chapter: 'Chapter 1: The Fourth Dimension',
-    difficulty: 'Advanced 11+',
+    difficulty: 'Advanced',
     tags: ['Science Fiction', 'Victorian Science', 'Philosophy'],
     text: "The Time Traveller was expounding a recondite matter to us. His grey eyes shone and twinkled, and his usually pale face was flushed and animated. The fire burned brightly, and the soft radiance of the incandescent lamps in the lilies of silver caught the bubbles that flashed and passed in our glasses.",
     vocabulary: [
@@ -935,7 +935,7 @@ questions: [
         hint: "Starts with 'r' (9 letters)",
         answer: 'recondite',
         acceptableAnswers: ['recondite'],
-        explanation: "'Recondite' is a hallmark 11+ scholarship vocabulary word denoting deep, esoteric concepts."
+        explanation: "'Recondite' is a hallmark literary vocabulary word denoting deep, esoteric concepts."
       },
       {
         id: 'tm-q2',
