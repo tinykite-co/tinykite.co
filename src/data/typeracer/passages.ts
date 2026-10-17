@@ -1,3 +1,9 @@
+export interface QAFollowup {
+  question: string;
+  answer: string;
+  contextNote: string;
+}
+
 export interface Question {
   id: string;
   type: 'vocabulary' | 'retrieval' | 'inference' | 'grammar';
@@ -26,6 +32,7 @@ export interface Passage {
   text: string;
   vocabulary: VocabularyItem[];
   questions: Question[];
+  qaFollowup: QAFollowup;
 }
 
 export const PASSAGES: Passage[] = [
@@ -45,7 +52,12 @@ export const PASSAGES: Passage[] = [
       { word: 'trill', definition: 'A vibrating, quavering musical sound made by a bird or voice' },
       { word: 'orchard', definition: 'A piece of enclosed land planted with fruit trees' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Where did the robin perch before opening his beak to sing?",
+      answer: "On the swinging spray of ivy on top of the orchard wall.",
+      contextNote: "Frances Hodgson Burnett uses the robin to guide Mary toward discovering the locked secret garden."
+    },
+questions: [
       {
         id: 'sg-q1',
         type: 'vocabulary',
@@ -91,7 +103,12 @@ export const PASSAGES: Passage[] = [
       { word: 'conversations', definition: 'Spoken dialogue or verbal exchanges between characters' },
       { word: 'bank', definition: 'The sloping land beside a body of water or grassy slope' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What did Alice believe was useless about her sister's book?",
+      answer: "It had no pictures or conversations in it.",
+      contextNote: "Lewis Carroll sets Alice's playful Victorian curiosity and impatience from the opening sentence."
+    },
+questions: [
       {
         id: 'aw-q1',
         type: 'vocabulary',
@@ -138,7 +155,12 @@ export const PASSAGES: Passage[] = [
       { word: 'soiled', definition: 'Dirty, stained, or weathered from hard seafaring life' },
       { word: 'hand-barrow', definition: 'A two-wheeled hand-drawn cart used for transporting luggage' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What heavy luggage was the scarred old sea-dog hauling?",
+      answer: "His sea-chest following behind him in a hand-barrow.",
+      contextNote: "Robert Louis Stevenson establishes Billy Bones' mysterious pirate background at the Admiral Benbow."
+    },
+questions: [
       {
         id: 'ti-q1',
         type: 'vocabulary',
@@ -184,7 +206,12 @@ export const PASSAGES: Passage[] = [
       { word: 'whitewash', definition: 'A lime-and-water solution used for painting walls white' },
       { word: 'spring-cleaning', definition: 'A thorough, exhaustive cleaning of a house undertaken in the spring' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What liquid left splashes all over the Mole's black fur?",
+      answer: "Whitewash from his brush and pail as he cleaned.",
+      contextNote: "Kenneth Grahame paints Mole's exhausted domestic spring-cleaning before his joyous breakout to the river."
+    },
+questions: [
       {
         id: 'ww-q1',
         type: 'vocabulary',
@@ -231,7 +258,12 @@ export const PASSAGES: Passage[] = [
       { word: 'festive', definition: 'Cheerful and celebratory (used here with bitter irony)' },
       { word: 'copper', definition: 'A large copper boiler or cauldron used for communal heating' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Why was the small child Oliver sentenced to be starved?",
+      answer: "He dared to ask the master for more gruel.",
+      contextNote: "Charles Dickens exposes the cruel neglect and starvation inside Victorian parish workhouses."
+    },
+questions: [
       {
         id: 'ot-q1',
         type: 'vocabulary',
@@ -276,7 +308,12 @@ export const PASSAGES: Passage[] = [
       { word: 'plucked', definition: 'Quickly picked or detached from a stem with fingers' },
       { word: 'except', definition: 'Not including; other than' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What does every single child know except for Peter Pan?",
+      answer: "They soon know that they will grow up.",
+      contextNote: "J.M. Barrie contrasts the sorrowful inevitability of growing up with Peter's eternal childhood."
+    },
+questions: [
       {
         id: 'pp-q1',
         type: 'vocabulary',
@@ -322,7 +359,12 @@ export const PASSAGES: Passage[] = [
       { word: 'pantomime', definition: 'A traditional British musical comedy stage theatrical for families' },
       { word: 'villa', definition: 'A detached or semi-detached residential house with garden' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Where did the children live before their life suddenly changed?",
+      answer: "In an ordinary red-brick villa in London.",
+      contextNote: "E. Nesbit grounds the family's dramatic downfall in comfortable Edwardian suburban reality."
+    },
+questions: [
       {
         id: 'rc-q1',
         type: 'vocabulary',
@@ -368,7 +410,12 @@ export const PASSAGES: Passage[] = [
       { word: 'undertaker', definition: 'A professional whose business is preparing the dead for burial' },
       { word: "'Change", definition: 'The Royal Exchange in the City of London where merchants traded' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What was cold about Ebenezer Scrooge even on the hottest days?",
+      answer: "The bitter cold within him that froze his old features.",
+      contextNote: "Charles Dickens uses harsh winter weather as an extended metaphor for Scrooge's unfeeling heart."
+    },
+questions: [
       {
         id: 'cc-q1',
         type: 'vocabulary',
@@ -414,7 +461,12 @@ export const PASSAGES: Passage[] = [
       { word: 'ploughed', definition: 'Soil turned over by a farm implement ready for sowing crops' },
       { word: 'meadow', definition: 'A piece of grassland, especially one used for hay or grazing' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What was the first pleasant place the young horse could remember?",
+      answer: "A large meadow with a pond of clear water and shady trees.",
+      contextNote: "Anna Sewell adopts the horse's gentle voice to inspire empathy for Victorian working animals."
+    },
+questions: [
       {
         id: 'bb-q1',
         type: 'vocabulary',
@@ -460,7 +512,12 @@ export const PASSAGES: Passage[] = [
       { word: 'squealing', definition: 'Making a high-pitched, shrill cry or sound of play' },
       { word: 'tumbling', definition: 'Rolling over and falling playfully across one another' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Who sprang forward when the bushes rustled at the cave?",
+      answer: "Father Wolf leaped into the air to defend his cubs.",
+      contextNote: "Rudyard Kipling depicts the sacred protective honour code of the Seeonee wolf pack."
+    },
+questions: [
       {
         id: 'jb-q1',
         type: 'vocabulary',
@@ -506,7 +563,12 @@ export const PASSAGES: Passage[] = [
       { word: 'issued', definition: 'Flowed out, emerged, or proceeded from a source' },
       { word: 'cheer', definition: 'Good spirits, optimism, and hearty happiness' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What dreaded Saturday chore faced young Tom Sawyer?",
+      answer: "Whitewashing thirty yards of board fence nine feet high.",
+      contextNote: "Mark Twain humorously illustrates how Tom tricks his neighbourhood friends into doing his work."
+    },
+questions: [
       {
         id: 'ts-q1',
         type: 'vocabulary',
@@ -552,7 +614,12 @@ export const PASSAGES: Passage[] = [
       { word: 'grumbled', definition: 'Complained in a bad-tempered, muttering tone' },
       { word: 'injured', definition: 'Offended, aggrieved, or hurt in dignity' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Why did Jo grumble that Christmas would not feel like Christmas?",
+      answer: "Because they were too poor to afford any presents.",
+      contextNote: "Louisa May Alcott celebrates sisterly devotion and cheerful resilience amidst wartime poverty."
+    },
+questions: [
       {
         id: 'lw-q1',
         type: 'vocabulary',
@@ -598,7 +665,12 @@ export const PASSAGES: Passage[] = [
       { word: 'terrific', definition: 'Inspiring great terror or alarming dread (archaic literary sense)' },
       { word: 'groaned', definition: 'Made a deep creaking sound under intense structural stress' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What sad sight did the family discover upon the wrecked vessel?",
+      answer: "The deserted ship had been abandoned by the frightened crew.",
+      contextNote: "Johann David Wyss emphasizes faith, resourcefulness, and family unity after calamity."
+    },
+questions: [
       {
         id: 'sfr-q1',
         type: 'vocabulary',
@@ -645,7 +717,12 @@ export const PASSAGES: Passage[] = [
       { word: 'predominates', definition: 'Has supreme exerting influence or controlling preeminence' },
       { word: 'akin', definition: 'Of similar character or related in essence' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "To Sherlock Holmes, what was Irene Adler always remembered as?",
+      answer: "She is always remembered as THE woman of intellect.",
+      contextNote: "Sir Arthur Conan Doyle notes that Holmes rarely admitted defeat except to the sharp-witted Irene Adler."
+    },
+questions: [
       {
         id: 'sh-q1',
         type: 'vocabulary',
@@ -691,7 +768,12 @@ export const PASSAGES: Passage[] = [
       { word: 'reigned', definition: 'Prevailed predominantly; held undisputed sway' },
       { word: 'spruce', definition: 'An evergreen coniferous tree typical of northern subarctic forests' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What grim sound broke the frozen silence of the northern forest?",
+      answer: "A faint, mournful cry from a hungry wolf pack.",
+      contextNote: "Jack London portrays the perilous, untamed savagery of the frozen subarctic wilderness."
+    },
+questions: [
       {
         id: 'wf-q1',
         type: 'vocabulary',
@@ -737,7 +819,12 @@ export const PASSAGES: Passage[] = [
       { word: 'economical', definition: 'Careful and prudent in the management of resources or effort' },
       { word: 'agitated', definition: 'Troubled, nervously excited, or visibly perturbed' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Why did Mr Phileas Fogg never take an unnecessary step?",
+      answer: "He always went to his destination by the shortest route.",
+      contextNote: "Jules Verne depicts Fogg as a living clock: calm, disciplined, and mathematically precise."
+    },
+questions: [
       {
         id: 'aw80-q1',
         type: 'vocabulary',
@@ -783,7 +870,12 @@ export const PASSAGES: Passage[] = [
       { word: 'penetrating', definition: 'Piercing, sharp, and soaking completely through' },
       { word: 'shrubbery', definition: 'An area planted with shrubs and ornamental bushes' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "Why could young Jane Eyre not take an outdoor walk that day?",
+      answer: "The cold winter wind had brought dark clouds and penetrating rain.",
+      contextNote: "Charlotte Brontë uses bleak winter storms to reflect Jane's emotional isolation at Gateshead Hall."
+    },
+questions: [
       {
         id: 'je-q1',
         type: 'vocabulary',
@@ -830,7 +922,12 @@ export const PASSAGES: Passage[] = [
       { word: 'incandescent', definition: 'Emitting brilliant light as a consequence of being heated' },
       { word: 'radiance', definition: 'Light or heat as emitted or reflected by something luminous' }
     ],
-    questions: [
+        qaFollowup: {
+      question: "What fourth dimension was the Time Traveller describing to his guests?",
+      answer: "Time, along which our consciousness moves through Space.",
+      contextNote: "H.G. Wells grounded Victorian speculative romance in modern physical and temporal theory."
+    },
+questions: [
       {
         id: 'tm-q1',
         type: 'vocabulary',

@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { PASSAGES } from '../../data/typeracer/passages';
 
-const pageTitle = "11+ TypeRacer | Gutenberg Classic Literature Speed & Comprehension | TinyKite";
-const pageDescription = "Ad-free TypeRacer built for 11+ preparation. Speed-type authentic classic literature passages from Project Gutenberg and master 11+ comprehension and vocabulary with interactive typing drills.";
+const pageTitle = "11+ TypeRacer | Classic Literature P2P & Multi-Bot Typing Arena | TinyKite";
+const pageDescription = "100% ad-free TypeRacer built for 11+ preparation. Speed-type authentic classic literature from Project Gutenberg with peer-to-peer multiplayer, realistic bot racers, and newline Q&A typing drills.";
 
 const initialPassage = PASSAGES[0];
 const initialWords = initialPassage.text.split(' ');
@@ -14,14 +14,12 @@ const initialWords = initialPassage.text.split(' ');
     .tk-typeracer-root {
       font-family: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    #question-challenge-view,
+    #qa-followup-view,
     #grand-results-view,
     #library-modal,
     #vocab-drawer,
-    #hint-box,
-    #answer-feedback,
-    #btn-reveal-answer,
-    #typing-error-tag {
+    #typing-error-tag,
+    #qa-error-tag {
       display: none;
     }
     .tr-track-surface {
@@ -33,12 +31,12 @@ const initialWords = initialPassage.text.split(' ');
     }
     .tr-finish-line {
       position: absolute;
-      right: 24px;
+      right: 20px;
       top: 0;
       bottom: 0;
       width: 14px;
       background: repeating-conic-gradient(#ffffff 0 90deg, #111827 0 180deg) 0 0/8px 8px;
-      opacity: 0.75;
+      opacity: 0.8;
       z-index: 2;
       border-left: 1px solid rgba(255, 255, 255, 0.4);
       border-right: 1px solid rgba(255, 255, 255, 0.4);
@@ -78,13 +76,23 @@ const initialWords = initialPassage.text.split(' ');
     .dark .tr-word-upcoming {
       color: #94a3b8;
     }
+    .tr-racer-transition {
+      transition: left 0.12s linear;
+    }
+    @keyframes pulse-gold {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 178, 60, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(255, 178, 60, 0); }
+    }
+    .pulse-gold {
+      animation: pulse-gold 2s infinite;
+    }
   </style>
 
-  <main class="tk-typeracer-root min-h-screen bg-brand-cream dark:bg-brand-navy pt-6 pb-16 transition-colors duration-300">
+  <main class="tk-typeracer-root min-h-screen bg-brand-cream dark:bg-brand-navy pt-5 pb-16 transition-colors duration-300">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
 
       <!-- TOP BAR: 100% Ad-Free Guarantee Banner -->
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-2 bg-white/80 dark:bg-brand-navy-light/80 backdrop-blur-md border border-brand-mist dark:border-white/10 rounded-2xl px-4 py-2 shadow-sm">
+      <div class="mb-3.5 flex flex-wrap items-center justify-between gap-2 bg-white/80 dark:bg-brand-navy-light/80 backdrop-blur-md border border-brand-mist dark:border-white/10 rounded-2xl px-4 py-2 shadow-sm">
         <div class="flex items-center gap-2 text-xs font-semibold text-brand-navy dark:text-brand-cream">
           <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-black">✓</span>
           <span><strong class="text-emerald-600 dark:text-emerald-400">100% Ad-Free</strong> • Project Gutenberg 11+ Classic Literature TypeRacer</span>
@@ -100,10 +108,10 @@ const initialWords = initialPassage.text.split(' ');
       </div>
 
       <!-- MAIN UNIFIED GAME CARD -->
-      <div id="arena-container" class="bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 rounded-3xl p-5 sm:p-6 shadow-md relative">
+      <div id="arena-container" class="bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 rounded-3xl p-4 sm:p-6 shadow-md relative">
 
         <!-- 1. Citation & Control Strip -->
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-brand-mist dark:border-white/10 pb-3 mb-3">
+        <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-brand-mist dark:border-white/10 pb-3 mb-3">
           <div class="flex items-center gap-2.5 min-w-0">
             <span class="text-2xl shrink-0">📖</span>
             <div class="min-w-0">
@@ -114,15 +122,18 @@ const initialWords = initialPassage.text.split(' ');
                 <span id="passage-difficulty" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
                   {initialPassage.difficulty}
                 </span>
+                <span id="race-mode-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-brand-gold/20 text-amber-800 dark:text-brand-gold">
+                  📖 11+ Context (Passage + Q&A)
+                </span>
               </div>
               <p id="passage-author" class="text-xs text-brand-slate dark:text-gray-400 truncate">
-                by {initialPassage.author} ({initialPassage.year})
+                by {initialPassage.author} ({initialPassage.year}) • {initialPassage.chapter}
               </p>
             </div>
           </div>
 
-          <div class="flex items-center gap-2">
-            <button id="btn-toggle-vocab" type="button" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-colors flex items-center gap-1">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <button id="btn-toggle-vocab" type="button" class="px-2 py-1 text-xs font-semibold rounded-lg bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-colors flex items-center gap-1">
               <span>💡</span> Vocab (<span id="vocab-count">{initialPassage.vocabulary.length}</span>)
             </button>
             <button id="btn-next-passage" type="button" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy hover:opacity-90 active:scale-95 transition-all flex items-center gap-1">
@@ -150,61 +161,125 @@ const initialWords = initialPassage.text.split(' ');
         </div>
 
         <!-- ============================================ -->
-        <!-- PHASE 1: TYPING RACE VIEW                    -->
+        <!-- PHASE 1: 4-LANE MULTIPLAYER / BOT RACING     -->
         <!-- ============================================ -->
         <div id="typing-race-view">
 
-          <!-- 2. Integrated Race Track -->
-          <div class="tr-track-surface p-3 space-y-2.5 overflow-hidden mb-3">
-            <div class="tr-finish-line"></div>
-
-            <!-- LANE 1: PLAYER -->
-            <div class="relative flex items-center h-10 z-10">
-              <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
-              <div id="player-racer" class="absolute left-0 transition-all duration-100 ease-out flex items-center gap-1 select-none" style="left: 0%;">
-                <span class="text-xl filter drop-shadow">🏎️</span>
-                <span id="player-wpm-pill" class="text-[10px] font-black px-1.5 py-0.5 rounded-full bg-brand-gold text-brand-navy whitespace-nowrap shadow-sm">
-                  0 WPM
-                </span>
-                <span class="text-[9px] font-bold text-white bg-slate-800/90 px-1 py-0.2 rounded">You</span>
-              </div>
+          <!-- Matchmaking Lobby & Peer Status Strip -->
+          <div id="lobby-bar" class="mb-2 px-3 py-1.5 rounded-xl bg-brand-navy/5 dark:bg-white/5 border border-brand-mist dark:border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span id="lobby-pulse-icon" class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span id="lobby-status-text" class="font-bold text-brand-navy dark:text-brand-cream">
+                🚦 Matchmaking: Waiting for other racers... (<span id="lobby-timer-num">5</span>s)
+              </span>
+              <span id="lobby-racers-summary" class="hidden sm:inline text-brand-slate dark:text-gray-400">
+                • 1 Player (You) + 3 Bots queued
+              </span>
             </div>
-
-            <!-- LANE 2: PACER BOT -->
-            <div id="pacer-lane" class="relative flex items-center h-8 z-10 border-t border-dashed border-white/10 pt-1">
-              <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
-              <div id="pacer-racer" class="absolute left-0 transition-all duration-150 ease-linear flex items-center gap-1 select-none" style="left: 0%;">
-                <span class="text-base filter drop-shadow">🤖</span>
-                <span id="pacer-label" class="text-[9px] font-semibold text-slate-300 bg-slate-800/90 px-1 py-0.2 rounded whitespace-nowrap">
-                  Pacer 45 WPM
-                </span>
-              </div>
+            <div class="flex items-center gap-1.5">
+              <button id="btn-start-race-now" type="button" class="px-2 py-0.5 rounded-lg text-xs font-black bg-brand-gold text-brand-navy hover:opacity-90 active:scale-95 transition-all">
+                ⚡ Start Now
+              </button>
+              <button id="btn-invite-link" type="button" class="px-2 py-0.5 rounded-lg text-xs font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-all flex items-center gap-1">
+                <span>🔗</span> <span id="invite-btn-label">Invite Friend</span>
+              </button>
             </div>
           </div>
 
-          <!-- 3. Slim Live HUD Strip -->
+          <!-- 4-Lane Race Track -->
+          <div class="tr-track-surface p-2.5 space-y-1.5 overflow-hidden mb-3">
+            <div class="tr-finish-line"></div>
+
+            <!-- LANE 0: YOU (Player) -->
+            <div class="relative flex items-center h-7 z-10">
+              <div class="absolute inset-x-0 h-0.5 bg-amber-400/20 rounded-full"></div>
+              <div id="racer-0" class="tr-racer-transition absolute left-0 flex items-center gap-1 select-none" style="left: 0%;">
+                <span class="text-lg filter drop-shadow">🏎️</span>
+                <span id="racer-0-wpm" class="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-brand-gold text-brand-navy whitespace-nowrap shadow-sm">
+                  0 WPM
+                </span>
+                <span class="text-[9px] font-bold text-white bg-amber-600/90 px-1 py-0.2 rounded">You</span>
+                <span id="racer-0-medal" class="hidden text-xs">🥇</span>
+              </div>
+            </div>
+
+            <!-- LANE 1: RACER 2 (Peer or Bot 1) -->
+            <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/10 pt-0.5">
+              <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+              <div id="racer-1" class="tr-racer-transition absolute left-0 flex items-center gap-1 select-none" style="left: 0%;">
+                <span id="racer-1-avatar" class="text-base filter drop-shadow">🏎️</span>
+                <span id="racer-1-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800/90 px-1 py-0.2 rounded whitespace-nowrap">
+                  0 WPM
+                </span>
+                <span id="racer-1-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1 py-0.2 rounded truncate max-w-[90px]">
+                  Cadence_Pro
+                </span>
+                <span id="racer-1-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1 rounded">BOT</span>
+                <span id="racer-1-medal" class="hidden text-xs">🥈</span>
+              </div>
+            </div>
+
+            <!-- LANE 2: RACER 3 (Peer or Bot 2) -->
+            <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/10 pt-0.5">
+              <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+              <div id="racer-2" class="tr-racer-transition absolute left-0 flex items-center gap-1 select-none" style="left: 0%;">
+                <span id="racer-2-avatar" class="text-base filter drop-shadow">🚗</span>
+                <span id="racer-2-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800/90 px-1 py-0.2 rounded whitespace-nowrap">
+                  0 WPM
+                </span>
+                <span id="racer-2-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1 py-0.2 rounded truncate max-w-[90px]">
+                  Oliver_T
+                </span>
+                <span id="racer-2-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1 rounded">BOT</span>
+                <span id="racer-2-medal" class="hidden text-xs">🥉</span>
+              </div>
+            </div>
+
+            <!-- LANE 3: RACER 4 (Peer or Bot 3) -->
+            <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/10 pt-0.5">
+              <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+              <div id="racer-3" class="tr-racer-transition absolute left-0 flex items-center gap-1 select-none" style="left: 0%;">
+                <span id="racer-3-avatar" class="text-base filter drop-shadow">🚕</span>
+                <span id="racer-3-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800/90 px-1 py-0.2 rounded whitespace-nowrap">
+                  0 WPM
+                </span>
+                <span id="racer-3-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1 py-0.2 rounded truncate max-w-[90px]">
+                  Jane_Eyre
+                </span>
+                <span id="racer-3-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1 rounded">BOT</span>
+                <span id="racer-3-medal" class="hidden text-xs"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live HUD Strip -->
           <div class="flex flex-wrap items-center justify-between gap-3 px-3.5 py-2 bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-xl text-xs font-semibold mb-3">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+              <div class="flex items-center gap-1">
+                <span class="text-brand-slate dark:text-gray-400">Position:</span>
+                <span id="hud-rank" class="px-2 py-0.5 rounded-md font-black bg-brand-gold text-brand-navy">
+                  1st / 4
+                </span>
+              </div>
               <div>Speed: <strong id="hud-wpm" class="text-sm font-black text-brand-navy dark:text-brand-cream">0</strong> WPM</div>
               <div>Accuracy: <strong id="hud-accuracy" class="text-sm font-black text-emerald-600 dark:text-emerald-400">100</strong>%</div>
               <div>Time: <strong id="hud-time" class="text-sm font-black text-brand-navy dark:text-brand-cream">0:00</strong></div>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 flex-wrap">
               <div class="flex items-center gap-1">
-                <span class="text-brand-slate dark:text-gray-400 text-[11px]">Pacer:</span>
-                <select id="pacer-select" class="bg-transparent font-bold text-brand-navy dark:text-brand-gold cursor-pointer text-xs focus:outline-none">
-                  <option value="0">Off (Solo)</option>
-                  <option value="30">30 WPM (Foundation)</option>
-                  <option value="45" selected>45 WPM (11+ Goal)</option>
-                  <option value="60">60 WPM (Advanced)</option>
-                  <option value="80">80 WPM (Scholar)</option>
+                <span class="text-brand-slate dark:text-gray-400 text-[11px]">Mode:</span>
+                <select id="mode-select" class="bg-transparent font-bold text-brand-navy dark:text-brand-gold cursor-pointer text-xs focus:outline-none">
+                  <option value="random" selected>🎲 Random Q&A (50%)</option>
+                  <option value="always">📖 Always with Q&A</option>
+                  <option value="sprint">⚡ Speed Sprint Only</option>
                 </select>
               </div>
               <div>Progress: <strong id="hud-progress" class="text-sm font-black text-brand-gold">0</strong>%</div>
             </div>
           </div>
 
-          <!-- 4. Passage Words Display Box (Pre-rendered for zero-delay instant display) -->
+          <!-- Passage Words Display Box -->
           <div id="passage-display" class="p-4 sm:p-5 bg-brand-cream/40 dark:bg-white/[0.02] border border-brand-mist dark:border-white/10 rounded-2xl text-base sm:text-lg leading-relaxed tracking-wide select-none mb-3 min-h-[90px]">
             {initialWords.map((word, idx) => (
               idx === 0 ? (
@@ -215,7 +290,7 @@ const initialWords = initialPassage.text.split(' ');
             ))}
           </div>
 
-          <!-- 5. Typing Input Field -->
+          <!-- Typing Input Field -->
           <div class="relative">
             <input
               id="typing-input"
@@ -236,142 +311,125 @@ const initialWords = initialPassage.text.split(' ');
         </div>
 
         <!-- ============================================ -->
-        <!-- PHASE 2: 11+ QUESTION CHALLENGE VIEW         -->
+        <!-- PHASE 2: 11+ CONTEXT Q&A TYPING FOLLOW-UP    -->
         <!-- ============================================ -->
-        <div id="question-challenge-view">
-          <div class="mb-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div id="qa-followup-view">
+          <div class="mb-3.5 bg-brand-gold/15 border border-brand-gold/40 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-2.5">
             <div class="flex items-center gap-2.5">
-              <span class="text-2xl">🏁</span>
+              <span class="text-2xl">📖</span>
               <div>
-                <h3 class="font-bold text-sm text-brand-navy dark:text-brand-cream">
-                  Race Complete! Speed: <span id="finish-race-wpm" class="text-emerald-600 dark:text-emerald-400 font-black">0</span> WPM (<span id="finish-race-acc" class="font-bold">100%</span> Acc)
+                <h3 class="font-bold text-sm text-brand-navy dark:text-brand-cream flex items-center gap-2">
+                  <span>Race Finished in <span id="qa-user-rank-badge" class="px-2 py-0.2 rounded bg-brand-gold text-brand-navy font-black text-xs">1st Place!</span></span>
+                  <span class="text-xs text-brand-slate dark:text-gray-400 font-normal">(Speed: <strong id="qa-finish-wpm" class="text-emerald-600 dark:text-emerald-400">0</strong> WPM)</span>
                 </h3>
                 <p class="text-xs text-brand-slate dark:text-gray-400">
-                  Pit Stop Challenge: Type the answers to these 11+ questions about the text!
+                  Follow-Up Context Drill: Type the Question & Answer to practice newlines (Enter ↵) and dialogue.
                 </p>
               </div>
             </div>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-brand-gold text-brand-navy">
-              11+ Comprehension Sprint
-            </span>
+            <button id="btn-skip-qa" type="button" class="px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-white/10 border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream hover:bg-brand-cream/60 dark:hover:bg-white/20 transition-all flex items-center gap-1">
+              <span>Skip to Results ➔</span>
+            </button>
           </div>
 
-          <!-- Sticky Passage Reference -->
-          <div class="mb-4 bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3.5">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-black uppercase tracking-wider text-brand-slate dark:text-gray-400 flex items-center gap-1">
-                <span>📖</span> Reference Passage:
+          <!-- Q&A Typing Card -->
+          <div class="bg-white dark:bg-brand-navy border-2 border-brand-gold/70 rounded-2xl p-4 sm:p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-black uppercase tracking-wider text-brand-gold flex items-center gap-1">
+                <span>✨</span> 11+ Comprehension & Format Typing
               </span>
-              <span class="text-[11px] text-brand-slate dark:text-gray-400">Refer back to find exact answers</span>
-            </div>
-            <p id="ref-passage-text" class="text-xs sm:text-sm text-brand-navy dark:text-brand-cream leading-relaxed italic">
-              "{initialPassage.text}"
-            </p>
-          </div>
-
-          <!-- Active Question Card -->
-          <div id="question-card" class="bg-white dark:bg-brand-navy border-2 border-brand-gold/60 rounded-2xl p-4 sm:p-5 shadow-sm">
-            <div class="flex items-center justify-between mb-2.5">
-              <span id="question-step" class="text-xs font-black uppercase tracking-wider text-brand-gold">
-                Question 1 of 3
-              </span>
-              <span id="question-type-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-teal/15 text-brand-teal dark:text-emerald-300">
-                Vocabulary in Context
+              <span id="qa-newline-cue" class="text-xs font-bold px-2 py-0.5 rounded-full bg-brand-teal/15 text-brand-teal dark:text-emerald-300">
+                ⌨️ Type line 1, then press Enter ↵
               </span>
             </div>
 
-            <h3 id="question-prompt" class="text-base font-bold text-brand-navy dark:text-brand-cream mb-3">
-              <!-- Prompt text -->
-            </h3>
+            <!-- Q&A Target Text Display with Newline Support -->
+            <div id="qa-display-box" class="p-4 bg-brand-cream/40 dark:bg-white/[0.03] border border-brand-mist dark:border-white/10 rounded-xl text-base sm:text-lg leading-relaxed select-none mb-3 font-mono">
+              <div id="qa-line-1" class="mb-2"></div>
+              <div id="qa-line-2"></div>
+            </div>
 
-            <form id="question-form" class="space-y-3">
-              <div class="relative">
-                <input
-                  id="question-input"
-                  type="text"
-                  autocomplete="off"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                  placeholder="Type your answer here and press Enter..."
-                  class="w-full px-4 py-2.5 text-base rounded-xl bg-brand-cream/40 dark:bg-brand-navy-light border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream focus:border-brand-gold focus:outline-none transition-all"
-                />
+            <!-- Q&A Typing Input -->
+            <div class="relative">
+              <input
+                id="qa-input"
+                type="text"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="Type the question above and press Enter..."
+                class="w-full px-4 py-2.5 text-base rounded-xl bg-brand-cream/30 dark:bg-brand-navy-light border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream focus:border-brand-gold focus:outline-none transition-all"
+              />
+              <div class="mt-1.5 flex items-center justify-between text-xs text-brand-slate dark:text-gray-400 px-1">
+                <span id="qa-instruction-label">Type the Question first. When finished, press <strong>Enter ↵</strong> to type the Answer.</span>
+                <span id="qa-error-tag" class="text-rose-500 font-bold">Incorrect letter! Press Backspace.</span>
               </div>
+            </div>
 
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <button type="button" id="btn-show-hint" class="text-xs font-semibold text-brand-slate dark:text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-1">
-                  <span>💡</span> <span id="hint-text-label">Need a hint?</span>
-                </button>
-
-                <div class="flex items-center gap-2">
-                  <button type="button" id="btn-reveal-answer" class="text-xs font-semibold text-brand-slate dark:text-gray-400 hover:text-rose-500 transition-colors">
-                    Reveal Answer
-                  </button>
-                  <button type="submit" id="btn-submit-answer" class="px-4 py-2 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-xs sm:text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-sm">
-                    Submit Answer ↵
-                  </button>
-                </div>
+            <!-- Context Note Card (Revealed upon finishing Q&A) -->
+            <div id="qa-context-reveal" class="hidden mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-900 dark:text-emerald-200">
+              <div class="font-black text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                <span>🎓</span> 11+ Context Note:
               </div>
-
-              <div id="hint-box" class="p-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-700 dark:text-amber-300">
-                <span class="font-bold">Clue:</span> <span id="hint-content"></span>
-              </div>
-
-              <div id="answer-feedback" class="p-3.5 rounded-xl text-xs sm:text-sm transition-all">
-                <div class="flex items-start gap-2">
-                  <span id="feedback-icon" class="text-base"></span>
-                  <div>
-                    <h4 id="feedback-title" class="font-bold"></h4>
-                    <p id="feedback-explanation" class="text-xs mt-0.5 leading-relaxed opacity-90"></p>
-                  </div>
-                </div>
-              </div>
-            </form>
+              <p id="qa-context-note-text" class="italic leading-relaxed"></p>
+            </div>
           </div>
         </div>
 
         <!-- ============================================ -->
-        <!-- PHASE 3: GRAND RESULTS SCREEN                -->
+        <!-- PHASE 3: 4-RACER PODIUM & GRAND RESULTS      -->
         <!-- ============================================ -->
         <div id="grand-results-view">
-          <div class="text-center py-3">
-            <span id="results-badge-icon" class="text-4xl inline-block mb-1.5 animate-bounce">🏆</span>
-            <span id="results-rank-pill" class="block mx-auto w-fit px-3 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-brand-gold text-brand-navy mb-1.5">
-              11+ Scholarship Grandmaster
+          <div class="text-center py-2 mb-3">
+            <span id="results-badge-icon" class="text-4xl inline-block mb-1 animate-bounce">🏆</span>
+            <span id="results-rank-pill" class="block mx-auto w-fit px-3 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-brand-gold text-brand-navy mb-1">
+              1st Place Victory!
             </span>
-            <h2 class="text-2xl font-black text-brand-navy dark:text-brand-cream tracking-tight mb-1">
+            <h2 class="text-2xl font-black text-brand-navy dark:text-brand-cream tracking-tight mb-0.5">
               Race Completed!
             </h2>
             <p id="results-subtitle" class="text-xs text-brand-slate dark:text-gray-300 max-w-md mx-auto">
-              Superb performance across speed typing and 11+ English comprehension.
+              Superb performance across speed typing, peer competition, and 11+ classic literature.
             </p>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
-            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+          <!-- 4-Racer Leaderboard Podium Grid -->
+          <div class="mb-4 bg-brand-cream/50 dark:bg-white/[0.03] border border-brand-mist dark:border-white/10 rounded-2xl p-3 sm:p-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-brand-navy dark:text-brand-cream mb-2 flex items-center gap-1.5">
+              <span>🏁</span> Official Race Finish Board:
+            </h4>
+            <div id="podium-grid" class="space-y-1.5">
+              <!-- Dynamically populated 4 racers -->
+            </div>
+          </div>
+
+          <!-- Player Performance 4-Stat Strip -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-2.5 text-center">
               <span class="block text-[10px] font-black uppercase tracking-wider text-brand-slate dark:text-gray-400">Typing Speed</span>
-              <span id="final-wpm" class="text-2xl font-black text-brand-navy dark:text-brand-cream">0</span>
+              <span id="final-wpm" class="text-xl font-black text-brand-navy dark:text-brand-cream">0</span>
               <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">WPM</span>
             </div>
-            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-2.5 text-center">
               <span class="block text-[10px] font-black uppercase tracking-wider text-brand-slate dark:text-gray-400">Accuracy</span>
-              <span id="final-accuracy" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">100</span>
+              <span id="final-accuracy" class="text-xl font-black text-emerald-600 dark:text-emerald-400">100</span>
               <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">%</span>
             </div>
-            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
-              <span class="block text-[10px] font-black uppercase tracking-wider text-brand-slate dark:text-gray-400">11+ Questions</span>
-              <span id="final-questions" class="text-2xl font-black text-brand-gold">3/3</span>
-              <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">Correct</span>
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-2.5 text-center">
+              <span class="block text-[10px] font-black uppercase tracking-wider text-brand-slate dark:text-gray-400">Podium Finish</span>
+              <span id="final-podium-rank" class="text-xl font-black text-brand-gold">1st</span>
+              <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">/ 4</span>
             </div>
-            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-2.5 text-center">
               <span class="block text-[10px] font-black uppercase tracking-wider text-brand-slate dark:text-gray-400">Total Time</span>
-              <span id="final-time" class="text-2xl font-black text-brand-navy dark:text-brand-cream">0s</span>
+              <span id="final-time" class="text-xl font-black text-brand-navy dark:text-brand-cream">0s</span>
             </div>
           </div>
 
           <!-- Vocabulary Revision Box -->
-          <div class="mb-5 bg-brand-cream/40 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3.5">
-            <h4 class="font-bold text-xs text-brand-navy dark:text-brand-cream mb-2 flex items-center gap-1.5">
+          <div class="mb-4 bg-brand-cream/40 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3">
+            <h4 class="font-bold text-xs text-brand-navy dark:text-brand-cream mb-1.5 flex items-center gap-1.5">
               <span>📚</span> Vocabulary Revision for this Book:
             </h4>
             <div id="results-vocab-grid" class="grid sm:grid-cols-3 gap-2">
@@ -380,12 +438,12 @@ const initialWords = initialPassage.text.split(' ');
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <div class="flex flex-wrap items-center justify-center gap-2">
             <button id="btn-results-next" type="button" class="px-5 py-2.5 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-xs sm:text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md">
-              🚀 Next 11+ Race
+              🚀 Next Race
             </button>
             <button id="btn-results-retry" type="button" class="px-4 py-2.5 bg-white dark:bg-white/10 border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream text-xs sm:text-sm font-bold rounded-xl hover:bg-brand-cream/60 dark:hover:bg-white/20 active:scale-95 transition-all">
-              🔁 Retry Passage
+              🔁 Retry Book
             </button>
             <button id="btn-share-score" type="button" class="px-4 py-2.5 bg-brand-teal text-white text-xs sm:text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center gap-1.5">
               <span>📋</span> <span id="share-btn-text">Share Score</span>
@@ -403,9 +461,9 @@ const initialWords = initialPassage.text.split(' ');
         <div class="flex flex-wrap items-center gap-3 sm:gap-5">
           <span class="text-brand-slate dark:text-gray-400 uppercase tracking-wider font-bold">Your Career:</span>
           <div>Races: <strong id="career-races">0</strong></div>
+          <div>Victories (1st): <strong id="career-victories" class="text-brand-gold">0</strong></div>
           <div>Best Speed: <strong id="career-best-wpm" class="text-emerald-600 dark:text-emerald-400">0 WPM</strong></div>
           <div>Average Speed: <strong id="career-avg-wpm">0 WPM</strong></div>
-          <div>11+ Solved: <strong id="career-questions" class="text-brand-gold">0</strong></div>
         </div>
         <button id="btn-reset-career" type="button" class="text-brand-slate dark:text-gray-400 hover:text-rose-500 transition-colors text-[11px]">
           Reset Stats
@@ -458,7 +516,7 @@ const initialWords = initialPassage.text.split(' ');
     window.__11P_PASSAGES__ = initialPassages;
   </script>
 
-  <!-- TypeRacer Client Application Script - INLINED TO PREVENT 404 ASSET BUNDLE ERRORS -->
+  <!-- TypeRacer Client Application Script - INLINED FOR 100% PORTABILITY -->
   <script is:inline>
     // --- Web Audio API Synth Sound Engine ---
     class SoundEngine {
@@ -498,6 +556,25 @@ const initialWords = initialPassage.text.split(' ');
         } catch (e) {}
       }
 
+      playReturnClick() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          // Classic carriage return typewriter bell chime
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1318.51, this.ctx.currentTime); // E6
+          gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.25);
+        } catch (e) {}
+      }
+
       playError() {
         if (!this.enabled) return;
         this.init();
@@ -517,46 +594,26 @@ const initialWords = initialPassage.text.split(' ');
         } catch (e) {}
       }
 
-      playFinishChime() {
+      playFinishChime(isFirstPlace) {
         if (!this.enabled) return;
         this.init();
         if (!this.ctx) return;
         try {
-          const notes = [523.25, 659.25, 783.99, 1046.50];
+          const notes = isFirstPlace 
+            ? [523.25, 659.25, 783.99, 1046.50, 1318.51] 
+            : [523.25, 659.25, 783.99];
           notes.forEach((freq, idx) => {
             if (!this.ctx) return;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.08);
-            gain.gain.setValueAtTime(0.15, this.ctx.currentTime + idx * 0.08);
+            gain.gain.setValueAtTime(0.14, this.ctx.currentTime + idx * 0.08);
             gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.08 + 0.35);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(this.ctx.currentTime + idx * 0.08);
             osc.stop(this.ctx.currentTime + idx * 0.08 + 0.35);
-          });
-        } catch (e) {}
-      }
-
-      playCorrect() {
-        if (!this.enabled) return;
-        this.init();
-        if (!this.ctx) return;
-        try {
-          const notes = [587.33, 880];
-          notes.forEach((freq, idx) => {
-            if (!this.ctx) return;
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
-            gain.gain.setValueAtTime(0.14, this.ctx.currentTime + idx * 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.25);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(this.ctx.currentTime + idx * 0.1);
-            osc.stop(this.ctx.currentTime + idx * 0.1 + 0.25);
           });
         } catch (e) {}
       }
@@ -579,40 +636,219 @@ const initialWords = initialPassage.text.split(' ');
     let totalKeystrokes = 0;
     let errorKeystrokes = 0;
     let hudTimerInterval = null;
-    let pacerInterval = null;
-    let pacerWpm = 45;
 
-    let currentQuestionIndex = 0;
-    let questionsAnsweredCorrectly = 0;
+    // Mode: 'random' (50% chance), 'always', or 'sprint'
+    let followupMode = 'random';
+    let currentRaceHasQA = false;
 
+    // Career Stats
     function getCareerStats() {
       try {
-        const data = localStorage.getItem('tinykite_typeracer_career');
+        const data = localStorage.getItem('tinykite_typeracer_career_v2');
         if (data) return JSON.parse(data);
       } catch (e) {}
-      return { races: 0, bestWpm: 0, totalWpm: 0, questionsSolved: 0 };
+      return { races: 0, victories: 0, bestWpm: 0, totalWpm: 0 };
     }
 
     function saveCareerStats(stats) {
       try {
-        localStorage.setItem('tinykite_typeracer_career', JSON.stringify(stats));
+        localStorage.setItem('tinykite_typeracer_career_v2', JSON.stringify(stats));
       } catch (e) {}
     }
 
     function updateCareerUI() {
       const stats = getCareerStats();
       const racesEl = document.getElementById('career-races');
+      const vicEl = document.getElementById('career-victories');
       const bestEl = document.getElementById('career-best-wpm');
       const avgEl = document.getElementById('career-avg-wpm');
-      const qEl = document.getElementById('career-questions');
 
       if (racesEl) racesEl.textContent = stats.races.toString();
+      if (vicEl) vicEl.textContent = (stats.victories || 0).toString();
       if (bestEl) bestEl.textContent = stats.bestWpm + ' WPM';
       if (avgEl) {
         const avg = stats.races > 0 ? Math.round(stats.totalWpm / stats.races) : 0;
         avgEl.textContent = avg + ' WPM';
       }
-      if (qEl) qEl.textContent = stats.questionsSolved.toString();
+    }
+
+    // --- 4 RACERS POOL & MULTIPLAYER SETUP ---
+    // Racer index 0 is always the local human player (You)
+    // Racers 1, 2, 3 can be real peers or simulated bots
+    let racers = [
+      { id: 'player-you', name: 'You', isPlayer: true, isPeer: false, avatar: '🏎️', progress: 0, currentWpm: 0, rank: null, finishTime: null },
+      { id: 'bot-1', name: 'Cadence_Pro', isPlayer: false, isPeer: false, avatar: '🏎️', progress: 0, currentWpm: 0, rank: null, finishTime: null, targetWpm: 55, startDelay: 400, jitter: 1.0 },
+      { id: 'bot-2', name: 'Oliver_T', isPlayer: false, isPeer: false, avatar: '🚗', progress: 0, currentWpm: 0, rank: null, finishTime: null, targetWpm: 65, startDelay: 600, jitter: 1.0 },
+      { id: 'bot-3', name: 'Jane_Eyre', isPlayer: false, isPeer: false, avatar: '🚕', progress: 0, currentWpm: 0, rank: null, finishTime: null, targetWpm: 42, startDelay: 500, jitter: 1.0 }
+    ];
+
+    let rankCounter = 1;
+    let botSimulationInterval = null;
+    let lobbyCountdownInterval = null;
+    let lobbyCountdownSeconds = 5;
+    let isLobbyActive = false;
+
+    // Names and Avatars pool for bot randomization
+    const BOT_NAMES = [
+      'Cadence_Pro', 'Oliver_T', 'Jim_Hawkins', 'Sherlock_H', 'Alice_C',
+      'Jane_Eyre', 'Pip_G', 'Captain_Nemo', 'Wendy_D', 'SwiftFox',
+      'Huck_Finn', 'Dorothy_G', 'Mole_99', 'Tom_Sawyer', 'BookWorm_11',
+      'GutenbergAce', 'TurboTyper', 'Jo_March', 'PixelCadet', 'Rowena_K'
+    ];
+    const BOT_AVATARS = ['🏎️', '🚗', '🚕', '🚀', '🏎️', '🚙', '🛸'];
+
+    // Human typing speed distribution generator
+    // ~15% slow (32-45), ~50% average 11+ (46-68), ~25% fast (69-90), ~10% demon speed (91-115)
+    function sampleHumanBotSpeed() {
+      const roll = Math.random();
+      if (roll < 0.15) {
+        return Math.round(32 + Math.random() * 13);
+      } else if (roll < 0.65) {
+        return Math.round(46 + Math.random() * 22);
+      } else if (roll < 0.90) {
+        return Math.round(69 + Math.random() * 21);
+      } else {
+        return Math.round(91 + Math.random() * 24);
+      }
+    }
+
+    function randomizeBots() {
+      const shuffledNames = BOT_NAMES.slice().sort(() => Math.random() - 0.5);
+      const shuffledAvatars = BOT_AVATARS.slice().sort(() => Math.random() - 0.5);
+
+      for (let i = 1; i <= 3; i++) {
+        if (!racers[i].isPeer) {
+          const speed = sampleHumanBotSpeed();
+          racers[i].name = shuffledNames[i - 1];
+          racers[i].avatar = shuffledAvatars[i - 1];
+          racers[i].targetWpm = speed;
+          racers[i].progress = 0;
+          racers[i].currentWpm = 0;
+          racers[i].rank = null;
+          racers[i].finishTime = null;
+          racers[i].startDelay = Math.round(300 + Math.random() * 550); // human delay
+          racers[i].jitter = 1.0;
+
+          // Update lane UI
+          const nameEl = document.getElementById('racer-' + i + '-name');
+          const avatarEl = document.getElementById('racer-' + i + '-avatar');
+          const badgeEl = document.getElementById('racer-' + i + '-badge');
+          const wpmEl = document.getElementById('racer-' + i + '-wpm');
+          const medalEl = document.getElementById('racer-' + i + '-medal');
+          const racerEl = document.getElementById('racer-' + i);
+
+          if (nameEl) nameEl.textContent = racers[i].name;
+          if (avatarEl) avatarEl.textContent = racers[i].avatar;
+          if (badgeEl) {
+            badgeEl.textContent = 'BOT · ' + speed + ' WPM';
+            badgeEl.className = 'text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1 rounded';
+          }
+          if (wpmEl) wpmEl.textContent = '0 WPM';
+          if (medalEl) medalEl.classList.add('hidden');
+          if (racerEl) racerEl.style.left = '0%';
+        }
+      }
+    }
+
+    // --- P2P Networking (BroadcastChannel + WebRTC) ---
+    const localRacerId = 'user-' + Math.random().toString(36).substring(2, 9);
+    let p2pChannel = null;
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        p2pChannel = new BroadcastChannel('tk_typeracer_p2p_channel');
+        p2pChannel.onmessage = function(event) {
+          handleP2PMessage(event.data);
+        };
+      }
+    } catch (e) {}
+
+    function handleP2PMessage(data) {
+      if (!data || data.senderId === localRacerId) return;
+
+      if (data.type === 'LOBBY_JOIN') {
+        // A peer tab has joined!
+        assignPeerRacer(data.senderId, data.name || 'Peer Racer', data.avatar || '🏎️');
+        if (p2pChannel) {
+          p2pChannel.postMessage({
+            type: 'LOBBY_ACK',
+            senderId: localRacerId,
+            name: 'Player 1',
+            avatar: '🏎️',
+            passageId: currentPassage.id
+          });
+        }
+      } else if (data.type === 'LOBBY_ACK') {
+        assignPeerRacer(data.senderId, data.name || 'Peer Racer', data.avatar || '🏎️');
+      } else if (data.type === 'RACER_PROGRESS') {
+        updatePeerProgress(data.senderId, data.progress, data.wpm, data.rank);
+      }
+    }
+
+    function assignPeerRacer(peerId, name, avatar) {
+      // Find or assign to lane 1 or 2
+      let peerSlot = racers.findIndex(r => r.id === peerId);
+      if (peerSlot === -1) {
+        // pick first non-player slot
+        for (let i = 1; i <= 3; i++) {
+          if (!racers[i].isPeer) {
+            peerSlot = i;
+            break;
+          }
+        }
+      }
+      if (peerSlot > 0) {
+        racers[peerSlot].id = peerId;
+        racers[peerSlot].isPeer = true;
+        racers[peerSlot].name = name;
+        racers[peerSlot].avatar = avatar;
+
+        const nameEl = document.getElementById('racer-' + peerSlot + '-name');
+        const avatarEl = document.getElementById('racer-' + peerSlot + '-avatar');
+        const badgeEl = document.getElementById('racer-' + peerSlot + '-badge');
+
+        if (nameEl) nameEl.textContent = name;
+        if (avatarEl) avatarEl.textContent = avatar;
+        if (badgeEl) {
+          badgeEl.textContent = 'PEER (LIVE)';
+          badgeEl.className = 'text-[8px] font-bold text-emerald-300 bg-emerald-950/80 px-1 rounded animate-pulse';
+        }
+
+        const summaryEl = document.getElementById('lobby-racers-summary');
+        if (summaryEl) summaryEl.textContent = '• Human Peer Connected! Ready to race';
+      }
+    }
+
+    function updatePeerProgress(peerId, progress, wpm, rank) {
+      const idx = racers.findIndex(r => r.id === peerId);
+      if (idx > 0) {
+        racers[idx].progress = progress;
+        racers[idx].currentWpm = wpm;
+
+        const racerEl = document.getElementById('racer-' + idx);
+        const wpmEl = document.getElementById('racer-' + idx + '-wpm');
+        const medalEl = document.getElementById('racer-' + idx + '-medal');
+
+        if (racerEl) racerEl.style.left = Math.min(92, progress * 0.92) + '%';
+        if (wpmEl) wpmEl.textContent = wpm + ' WPM';
+
+        if (rank && medalEl) {
+          medalEl.classList.remove('hidden');
+          const medals = { 1: '🥇', 2: '🥈', 3: '🥉', 4: '4th' };
+          medalEl.textContent = medals[rank] || '';
+        }
+      }
+    }
+
+    function broadcastMyProgress(progress, wpm, rank) {
+      if (p2pChannel) {
+        p2pChannel.postMessage({
+          type: 'RACER_PROGRESS',
+          senderId: localRacerId,
+          progress: progress,
+          wpm: wpm,
+          rank: rank
+        });
+      }
     }
 
     // --- DOM Elements ---
@@ -622,18 +858,23 @@ const initialWords = initialPassage.text.split(' ');
     const passageGutenbergId = document.getElementById('passage-gutenberg-id');
     const passageGutenbergLink = document.getElementById('passage-gutenberg-link');
     const passageDisplay = document.getElementById('passage-display');
+    const raceModeBadge = document.getElementById('race-mode-badge');
     const typingInput = document.getElementById('typing-input');
     const typingErrorTag = document.getElementById('typing-error-tag');
-    const playerRacer = document.getElementById('player-racer');
-    const playerWpmPill = document.getElementById('player-wpm-pill');
-    const pacerRacer = document.getElementById('pacer-racer');
-    const pacerLane = document.getElementById('pacer-lane');
-    const pacerLabel = document.getElementById('pacer-label');
-    const pacerSelect = document.getElementById('pacer-select');
+
     const hudWpm = document.getElementById('hud-wpm');
     const hudAccuracy = document.getElementById('hud-accuracy');
     const hudTime = document.getElementById('hud-time');
     const hudProgress = document.getElementById('hud-progress');
+    const hudRank = document.getElementById('hud-rank');
+    const modeSelect = document.getElementById('mode-select');
+
+    const lobbyBar = document.getElementById('lobby-bar');
+    const lobbyTimerNum = document.getElementById('lobby-timer-num');
+    const lobbyStatusText = document.getElementById('lobby-status-text');
+    const btnStartRaceNow = document.getElementById('btn-start-race-now');
+    const btnInviteLink = document.getElementById('btn-invite-link');
+    const inviteBtnLabel = document.getElementById('invite-btn-label');
 
     const btnToggleVocab = document.getElementById('btn-toggle-vocab');
     const vocabDrawer = document.getElementById('vocab-drawer');
@@ -641,30 +882,27 @@ const initialWords = initialPassage.text.split(' ');
     const vocabCount = document.getElementById('vocab-count');
 
     const typingRaceView = document.getElementById('typing-race-view');
-    const questionChallengeView = document.getElementById('question-challenge-view');
+    const qaFollowupView = document.getElementById('qa-followup-view');
     const grandResultsView = document.getElementById('grand-results-view');
 
-    const refPassageText = document.getElementById('ref-passage-text');
-    const finishRaceWpm = document.getElementById('finish-race-wpm');
-    const finishRaceAcc = document.getElementById('finish-race-acc');
-    const questionStep = document.getElementById('question-step');
-    const questionTypeBadge = document.getElementById('question-type-badge');
-    const questionPrompt = document.getElementById('question-prompt');
-    const questionInput = document.getElementById('question-input');
-    const questionForm = document.getElementById('question-form');
-    const btnShowHint = document.getElementById('btn-show-hint');
-    const hintBox = document.getElementById('hint-box');
-    const hintContent = document.getElementById('hint-content');
-    const answerFeedback = document.getElementById('answer-feedback');
-    const feedbackIcon = document.getElementById('feedback-icon');
-    const feedbackTitle = document.getElementById('feedback-title');
-    const feedbackExplanation = document.getElementById('feedback-explanation');
-    const btnRevealAnswer = document.getElementById('btn-reveal-answer');
-    const btnSubmitAnswer = document.getElementById('btn-submit-answer');
+    // Q&A Follow-up View Elements
+    const qaUserRankBadge = document.getElementById('qa-user-rank-badge');
+    const qaFinishWpm = document.getElementById('qa-finish-wpm');
+    const qaLine1 = document.getElementById('qa-line-1');
+    const qaLine2 = document.getElementById('qa-line-2');
+    const qaInput = document.getElementById('qa-input');
+    const qaNewlineCue = document.getElementById('qa-newline-cue');
+    const qaErrorTag = document.getElementById('qa-error-tag');
+    const qaInstructionLabel = document.getElementById('qa-instruction-label');
+    const qaContextReveal = document.getElementById('qa-context-reveal');
+    const qaContextNoteText = document.getElementById('qa-context-note-text');
+    const btnSkipQa = document.getElementById('btn-skip-qa');
 
+    // Grand Results Elements
+    const podiumGrid = document.getElementById('podium-grid');
     const finalWpm = document.getElementById('final-wpm');
     const finalAccuracy = document.getElementById('final-accuracy');
-    const finalQuestions = document.getElementById('final-questions');
+    const finalPodiumRank = document.getElementById('final-podium-rank');
     const finalTime = document.getElementById('final-time');
     const resultsVocabGrid = document.getElementById('results-vocab-grid');
     const resultsRankPill = document.getElementById('results-rank-pill');
@@ -685,7 +923,6 @@ const initialWords = initialPassage.text.split(' ');
     const btnToggleSound = document.getElementById('btn-toggle-sound');
     const soundIcon = document.getElementById('sound-icon');
     const soundLabel = document.getElementById('sound-label');
-
     const btnNextPassage = document.getElementById('btn-next-passage');
 
     // --- Sound Settings Persistence ---
@@ -709,13 +946,42 @@ const initialWords = initialPassage.text.split(' ');
     if (btnResetCareer) {
       btnResetCareer.addEventListener('click', () => {
         if (confirm("Reset your 11+ TypeRacer career stats?")) {
-          saveCareerStats({ races: 0, bestWpm: 0, totalWpm: 0, questionsSolved: 0 });
+          saveCareerStats({ races: 0, victories: 0, bestWpm: 0, totalWpm: 0 });
           updateCareerUI();
         }
       });
     }
 
-    // --- Initialize / Render Current Passage ---
+    // Mode Selector Handler
+    if (modeSelect) {
+      modeSelect.addEventListener('change', function() {
+        followupMode = modeSelect.value;
+        determineQAMode();
+      });
+    }
+
+    function determineQAMode() {
+      if (followupMode === 'always') {
+        currentRaceHasQA = true;
+      } else if (followupMode === 'sprint') {
+        currentRaceHasQA = false;
+      } else {
+        // Random 50%
+        currentRaceHasQA = Math.random() < 0.5;
+      }
+
+      if (raceModeBadge) {
+        if (currentRaceHasQA) {
+          raceModeBadge.textContent = '📖 11+ Context (Passage + Q&A)';
+          raceModeBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-black bg-brand-gold/20 text-amber-800 dark:text-brand-gold';
+        } else {
+          raceModeBadge.textContent = '⚡ Speed Sprint (Passage Only)';
+          raceModeBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-black bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+        }
+      }
+    }
+
+    // --- Load and Initialize Race ---
     function loadPassage(index) {
       currentPassageIndex = index;
       currentPassage = passages[currentPassageIndex];
@@ -728,12 +994,16 @@ const initialWords = initialPassage.text.split(' ');
       raceEndTime = 0;
       totalKeystrokes = 0;
       errorKeystrokes = 0;
+      rankCounter = 1;
+
+      determineQAMode();
 
       if (hudTimerInterval) clearInterval(hudTimerInterval);
-      if (pacerInterval) clearInterval(pacerInterval);
+      if (botSimulationInterval) clearInterval(botSimulationInterval);
+      if (lobbyCountdownInterval) clearInterval(lobbyCountdownInterval);
 
       if (typingRaceView) typingRaceView.style.display = 'block';
-      if (questionChallengeView) questionChallengeView.style.display = 'none';
+      if (qaFollowupView) qaFollowupView.style.display = 'none';
       if (grandResultsView) grandResultsView.style.display = 'none';
       if (vocabDrawer) vocabDrawer.style.display = 'none';
       if (libraryModal) libraryModal.style.display = 'none';
@@ -763,17 +1033,32 @@ const initialWords = initialPassage.text.split(' ');
         }).join('');
       }
 
+      // Reset Player State
+      racers[0].progress = 0;
+      racers[0].currentWpm = 0;
+      racers[0].rank = null;
+      racers[0].finishTime = null;
+
+      const playerRacerEl = document.getElementById('racer-0');
+      const playerWpmEl = document.getElementById('racer-0-wpm');
+      const playerMedalEl = document.getElementById('racer-0-medal');
+      if (playerRacerEl) playerRacerEl.style.left = '0%';
+      if (playerWpmEl) playerWpmEl.textContent = '0 WPM';
+      if (playerMedalEl) playerMedalEl.classList.add('hidden');
+
+      // Randomize 3 Bots with human distribution
+      randomizeBots();
+
       if (hudWpm) hudWpm.textContent = '0';
       if (hudAccuracy) hudAccuracy.textContent = '100';
       if (hudTime) hudTime.textContent = '0:00';
       if (hudProgress) hudProgress.textContent = '0';
-      if (playerRacer) playerRacer.style.left = '0%';
-      if (playerWpmPill) playerWpmPill.textContent = '0 WPM';
-      if (pacerRacer) pacerRacer.style.left = '0%';
+      if (hudRank) hudRank.textContent = '1st / 4';
 
       if (typingInput) {
         typingInput.value = '';
         typingInput.disabled = false;
+        typingInput.placeholder = "Click here and type to race...";
         typingInput.classList.remove('border-rose-500', 'bg-rose-50/50', 'dark:bg-rose-950/20');
         try {
           typingInput.focus({ preventScroll: true });
@@ -782,6 +1067,68 @@ const initialWords = initialPassage.text.split(' ');
       if (typingErrorTag) typingErrorTag.style.display = 'none';
 
       renderPassageWords();
+      startLobbyMatchmaking();
+
+      // Broadcast to other tabs that we loaded this passage
+      if (p2pChannel) {
+        p2pChannel.postMessage({
+          type: 'LOBBY_JOIN',
+          senderId: localRacerId,
+          name: 'Player',
+          avatar: '🏎️',
+          passageId: currentPassage.id
+        });
+      }
+    }
+
+    // --- Matchmaking Lobby Countdown ---
+    function startLobbyMatchmaking() {
+      isLobbyActive = true;
+      lobbyCountdownSeconds = 5;
+      if (lobbyBar) lobbyBar.style.display = 'flex';
+      if (lobbyTimerNum) lobbyTimerNum.textContent = '5';
+      if (lobbyStatusText) lobbyStatusText.innerHTML = '🚦 Matchmaking: Waiting for other racers... (<span id="lobby-timer-num">5</span>s)';
+
+      lobbyCountdownInterval = setInterval(function() {
+        lobbyCountdownSeconds--;
+        const timerEl = document.getElementById('lobby-timer-num');
+        if (timerEl) timerEl.textContent = lobbyCountdownSeconds.toString();
+
+        if (lobbyCountdownSeconds <= 0) {
+          endLobbyCountdown();
+        }
+      }, 1000);
+    }
+
+    function endLobbyCountdown() {
+      if (lobbyCountdownInterval) clearInterval(lobbyCountdownInterval);
+      isLobbyActive = false;
+      if (lobbyStatusText) lobbyStatusText.innerHTML = '🏁 Race in Progress! Type the text below.';
+    }
+
+    if (btnStartRaceNow) {
+      btnStartRaceNow.addEventListener('click', function() {
+        endLobbyCountdown();
+        if (typingInput) {
+          try {
+            typingInput.focus({ preventScroll: true });
+          } catch (e) {}
+        }
+      });
+    }
+
+    if (btnInviteLink) {
+      btnInviteLink.addEventListener('click', function() {
+        const url = window.location.origin + window.location.pathname + '?room=' + (localRacerId.slice(-4));
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(function() {
+            if (inviteBtnLabel) inviteBtnLabel.textContent = 'Copied Link!';
+            setTimeout(function() {
+              if (inviteBtnLabel) inviteBtnLabel.textContent = 'Invite Friend';
+            }, 2000);
+          });
+        }
+      });
     }
 
     // --- Render Passage Letter-by-Letter Display ---
@@ -891,39 +1238,76 @@ const initialWords = initialPassage.text.split(' ');
       });
     }
 
-    // --- Race Lifecycle Functions ---
+    // --- Start Race & Run Bots ---
     function startRace() {
+      if (isRaceActive) return;
       isRaceActive = true;
       raceStartTime = Date.now();
+      endLobbyCountdown();
 
+      // HUD Timer Interval
       hudTimerInterval = window.setInterval(function() {
         const elapsedSec = Math.floor((Date.now() - raceStartTime) / 1000);
         const mins = Math.floor(elapsedSec / 60);
         const secs = elapsedSec % 60;
         if (hudTime) hudTime.textContent = mins + ':' + secs.toString().padStart(2, '0');
         updateLiveWpm(elapsedSec);
-      }, 300);
+      }, 250);
 
-      startPacer();
+      // Bot Simulation Interval (every 100ms)
+      startBotSimulation();
     }
 
-    function startPacer() {
-      if (pacerWpm <= 0) {
-        if (pacerLane) pacerLane.style.display = 'none';
-        return;
-      }
-      if (pacerLane) pacerLane.style.display = 'flex';
-      if (pacerLabel) pacerLabel.textContent = 'Pacer ' + pacerWpm + ' WPM';
-
+    function startBotSimulation() {
       const totalChars = currentPassage.text.length;
-      const charsPerSec = (pacerWpm * 5) / 60;
-      const totalPacerSeconds = totalChars / charsPerSec;
 
-      pacerInterval = window.setInterval(function() {
-        if (!isRaceActive) return;
-        const elapsed = (Date.now() - raceStartTime) / 1000;
-        const progress = Math.min(100, (elapsed / totalPacerSeconds) * 100);
-        if (pacerRacer) pacerRacer.style.left = Math.min(92, progress * 0.92) + '%';
+      botSimulationInterval = window.setInterval(function() {
+        if (!isRaceActive && isRaceFinished) return;
+        const now = Date.now();
+        const elapsedSec = (now - raceStartTime) / 1000;
+
+        for (let i = 1; i <= 3; i++) {
+          const bot = racers[i];
+          if (bot.isPeer || bot.rank !== null) continue; // skip peers or finished
+
+          // Check start reaction delay
+          if (elapsedSec * 1000 < bot.startDelay) continue;
+
+          // Realistic human speed pacing with micro-pauses & bursts
+          if (Math.random() < 0.08) {
+            bot.jitter = 0.88 + Math.random() * 0.24; // +/- 12% fluctuation
+          }
+
+          const effectiveWpm = bot.targetWpm * bot.jitter;
+          const charsPerSec = (effectiveWpm * 5) / 60;
+          const progressDelta = (charsPerSec * 0.1 / totalChars) * 100;
+          bot.progress = Math.min(100, bot.progress + progressDelta);
+
+          // Update Bot Live WPM
+          const wordsTyped = (bot.progress / 100) * totalChars / 5;
+          const botElapsedMinutes = Math.max(0.05, (now - (raceStartTime + bot.startDelay)) / 60000);
+          bot.currentWpm = Math.round(wordsTyped / botElapsedMinutes);
+
+          // Update UI
+          const racerEl = document.getElementById('racer-' + i);
+          const wpmEl = document.getElementById('racer-' + i + '-wpm');
+          if (racerEl) racerEl.style.left = Math.min(92, bot.progress * 0.92) + '%';
+          if (wpmEl) wpmEl.textContent = bot.currentWpm + ' WPM';
+
+          // Check if bot finished
+          if (bot.progress >= 100 && bot.rank === null) {
+            bot.rank = rankCounter++;
+            bot.finishTime = now;
+            const medalEl = document.getElementById('racer-' + i + '-medal');
+            if (medalEl) {
+              medalEl.classList.remove('hidden');
+              const medals = { 1: '🥇', 2: '🥈', 3: '🥉', 4: '4th' };
+              medalEl.textContent = medals[bot.rank] || '';
+            }
+          }
+        }
+
+        updateLiveRank();
       }, 100);
     }
 
@@ -939,7 +1323,9 @@ const initialWords = initialPassage.text.split(' ');
       const minutes = elapsedSec / 60;
       const wpm = Math.round(wordsTyped / minutes);
 
+      racers[0].currentWpm = Math.max(0, wpm);
       if (hudWpm) hudWpm.textContent = Math.max(0, wpm).toString();
+      const playerWpmPill = document.getElementById('racer-0-wpm');
       if (playerWpmPill) playerWpmPill.textContent = Math.max(0, wpm) + ' WPM';
     }
 
@@ -952,8 +1338,10 @@ const initialWords = initialPassage.text.split(' ');
       completedChars += Math.min(currentInput.length, words[currentWordIndex] ? words[currentWordIndex].length : 0);
 
       const pct = Math.min(100, Math.round((completedChars / totalChars) * 100));
+      racers[0].progress = pct;
       if (hudProgress) hudProgress.textContent = pct.toString();
 
+      const playerRacer = document.getElementById('racer-0');
       if (playerRacer) {
         playerRacer.style.left = Math.min(92, (pct / 100) * 92) + '%';
       }
@@ -961,6 +1349,26 @@ const initialWords = initialPassage.text.split(' ');
       if (totalKeystrokes > 0 && hudAccuracy) {
         const acc = Math.max(0, Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100));
         hudAccuracy.textContent = acc.toString();
+      }
+
+      updateLiveRank();
+      broadcastMyProgress(pct, racers[0].currentWpm, racers[0].rank);
+    }
+
+    function updateLiveRank() {
+      // Calculate current order based on progress
+      const sorted = racers.slice().sort((a, b) => b.progress - a.progress);
+      const playerPos = sorted.findIndex(r => r.isPlayer) + 1;
+      const suffix = { 1: 'st', 2: 'nd', 3: 'rd', 4: 'th' }[playerPos] || 'th';
+      if (hudRank) {
+        hudRank.textContent = playerPos + suffix + ' / 4';
+        if (playerPos === 1) {
+          hudRank.className = 'px-2 py-0.5 rounded-md font-black bg-brand-gold text-brand-navy';
+        } else if (playerPos === 2) {
+          hudRank.className = 'px-2 py-0.5 rounded-md font-black bg-slate-200 text-slate-800';
+        } else {
+          hudRank.className = 'px-2 py-0.5 rounded-md font-black bg-amber-800/20 text-amber-900 dark:text-amber-300';
+        }
       }
     }
 
@@ -970,191 +1378,305 @@ const initialWords = initialPassage.text.split(' ');
       raceEndTime = Date.now();
 
       if (hudTimerInterval) clearInterval(hudTimerInterval);
-      if (pacerInterval) clearInterval(pacerInterval);
 
-      sound.playFinishChime();
+      racers[0].progress = 100;
+      racers[0].rank = rankCounter++;
+      racers[0].finishTime = raceEndTime;
 
+      const playerRacer = document.getElementById('racer-0');
+      const playerMedal = document.getElementById('racer-0-medal');
       if (playerRacer) playerRacer.style.left = '92%';
+      if (playerMedal) {
+        playerMedal.classList.remove('hidden');
+        const medals = { 1: '🥇', 2: '🥈', 3: '🥉', 4: '4th' };
+        playerMedal.textContent = medals[racers[0].rank] || '';
+      }
+
+      sound.playFinishChime(racers[0].rank === 1);
 
       const elapsedSeconds = Math.max(1, (raceEndTime - raceStartTime) / 1000);
       const totalWords = currentPassage.text.length / 5;
       const wpm = Math.round((totalWords / elapsedSeconds) * 60);
       const accuracy = totalKeystrokes > 0 ? Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100) : 100;
+      racers[0].currentWpm = wpm;
 
+      broadcastMyProgress(100, wpm, racers[0].rank);
+
+      // Save Career Record
+      const stats = getCareerStats();
+      stats.races++;
+      stats.totalWpm += wpm;
+      if (racers[0].rank === 1) stats.victories = (stats.victories || 0) + 1;
+      if (wpm > stats.bestWpm) stats.bestWpm = wpm;
+      saveCareerStats(stats);
+      updateCareerUI();
+
+      // Check whether this race has Q&A Follow-up or goes straight to Grand Results
       setTimeout(function() {
-        startQuestionPhase(wpm, accuracy);
+        if (currentRaceHasQA && currentPassage.qaFollowup) {
+          startQAFollowupPhase(wpm, accuracy, racers[0].rank);
+        } else {
+          showGrandResults(wpm, accuracy, racers[0].rank);
+        }
       }, 1000);
     }
 
-    // --- PHASE 2: 11+ QUESTION CHALLENGE ---
-    let raceWpmResult = 0;
-    let raceAccResult = 100;
+    // ============================================
+    // PHASE 2: 11+ CONTEXT Q&A TYPING DRILL
+    // ============================================
+    let qaTargetQ = '';
+    let qaTargetA = '';
+    let qaStage = 1; // 1 = typing Question, 2 = typing Answer, 3 = finished
+    let qaTypedQ = '';
+    let qaTypedA = '';
 
-    function startQuestionPhase(wpm, acc) {
-      raceWpmResult = wpm;
-      raceAccResult = acc;
-
+    function startQAFollowupPhase(wpm, acc, rank) {
       if (typingRaceView) typingRaceView.style.display = 'none';
-      if (questionChallengeView) questionChallengeView.style.display = 'block';
+      if (qaFollowupView) qaFollowupView.style.display = 'block';
 
-      if (finishRaceWpm) finishRaceWpm.textContent = wpm.toString();
-      if (finishRaceAcc) finishRaceAcc.textContent = acc + '%';
-      if (refPassageText) refPassageText.textContent = '"' + currentPassage.text + '"';
+      const rankLabels = { 1: '1st Place! 🥇', 2: '2nd Place! 🥈', 3: '3rd Place! 🥉', 4: '4th Place' };
+      if (qaUserRankBadge) qaUserRankBadge.textContent = rankLabels[rank] || rank + 'th';
+      if (qaFinishWpm) qaFinishWpm.textContent = wpm.toString();
 
-      currentQuestionIndex = 0;
-      questionsAnsweredCorrectly = 0;
+      const qa = currentPassage.qaFollowup || {
+        question: "What main theme is highlighted in this classic passage?",
+        answer: "Character resilience and observation.",
+        contextNote: "Authentic 11+ classic literature extract from Project Gutenberg."
+      };
 
-      loadQuestion(0);
-    }
+      qaTargetQ = 'Q: ' + qa.question;
+      qaTargetA = 'A: ' + qa.answer;
+      qaStage = 1;
+      qaTypedQ = '';
+      qaTypedA = '';
 
-    function loadQuestion(index) {
-      currentQuestionIndex = index;
-      const q = currentPassage.questions[currentQuestionIndex];
-
-      if (questionStep) questionStep.textContent = 'Question ' + (index + 1) + ' of ' + currentPassage.questions.length;
-      if (questionTypeBadge) {
-        const typeLabels = {
-          vocabulary: 'Vocabulary in Context',
-          retrieval: 'Fact Retrieval',
-          inference: '11+ Inference & Deduction',
-          grammar: 'Grammar & Literary Devices'
-        };
-        questionTypeBadge.textContent = typeLabels[q.type] || '11+ Comprehension';
+      if (qaContextReveal) qaContextReveal.classList.add('hidden');
+      if (qaErrorTag) qaErrorTag.style.display = 'none';
+      if (qaNewlineCue) {
+        qaNewlineCue.textContent = '⌨️ Type Question, then press Enter ↵';
+        qaNewlineCue.className = 'text-xs font-bold px-2 py-0.5 rounded-full bg-brand-teal/15 text-brand-teal dark:text-emerald-300';
       }
-      if (questionPrompt) questionPrompt.textContent = q.question;
+      if (qaInstructionLabel) {
+        qaInstructionLabel.innerHTML = 'Type the Question first. When finished, press <strong>Enter ↵</strong> to type the Answer.';
+      }
 
-      if (questionInput) {
-        questionInput.value = '';
-        questionInput.disabled = false;
+      renderQALines();
+
+      if (qaInput) {
+        qaInput.value = '';
+        qaInput.disabled = false;
+        qaInput.placeholder = "Type: " + qaTargetQ.slice(0, 30) + "...";
         try {
-          questionInput.focus({ preventScroll: true });
+          qaInput.focus({ preventScroll: true });
         } catch (e) {}
       }
-
-      if (hintBox) hintBox.style.display = 'none';
-      if (hintContent) hintContent.textContent = q.hint;
-      if (btnRevealAnswer) btnRevealAnswer.style.display = 'none';
-      if (answerFeedback) answerFeedback.style.display = 'none';
-      if (btnSubmitAnswer) {
-        btnSubmitAnswer.textContent = 'Submit Answer ↵';
-        btnSubmitAnswer.disabled = false;
-      }
     }
 
-    if (btnShowHint) {
-      btnShowHint.addEventListener('click', function() {
-        if (hintBox) {
-          hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
-        }
-      });
-    }
+    function renderQALines() {
+      if (!qaLine1 || !qaLine2) return;
 
-    function normalizeAnswer(str) {
-      return str.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, ' ');
-    }
-
-    if (questionForm) {
-      questionForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!questionInput) return;
-
-        const typedAnswer = questionInput.value;
-        if (!typedAnswer.trim()) return;
-
-        const q = currentPassage.questions[currentQuestionIndex];
-        const normalizedInput = normalizeAnswer(typedAnswer);
-        const normalizedTarget = normalizeAnswer(q.answer);
-        const normalizedAcceptable = q.acceptableAnswers.map(function(a) { return normalizeAnswer(a); });
-
-        const isMatch = normalizedInput === normalizedTarget || normalizedAcceptable.includes(normalizedInput);
-
-        if (isMatch) {
-          sound.playCorrect();
-          questionsAnsweredCorrectly++;
-          showFeedback(true, "✓ Correct! (+100 pts)", q.explanation);
-
-          const stats = getCareerStats();
-          stats.questionsSolved++;
-          saveCareerStats(stats);
-          updateCareerUI();
-
-          questionInput.disabled = true;
-          if (btnSubmitAnswer) btnSubmitAnswer.disabled = true;
-
-          setTimeout(function() {
-            if (currentQuestionIndex + 1 < currentPassage.questions.length) {
-              loadQuestion(currentQuestionIndex + 1);
-            } else {
-              showGrandResults();
-            }
-          }, 1600);
+      // Line 1: Question
+      let qHtml = '';
+      let qError = false;
+      for (let i = 0; i < qaTargetQ.length; i++) {
+        if (i < qaTypedQ.length) {
+          if (qaTypedQ[i] === qaTargetQ[i] && !qError) {
+            qHtml += '<span class="text-emerald-600 dark:text-emerald-400 font-bold">' + escapeHtml(qaTargetQ[i]) + '</span>';
+          } else {
+            qError = true;
+            qHtml += '<span class="text-rose-600 bg-rose-100 dark:bg-rose-900/40 font-bold underline">' + escapeHtml(qaTargetQ[i]) + '</span>';
+          }
+        } else if (i === qaTypedQ.length && qaStage === 1) {
+          qHtml += '<span class="bg-amber-300 dark:bg-amber-500/40 text-brand-navy dark:text-brand-cream font-bold underline">' + escapeHtml(qaTargetQ[i]) + '</span>';
         } else {
-          sound.playError();
-          showFeedback(false, "Not quite right!", 'Check the passage carefully and try again. Hint: ' + q.hint);
-          if (btnRevealAnswer) btnRevealAnswer.style.display = 'inline-block';
+          qHtml += '<span class="text-slate-400 dark:text-gray-500">' + escapeHtml(qaTargetQ[i]) + '</span>';
         }
-      });
-    }
+      }
+      if (qaStage === 1 && qaTypedQ === qaTargetQ) {
+        qHtml += ' <span class="px-1.5 py-0.5 rounded bg-brand-gold text-brand-navy font-bold text-xs animate-bounce ml-2">↵ Press Enter</span>';
+      }
+      qaLine1.innerHTML = qHtml;
 
-    if (btnRevealAnswer) {
-      btnRevealAnswer.addEventListener('click', function() {
-        const q = currentPassage.questions[currentQuestionIndex];
-        showFeedback(false, 'The answer is: "' + q.answer + '"', q.explanation);
-        if (btnSubmitAnswer) {
-          btnSubmitAnswer.textContent = 'Next Question →';
-          btnSubmitAnswer.disabled = false;
-          btnSubmitAnswer.onclick = function() {
-            btnSubmitAnswer.onclick = null;
-            if (currentQuestionIndex + 1 < currentPassage.questions.length) {
-              loadQuestion(currentQuestionIndex + 1);
+      // Line 2: Answer
+      let aHtml = '';
+      let aError = false;
+      for (let i = 0; i < qaTargetA.length; i++) {
+        if (qaStage < 2) {
+          aHtml += '<span class="text-slate-400 dark:text-gray-600 opacity-60">' + escapeHtml(qaTargetA[i]) + '</span>';
+        } else {
+          if (i < qaTypedA.length) {
+            if (qaTypedA[i] === qaTargetA[i] && !aError) {
+              aHtml += '<span class="text-emerald-600 dark:text-emerald-400 font-bold">' + escapeHtml(qaTargetA[i]) + '</span>';
             } else {
-              showGrandResults();
+              aError = true;
+              aHtml += '<span class="text-rose-600 bg-rose-100 dark:bg-rose-900/40 font-bold underline">' + escapeHtml(qaTargetA[i]) + '</span>';
             }
-          };
+          } else if (i === qaTypedA.length && qaStage === 2) {
+            aHtml += '<span class="bg-amber-300 dark:bg-amber-500/40 text-brand-navy dark:text-brand-cream font-bold underline">' + escapeHtml(qaTargetA[i]) + '</span>';
+          } else {
+            aHtml += '<span class="text-slate-400 dark:text-gray-500">' + escapeHtml(qaTargetA[i]) + '</span>';
+          }
+        }
+      }
+      qaLine2.innerHTML = aHtml;
+    }
+
+    if (qaInput) {
+      qaInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (qaStage === 1 && qaTypedQ === qaTargetQ) {
+            sound.playReturnClick();
+            qaStage = 2;
+            qaInput.value = '';
+            qaTypedA = '';
+            if (qaNewlineCue) {
+              qaNewlineCue.textContent = '↵ Enter registered! Now type the Answer:';
+              qaNewlineCue.className = 'text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+            }
+            if (qaInstructionLabel) {
+              qaInstructionLabel.innerHTML = 'Now type the Answer line.';
+            }
+            qaInput.placeholder = "Type: " + qaTargetA.slice(0, 30) + "...";
+            renderQALines();
+            return;
+          }
+        }
+      });
+
+      qaInput.addEventListener('input', function() {
+        const val = qaInput.value;
+
+        if (qaStage === 1) {
+          qaTypedQ = val;
+          const target = qaTargetQ;
+          if (target.startsWith(val)) {
+            sound.playKeyClick();
+            if (qaErrorTag) qaErrorTag.style.display = 'none';
+            qaInput.classList.remove('border-rose-500');
+          } else {
+            sound.playError();
+            if (qaErrorTag) qaErrorTag.style.display = 'inline';
+            qaInput.classList.add('border-rose-500');
+          }
+
+          if (val === target) {
+            if (qaNewlineCue) {
+              qaNewlineCue.textContent = '↵ Great! Press Enter to move to Line 2';
+              qaNewlineCue.className = 'text-xs font-black px-2 py-0.5 rounded-full bg-brand-gold text-brand-navy animate-pulse';
+            }
+          }
+          renderQALines();
+        } else if (qaStage === 2) {
+          qaTypedA = val;
+          const target = qaTargetA;
+          if (target.startsWith(val)) {
+            sound.playKeyClick();
+            if (qaErrorTag) qaErrorTag.style.display = 'none';
+            qaInput.classList.remove('border-rose-500');
+          } else {
+            sound.playError();
+            if (qaErrorTag) qaErrorTag.style.display = 'inline';
+            qaInput.classList.add('border-rose-500');
+          }
+
+          renderQALines();
+
+          if (val === target) {
+            qaStage = 3;
+            sound.playFinishChime(true);
+            qaInput.disabled = true;
+
+            const qa = currentPassage.qaFollowup;
+            if (qaContextReveal && qaContextNoteText && qa) {
+              qaContextNoteText.textContent = qa.contextNote;
+              qaContextReveal.classList.remove('hidden');
+            }
+
+            if (qaNewlineCue) {
+              qaNewlineCue.textContent = '✓ 11+ Context Complete!';
+              qaNewlineCue.className = 'text-xs font-black px-2 py-0.5 rounded-full bg-emerald-500 text-white';
+            }
+
+            setTimeout(function() {
+              showGrandResults(racers[0].currentWpm, 100, racers[0].rank);
+            }, 1800);
+          }
         }
       });
     }
 
-    function showFeedback(isCorrect, title, explanation) {
-      if (!answerFeedback || !feedbackIcon || !feedbackTitle || !feedbackExplanation) return;
-
-      answerFeedback.style.display = 'block';
-      answerFeedback.className = isCorrect
-        ? 'p-3.5 rounded-xl text-xs sm:text-sm bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200'
-        : 'p-3.5 rounded-xl text-xs sm:text-sm bg-rose-500/10 border border-rose-500/30 text-rose-800 dark:text-rose-200';
-
-      feedbackIcon.textContent = isCorrect ? '🌟' : '⚠️';
-      feedbackTitle.textContent = title;
-      feedbackExplanation.textContent = explanation;
+    if (btnSkipQa) {
+      btnSkipQa.addEventListener('click', function() {
+        showGrandResults(racers[0].currentWpm, 100, racers[0].rank);
+      });
     }
 
-    // --- PHASE 3: GRAND RESULTS SCREEN ---
-    function showGrandResults() {
-      if (questionChallengeView) questionChallengeView.style.display = 'none';
+    // ============================================
+    // PHASE 3: 4-RACER PODIUM & GRAND RESULTS
+    // ============================================
+    function showGrandResults(wpm, acc, rank) {
+      if (typingRaceView) typingRaceView.style.display = 'none';
+      if (qaFollowupView) qaFollowupView.style.display = 'none';
       if (grandResultsView) grandResultsView.style.display = 'block';
 
       const totalElapsedSec = Math.round((Date.now() - raceStartTime) / 1000);
 
-      if (finalWpm) finalWpm.textContent = raceWpmResult.toString();
-      if (finalAccuracy) finalAccuracy.textContent = raceAccResult.toString();
-      if (finalQuestions) finalQuestions.textContent = questionsAnsweredCorrectly + '/' + currentPassage.questions.length;
+      if (finalWpm) finalWpm.textContent = wpm.toString();
+      if (finalAccuracy) finalAccuracy.textContent = acc.toString();
+      if (finalPodiumRank) {
+        const labels = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th' };
+        finalPodiumRank.textContent = labels[rank] || rank.toString();
+      }
       if (finalTime) finalTime.textContent = totalElapsedSec + 's';
 
-      let rankTitle = '🥉 Junior 11+ Cadet';
+      let rankTitle = '🥉 11+ Race Contender';
       let rankIcon = '🎖️';
-      if (raceWpmResult >= 50 && raceAccResult >= 95 && questionsAnsweredCorrectly === currentPassage.questions.length) {
-        rankTitle = '🏆 11+ Scholarship Grandmaster';
+      if (rank === 1) {
+        rankTitle = '🏆 1st Place Champion!';
         rankIcon = '🏆';
-      } else if (raceWpmResult >= 38 && raceAccResult >= 90 && questionsAnsweredCorrectly >= 2) {
-        rankTitle = '🥇 Grammar School Ready';
-        rankIcon = '🥇';
-      } else if (raceWpmResult >= 28 && raceAccResult >= 85) {
-        rankTitle = '🥈 11+ Speed Apprentice';
+      } else if (rank === 2) {
+        rankTitle = '🥈 2nd Place Podium Finisher';
         rankIcon = '🥈';
+      } else if (rank === 3) {
+        rankTitle = '🥉 3rd Place Bronze Finish';
+        rankIcon = '🥉';
       }
 
       if (resultsRankPill) resultsRankPill.textContent = rankTitle;
       if (resultsBadgeIcon) resultsBadgeIcon.textContent = rankIcon;
+
+      // Populate 4-Racer Podium Board
+      if (podiumGrid) {
+        // Sort racers by rank or progress
+        const sorted = racers.slice().sort(function(a, b) {
+          if (a.rank && b.rank) return a.rank - b.rank;
+          if (a.rank) return -1;
+          if (b.rank) return 1;
+          return b.progress - a.progress;
+        });
+
+        podiumGrid.innerHTML = sorted.map(function(racer, index) {
+          const pos = index + 1;
+          const medals = { 1: '🥇 1st', 2: '🥈 2nd', 3: '🥉 3rd', 4: '4th' };
+          const isYou = racer.isPlayer;
+
+          return '<div class="flex items-center justify-between p-2 rounded-xl ' + 
+            (isYou ? 'bg-brand-gold/20 border border-brand-gold font-bold' : 'bg-white dark:bg-white/5 border border-brand-mist dark:border-white/10') + 
+            ' text-xs">' +
+            '<div class="flex items-center gap-2">' +
+              '<span class="font-black w-12 text-brand-navy dark:text-brand-cream">' + (medals[pos] || pos + 'th') + '</span>' +
+              '<span class="text-base">' + racer.avatar + '</span>' +
+              '<span class="font-bold text-brand-navy dark:text-brand-cream">' + racer.name + (isYou ? ' (You)' : '') + '</span>' +
+              '<span class="text-[9px] px-1 rounded ' + (isYou ? 'bg-brand-gold text-brand-navy' : (racer.isPeer ? 'bg-emerald-500/20 text-emerald-600' : 'bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-gray-300')) + '">' + (isYou ? 'YOU' : (racer.isPeer ? 'PEER' : 'BOT')) + '</span>' +
+            '</div>' +
+            '<div class="flex items-center gap-3">' +
+              '<span class="text-brand-slate dark:text-gray-400 font-semibold">' + (racer.currentWpm || racer.targetWpm || wpm) + ' WPM</span>' +
+              '<span class="text-emerald-600 dark:text-emerald-400 font-black">' + (pos === 1 ? 'WINNER' : 'Finished') + '</span>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
 
       if (resultsVocabGrid) {
         resultsVocabGrid.innerHTML = currentPassage.vocabulary.map(function(v) {
@@ -1168,13 +1690,6 @@ const initialWords = initialPassage.text.split(' ');
       if (resultsGutenbergBtn) {
         resultsGutenbergBtn.href = currentPassage.gutenbergUrl;
       }
-
-      const stats = getCareerStats();
-      stats.races++;
-      stats.totalWpm += raceWpmResult;
-      if (raceWpmResult > stats.bestWpm) stats.bestWpm = raceWpmResult;
-      saveCareerStats(stats);
-      updateCareerUI();
     }
 
     // --- Action Button Handlers ---
@@ -1197,83 +1712,70 @@ const initialWords = initialPassage.text.split(' ');
 
     if (btnShareScore) {
       btnShareScore.addEventListener('click', function() {
-        const text = '🏁 TinyKite 11+ TypeRacer\n📖 Book: ' + currentPassage.title + ' (' + currentPassage.author + ')\n⚡ Speed: ' + raceWpmResult + ' WPM | 🎯 Accuracy: ' + raceAccResult + '%\n🧠 11+ Questions: ' + questionsAnsweredCorrectly + '/' + currentPassage.questions.length + ' Correct\nTry it 100% ad-free: https://tinykite.co/typeracer';
-        navigator.clipboard.writeText(text).then(function() {
-          if (shareBtnText) {
-            const original = shareBtnText.textContent;
-            shareBtnText.textContent = 'Copied! ✓';
-            setTimeout(function() { shareBtnText.textContent = original; }, 2500);
-          }
-        }).catch(function() {
-          alert(text);
-        });
-      });
-    }
-
-    if (pacerSelect) {
-      pacerSelect.addEventListener('change', function() {
-        pacerWpm = parseInt(pacerSelect.value, 10);
-        if (!isRaceActive && !isRaceFinished) {
-          if (pacerWpm <= 0) {
-            if (pacerLane) pacerLane.style.display = 'none';
-          } else {
-            if (pacerLane) pacerLane.style.display = 'flex';
-            if (pacerLabel) pacerLabel.textContent = 'Pacer ' + pacerWpm + ' WPM';
-          }
+        const text = '🏁 TinyKite 11+ TypeRacer\n📖 Book: ' + currentPassage.title + ' (' + currentPassage.author + ')\n🏆 Finish: ' + (racers[0].rank || 1) + 'st Place / 4 Racers\n⚡ Speed: ' + racers[0].currentWpm + ' WPM\nTry it 100% ad-free: https://tinykite.co/typeracer';
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(function() {
+            if (shareBtnText) shareBtnText.textContent = 'Copied to Clipboard!';
+            setTimeout(function() {
+              if (shareBtnText) shareBtnText.textContent = 'Share Score';
+            }, 2000);
+          });
         }
       });
     }
 
+    // Vocabulary Drawer Toggle
     if (btnToggleVocab && vocabDrawer) {
       btnToggleVocab.addEventListener('click', function() {
-        vocabDrawer.style.display = vocabDrawer.style.display === 'block' ? 'none' : 'block';
+        const isHidden = vocabDrawer.style.display === 'none' || !vocabDrawer.style.display;
+        vocabDrawer.style.display = isHidden ? 'block' : 'none';
       });
     }
 
     // --- Library Modal Logic ---
-    function populateLibraryCards(filter, searchQuery) {
+    function renderLibrary(filter) {
+      filter = filter || 'all';
       if (!libraryCardsContainer) return;
 
-      const f = filter || 'all';
-      const q = (searchQuery || '').toLowerCase().trim();
+      const q = (librarySearch ? librarySearch.value : '').toLowerCase().trim();
+
       const filtered = passages.filter(function(p) {
-        const matchFilter = f === 'all' || p.difficulty === f;
-        const matchSearch = !q || p.title.toLowerCase().includes(q) || p.author.toLowerCase().includes(q) || p.text.toLowerCase().includes(q);
-        return matchFilter && matchSearch;
+        const matchesFilter = filter === 'all' || p.difficulty === filter;
+        const matchesQuery = !q || p.title.toLowerCase().includes(q) || p.author.toLowerCase().includes(q);
+        return matchesFilter && matchesQuery;
       });
 
-      if (filtered.length === 0) {
-        libraryCardsContainer.innerHTML = '<div class="text-center py-8 text-brand-slate text-xs">No books found matching "' + escapeHtml(q) + '".</div>';
-        return;
-      }
-
       libraryCardsContainer.innerHTML = filtered.map(function(p) {
-        const realIdx = passages.findIndex(function(item) { return item.id === p.id; });
-        return '<div class="p-3 rounded-2xl bg-white dark:bg-white/5 border border-brand-mist dark:border-white/10 hover:border-brand-gold/60 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">' +
-          '<div class="flex-1 min-w-0">' +
-          '<div class="flex items-center gap-2 mb-0.5">' +
-          '<h4 class="font-bold text-xs sm:text-sm text-brand-navy dark:text-brand-cream truncate">' + p.title + '</h4>' +
-          '<span class="text-[9px] font-black px-1.5 py-0.2 rounded-full ' +
-          (p.difficulty === 'Foundation' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
-          p.difficulty === 'Standard 11+' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300' :
-          'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300') +
-          '">' + p.difficulty + '</span>' +
+        const origIdx = passages.findIndex(item => item.id === p.id);
+        const isCurrent = origIdx === currentPassageIndex;
+
+        return '<div class="p-3.5 rounded-2xl border transition-all flex flex-wrap items-center justify-between gap-3 ' +
+          (isCurrent
+            ? 'bg-brand-gold/15 border-brand-gold shadow-sm'
+            : 'bg-brand-cream/40 dark:bg-white/5 border-brand-mist dark:border-white/10 hover:border-brand-gold/50') + '">' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-center gap-2 flex-wrap mb-1">' +
+              '<h4 class="font-bold text-sm text-brand-navy dark:text-brand-cream">' + p.title + '</h4>' +
+              '<span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-white dark:bg-white/10 text-brand-slate dark:text-gray-300">' + p.difficulty + '</span>' +
+              (isCurrent ? '<span class="px-2 py-0.2 rounded-full text-[10px] font-black bg-brand-gold text-brand-navy">Current Book</span>' : '') +
+            '</div>' +
+            '<p class="text-xs text-brand-slate dark:text-gray-400 mb-1.5">by ' + p.author + ' (' + p.year + ') • ' + p.chapter + '</p>' +
+            '<p class="text-xs text-brand-slate dark:text-gray-300 line-clamp-2 italic">"' + p.text + '"</p>' +
           '</div>' +
-          '<p class="text-[11px] text-brand-slate dark:text-gray-400 mb-1">by ' + p.author + ' (' + p.year + ') • Gutenberg #' + p.gutenbergId + '</p>' +
-          '<p class="text-xs text-brand-navy/70 dark:text-gray-300 italic line-clamp-2">"' + p.text + '"</p>' +
+          '<div class="flex items-center gap-2">' +
+            '<button type="button" class="btn-select-book px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy hover:opacity-90 active:scale-95 transition-all shadow-sm" data-index="' + origIdx + '">' +
+              (isCurrent ? 'Racing Now' : 'Race Book') +
+            '</button>' +
           '</div>' +
-          '<button type="button" class="btn-select-book px-3 py-1.5 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-xs font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all whitespace-nowrap self-start sm:self-center" data-index="' + realIdx + '">' +
-          'Race This ↵' +
-          '</button>' +
-          '</div>';
+        '</div>';
       }).join('');
 
-      libraryCardsContainer.querySelectorAll('.btn-select-book').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          const target = e.currentTarget;
-          const idx = parseInt(target.getAttribute('data-index') || '0', 10);
-          if (libraryModal) libraryModal.style.display = 'none';
+      const selectBtns = libraryCardsContainer.querySelectorAll('.btn-select-book');
+      selectBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const idx = parseInt(btn.getAttribute('data-index') || '0', 10);
           loadPassage(idx);
+          if (libraryModal) libraryModal.style.display = 'none';
         });
       });
     }
@@ -1281,7 +1783,7 @@ const initialWords = initialPassage.text.split(' ');
     if (btnOpenLibrary && libraryModal) {
       btnOpenLibrary.addEventListener('click', function() {
         libraryModal.style.display = 'flex';
-        populateLibraryCards('all', '');
+        renderLibrary('all');
       });
     }
 
@@ -1291,24 +1793,6 @@ const initialWords = initialPassage.text.split(' ');
       });
     }
 
-    if (librarySearch) {
-      librarySearch.addEventListener('input', function() {
-        populateLibraryCards('all', librarySearch.value);
-      });
-    }
-
-    libFilterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        libFilterBtns.forEach(function(b) {
-          b.className = 'lib-filter-btn px-2 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20';
-        });
-        const target = e.currentTarget;
-        target.className = 'lib-filter-btn px-2 py-1 rounded-lg font-bold bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy';
-        const filter = target.getAttribute('data-filter') || 'all';
-        populateLibraryCards(filter, librarySearch ? librarySearch.value : '');
-      });
-    });
-
     if (libraryModal) {
       libraryModal.addEventListener('click', function(e) {
         if (e.target === libraryModal) {
@@ -1317,9 +1801,26 @@ const initialWords = initialPassage.text.split(' ');
       });
     }
 
-    // --- On Initial Page Load ---
+    if (librarySearch) {
+      librarySearch.addEventListener('input', function() {
+        renderLibrary(window.__currentLibFilter || 'all');
+      });
+    }
+
+    libFilterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        libFilterBtns.forEach(b => {
+          b.className = 'lib-filter-btn px-2 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20';
+        });
+        btn.className = 'lib-filter-btn px-2 py-1 rounded-lg font-bold bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy';
+        const filter = btn.getAttribute('data-filter') || 'all';
+        window.__currentLibFilter = filter;
+        renderLibrary(filter);
+      });
+    });
+
+    // --- Initial Boot ---
     updateCareerUI();
     loadPassage(currentPassageIndex);
-    window.scrollTo({ top: 0, behavior: 'instant' });
   </script>
 </Layout>
