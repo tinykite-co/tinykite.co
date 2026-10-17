@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { DOWNLOAD_LABELS, WATER_RELEASES_PAGE } from "../../lib/water/download";
 ---
 
 <Layout
@@ -23,31 +24,19 @@ import Layout from "../../layouts/Layout.astro";
           water<span class="text-[var(--water-blue)]">.</span>
         </h1>
         <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
-          Your friendly desktop and mobile hydration buddy.
+          Your friendly desktop hydration buddy.
         </p>
         <p class="text-gray-500 text-base max-w-xl mx-auto mb-10">
-          TinyKite Water lives quietly on your devices and walks across your screen to remind you to drink water. Fully customizable, beautifully animated, and guaranteed to bring a smile to your face.
+          TinyKite Water lives quietly on your desktop and walks across your screen to remind you to drink water. Fully customizable, beautifully animated, and guaranteed to bring a smile to your face.
         </p>
         
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
           <a
             id="desktop-download-btn"
-            href="https://github.com/tinykite-co/apps/releases/latest"
+            href={WATER_RELEASES_PAGE}
             class="inline-block px-8 py-3 bg-[var(--water-blue)] text-white font-semibold rounded-full hover:bg-[var(--water-dark-blue)] transition-colors text-sm w-full sm:w-auto"
           >
-            Download for macOS
-          </a>
-          <a
-            href="https://apps.apple.com/app/tinykite-water"
-            class="inline-block px-8 py-3 border border-gray-200 dark:border-gray-800 text-text font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors text-sm w-full sm:w-auto"
-          >
-            Download on iOS
-          </a>
-          <a
-            href="https://play.google.com/store/apps/details?id=co.tinykite.water"
-            class="inline-block px-8 py-3 border border-gray-200 dark:border-gray-800 text-text font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors text-sm w-full sm:w-auto"
-          >
-            Get it on Android
+            {DOWNLOAD_LABELS.mac}
           </a>
         </div>
       </div>
@@ -119,39 +108,21 @@ import Layout from "../../layouts/Layout.astro";
   }
 </style>
 
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("desktop-download-btn");
-    if (!btn) return;
+<script>
+  import { DOWNLOAD_LABELS, WATER_RELEASES_API, detectPlatform, newestInstallerUrl, type Release } from "../../lib/water/download";
 
-    let os = "mac";
-    const ua = navigator.userAgent;
-    if (ua.indexOf("Win") !== -1) {
-      os = "win";
-      btn.textContent = "Download for Windows";
-    } else if (ua.indexOf("Mac") !== -1) {
-      os = "mac";
-      btn.textContent = "Download for macOS";
-    }
+  // The button links to the releases list until the newest installer for this desktop is found.
+  async function pointAtNewestInstaller(button: HTMLAnchorElement): Promise<void> {
+    const platform = detectPlatform(navigator.userAgent);
+    button.textContent = DOWNLOAD_LABELS[platform];
+    const response = await fetch(WATER_RELEASES_API);
+    if (!response.ok) return;
+    const installer = newestInstallerUrl((await response.json()) as Release[], platform);
+    if (installer) button.href = installer;
+  }
 
-    // Fetch the latest release assets from GitHub API
-    fetch("https://api.github.com/repos/tinykite-co/apps/releases/latest")
-      .then(res => res.json())
-      .then(data => {
-        if (!data || !data.assets) return;
-        
-        let targetAsset = null;
-        if (os === "mac") {
-          targetAsset = data.assets.find(a => a.name.endsWith(".dmg"));
-        } else if (os === "win") {
-          targetAsset = data.assets.find(a => a.name.endsWith(".exe") || a.name.endsWith(".msi"));
-        }
-
-        if (targetAsset && targetAsset.browser_download_url) {
-          btn.href = targetAsset.browser_download_url;
-        }
-      })
-      .catch(err => console.error("Failed to fetch latest release:", err));
-  });
+  const button = document.getElementById("desktop-download-btn");
+  if (button instanceof HTMLAnchorElement) {
+    pointAtNewestInstaller(button).catch((error) => console.error("Could not look up the latest TinyKite Water installer:", error));
+  }
 </script>
-
