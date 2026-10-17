@@ -1,0 +1,144 @@
+---
+import { DEFAULT_VERSUS, fillEvidence, type ReadingEvidence, type ResolvedStory } from "../../../lib/gloss/campaign";
+
+/**
+ * The reading story on a backing page: the moment a child meets a word, our
+ * measured new-words-per-chapter, the risk of handing over a phone, the
+ * dictionary this family would otherwise use beside Gloss, pictures, depths
+ * and practice. Every number names its source.
+ */
+interface Props {
+  story: ResolvedStory;
+  evidence: ReadingEvidence;
+  /** False while the page's words in other languages are ours, not yet a native speaker's. */
+  nativeReviewed: boolean;
+}
+
+const { story, evidence, nativeReviewed } = Astro.props;
+const fill = (text: string) => fillEvidence(text, evidence);
+const sectionTitle = "text-3xl font-bold text-text mb-3";
+const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
+const prose = "text-gray-700 dark:text-gray-300 leading-relaxed";
+---
+
+<!-- The moment -->
+<section class="py-12 px-6">
+  <div class="container mx-auto max-w-3xl">
+    <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.moment.title)}</h2>
+    <p class={prose}>{fill(story.moment.body)}</p>
+    {!nativeReviewed && (
+      <p class="text-xs text-gray-500 mt-3">The examples on this page are ours. A native speaker will check them before anything ships.</p>
+    )}
+
+    <div class={`${card} mt-8`}>
+      <h3 class="font-semibold text-text mb-3">New words in one chapter, by age</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-gray-500">
+            <tr>
+              <th class="py-2 pr-4 font-normal">Age</th>
+              <th class="py-2 pr-4 font-normal">Words they don’t know yet</th>
+              <th class="py-2 font-normal">Words they already know</th>
+            </tr>
+          </thead>
+          <tbody>
+            {evidence.rows.map((row) => (
+              <tr class="border-t border-gray-100 dark:border-white/[0.06]">
+                <td class="py-2 pr-4 font-semibold text-text">{row.age}</td>
+                <td class="py-2 pr-4 text-gray-700 dark:text-gray-300">
+                  <span class="text-lg font-semibold text-text">{row.unknownWords}</span>
+                  <span class="text-gray-500"> ({row.low}–{row.high} across the books)</span>
+                </td>
+                <td class="py-2 text-gray-700 dark:text-gray-300">{row.knownPercent}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+        {evidence.notes.map((note) => <li>{fill(note)}</li>)}
+      </ul>
+      <details class="mt-4 text-xs text-gray-500">
+        <summary class="cursor-pointer">How we counted</summary>
+        <p class="mt-2">{evidence.method}</p>
+        <p class="mt-2">{evidence.caveat}</p>
+        <ul class="mt-2 space-y-1">
+          {evidence.citations.map((citation) => (
+            <li><a href={citation.url} class="underline" rel="noopener" target="_blank">{citation.label}</a></li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- The risk -->
+<section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+  <div class="container mx-auto max-w-3xl">
+    <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.risk.title)}</h2>
+    <p class={prose}>{fill(story.risk.body)}</p>
+    {(story.risk.citations ?? []).map((citation) => (
+      <p class="text-xs text-gray-500 mt-3">Source: <a href={citation.url} class="underline" rel="noopener" target="_blank">{citation.label}</a></p>
+    ))}
+  </div>
+</section>
+
+<!-- A traditional dictionary beside Gloss -->
+<section class="py-12 px-6">
+  <div class="container mx-auto max-w-3xl">
+    <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.dictionary.title)}</h2>
+    <p class={`${prose} mb-6`}>{fill(story.dictionary.body)}</p>
+    <div class="grid grid-cols-2 gap-px rounded-2xl overflow-hidden border border-gray-100 dark:border-white/[0.06] bg-gray-100 dark:bg-white/[0.06] text-sm">
+      <div class="bg-white dark:bg-neutral-900 p-3 font-semibold text-gray-500">{story.dictionary.versus ?? DEFAULT_VERSUS}</div>
+      <div class="bg-white dark:bg-neutral-900 p-3 font-semibold text-[var(--gloss-sage)]">Gloss</div>
+      {story.dictionary.rows.map((row) => (
+        <Fragment>
+          <div class="bg-white dark:bg-neutral-900 p-3 text-gray-600 dark:text-gray-400">{fill(row.traditional)}</div>
+          <div class="bg-white dark:bg-neutral-900 p-3 text-text">{fill(row.gloss)}</div>
+        </Fragment>
+      ))}
+    </div>
+    <p class="text-xs text-gray-500 mt-3">
+      Sources:
+      {(story.dictionary.citations ?? []).map((citation, index) => (
+        <Fragment>{index > 0 && " · "}<a href={citation.url} class="underline" rel="noopener" target="_blank">{citation.label}</a></Fragment>
+      ))}
+    </p>
+  </div>
+</section>
+
+<!-- Pictures and depths -->
+<section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
+  <div class="container mx-auto max-w-3xl grid md:grid-cols-2 gap-5">
+    {[story.pictures, story.depths].map((section) => (
+      <div class={card}>
+        <h3 class="text-xl font-semibold text-text mb-2" style="font-family: 'Lora', serif;">{fill(section.title)}</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{fill(section.body)}</p>
+        {(section.citations ?? []).map((citation) => (
+          <p class="text-xs text-gray-500 mt-3">Source: <a href={citation.url} class="underline" rel="noopener" target="_blank">{citation.label}</a></p>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Practice -->
+<section class="py-12 px-6">
+  <div class="container mx-auto max-w-3xl">
+    <h2 class={sectionTitle} style="font-family: 'Lora', serif;">{fill(story.practice.title)}</h2>
+    <div class="grid md:grid-cols-2 gap-5 mt-6">
+      <div class={card}>
+        <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-3">In Gloss today</p>
+        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          {story.practice.today.map((line) => <li>· {fill(line)}</li>)}
+        </ul>
+      </div>
+      <div class={card}>
+        <p class="text-xs font-semibold text-[var(--gloss-honey)] uppercase tracking-wide mb-3">What your backing builds</p>
+        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          {story.practice.next.map((line) => <li>· {fill(line)}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

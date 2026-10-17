@@ -3,13 +3,20 @@ import assert from "node:assert/strict";
 import {
   closingDateText,
   dollars,
+  fillEvidence,
   isOpen,
+  isPricedFromReference,
+  languagesByGroup,
   percentRaised,
+  resolveStory,
   pledgeLink,
   tierName,
   validateCampaign,
   type Campaign,
   type Language,
+  type ReadingEvidence,
+  type Story,
+  type StoryDefaults,
 } from "./campaign-rules.ts";
 
 const CLOSES_ON = "2026-12-11";
@@ -18,6 +25,7 @@ function language(overrides: Partial<Language> = {}): Language {
   return {
     slug: "hinglish",
     name: "Hinglish",
+    group: "indian",
     who: "",
     goal: 10000,
     promise: "",
@@ -32,6 +40,8 @@ function language(overrides: Partial<Language> = {}): Language {
     pledgeLinks: { "early-backer": "" },
     raised: 0,
     backers: 0,
+    story: story(),
+    nativeReviewed: false,
     ...overrides,
   };
 }
@@ -44,10 +54,37 @@ function campaignWith(languages: Language[], closesOn: string | null = CLOSES_ON
     closesOn,
     tiers: [{ id: "early-backer", price: 10, title: "Early backer", limitPerLanguage: null, now: [], later: [] }],
     languages,
+    costReference: { slug: "hinglish", built: "", investedUsd: null },
+    readingEvidence: evidence(),
+    storyDefaults: storyDefaults(),
   };
 }
 
 const LINK = "https://buy.stripe.com/test_abc";
+
+function evidence(overrides: Partial<ReadingEvidence> = {}): ReadingEvidence {
+  return {
+    method: "",
+    rows: [{ age: 9, unknownWords: 47, low: 31, high: 103, knownPercent: 97 }],
+    notes: [],
+    caveat: "",
+    citations: [],
+    ...overrides,
+  };
+}
+
+function story(momentTitle = "About {unknownWordsAt9} a chapter"): Story {
+  const section = { title: "", body: "" };
+  return { moment: { title: momentTitle, body: "" }, dictionary: { ...section, rows: [] }, pictures: section };
+}
+
+function storyDefaults(): StoryDefaults {
+  return {
+    risk: { title: "Shared risk", body: "" },
+    depths: { title: "Shared depths", body: "" },
+    practice: { title: "Shared practice", today: [], next: [] },
+  };
+}
 
 test("a pledge stays closed without a link", () => {
   assert.equal(pledgeLink(language(), "early-backer", CLOSES_ON), null);
@@ -118,4 +155,94 @@ test("validation rejects a zero goal", () => {
 
 test("validation rejects a closing date that isn't a date", () => {
   assert.throws(() => validateCampaign(campaignWith([language()], "soon")), /closesOn/);
+});
+
+test("validation rejects a cost reference to a language that doesn't exist", () => {
+  const campaign = campaignWith([language()]);
+  campaign.costReference.slug = "klingon";
+  assert.throws(() => validateCampaign(campaign), /costReference/);
+});
+
+test("validation rejects a zero invested amount", () => {
+  const campaign = campaignWith([language()]);
+  campaign.costReference.investedUsd = 0;
+  assert.throws(() => validateCampaign(campaign), /investedUsd/);
+});
+
+test("only languages other than the reference are priced from it", () => {
+  const tenglish = language({ slug: "tenglish" });
+  const campaign = campaignWith([language(), tenglish]);
+  assert.equal(isPricedFromReference(language(), campaign), false);
+  assert.equal(isPricedFromReference(tenglish, campaign), true);
+});
+
+test("evidence placeholders fill with the measured number for that age", () => {
+  assert.equal(fillEvidence("{unknownWordsAt9} new, {knownPercentAt9}% known", evidence()), "47 new, 97% known");
+});
+
+test("an age with no measurement is refused", () => {
+  assert.throws(() => fillEvidence("{unknownWordsAt5}", evidence()), /age 5/);
+});
+
+test("a misspelt placeholder is refused rather than printed", () => {
+  assert.throws(() => fillEvidence("{unknownWordAt9}", evidence()), /unknown placeholder/);
+});
+
+test("validation refuses a story with a placeholder that cannot fill", () => {
+  const broken = campaignWith([language({ story: story("{knownPercentAt12}") })]);
+  assert.throws(() => validateCampaign(broken), /age 12/);
+});
+
+test("validation accepts a story whose placeholders fill", () => {
+  assert.doesNotThrow(() => validateCampaign(campaignWith([language({ story: story() })])));
+});
+
+test("validation refuses evidence whose median is outside its range", () => {
+  const broken = campaignWith([language()]);
+  broken.readingEvidence = evidence({ rows: [{ age: 9, unknownWords: 200, low: 31, high: 103, knownPercent: 97 }] });
+  assert.throws(() => validateCampaign(broken), /outside its range/);
+});
+
+test("validation refuses a citation that isn't https", () => {
+  const broken = campaignWith([language()]);
+  broken.readingEvidence = evidence({ citations: [{ label: "x", url: "http://example.com" }] });
+  assert.throws(() => validateCampaign(broken), /https/);
+});
+
+test("a story without its own risk, depths or practice uses the shared ones", () => {
+  const resolved = resolveStory(language(), campaignWith([]));
+  assert.equal(resolved.risk.title, "Shared risk");
+  assert.equal(resolved.practice.title, "Shared practice");
+});
+
+test("a story's own section wins over the shared one", () => {
+  const own = language({ story: { ...story(), risk: { title: "Our risk", body: "" } } });
+  assert.equal(resolveStory(own, campaignWith([])).risk.title, "Our risk");
+});
+
+test("validation refuses a shared section whose placeholder cannot fill", () => {
+  const broken = campaignWith([language()]);
+  broken.storyDefaults.depths.title = "{unknownWordsAt4}";
+  assert.throws(() => validateCampaign(broken), /age 4/);
+});
+
+test("validation refuses a page that copies another page's story", () => {
+  const copied = { ...story(), moment: { title: "Same", body: "A child in Leeds" } };
+  const languages = [language({ story: copied }), language({ slug: "tenglish", story: copied })];
+  assert.throws(() => validateCampaign(campaignWith(languages)), /tenglish: repeats hinglish/);
+});
+
+test("validation refuses an unknown group", () => {
+  const broken = language({ group: "martian" as Language["group"] });
+  assert.throws(() => validateCampaign(campaignWith([broken])), /unknown group/);
+});
+
+test("languages group in order, without the page being read or empty groups", () => {
+  const british = language({ slug: "british-english", group: "english", story: story("British") });
+  const tenglish = language({ slug: "tenglish", story: story("Telugu") });
+  const groups = languagesByGroup([tenglish, british, language()], "hinglish");
+  assert.deepEqual(groups.map((group) => [group.id, group.languages.map((each) => each.slug)]), [
+    ["english", ["british-english"]],
+    ["indian", ["tenglish"]],
+  ]);
 });

@@ -77,33 +77,26 @@
       "name": "British English",
       "who": "For families in the UK",
       "goal": 10000,
-      "promise": "Finish the dictionary British children already use: a checked picture for every word a child looks up most.",
+      "promise": "The safe dictionary for the words in your child’s books: a checked picture, a voice, and an explanation they can read.",
       "roots": null,
       "forFun": null,
-      "builtIntro": "This is the part of Gloss that already works best.",
+      "builtIntro": "Gloss is in public testing on iPhone and Android, and the British dictionary is the part that works best.",
       "built": [
         {
-          "title": "65,019 words, each one checked for children",
-          "body": "On 8 October 2026 we re-checked every word against a guide for what is suitable for children. Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+          "title": "Works without the internet",
+          "body": "Every word, its sounds, and suggestions from 63,265 words as your child types are on the phone, so Gloss works on a plane or a train with no signal."
         },
         {
-          "title": "Nearly every word can be heard",
-          "body": "A British pronunciation for each way a word is said, stored on the phone so it plays offline. “Read” says REED in one meaning and RED in another."
-        },
-        {
-          "title": "One meaning at four depths",
-          "body": "Simple, More, Deeper and All. A six-year-old and a ten-year-old both get a meaning they can read."
-        },
-        {
-          "title": "Suggestions as you type, offline",
-          "body": "Type two letters and Gloss suggests from 63,265 words, without internet."
+          "title": "Checked again on 8 October 2026",
+          "body": "We re-checked all 65,019 words against a guide for what is suitable for children."
         }
       ],
-      "samplesIntro": "Pictures are the gap. 1,200 words have one. A child understands “heron” faster from a heron than from a sentence.",
+      "samplesIntro": "Pictures are the gap: 1,200 words have one. Your backing pays for the next 5,000, and for the games that bring words back.",
       "samples": [],
       "buys": [
         "A checked picture for each of the 5,000 words British children look up most",
         "UK teachers and parents, paid to check those words, their pictures and their sounds",
+        "A crossword and a letter-tile game built from each child’s own words",
         "A year of servers for the British dictionary"
       ],
       "pledgeLinks": {
@@ -117,7 +110,7 @@
       "backers": 0,
       "screenshot": {
         "src": "/gloss/screenshots/app/03-duck-article.png",
-        "alt": "Gloss showing the word duck: a picture, a short meaning, the Hindi word बतख़, and four depths of meaning"
+        "alt": "Gloss showing the word duck: a picture, a short meaning, and four depths of meaning"
       },
       "tierNames": {
         "early-backer": {
@@ -135,58 +128,113 @@
         "patron": {
           "name": "Patron"
         }
-      }
+      },
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} times a chapter, a nine-year-old meets a word they don’t know yet",
+          "body": "“What does bewilderment mean?” It is in the first chapter of The Secret Garden, with dozens like it. A seven-year-old meets about {unknownWordsAt7} in a chapter. A child who skips them loses the story. A child who has to stop and ask, again and again, often stops reading."
+        },
+        "dictionary": {
+          "title": "Dictionaries were made for grown-ups",
+          "body": "The first English dictionary, Robert Cawdrey’s Table Alphabeticall of 1604, explained “hard usual English words” to adult readers. Dictionaries written for children came much later — the Thorndike-Century Junior Dictionary of 1935, built on a count of the words children actually meet, is one of the best known — and they made the words simpler. The form stayed the same: a list of written definitions, at one level, for everybody. Our own children, and their friends, didn’t open it. This is what changes when a dictionary is built for a child from the start.",
+          "citations": [
+            {
+              "label": "Cawdrey’s Table Alphabeticall (1604), University of Toronto notes on early English dictionaries",
+              "url": "https://cpercy.artsci.utoronto.ca/courses/EarlyModernEnglishDictionaries.htm"
+            },
+            {
+              "label": "The Thorndike-Century Junior Dictionary (1935), Indiana University Lilly Library",
+              "url": "https://blogs.libraries.indiana.edu/lilly/2023/10/19/just-say-the-word/"
+            }
+          ],
+          "rows": [
+            {
+              "traditional": "Explains a word with harder words",
+              "gloss": "Explains it in words easier than the word itself"
+            },
+            {
+              "traditional": "Pronunciation in symbols a child can’t read",
+              "gloss": "Tap to hear it — the right sound for each meaning: “read” is REED or RED"
+            },
+            {
+              "traditional": "Every meaning, including the grown-up ones",
+              "gloss": "Grown-up meanings never shown: “wine” is a colour"
+            },
+            {
+              "traditional": "One level for everyone",
+              "gloss": "Four depths: Simple, More, Deeper and All"
+            },
+            {
+              "traditional": "A few line drawings, if any",
+              "gloss": "A checked picture for the meaning your child is reading"
+            },
+            {
+              "traditional": "Stays on the shelf",
+              "gloss": "Remembers every word your child looked up, and brings it back to practise"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A picture isn’t a shortcut",
+          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and cricket bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships. 1,200 words have one today; this campaign pays for 5,000.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      },
+      "group": "english",
+      "nativeReviewed": true
     },
     {
       "slug": "american-english",
       "name": "American English",
       "who": "For families in the US",
       "goal": 10000,
-      "promise": "Gloss speaks British English today. Fund the American dictionary: American spellings, an American voice, and American meanings.",
+      "promise": "The safe dictionary for the words in your kid’s books — in American English, with an American voice.",
       "roots": null,
-      "forFun": "An American child reading Roald Dahl or Harry Potter meets jumper, torch and biscuit. With both dictionaries, Gloss explains the British word in American terms.",
-      "builtIntro": "Everything in the British dictionary already works on an American phone. What’s missing is America.",
+      "forFun": "Harry Potter gets a hand-knitted jumper for Christmas. British books are full of words like it — biscuit, torch, rubber, queue — and Gloss will explain each one in words an American kid already knows: sweater, cookie, flashlight, eraser, line.",
+      "builtIntro": "Gloss is in public testing on iPhone and Android. It learned English in Britain, so this is what an American kid sees today:",
       "built": [
         {
-          "title": "65,019 words, each one checked for children",
-          "body": "Adult meanings are never shown, so “wine” is a colour and “gun” is a glue gun."
+          "title": "Works without the internet",
+          "body": "Every word, its sounds, and suggestions as your kid types are on the phone, so Gloss works with no signal."
         },
         {
-          "title": "Nearly every word can be heard",
-          "body": "In a British voice today. The American dictionary gets an American one."
-        },
-        {
-          "title": "One meaning at four depths",
-          "body": "Simple, More, Deeper and All, so every age gets a meaning they can read."
+          "title": "A British voice and British spelling",
+          "body": "Every word can be heard today, in a British voice. This campaign adds an American one."
         }
       ],
-      "samplesIntro": "The same word can mean something else in each country. Today, an American child gets the British answer.",
+      "samplesIntro": "Some words change when they cross the Atlantic, and Gloss doesn’t know that yet:",
       "samples": [
         {
           "word": "pants",
           "lines": [
-            "British: underwear.",
-            "American: trousers."
+            "In America: trousers.",
+            "Gloss today: underwear."
           ]
         },
         {
           "word": "chips",
           "lines": [
-            "British: hot fried potato sticks, what Americans call fries.",
-            "American: thin, crunchy potato slices, what the British call crisps."
+            "In America: thin, crunchy potato slices.",
+            "Gloss today: hot fries."
           ]
         },
         {
           "word": "color",
           "lines": [
-            "American spelling. Today Gloss knows it as colour."
+            "Gloss today only knows it spelled colour."
           ]
         }
       ],
       "buys": [
         "American spellings and an American voice for the most-read 5,000 words",
-        "American meanings wherever they differ from British ones",
-        "US teachers and parents, paid to check the American dictionary"
+        "American meanings for every word where America means something else",
+        "US teachers and parents, paid to check the American dictionary",
+        "A crossword and a letter-tile game built from each kid’s own words"
       ],
       "pledgeLinks": {
         "early-backer": "",
@@ -214,16 +262,840 @@
         "patron": {
           "name": "Patron"
         }
+      },
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} times a chapter, a 4th grader meets a word they don’t know yet",
+          "body": "“What does bewilderment mean?” It is in the first chapter of The Secret Garden, with dozens like it. A 2nd grader meets about {unknownWordsAt7} in a chapter. A kid who skips them loses the story. A kid who has to stop and ask, again and again, often stops reading."
+        },
+        "risk": {
+          "title": "So you hand over the phone",
+          "body": "A kid who won’t open a paper dictionary will happily type into a search box. Then come image results, videos and ads that were never made for them. In a 2022 survey of US teens, 15% said they first saw pornography online at 10 or younger, and 58% of those who had seen it said they had come across it by accident. Gloss is the screen you can hand over instead: 65,019 words checked for kids, no ads, no web results, and it shows you how to lock the tablet to Gloss with the phone’s own Guided Access or screen pinning.",
+          "citations": [
+            {
+              "label": "Common Sense Media, Teens and Pornography (survey of 1,358 US teens aged 13–17, September 2022)",
+              "url": "https://www.commonsensemedia.org/press-releases/new-report-reveals-truths-about-how-teens-engage-with-pornography"
+            }
+          ]
+        },
+        "dictionary": {
+          "title": "Noah Webster wrote for grown-ups too",
+          "body": "Noah Webster’s American Dictionary of 1828 was written for adults, like the English dictionaries before it. Dictionaries written for kids came a century later — the Thorndike-Century Junior Dictionary of 1935, built on a count of the words kids actually meet and a fixture of American classrooms for decades, is one of the best known — and they made the words simpler. The form stayed the same: a list of written definitions, at one level, for everybody. Our own kids, and their friends, didn’t open it. This is what changes when a dictionary is built for a kid from the start.",
+          "citations": [
+            {
+              "label": "The Thorndike-Century Junior Dictionary (1935), Indiana University Lilly Library",
+              "url": "https://blogs.libraries.indiana.edu/lilly/2023/10/19/just-say-the-word/"
+            }
+          ],
+          "rows": [
+            {
+              "traditional": "Explains a word with harder words",
+              "gloss": "Explains it in words easier than the word itself"
+            },
+            {
+              "traditional": "Pronunciation in symbols a kid can’t read",
+              "gloss": "Tap to hear it — the right sound for each meaning: “read” is REED or RED"
+            },
+            {
+              "traditional": "Every meaning, including the grown-up ones",
+              "gloss": "Grown-up meanings never shown: “wine” is a color"
+            },
+            {
+              "traditional": "One level for everyone",
+              "gloss": "Four depths: Simple, More, Deeper and All"
+            },
+            {
+              "traditional": "A few line drawings, if any",
+              "gloss": "A checked picture for the meaning your kid is reading"
+            },
+            {
+              "traditional": "Stays on the shelf",
+              "gloss": "Remembers every word your kid looked up, and brings it back to practice"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "The right picture, not the first one a search returns",
+          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and baseball bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        },
+        "depths": {
+          "title": "Easy explanations, and the hard ones too",
+          "body": "Simple, More, Deeper and All: the same meaning written four ways. A 2nd grader who finds reading hard starts at Simple. A confident 6th grader opens All and meets the full grown-up definition, safely. Every kid starts where they are and steps up when they are ready — that is how the muscle builds."
+        },
+        "practice": {
+          "title": "Looking a word up is only half the job",
+          "today": [
+            "Every word your kid looks up is saved to their own reader, on the phone",
+            "Flashcards: flip it, tap “Knew it” or “Still learning”, and the stumbles come first",
+            "A picture quiz: see the picture, pick the word",
+            "No streaks and no timers, so there is nothing to lose by taking a month off"
+          ],
+          "next": [
+            "A crossword built only from the words your child already knows",
+            "A letter-tile word game that plays with your child’s own words"
+          ]
+        }
+      },
+      "group": "english",
+      "nativeReviewed": false
+    },
+    {
+      "slug": "australian-english",
+      "name": "Australian English",
+      "group": "english",
+      "who": "For families in Australia",
+      "goal": 10000,
+      "promise": "A safe dictionary that will speak Australian: your child’s spelling, your accent, and the words they hear at school.",
+      "roots": "Your child writes “colour”, says “arvo” and “barbie”, and reads books written somewhere else. Gloss should explain English the way it’s spoken at their school, in an Australian voice.",
+      "forFun": null,
+      "builtIntro": "There is no Australian English in Gloss yet. Today it explains words the British way, and that part works now:",
+      "built": [
+        {
+          "title": "Your child can use it today",
+          "body": "65,019 words checked for children, with a sound for nearly every one, all stored on the phone so it works in the car with no signal."
+        },
+        {
+          "title": "Practice that remembers",
+          "body": "Every word your child looks up comes back in flashcards and a picture quiz."
+        }
+      ],
+      "samplesIntro": "Your backing pays Australian teachers to check the words children here look up most, and to add the words only Australians use. An entry might read:",
+      "samples": [
+        {
+          "word": "arvo",
+          "lines": [
+            "Arvo means afternoon. “See you this arvo” means see you later today, after lunch."
+          ]
+        },
+        {
+          "word": "barbie",
+          "lines": [
+            "In Australia a barbie is a barbecue: sausages cooked outside on a hot plate."
+          ],
+          "picture": "A backyard barbecue, not a doll."
+        }
+      ],
+      "buys": [
+        "Australian teachers and parents, paid to check the 5,000 words children here look up most",
+        "Australian words and meanings, added where the British ones don’t fit",
+        "Every one of those words recorded in an Australian voice",
+        "Pictures redrawn where today’s don’t look like home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Around {unknownWordsAt9} words in every chapter are new to a nine-year-old",
+          "body": "That’s the middle of ten classic children’s novels we counted, and a seven-year-old meets about {unknownWordsAt7}. Australian shelves add their own: The Magic Pudding, from 1918, still sends children to ask what a bunyip is. Every unknown word is a choice — guess, skip, or come and ask you."
+        },
+        "dictionary": {
+          "title": "Australia got its own dictionary in 1981, and it was for adults",
+          "body": "The Macquarie Dictionary, first published in 1981, became the standard for Australian English, and The Australian National Dictionary followed in 1988 with 10,000 Australian terms and their history. Both were built for grown-up readers: written definitions, one level, no sound. We watched our own children and their friends leave that kind of dictionary on the shelf. Gloss starts from the child.",
+          "versus": "A desk dictionary",
+          "rows": [
+            {
+              "traditional": "Spellings and words from wherever it was printed",
+              "gloss": "Will spell it colour, say it in an Australian voice, and know what an arvo is"
+            },
+            {
+              "traditional": "A word explained with harder words",
+              "gloss": "Easier words first, and a harder version a tap away"
+            },
+            {
+              "traditional": "A pronunciation key in symbols",
+              "gloss": "A voice you tap; with your backing, an Australian one"
+            },
+            {
+              "traditional": "Every meaning, grown-up ones too",
+              "gloss": "Keeps to the meanings a child should see"
+            },
+            {
+              "traditional": "Ink drawings, if any",
+              "gloss": "A checked picture for the meaning on the page"
+            }
+          ],
+          "citations": [
+            {
+              "label": "The Macquarie Dictionary, first published 1981",
+              "url": "https://en.wikipedia.org/wiki/Macquarie_Dictionary"
+            },
+            {
+              "label": "The Australian National Dictionary, first edition 1988",
+              "url": "https://en.wikipedia.org/wiki/The_Australian_National_Dictionary"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "The right picture, from the right side of the world",
+          "body": "A child remembers a word better when they see it as well as read it — the picture superiority effect. But the picture has to match their world. In Australia a barbie is a barbecue, and an image search can’t be trusted to know that, or to keep what comes back suitable. Every Gloss picture belongs to one meaning and is checked before a child sees it.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "canadian-english",
+      "name": "Canadian English",
+      "group": "english",
+      "who": "For families in Canada",
+      "goal": 10000,
+      "promise": "A safe dictionary that will spell like a Canadian — colour and tire on the same page — and sound like one too.",
+      "roots": "Canadian English keeps its own rules: colour like Britain, tire and curb like the US, and words like toque, washroom and double-double that belong only here. Gloss should know all of them, so the dictionary your child trusts agrees with their teacher.",
+      "forFun": null,
+      "builtIntro": "Gloss doesn’t speak Canadian English yet. It explains words the British way today, and this already works:",
+      "built": [
+        {
+          "title": "Safe to hand over",
+          "body": "65,019 words checked for children, no ads, no web results, and a guide to lock the tablet to Gloss."
+        },
+        {
+          "title": "No signal needed",
+          "body": "Words, sounds and 63,265 typing suggestions are on the device, for the drive to the cottage."
+        }
+      ],
+      "samplesIntro": "Your backing pays Canadian teachers to check the words kids here look up most, and to add the ones only Canadians use. For example:",
+      "samples": [
+        {
+          "word": "toque",
+          "lines": [
+            "A toque is a warm knitted hat you wear in winter. Some people spell it tuque."
+          ],
+          "picture": "A knitted winter hat with a pom-pom."
+        },
+        {
+          "word": "washroom",
+          "lines": [
+            "A washroom is a room with a toilet and a sink. At school you ask, “May I go to the washroom?”"
+          ]
+        }
+      ],
+      "buys": [
+        "Canadian teachers and parents, paid to check the 5,000 words kids here look up most",
+        "Canadian spellings and words, so the dictionary agrees with your child’s teacher",
+        "Those words recorded in a Canadian voice",
+        "Pictures redrawn where today’s don’t match life in Canada"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Anne of Green Gables, chapter by chapter, is full of words a child doesn’t know yet",
+          "body": "It’s one of the ten classic children’s novels we counted. In a typical chapter of those books, a nine-year-old meets about {unknownWordsAt9} words they don’t know yet, and a seven-year-old about {unknownWordsAt7}. Anne would look each one up with delight. Most kids don’t: they skip it, or they ask for your phone."
+        },
+        "dictionary": {
+          "title": "Canada’s dictionaries were made for grown-up readers",
+          "body": "In 1967 Gage published A Dictionary of Canadianisms on Historical Principles, and other Canadian dictionaries followed, among them the Canadian Oxford in 1998. Some have editions for students. The form stayed the same: written definitions, one level, silent. With our own children and the kids around them, it didn’t stick. Gloss was designed for the child first.",
+          "versus": "A printed dictionary",
+          "rows": [
+            {
+              "traditional": "Silent on the page",
+              "gloss": "Tap to hear the word; with your backing, a Canadian voice"
+            },
+            {
+              "traditional": "Defines a word using harder ones",
+              "gloss": "Starts with words simpler than the one being explained"
+            },
+            {
+              "traditional": "Every sense of a word, grown-up ones included",
+              "gloss": "Only the senses a child should meet"
+            },
+            {
+              "traditional": "A spelling chosen by the publisher",
+              "gloss": "Will follow Canadian spelling: colour, centre, tire, curb"
+            },
+            {
+              "traditional": "Stays closed after the lookup",
+              "gloss": "Brings each looked-up word back to practise"
+            }
+          ],
+          "citations": [
+            {
+              "label": "A Dictionary of Canadianisms on Historical Principles (1967)",
+              "url": "https://en.wikipedia.org/wiki/A_Dictionary_of_Canadianisms_on_Historical_Principles"
+            },
+            {
+              "label": "The Canadian Oxford Dictionary (1998)",
+              "url": "https://en.wikipedia.org/wiki/Canadian_Oxford_Dictionary"
+            },
+            {
+              "label": "Canadian English: spelling and vocabulary",
+              "url": "https://en.wikipedia.org/wiki/Canadian_English"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A toque is not a chef’s hat",
+          "body": "Kids remember a word better with a picture beside it; psychologists call it the picture superiority effect. But only if it’s the right picture. Search “toque” and you may get a chef’s hat, not the knitted one your child wears to school in January. Gloss gives each meaning its own picture, and checks it before any child sees it.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "indian-english",
+      "name": "Indian English",
+      "group": "english",
+      "who": "For families who speak English at home, in India and abroad",
+      "goal": 10000,
+      "promise": "A safe dictionary that knows the English your child hears at home, and explains the English in their books.",
+      "roots": "At home your child hears “tiffin”, “prepone” and “two lakh”. In a storybook, “pass out” means to faint, while an older cousin “passed out” of school last year. Indian English is a variety of English with its own words, not a mistake. Gloss should explain both side by side, so a child never has to choose.",
+      "forFun": null,
+      "builtIntro": "Gloss doesn’t know Indian English yet; today it explains words the British way. What works now:",
+      "built": [
+        {
+          "title": "Built to be handed over",
+          "body": "No ads, no web results, 65,019 words checked for children, and a guide to pin the screen so Gloss is the only app open."
+        },
+        {
+          "title": "Offline everywhere",
+          "body": "Words, sounds and typing suggestions live on the phone, so it works on a train or on the flight home."
+        }
+      ],
+      "samplesIntro": "Your backing pays Indian teachers to check the words children look up most, and to write the Indian English meanings. Something like:",
+      "samples": [
+        {
+          "word": "prepone",
+          "lines": [
+            "To prepone something is to move it earlier. “The test is preponed to Monday” means it is now sooner than planned."
+          ]
+        },
+        {
+          "word": "lakh",
+          "lines": [
+            "A lakh is one hundred thousand, written 1,00,000. Ten lakh make a million."
+          ]
+        }
+      ],
+      "buys": [
+        "Indian teachers and parents, paid to check the 5,000 words children look up most",
+        "Indian English meanings, written beside the book’s meanings",
+        "Recordings in an Indian English voice",
+        "Pictures redrawn wherever today’s don’t look like an Indian home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "At nine, a child reading English storybooks meets about {unknownWordsAt9} new words a chapter",
+          "body": "We counted ten classic children’s novels. A seven-year-old finds about {unknownWordsAt7} words a chapter they don’t know yet; at eleven it’s still around {unknownWordsAt11}. Many name things far from home in Pune or Pittsburgh: moors, hedgerows, sculleries. Each one is a moment where your child either asks, or stops."
+        },
+        "dictionary": {
+          "title": "Indian English got a famous dictionary in 1886. It was for grown-ups",
+          "body": "Hobson-Jobson, by two British scholars, Henry Yule and Arthur Coke Burnell, collected Anglo-Indian words, many of them borrowed from Indian languages. It was a book for adult readers, and so were the school dictionaries that came after it: a column of definitions, the same for every reader. We saw our own children, and the children around us, put that kind of dictionary down. Gloss was made for them.",
+          "versus": "A school dictionary",
+          "rows": [
+            {
+              "traditional": "One English, chosen by the publisher",
+              "gloss": "Will give the Indian meaning beside the book’s: “pass out” at school and in a story"
+            },
+            {
+              "traditional": "Hard words to explain a hard word",
+              "gloss": "Easy words first; the full definition when your child wants it"
+            },
+            {
+              "traditional": "Pronunciation symbols",
+              "gloss": "A voice you can tap; with your backing, an Indian English one"
+            },
+            {
+              "traditional": "Every meaning, including adult ones",
+              "gloss": "Adult meanings hidden"
+            },
+            {
+              "traditional": "Black-and-white drawings, if any",
+              "gloss": "A checked picture for the exact meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Hobson-Jobson (Yule and Burnell, 1886)",
+              "url": "https://en.wikipedia.org/wiki/Hobson-Jobson"
+            },
+            {
+              "label": "Indian English: vocabulary such as prepone, lakh and crore",
+              "url": "https://en.wikipedia.org/wiki/Indian_English"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A tiffin box should look like your child’s tiffin box",
+          "body": "A word sticks better when a child sees it too — the picture superiority effect. Pictures from a web search come from everywhere, unchecked, and rarely from an Indian home. In Gloss, every picture is drawn for one meaning and checked before a child sees it, and your backing pays to redraw the ones that don’t look like home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "new-zealand-english",
+      "name": "New Zealand English",
+      "group": "english",
+      "who": "For families in Aotearoa New Zealand",
+      "goal": 10000,
+      "promise": "A safe dictionary that will speak New Zealand English, with the te reo Māori words your child already uses, said properly.",
+      "roots": "Your child eats kai, goes to the dairy in jandals, and spends summer at the bach. Here English and te reo Māori sit together, and Gloss should keep them together, with each Māori word checked by Māori speakers and said with the right sounds.",
+      "forFun": null,
+      "builtIntro": "There’s no New Zealand English in Gloss yet. The British dictionary works today, and your child can use it now:",
+      "built": [
+        {
+          "title": "Nothing to stumble into",
+          "body": "65,019 words checked for children, no ads and no web results."
+        },
+        {
+          "title": "Works at the bach",
+          "body": "Everything is stored on the phone, so it works with no signal."
+        }
+      ],
+      "samplesIntro": "Your backing pays New Zealand teachers, and Māori speakers for every te reo word, to check the words children look up most. For example:",
+      "samples": [
+        {
+          "word": "jandals",
+          "lines": [
+            "Jandals are flat rubber sandals held on by a strap between your toes."
+          ],
+          "picture": "A pair of jandals on the sand."
+        },
+        {
+          "word": "kai",
+          "lines": [
+            "Kai is a Māori word for food. “Time for kai” means it’s time to eat."
+          ]
+        }
+      ],
+      "buys": [
+        "New Zealand teachers and parents, paid to check the 5,000 words children here look up most",
+        "Māori speakers, paid to check every te reo Māori word and how it’s said",
+        "New Zealand words, recorded in a New Zealand voice",
+        "Pictures redrawn wherever today’s don’t look like Aotearoa"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Each chapter hides about {unknownWordsAt9} words a nine-year-old hasn’t learned yet",
+          "body": "That’s what we found in ten classic children’s novels. For a seven-year-old it’s about {unknownWordsAt7}. Margaret Mahy’s The Haunting, which won the Carnegie Medal, asks a lot of a young reader too. When your child stops at a word, they need an answer that doesn’t come with a search engine attached."
+        },
+        "dictionary": {
+          "title": "New Zealand English got its own dictionaries late, and for adults",
+          "body": "Harry Orsman edited the Heinemann New Zealand Dictionary in 1979, and The Dictionary of New Zealand English in 1997, drawing on more than forty years of research. They are scholarly books for grown-ups. Ordinary dictionaries never really changed shape for children, and our own children, and their friends, showed us they wouldn’t use one. Gloss is shaped around a child.",
+          "versus": "A printed dictionary",
+          "rows": [
+            {
+              "traditional": "Māori words missing, or no way to hear them",
+              "gloss": "Will include the te reo words children use, recorded by Māori speakers"
+            },
+            {
+              "traditional": "Explanations that need explaining",
+              "gloss": "Plain words, with deeper versions to grow into"
+            },
+            {
+              "traditional": "No sound",
+              "gloss": "Tap to hear every word"
+            },
+            {
+              "traditional": "Grown-up meanings listed",
+              "gloss": "Only meanings for children"
+            },
+            {
+              "traditional": "No pictures, or a few",
+              "gloss": "A checked picture for each meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "New Zealand English: dictionaries, from Orsman (1979, 1997) to today",
+              "url": "https://en.wikipedia.org/wiki/New_Zealand_English"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Show a kūmara, not just any sweet potato",
+          "body": "Seeing a word as well as reading it helps a child remember it; this is called the picture superiority effect. A web search for an everyday New Zealand word can return anything. In Gloss, each picture is made for one meaning and checked before a child sees it. Your backing pays to draw the ones that look like home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "irish-english",
+      "name": "Irish English",
+      "group": "english",
+      "who": "For families in Ireland, and Irish families abroad",
+      "goal": 10000,
+      "promise": "A safe dictionary that will sound like home: Irish English words, an Irish voice, and pictures your child recognises.",
+      "roots": "Irish English keeps things other Englishes lost. It still says “ye” to more than one of you, and “Bye now” at the door. A child reading in English, and learning Irish at school as well, should have a dictionary that sounds like the people around them.",
+      "forFun": null,
+      "builtIntro": "Irish English isn’t in Gloss yet. Here is what your child can use right now:",
+      "built": [
+        {
+          "title": "Safe in a child’s hands",
+          "body": "No ads and no web results; 65,019 words checked for children."
+        },
+        {
+          "title": "Practice built in",
+          "body": "Flashcards and a picture quiz bring back the words your child looked up."
+        }
+      ],
+      "samplesIntro": "Your backing pays Irish teachers to check the words children look up most, and to add Irish English. An entry could read:",
+      "samples": [
+        {
+          "word": "ye",
+          "lines": [
+            "Ye means you, when you’re talking to more than one person: “Are ye coming?”"
+          ]
+        },
+        {
+          "word": "bye now",
+          "lines": [
+            "“Bye now” is a friendly way to say goodbye."
+          ]
+        }
+      ],
+      "buys": [
+        "Irish teachers and parents, paid to check the 5,000 words children here look up most",
+        "Irish English words and meanings, written in",
+        "Recordings in an Irish voice",
+        "Pictures redrawn wherever today’s don’t look like Ireland"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "By nine, a child still meets about {unknownWordsAt9} unfamiliar words in a single chapter",
+          "body": "We counted ten classic children’s novels: about {unknownWordsAt7} unknown words a chapter at seven, and about {unknownWordsAt11} even at eleven, when they’re into books like Eoin Colfer’s Artemis Fowl. Sure, they can guess some. The rest send them looking, and these days that means a screen."
+        },
+        "dictionary": {
+          "title": "Irish English has its dictionary. Children never got theirs",
+          "body": "Terence Dolan’s Dictionary of Hiberno-English records English as it is spoken in Ireland, and it is a fine book for an adult. The dictionaries children are given are built the same way: a page of written definitions at one level. Ours, and the children we know, wouldn’t open one twice. Gloss is built for the child holding it.",
+          "versus": "A shelf dictionary",
+          "rows": [
+            {
+              "traditional": "Sounds given in phonetic symbols",
+              "gloss": "A voice to tap; with your backing, an Irish one"
+            },
+            {
+              "traditional": "Long words to explain long words",
+              "gloss": "Short, plain explanations, and a deeper one a tap away"
+            },
+            {
+              "traditional": "Grown-up meanings mixed in",
+              "gloss": "Grown-up meanings left out"
+            },
+            {
+              "traditional": "Irish words and uses missing",
+              "gloss": "Will include Irish English as your child hears it"
+            },
+            {
+              "traditional": "Forgotten once it’s shut",
+              "gloss": "Brings back the words your child looked up, for practice"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Terence Dolan and his Dictionary of Hiberno-English",
+              "url": "https://en.wikipedia.org/wiki/Terence_Dolan"
+            },
+            {
+              "label": "Hiberno-English: “ye”, “yous” and “Bye now”",
+              "url": "https://en.wikipedia.org/wiki/Hiberno-English"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "The picture has to be the right one",
+          "body": "Children remember words better when they also see them — the picture superiority effect. A web search can’t promise the right picture, or a safe one. Gloss draws a picture for each meaning and checks it, and your backing pays to redraw the ones that don’t look like an Irish home, school or street.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "south-african-english",
+      "name": "South African English",
+      "group": "english",
+      "who": "For families in South Africa, and South Africans abroad",
+      "goal": 10000,
+      "promise": "A safe dictionary that will know a robot can be a traffic light, and say it in a South African voice.",
+      "roots": "Your child stops at the robot, wears tekkies to school and goes to a braai on Saturday. South African English borrows from Afrikaans, isiZulu, isiXhosa and more. A dictionary for your child should know those words, and explain the book’s English without losing them.",
+      "forFun": null,
+      "builtIntro": "South African English isn’t in Gloss yet. Your child can use the British dictionary today, and it already does this:",
+      "built": [
+        {
+          "title": "A safe screen for a curious child",
+          "body": "65,019 words checked for children, with no ads and no web results."
+        },
+        {
+          "title": "Works when the signal doesn’t",
+          "body": "Every word and sound is on the phone, so it works offline."
+        }
+      ],
+      "samplesIntro": "Your backing pays South African teachers to check the words children look up most, and to add South African words. For example:",
+      "samples": [
+        {
+          "word": "robot",
+          "lines": [
+            "In South Africa a robot is also a traffic light. “Turn left at the robot.”"
+          ]
+        },
+        {
+          "word": "braai",
+          "lines": [
+            "A braai is a barbecue: meat cooked over a fire outside, with family and friends."
+          ],
+          "picture": "A braai over coals, with family round it."
+        }
+      ],
+      "buys": [
+        "South African teachers and parents, paid to check the 5,000 words children look up most",
+        "South African words and meanings added, from tekkies to braai",
+        "Recordings in a South African voice",
+        "Pictures redrawn wherever today’s don’t look like South Africa"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "A seven-year-old meets about {unknownWordsAt7} words a chapter they don’t know yet",
+          "body": "That’s the middle of ten classic children’s novels we counted; at nine it’s about {unknownWordsAt9}. South Africa’s own classics ask as much: Jock of the Bushveld, from 1907, still has words to explain. Each unknown word is a small fork in the road — stop and ask, skip it, or give up."
+        },
+        "dictionary": {
+          "title": "South African English has been written down since 1913, for adults",
+          "body": "Charles Pettman’s Africanderisms came first, in 1913, and the Dictionary of South African English followed in 1978 from Rhodes University and Oxford. They were made for adult readers, like every big dictionary. We saw that our own young children, and other children we know, wouldn’t use a dictionary built that way. Gloss is built for them.",
+          "versus": "A standard dictionary",
+          "rows": [
+            {
+              "traditional": "A robot is a machine, full stop",
+              "gloss": "Will add the South African meaning: a traffic light"
+            },
+            {
+              "traditional": "A hard word, explained in harder ones",
+              "gloss": "Simple words first, harder ones when your child is ready"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A voice for each word; with your backing, a South African one"
+            },
+            {
+              "traditional": "All meanings, adult ones too",
+              "gloss": "Grown-up meanings stay out of sight"
+            },
+            {
+              "traditional": "Few pictures",
+              "gloss": "A checked picture for the meaning your child is reading about"
+            }
+          ],
+          "citations": [
+            {
+              "label": "South African English: Pettman (1913) and the Dictionary of South African English (1978)",
+              "url": "https://en.wikipedia.org/wiki/South_African_English"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A braai should look like a braai",
+          "body": "A picture beside a word helps a child remember it — psychologists call this the picture superiority effect. But a web search can’t promise a picture is the right one, or that it’s fit for a child. Each picture in Gloss is drawn for one meaning and checked first; your backing pays for pictures that look like South Africa.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "nigerian-english",
+      "name": "Nigerian English",
+      "group": "english",
+      "who": "For families in Nigeria, and Nigerians abroad",
+      "goal": 10000,
+      "promise": "A safe dictionary that will know Nigerian English, and explain the English in your child’s books in a voice that sounds like home.",
+      "roots": "When someone falls and a Nigerian says “sorry”, it means “I feel for you”, not “it was my fault”. Your child hears danfo and okada at home, and reads a different English at school. Gloss should explain both, without telling your child the English they grew up with is wrong.",
+      "forFun": null,
+      "builtIntro": "There is no Nigerian English in Gloss yet. It explains words the British way, and today it already does this:",
+      "built": [
+        {
+          "title": "Nothing unsuitable",
+          "body": "65,019 words checked for children; no ads, no web results."
+        },
+        {
+          "title": "Works without data",
+          "body": "Words and sounds are stored on the phone, so it needs no data plan."
+        }
+      ],
+      "samplesIntro": "Your backing pays Nigerian teachers to check the words children look up most, and to write in Nigerian English. An entry could read:",
+      "samples": [
+        {
+          "word": "okada",
+          "lines": [
+            "An okada is a motorcycle taxi: you pay the rider to carry you."
+          ]
+        },
+        {
+          "word": "danfo",
+          "lines": [
+            "A danfo is a minibus that carries passengers around the city."
+          ]
+        }
+      ],
+      "buys": [
+        "Nigerian teachers and parents, paid to check the 5,000 words children look up most",
+        "Nigerian English words and meanings, written in",
+        "Recordings in a Nigerian voice",
+        "Pictures redrawn wherever today’s don’t look like a Nigerian home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Most chapters hold about {unknownWordsAt9} words that are new to a nine-year-old",
+          "body": "That’s the middle of ten classic children’s novels we counted; at seven it’s about {unknownWordsAt7}. Chinua Achebe wrote Chike and the River, published in 1966, after noticing that most school texts for African children were written by Westerners. Many of the books your child reads still are, full of words for somewhere else."
+        },
+        "dictionary": {
+          "title": "Nigerian English reached the Oxford English Dictionary in 2020",
+          "body": "In January 2020 the OED added 29 entries from Nigerian English, and more than 20 others in December 2024. That is recognition, but it is still a dictionary for grown-ups: written definitions, one level, no sound. We saw with our own children, and the children around us, that this kind of dictionary doesn’t hold a young reader. Gloss starts with the child.",
+          "versus": "A grown-up dictionary",
+          "rows": [
+            {
+              "traditional": "Meanings from one country",
+              "gloss": "Will add Nigerian meanings, like “sorry” said in sympathy"
+            },
+            {
+              "traditional": "Definitions a child must decode",
+              "gloss": "Easier words first, then the fuller meaning"
+            },
+            {
+              "traditional": "No sound",
+              "gloss": "A voice to tap; with your backing, a Nigerian one"
+            },
+            {
+              "traditional": "Adult meanings included",
+              "gloss": "Only the meanings for a child"
+            },
+            {
+              "traditional": "Rare pictures",
+              "gloss": "A checked picture for every meaning it shows"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Nigerian English, including its OED entries of 2020 and 2024",
+              "url": "https://en.wikipedia.org/wiki/Nigerian_English"
+            },
+            {
+              "label": "Chike and the River (Achebe, 1966)",
+              "url": "https://en.wikipedia.org/wiki/Chike_and_the_River"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Pictures from home, checked",
+          "body": "A child who sees a word as well as reads it remembers it better: the picture superiority effect. A web search can’t promise that the picture is right, or suitable. In Gloss, each picture belongs to one meaning and is checked before any child sees it. Your backing pays to draw Nigerian homes, food and streets.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
       }
     },
     {
       "slug": "hinglish",
       "name": "Hinglish",
-      "who": "For families who speak Hindi, in India and around the world",
+      "group": "indian",
+      "who": "For families who speak Hindi at home, in India and far from it",
       "goal": 10000,
-      "promise": "English words from your child’s books, explained the way your family talks, with the Hindi word beside them.",
-      "roots": "Your child reads “uncle” at school. At home there’s chacha, mama, tau, and more. Gloss shows the English word and the Hindi ones together, so the words from Dadi’s house aren’t lost to a school book.",
-      "forFun": "A child in Leeds whose best friend speaks Hindi can tap “duck”, see बतख़, read it as batakh, and hear it said by a Hindi voice. One new word a day, for fun.",
+      "promise": "English words from your child’s books, explained the way you’d explain them at home — in Hinglish, with the Hindi word and a Hindi voice beside them.",
+      "roots": "Grandparents on a video call ask “beta, kya padh rahe ho?” and the answer comes back in English. Gloss lets the Hindi stay in the room: the English word from the book and, right beside it, the Hindi one — in Devanagari and in Roman letters, said by a Hindi voice — so Dadi’s words travel with the school book instead of being replaced by it.",
+      "forFun": "Some words don’t translate, and children love that. जुगाड़ (jugaad) — a clever fix made from whatever is to hand — gets its own explanation in Gloss, because English has no word for it.",
       "builtIntro": "Hindi already works in Gloss, on a small set of test words. This is what it does today:",
       "built": [
         {
@@ -239,28 +1111,32 @@
           "body": "“Uncle” shows five Hindi words, each saying which uncle: चाचा, मामा and more. जुगाड़ gets an explanation, because English has no word for it."
         }
       ],
-      "samplesIntro": "Today’s Hindi was written by a model and hasn’t been checked by native speakers yet. This campaign pays for that check, and for meanings written in Hinglish. Here is the kind of entry we mean:",
+      "samplesIntro": "Today’s Hindi was written by a model and hasn’t been checked by native speakers yet. Backing pays for that check, and for meanings written in Hinglish. The kind of entry we mean:",
       "samples": [
         {
-          "word": "harvest",
+          "word": "rain",
           "lines": [
-            "Harvest matlab fasal kaatna. Jab khet mein gehun pak jaata hai, kisaan use kaat kar ghar laate hain.",
-            "Baisakhi aur Lohri harvest ke tyohaar hain."
+            "Rain matlab baarish (बारिश). Monsoon mein lagbhag roz baarish hoti hai."
           ],
-          "picture": "A wheat field at Baisakhi, not an English combine harvester."
+          "picture": "The first monsoon shower on a city street, not drizzle on a lawn."
         },
         {
           "word": "uncle",
           "lines": [
-            "Papa ke chhote bhai: chacha (चाचा). Mummy ke bhai: mama (मामा)."
+            "Papa ke chhote bhai: chacha (चाचा). Papa ke bade bhai: tau (ताऊ). Mummy ke bhai: mama (मामा)."
           ]
         }
       ],
       "buys": [
         "Native Hindi speakers, paid to check every Hindi word and recording already in Gloss",
-        "Hinglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "Hinglish meanings for the 5,000 words children look up most, written at a stated level of politeness",
+        "A Hindi voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit your family’s home"
       ],
+      "screenshot": {
+        "src": "/gloss/screenshots/app/03-duck-article.png",
+        "alt": "Gloss showing the word duck, with a chip for the Hindi word बतख़"
+      },
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
@@ -270,10 +1146,7 @@
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": {
-        "src": "/gloss/screenshots/app/03-duck-article.png",
-        "alt": "Gloss showing the word duck, with a chip for the Hindi word बतख़"
-      },
+      "nativeReviewed": false,
       "tierNames": {
         "early-backer": {
           "name": "Dost",
@@ -295,16 +1168,70 @@
           "name": "Shubhchintak",
           "meaning": "Well-wisher"
         }
+      },
+      "story": {
+        "moment": {
+          "title": "Your child is reading in English. You’re explaining in Hindi.",
+          "body": "“Papa, what does ‘bewilderment’ mean?” At bedtime in Wembley or Jersey City, the Hindi comes first — हैरानी (hairaani), घबराहट (ghabrahat) — and then the hunt for the English. A nine-year-old reading a chapter book meets about {unknownWordsAt9} words like it in one chapter; a seven-year-old, about {unknownWordsAt7}. Each one is a small choice: stop and ask, or skip it and lose the thread."
+        },
+        "dictionary": {
+          "title": "The great Hindi dictionaries were written for scholars",
+          "body": "John Platts’s Dictionary of Urdu, Classical Hindi, and English came out in 1884. Ramchandra Varma later worked on the Hindi Shabda Sagar and the Manak Hindi Kosh. They are monuments, and they expect a grown reader who already knows Devanagari, grammar labels and word histories. We tried one on our own children; it stayed shut. Gloss goes the other way: the English word your child is reading, with the Hindi beside it, said aloud.",
+          "versus": "A Hindi–English dictionary",
+          "rows": [
+            {
+              "traditional": "Explains Hindi to adults who already read Devanagari",
+              "gloss": "Explains the English word in the Hinglish your child hears at home"
+            },
+            {
+              "traditional": "One word for ‘uncle’, or a list with no way to choose",
+              "gloss": "चाचा, ताऊ, मामा, फूफा, मौसा — each with whose brother or husband he is"
+            },
+            {
+              "traditional": "Never says which ‘you’ to use",
+              "gloss": "Examples written at a stated level: तू, तुम or आप"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "Hindi and English said aloud, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture for the meaning on the page"
+            }
+          ],
+          "citations": [
+            {
+              "label": "John Thompson Platts and his Dictionary of Urdu, Classical Hindi, and English (1884)",
+              "url": "https://en.wikipedia.org/wiki/John_Thompson_Platts"
+            },
+            {
+              "label": "Ramchandra Varma, Hindi lexicographer (Hindi Shabda Sagar, Manak Hindi Kosh)",
+              "url": "https://en.wikipedia.org/wiki/Ramchandra_Varma"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "The first monsoon, not an English drizzle",
+          "body": "A word with a picture is stored twice, as sound and as image — if the picture is one your child would recognise. For “rain”, that’s the first monsoon shower on a busy street. An image search can promise neither the right picture nor a safe one. Every Gloss picture belongs to one meaning and is checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
       }
     },
     {
       "slug": "tenglish",
       "name": "Tenglish",
-      "who": "For families who speak Telugu, in India and around the world",
+      "group": "indian",
+      "who": "For Telugu families in Dallas, New Jersey, the Bay Area, Sydney — and back home",
       "goal": 10000,
-      "promise": "English words from your child’s books, explained the way your family talks, with the Telugu word beside them.",
-      "roots": "Your child reads “uncle” at school. At home there’s babai, mamayya, and more. With Tenglish, Gloss will show the English word and the Telugu ones together, so the words from Ammamma’s house aren’t lost to a school book.",
-      "forFun": "A child in Leeds whose best friend speaks Telugu can tap “duck”, see బాతు, and hear it said by a Telugu voice. One new word a day, for fun.",
+      "promise": "Your child’s English books, explained in the Telugu-and-English your family actually speaks, with the Telugu word and voice beside each one.",
+      "roots": "Telugu carries the family inside its words. “Uncle” in a school book is one word; at home he’s babai if he’s Nanna’s younger brother, pedda nanna if he’s older, mamayya if he’s Amma’s brother. Gloss shows the English and the Telugu side by side, so the words from Ammamma’s house come along with the school book.",
+      "forFun": "Every Telugu child knows చందమామ రావే (Chandamama raave), the moon song. With Telugu built, a child who reads “moon” in a story will see చందమామ (chandamama) beside it and hear it in a Telugu voice — a word they already love, met again on the page.",
       "builtIntro": "Telugu already works in Gloss, on a few test words. This is what it does today:",
       "built": [
         {
@@ -316,7 +1243,7 @@
           "body": "Many phones can’t speak Telugu at all, so Gloss stores the recording on the phone. It plays offline."
         }
       ],
-      "samplesIntro": "Today’s Telugu was written by a model and hasn’t been checked by native speakers yet. This campaign pays for that check, and for meanings written in Tenglish. Here is the kind of entry we mean:",
+      "samplesIntro": "Today’s Telugu was written by a model and hasn’t been checked by native speakers yet. Backing pays for that check, and for meanings written in Tenglish. The kind of entry we mean:",
       "samples": [
         {
           "word": "harvest",
@@ -336,8 +1263,10 @@
       "buys": [
         "Native Telugu speakers, paid to check every Telugu word and recording already in Gloss",
         "Tenglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "A Telugu voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Telugu home: food, clothes, homes, festivals"
       ],
+      "screenshot": null,
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
@@ -347,7 +1276,7 @@
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": null,
+      "nativeReviewed": false,
       "tierNames": {
         "early-backer": {
           "name": "Nestham",
@@ -369,28 +1298,78 @@
           "name": "Shreyobhilaashi",
           "meaning": "Well-wisher"
         }
+      },
+      "story": {
+        "moment": {
+          "title": "Ammamma is here for six months. Your daughter is on chapter three.",
+          "body": "Grandparents come for the long visit — for a new baby, for the summer — and bedtime reading turns three-way. Your daughter reads aloud in English, stops at “reluctant”, and looks at you; Ammamma looks at you too. A nine-year-old meets about {unknownWordsAt9} words she doesn’t know in one chapter. You put one into Telugu for Ammamma and into easier English for your daughter, and by the fifth the book is closed."
+        },
+        "dictionary": {
+          "title": "C. P. Brown wrote his dictionary for officials",
+          "body": "Charles Philip Brown, an East India Company official who loved Telugu poetry and published the verses of Vemana, brought out his Telugu–English dictionary in 1852 and an English–Telugu one in 1854. Its own title says it explains “the Colloquial Style used in Business”. It was made for grown men running a district, not for an eight-year-old in Plano. Gloss starts from the other end: the English word in your child’s book.",
+          "versus": "Brown’s Telugu–English dictionary",
+          "rows": [
+            {
+              "traditional": "Telugu words, explained in English, for adults",
+              "gloss": "The English word from the book, explained in Tenglish your child follows"
+            },
+            {
+              "traditional": "“Uncle”, and no way to say whose brother",
+              "gloss": "బాబాయ్ (babai), పెద్దనాన్న (pedda nanna), మామయ్య (mamayya) — who he is to you"
+            },
+            {
+              "traditional": "Long Telugu words cut into grammar",
+              "gloss": "Telugu’s joined-up words said whole, by a Telugu voice"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A picture checked for that one meaning"
+            },
+            {
+              "traditional": "A library shelf",
+              "gloss": "The phone in your hand, offline, with no web results"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Charles Philip Brown: Telugu–English (1852) and English–Telugu (1854) dictionaries",
+              "url": "https://en.wikipedia.org/wiki/Charles_Philip_Brown"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A kite at Sankranti",
+          "body": "Children remember a word better with a picture — but only a picture of their own world. For “kite”, that’s a గాలిపటం (gaalipatam) over a rooftop at Sankranti; for “pattern”, a ముగ్గు (muggu) drawn at the door in the morning. A search engine shows whatever comes first. In Gloss each picture is drawn for one meaning, checked, and redrawn where it doesn’t fit a Telugu home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
       }
     },
     {
       "slug": "tanglish",
       "name": "Tanglish",
-      "who": "For families who speak Tamil, in India and around the world",
+      "group": "indian",
+      "who": "For Tamil families in Toronto, London, Singapore, Chennai, Jaffna and everywhere between",
       "goal": 10000,
-      "promise": "English words from your child’s books, explained the way your family talks, with the Tamil word beside them.",
-      "roots": "Your child reads “uncle” at school. At home there’s chithappa, maama, and more. With Tanglish, Gloss will show the English word and the Tamil ones together, so the words from Paati’s house aren’t lost to a school book.",
-      "forFun": "With Tanglish, a child in Leeds whose best friend speaks Tamil will be able to tap “duck”, see வாத்து, and hear it said in Tamil. One new word a day, for fun.",
-      "builtIntro": "Tamil is the least built of the three. Gloss has only a couple of Tamil words today. What is ready is everything around them:",
+      "promise": "English words from your child’s books, explained in the spoken Tamil-and-English of home, with the Tamil word and a Tamil voice beside them.",
+      "roots": "Avvaiyar’s ஆத்திசூடி (Aathichoodi) is a set of one-line lessons many Tamil children learn by heart, beginning “அறம் செய விரும்பு” — aram seya virumbu, want to do good. Gloss puts Tamil beside the English of school books, so a child who reads “kind” or “virtue” can see the Tamil word too, and hear it.",
+      "forFun": "In Singapore, Tamil is one of the four official languages, and children study it at school alongside English. Gloss is built for exactly that child: English books on one side, Tamil on the other.",
+      "builtIntro": "Tamil already works in Gloss, on a few test words. This is what it does today:",
       "built": [
         {
-          "title": "Tamil as a reader’s language",
-          "body": "A reader can choose Tamil, and Gloss keeps Tamil and English words apart, so a grandparent can read in Tamil and a child in English on the same phone."
+          "title": "The Tamil word, beside the English one",
+          "body": "Open “duck” and its translations show வாத்து (vaathu), with Roman spelling."
         },
         {
-          "title": "Recordings on the phone",
-          "body": "Many phones can’t speak Tamil, so Gloss is built to store each word’s recording on the phone. This campaign pays for the recordings."
+          "title": "Said by a Tamil voice",
+          "body": "Many phones can’t speak Tamil at all, so Gloss stores the recording on the phone. It plays offline."
         }
       ],
-      "samplesIntro": "Gloss has almost no Tamil yet. This campaign pays native speakers to write it, with meanings in Tanglish. Here is the kind of entry we mean:",
+      "samplesIntro": "Today’s Tamil was written by a model and hasn’t been checked by native speakers yet. Backing pays for that check, and for meanings written in spoken Tamil. The kind of entry we mean:",
       "samples": [
         {
           "word": "harvest",
@@ -408,10 +1387,12 @@
         }
       ],
       "buys": [
-        "Native Tamil speakers, paid to write and check the Tamil words Gloss doesn’t have yet",
-        "Tanglish meanings for the 5,000 words children look up most",
-        "Pictures redrawn wherever the British one doesn’t fit: food, clothes, homes, festivals"
+        "Native Tamil speakers, paid to check every Tamil word and recording already in Gloss",
+        "Meanings in spoken Tamil for the 5,000 words children look up most",
+        "A Tamil voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Tamil home"
       ],
+      "screenshot": null,
       "pledgeLinks": {
         "early-backer": "",
         "lifetime-family": "",
@@ -421,7 +1402,7 @@
       },
       "raised": 0,
       "backers": 0,
-      "screenshot": null,
+      "nativeReviewed": false,
       "tierNames": {
         "early-backer": {
           "name": "Nanban",
@@ -443,7 +1424,1899 @@
           "name": "Nalam virumbi",
           "meaning": "Well-wisher"
         }
+      },
+      "story": {
+        "moment": {
+          "title": "Book Tamil and home Tamil are not the same Tamil",
+          "body": "Tamil has two: the formal Tamil of books and speeches, and the Tamil your child hears at the dinner table. Children speak the second and meet the first later, at school or weekend class. Now add English. A nine-year-old reading an English chapter book meets about {unknownWordsAt9} words a chapter she doesn’t know yet. Explain “ancient” with the book word பண்டைய (pandaiya) and you’ve handed her a second word to look up; say “romba pazhaya” and she has it. Gloss explains in the Tamil she already speaks."
+        },
+        "dictionary": {
+          "title": "Even the old dictionaries knew there were two Tamils",
+          "body": "Miron Winslow, an American missionary in Madras, finished his Comprehensive Tamil and English Dictionary of High and Low Tamil in 1862, after twenty years’ work: some sixty-seven thousand words. The University of Madras built on it for the Tamil Lexicon, printed between 1924 and 1939. Both are landmarks. Both were made for adult scholars, and neither will tell a seven-year-old in Scarborough what “reluctant” means.",
+          "versus": "Winslow’s Tamil–English dictionary",
+          "rows": [
+            {
+              "traditional": "Formal Tamil, explained in English for adults",
+              "gloss": "English words explained in the spoken Tamil of home"
+            },
+            {
+              "traditional": "Kinship as a list",
+              "gloss": "சித்தப்பா (chithappa), பெரியப்பா (periyappa), மாமா (maama) — whose brother, explained"
+            },
+            {
+              "traditional": "Long Tamil words cut into their parts",
+              "gloss": "Long Tamil words said whole, by a Tamil voice"
+            },
+            {
+              "traditional": "One standard, set in Madras",
+              "gloss": "Spoken Tamil, which isn’t the same in Jaffna as in Madurai — so our reviewers say which they speak"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture for each meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Miron Winslow, A Comprehensive Tamil and English Dictionary of High and Low Tamil (1862)",
+              "url": "https://en.wikipedia.org/wiki/Miron_Winslow"
+            },
+            {
+              "label": "Tamil Lexicon, University of Madras (printed 1924–1939)",
+              "url": "https://en.wikipedia.org/wiki/Tamil_Lexicon_dictionary"
+            },
+            {
+              "label": "Diglossia: literary and spoken Tamil",
+              "url": "https://en.wikipedia.org/wiki/Diglossia"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A Pongal pot, a vaathu, a kolam",
+          "body": "A word sticks when the picture looks like home. For “pot”, the clay pot boiling over at Pongal; for “duck”, the வாத்து (vaathu) Gloss already says in a Tamil voice. A web search brings back whatever it likes. Each Gloss picture is drawn for one meaning, checked, and redrawn where it doesn’t look like a Tamil home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "bengali",
+      "name": "Bengali",
+      "group": "indian",
+      "who": "For Bengali-speaking families, from Kolkata and Dhaka to London and New York",
+      "goal": 10000,
+      "promise": "The words in your child’s English books, explained in the Bangla of your home, with the Bengali word and a Bengali voice beside them.",
+      "roots": "Generations of Bengali children have laughed at সুকুমার রায় (Sukumar Ray)’s আবোল তাবোল (Abol Tabol), nonsense rhymes that delight in words for their own sake. That love of words is what Gloss is for. With Bengali built, a child who reads “duck” will see হাঁস (haansh) beside it and hear it in a Bengali voice.",
+      "forFun": null,
+      "builtIntro": "There is no Bengali in Gloss yet. It is on Gloss’s language list, waiting for words, voices and the people to check them. Your child can use the English dictionary today:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "Here is the kind of entry backing pays native speakers to write and check. In Kolkata and in Dhaka some words differ, and the reviewers will say which they use:",
+      "samples": [
+        {
+          "word": "rain",
+          "lines": [
+            "Rain mane brishti (বৃষ্টি) — akash theke pora jol."
+          ],
+          "picture": "Rain on a Kolkata street in the monsoon."
+        },
+        {
+          "word": "uncle",
+          "lines": [
+            "Babar chhoto bhai: kaka (কাকা). Babar boro bhai: jethu (জেঠু). Mayer bhai: mama (মামা)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Bengali speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "A Bengali voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Bengali home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Somewhere between adda and homework",
+          "body": "Bengali homes run on talk — আড্ডা (adda), the long conversation that goes nowhere in particular and everywhere at once. Then homework arrives in English, and a nine-year-old meets around {unknownWordsAt9} words in one chapter that she hasn’t learnt yet. The talk stops while someone looks one up. Gloss keeps it going: the meaning in words she knows, and the Bengali one beside it."
+        },
+        "dictionary": {
+          "title": "The great Bengali dictionary explains Bengali to Bengali readers",
+          "body": "The Bangiya Sabdakosh, Haricharan Bandopadhayaya’s five-volume Bengali dictionary, was published by Visva-Bharati in 1945. It explains Bengali words, in Bengali, to readers who already read Bengali well. A child in Queens stuck on a word in an English novel needs something else: that word made simple, with the Bengali she knows from home.",
+          "versus": "A Bengali dictionary",
+          "rows": [
+            {
+              "traditional": "Bengali explained for fluent adult readers",
+              "gloss": "An English word explained in the Bangla your child hears"
+            },
+            {
+              "traditional": "‘Water’ is just water",
+              "gloss": "জল (jol) or পানি (pani) — the word your family says"
+            },
+            {
+              "traditional": "Kaka or jethu? Not its problem",
+              "gloss": "কাকা (kaka), জেঠু (jethu), মামা (mama) — which of Baba’s or Ma’s brothers he is"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A Bengali voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture of the meaning she’s reading"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Haricharan Bandopadhayaya and the Bangiya Sabdakosh (Visva-Bharati, 1945)",
+              "url": "https://en.wikipedia.org/wiki/Haricharan_Bandopadhayaya"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Ilish, not cod",
+          "body": "A child remembers “fish” better with a picture — and better still if it’s the ইলিশ (ilish) on the plate at home rather than a cod on a fishmonger’s slab. Type “fish” into an image search and you get whatever ranks highest, safe or not. In Gloss each picture is checked for its meaning, and backing pays to redraw the ones that don’t look like a Bengali home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "marathi",
+      "name": "Marathi",
+      "group": "indian",
+      "who": "For Marathi families in Pune, Mumbai, the Bay Area, Seattle, London and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained the way your family talks at home, with the Marathi word and a Marathi voice beside them.",
+      "roots": "Sane Guruji’s श्यामची आई (Shyamchi Aai), a son’s book about his mother, is counted among the great books of Marathi. Words like आई (aai), आजी (aaji) and माया (maya, tender affection) are the first a child stops hearing when school is in English. With Marathi built, Gloss puts them beside the English words in your child’s books, said in a Marathi voice.",
+      "forFun": null,
+      "builtIntro": "There is no Marathi in Gloss yet. Marathi is on Gloss’s language list, but has no words or voices yet. Meanwhile your child can use the English dictionary:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "The kind of entry backing pays native Marathi speakers to write and check:",
+      "samples": [
+        {
+          "word": "aunt",
+          "lines": [
+            "Babanchi bahin: atya (आत्या). Aaichi bahin: mavshi (मावशी). Kakanchi bayko: kaku (काकू)."
+          ]
+        },
+        {
+          "word": "rain",
+          "lines": [
+            "Rain mhanje paus (पाऊस). Pavsalyat roj paus padto."
+          ],
+          "picture": "Monsoon rain over the Sahyadri hills."
+        }
+      ],
+      "buys": [
+        "Native Marathi speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "A Marathi voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Marathi home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Aaji asks what the book is about. The answer comes in English.",
+          "body": "Your son is halfway through a chapter book, and on the video call his आजी (aaji) asks what it’s about. He answers in English, because the story lives in English now. It also hides about {unknownWordsAt9} words a chapter that a nine-year-old doesn’t know yet. Each is a fork: ask, guess or skip. Gloss is meant to make asking easy — and to answer in Marathi as well as English, so aaji can follow too."
+        },
+        "dictionary": {
+          "title": "Molesworth compiled his for the Government of Bombay",
+          "body": "In 1818 two East India Company interpreters, James Molesworth and Thomas Candy, began collecting Marathi words in Solapur. Their Marathi–English dictionary appeared in 1831 — some forty thousand words, compiled for the Government of Bombay. It is a scholarly treasure and a tool of government. It was never meant for a child in Fremont with a library book.",
+          "versus": "Molesworth’s Marathi–English dictionary",
+          "rows": [
+            {
+              "traditional": "Marathi explained for officials and scholars",
+              "gloss": "English explained in the Marathi-and-English of home"
+            },
+            {
+              "traditional": "Grammar labels a child can’t use",
+              "gloss": "Gender and agreement shown in each example sentence, not in a label"
+            },
+            {
+              "traditional": "One word for ‘aunt’",
+              "gloss": "आत्या (atya), मावशी (mavshi), काकू (kaku) — whose aunt, explained"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A Marathi voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture, drawn for one meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "James Thomas Molesworth: A Dictionary, Murathee & English (1831)",
+              "url": "https://en.wikipedia.org/wiki/James_Thomas_Molesworth"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Modak, not muffin",
+          "body": "Children remember a word with a picture — when the picture is right. For “sweet”, that could be a मोदक (modak) at Ganeshotsav; for “flag”, a गुढी (gudhi) raised for Gudi Padwa. A search engine can’t promise the right picture, or a safe one. Each Gloss picture is drawn for one meaning, checked, and redrawn when it doesn’t fit.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "gujarati",
+      "name": "Gujarati",
+      "group": "indian",
+      "who": "For Gujarati families in Leicester, Wembley, Edison, Nairobi, Ahmedabad and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Gujarati-and-English of home, with the Gujarati word and a Gujarati voice beside them.",
+      "roots": "Gujarati keeps its own words for the people around a child: બા (ba) and બાપુજી (bapuji), મોટા પપ્પા (mota pappa) and ફોઈ (foi). These are the first words to fade when school is in English. With Gujarati built, Gloss shows them beside the English ones, in Gujarati script and Roman letters, said in a Gujarati voice.",
+      "forFun": null,
+      "builtIntro": "There is no Gujarati in Gloss yet. Gujarati is on its language list and waiting for its words. In the meantime, here is what your child can use:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "This is the kind of entry backing pays native Gujarati speakers to write and check:",
+      "samples": [
+        {
+          "word": "kite",
+          "lines": [
+            "Kite etle patang (પતંગ). Uttarayan ma badha agashi par patang chagave."
+          ],
+          "picture": "Kites over Ahmedabad rooftops at Uttarayan."
+        },
+        {
+          "word": "aunt",
+          "lines": [
+            "Pappa ni ben: foi (ફોઈ). Mummy ni ben: masi (માસી)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Gujarati speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "A Gujarati voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Gujarati home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Three generations, two continents, one bedtime book",
+          "body": "Many Gujarati families in Britain came by way of Kenya and Uganda, and now the grandchildren read English better than anyone in the house. That’s a success, and it brings its own moment. A nine-year-old meets about {unknownWordsAt9} words a chapter she doesn’t know yet; a seven-year-old about {unknownWordsAt7}. The person she asks is often બા (Ba), who answers in Gujarati. Gloss gives them a page they can both read."
+        },
+        "dictionary": {
+          "title": "Narmad made his dictionary for students",
+          "body": "The poet Narmad published Narmakosh in 1873: 25,268 words, and the first dictionary to explain Gujarati words only in Gujarati. Earlier ones had mixed English and Gujarati. Narmad meant it to be useful to students — students of the 1870s, reading Gujarati. Your child reads English and speaks Gujarati, and needs a dictionary that runs the other way.",
+          "versus": "A Gujarati dictionary",
+          "rows": [
+            {
+              "traditional": "Gujarati words, explained in Gujarati, for readers",
+              "gloss": "English words, explained in the Gujarati your child hears"
+            },
+            {
+              "traditional": "‘Aunt’, and nothing about whose",
+              "gloss": "ફોઈ (foi), માસી (masi), કાકી (kaki) — whose sister or wife, explained"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A Gujarati voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture, drawn for this meaning only"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Narmakosh (1873), the first Gujarati dictionary explained only in Gujarati",
+              "url": "https://en.wikipedia.org/wiki/Narmakosh"
+            },
+            {
+              "label": "British Indians: Gujarati families who came from East Africa",
+              "url": "https://en.wikipedia.org/wiki/British_Indians"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Kai po che",
+          "body": "When your child reads “kite”, the right picture is a પતંગ (patang) on a rooftop at Uttarayan, and the right sound is the shout of “kai po che” — I’ve cut it. An image search can’t pick that picture for you, or promise what else comes with it. Each Gloss picture is drawn for one meaning and checked; backing redraws those that don’t look like a Gujarati home.",
+          "citations": [
+            {
+              "label": "“Kai po che”, the Gujarati kite-flying cry at Uttarayan",
+              "url": "https://en.wikipedia.org/wiki/Kai_Po_Che!"
+            },
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "urdu",
+      "name": "Urdu",
+      "group": "indian",
+      "who": "For Urdu-speaking families in Bradford, Birmingham, Toronto, Houston, Dubai, Karachi and Lucknow",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Urdu of home — right to left, in Nastaliq — with an Urdu voice beside them.",
+      "roots": "Urdu is a language of courtesy: آپ (aap) for anyone older, تشریف رکھیے (tashreef rakhiye) to ask a guest to sit. Those registers are easy to lose when school is in English, and hard to teach from a textbook. With Urdu built, each example will be written at a stated level of politeness, so a child learns the words and the manners together.",
+      "forFun": null,
+      "builtIntro": "There is no Urdu in Gloss yet. Urdu is on Gloss’s language list, and the right-to-left layout it needs is planned. What your child can use today:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "This is the kind of entry backing pays native Urdu speakers to write and check:",
+      "samples": [
+        {
+          "word": "moon",
+          "lines": [
+            "Moon یعنی چاند (chaand)۔",
+            "Moon yani chaand."
+          ]
+        },
+        {
+          "word": "uncle",
+          "lines": [
+            "ابو کے بھائی: چچا (chacha)۔ امی کے بھائی: ماموں (mamoon)۔",
+            "Abbu ke bhai: chacha. Ammi ke bhai: mamoon."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Urdu speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "An Urdu voice recorded for each of those words",
+        "Urdu laid out right to left, in Nastaliq, on every screen it appears",
+        "Pictures redrawn wherever today’s picture doesn’t fit an Urdu-speaking home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Left to right at school, right to left at home",
+          "body": "An Urdu-speaking child switches direction every day: English across the page one way, Urdu back the other, in Nastaliq’s sloping lines. The English side moves fast. A nine-year-old’s chapter book holds about {unknownWordsAt9} words she hasn’t learnt yet, and an eleven-year-old still meets about {unknownWordsAt11}. When she asks, the explanation that lands first is often in Urdu. Gloss is built to give her both."
+        },
+        "dictionary": {
+          "title": "Platts wrote for Victorian scholars",
+          "body": "John Thompson Platts’s Dictionary of Urdu, Classical Hindi, and English (1884) is a landmark of Urdu scholarship. Every entry assumes a grown reader who wants Persian and Arabic roots. It was never meant to tell a child what “glimmer” means in a story, in words she knows, in the script her grandmother writes.",
+          "versus": "Platts’s Urdu dictionary",
+          "rows": [
+            {
+              "traditional": "Persian and Arabic roots, for scholars",
+              "gloss": "Everyday Urdu, for a child"
+            },
+            {
+              "traditional": "Explains Urdu in English",
+              "gloss": "Explains English in Urdu, right to left, in Nastaliq"
+            },
+            {
+              "traditional": "‘Uncle’, once",
+              "gloss": "چچا (chacha)، ماموں (mamoon)، خالو (khaloo)، پھوپھا (phuppha) — whose uncle, explained"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "An Urdu voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture for one meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "John Thompson Platts, A Dictionary of Urdu, Classical Hindi, and English (1884)",
+              "url": "https://en.wikipedia.org/wiki/John_Thompson_Platts"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A Sindhri mango, not a supermarket one",
+          "body": "A picture helps a word stay — the right picture. For “mango”, a Sindhri or a Langra; for “tea”, chai poured from the pan at home. A search box can’t tell which mango your family means, or keep the wrong results out. Each Gloss picture belongs to one meaning, is checked, and is redrawn where it doesn’t fit an Urdu-speaking home.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "kannada",
+      "name": "Kannada",
+      "group": "indian",
+      "who": "For Kannada families in Bengaluru, Mysuru, the Bay Area, Seattle, London and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Kannada-and-English of your home, with the Kannada word and a Kannada voice beside them.",
+      "roots": "Kannada children call their grandparents ಅಜ್ಜ (ajja) and ಅಜ್ಜಿ (ajji), and call an older girl ಅಕ್ಕ (akka) whether or not she’s a sister. Words like these fade first when English takes over school. With Kannada built, Gloss shows them beside the English words in your child’s books.",
+      "forFun": null,
+      "builtIntro": "There is no Kannada in Gloss yet. It is on the language list; nothing is written yet. While it’s built, your child has the English dictionary:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "The kind of entry backing pays native Kannada speakers to write and check:",
+      "samples": [
+        {
+          "word": "uncle",
+          "lines": [
+            "Appana tamma: chikkappa (ಚಿಕ್ಕಪ್ಪ). Appana anna: doddappa (ದೊಡ್ಡಪ್ಪ). Ammana anna-tamma: maava (ಮಾವ)."
+          ]
+        },
+        {
+          "word": "sweet",
+          "lines": [
+            "Sweet andre sihi (ಸಿಹಿ). Bella sihi; bevu kahi (ಕಹಿ)."
+          ],
+          "picture": "Bevu-bella on a plate at Ugadi."
+        }
+      ],
+      "buys": [
+        "Native Kannada speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "A Kannada voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Kannada home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Bevu-bella: the bitter and the sweet of a new word",
+          "body": "At Ugadi, Kannada families eat ಬೇವು ಬೆಲ್ಲ (bevu bella) — neem and jaggery, the bitter and the sweet together. A hard word in a good book is a little of both. A nine-year-old meets about {unknownWordsAt9} of them in one chapter, a seven-year-old about {unknownWordsAt7}. Find the meaning quickly and it’s sweet; stop for every one and the book goes back on the shelf."
+        },
+        "dictionary": {
+          "title": "A German missionary wrote the great Kannada dictionary",
+          "body": "Ferdinand Kittel, of the Basel Mission, worked in Mangalore, Madikeri and Dharwad, and in 1894 published a Kannada–English dictionary of about seventy thousand words. He came back to India in his fifties to finish it. It is a scholar’s masterpiece, for scholars. A seven-year-old in Sunnyvale needs an English word explained the way her ajji would explain it.",
+          "versus": "Kittel’s Kannada–English dictionary",
+          "rows": [
+            {
+              "traditional": "Kannada explained in English, for scholars",
+              "gloss": "English explained in the Kannada-and-English of home"
+            },
+            {
+              "traditional": "Chikkappa and doddappa, if you know where to look",
+              "gloss": "ಚಿಕ್ಕಪ್ಪ (chikkappa) and ದೊಡ್ಡಪ್ಪ (doddappa): Appa’s younger and elder brothers, explained"
+            },
+            {
+              "traditional": "Long words broken into roots",
+              "gloss": "Kannada’s joined-up words said whole, by a Kannada voice"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A picture for every meaning, checked first"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Ferdinand Kittel and his Kannada–English dictionary (1894)",
+              "url": "https://en.wikipedia.org/wiki/Ferdinand_Kittel"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Idli, not toast",
+          "body": "Pictures help words stick, if they’re the right pictures. For “breakfast”, an idli plate tells a Kannada child more than toast does; for “elephant”, one in procession at Mysuru Dasara. A web search won’t know which elephant you mean, and won’t stop at elephants. Gloss draws one picture per meaning, and someone checks it.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "malayalam",
+      "name": "Malayalam",
+      "group": "indian",
+      "who": "For Malayali families in Dubai, Kuwait, Muscat, Manchester, Dublin, Houston — and Kerala",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Malayalam-and-English of home, with the Malayalam word and a Malayalam voice beside them.",
+      "roots": "Malayalam is a word children enjoy: spell it in English and it reads the same backwards. The language inside it has words English doesn’t — അമ്മൂമ്മ (ammoomma) and അച്ഛമ്മ (achamma) for the two grandmothers, depending on whose mother she is. With Malayalam built, Gloss shows them beside the English words in your child’s books.",
+      "forFun": null,
+      "builtIntro": "There is no Malayalam in Gloss yet. Malayalam sits on the language list with no words yet. Today your child can use the English dictionary:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "Here is the kind of entry backing pays native Malayalam speakers to write and check:",
+      "samples": [
+        {
+          "word": "flower",
+          "lines": [
+            "Flower ennal poovu (പൂവ്). Onathinu pookkalam idum."
+          ],
+          "picture": "A pookkalam at Onam."
+        },
+        {
+          "word": "grandmother",
+          "lines": [
+            "Ammayude amma: ammoomma (അമ്മൂമ്മ). Achante amma: achamma (അച്ഛമ്മ)."
+          ]
+        }
+      ],
+      "buys": [
+        "Native Malayalam speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "A Malayalam voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Malayali home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "A Gulf school, an English book, a Malayalam home",
+          "body": "Malayali families have been raising children in the Gulf since the oil boom of the 1970s. At home it’s Malayalam; in the book it’s English, and a nine-year-old’s chapter holds about {unknownWordsAt9} words she hasn’t met yet. When she asks, Amma often explains in Malayalam first, then hunts for the English. Gloss gives her both on one page."
+        },
+        "dictionary": {
+          "title": "Gundert’s dictionary is over 150 years old",
+          "body": "Hermann Gundert, a German missionary at Tellicherry — the man credited with calling Kerala “God’s own country” — published his Malayalam–English dictionary in 1872. Scholars have called it monumental. Some of its words aren’t used any more, and none of it was written for a child.",
+          "versus": "Gundert’s Malayalam–English dictionary",
+          "rows": [
+            {
+              "traditional": "Older Malayalam, for adult scholars",
+              "gloss": "Today’s Malayalam, for a child reading English"
+            },
+            {
+              "traditional": "Words no one uses now",
+              "gloss": "Words your family uses now"
+            },
+            {
+              "traditional": "Older and younger, flattened",
+              "gloss": "ചേട്ടൻ (chettan) and ചേച്ചി (chechi): an older brother or sister, or any older child you respect"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A Malayalam voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A picture that matches the sentence she’s reading, checked"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Hermann Gundert and his Malayalam–English dictionary (1872)",
+              "url": "https://en.wikipedia.org/wiki/Hermann_Gundert"
+            },
+            {
+              "label": "Malayali diaspora: the Gulf migration of the 1970s and 1980s",
+              "url": "https://en.wikipedia.org/wiki/Malayali_diaspora"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A pookkalam for “flower”",
+          "body": "Children remember a word better with a picture, when it’s one they recognise. For “flower”, a പൂക്കളം (pookkalam) laid out at Onam; for “boat”, a Kerala snake boat. Searching the web for “boat” turns up anything from ferries to adverts. Gloss pictures are drawn for a single meaning, then checked before they ship.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "punjabi",
+      "name": "Punjabi",
+      "group": "indian",
+      "who": "For Punjabi families in Southall, Brampton, Surrey BC, Melbourne, Ludhiana and Lahore",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Punjabi of home, in Gurmukhi first, with a Punjabi voice beside them.",
+      "roots": "In a Punjabi home the grandmother may be ਬੇਬੇ (bebe), ਦਾਦੀ (dadi) or ਨਾਨੀ (nani), and every uncle has a name that says whose brother he is. Those words cross oceans with a family, and then school starts. With Punjabi built, Gloss keeps them beside the English ones.",
+      "forFun": null,
+      "builtIntro": "There is no Punjabi in Gloss yet. Punjabi is on Gloss’s language list for India and Pakistan, with no words yet. Your child can use the English dictionary now:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "The kind of entry backing pays native Punjabi speakers to write and check:",
+      "samples": [
+        {
+          "word": "uncle",
+          "lines": [
+            "Papa de vadde bhra: taaya (ਤਾਇਆ). Papa de chhote bhra: chacha (ਚਾਚਾ). Mummy de bhra: mama (ਮਾਮਾ)."
+          ]
+        },
+        {
+          "word": "field",
+          "lines": [
+            "Field matlab khet (ਖੇਤ). Siyaal vich sarhon de khet peele ho jaande ne."
+          ],
+          "picture": "Mustard in flower across a Punjab field."
+        }
+      ],
+      "buys": [
+        "Native Punjabi speakers, paid to write and check meanings for the 5,000 words children look up most, in Gurmukhi",
+        "A Punjabi voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit a Punjabi home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "One language, two scripts, and school in neither",
+          "body": "Punjabi is written in Gurmukhi in India and in Shahmukhi, right to left, in Pakistan. In Brampton or Southall a child may learn one of them from a grandparent or at weekend class, while every school book is in English. Those books move fast: about {unknownWordsAt9} new words a chapter at nine. The meaning that sticks is often the one Bebe gives in Punjabi. Gloss is built to put that meaning on the page."
+        },
+        "dictionary": {
+          "title": "Bhai Kahn Singh Nabha spent fourteen years on his",
+          "body": "The Mahan Kosh, compiled by Bhai Kahn Singh Nabha over fourteen years and published in 1930, was the first Punjabi encyclopedia: about sixty-five thousand words. It is a work of deep scholarship. It is not how a nine-year-old in Surrey, British Columbia, finds out what “stubborn” means.",
+          "versus": "The Mahan Kosh",
+          "rows": [
+            {
+              "traditional": "Punjabi explained for scholars",
+              "gloss": "English explained in everyday Punjabi"
+            },
+            {
+              "traditional": "One script",
+              "gloss": "Gurmukhi first, and Shahmukhi too if families who read it back it"
+            },
+            {
+              "traditional": "Every uncle called ‘uncle’",
+              "gloss": "ਚਾਚਾ (chacha), ਤਾਇਆ (taaya), ਮਾਮਾ (mama), ਫੁੱਫੜ (phuphar), ਮਾਸੜ (masar) — each placed in the family tree"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A Punjabi voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "One checked picture per meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Mahan Kosh (1930), compiled by Bhai Kahn Singh Nabha",
+              "url": "https://en.wikipedia.org/wiki/Mahan_Kosh"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Mustard fields, not a meadow",
+          "body": "A child holds onto a word better with a picture of something they know: for “field”, mustard flowering yellow across Punjab in winter; for “harvest”, wheat at Vaisakhi. Online image results can’t know that, and can’t promise to stay clean. In Gloss a picture is drawn for one meaning only, and checked.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "odia",
+      "name": "Odia",
+      "group": "indian",
+      "who": "For Odia families in Bhubaneswar, Bengaluru, the US, the UK and the Gulf",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained in the Odia-and-English of home, with the Odia word and an Odia voice beside them.",
+      "roots": "Odisha marks ପଖାଳ ଦିବସ (Pakhala Dibasa) every 20 March — though a cold bowl of pakhala is harder to love in a Michigan March. Food words, family words and festival words fade first when school is in English. With Odia built, Gloss keeps them beside the English words in your child’s books.",
+      "forFun": null,
+      "builtIntro": "There is no Odia in Gloss yet. Odia is on the language list and needs its words, voices and checkers. Until then, your child can use the English dictionary:",
+      "built": [
+        {
+          "title": "The English side works today",
+          "body": "65,019 English words, re-checked for children on 8 October 2026, with sounds stored on the phone and four depths of explanation. No adverts, no web results, and it works offline."
+        },
+        {
+          "title": "Practice is already there",
+          "body": "Every word your child looks up is saved to their own reader, then comes back as flashcards and a picture quiz, with no streaks to break."
+        }
+      ],
+      "samplesIntro": "The kind of entry backing pays native Odia speakers to write and check:",
+      "samples": [
+        {
+          "word": "rice",
+          "lines": [
+            "Rice mane bhata (ଭାତ). Pakhala hela pani dia bhata."
+          ],
+          "picture": "A bowl of pakhala with fried greens."
+        },
+        {
+          "word": "chariot",
+          "lines": [
+            "Chariot mane ratha (ରଥ). Rath Yatra re bada bada ratha tana jae."
+          ],
+          "picture": "The chariots at Puri’s Rath Yatra."
+        }
+      ],
+      "buys": [
+        "Native Odia speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "An Odia voice recorded for each of those words",
+        "Pictures redrawn wherever today’s picture doesn’t fit an Odia home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Round letters, and a chapter full of new words",
+          "body": "Odia’s letters are round, it’s said, because palm leaves tore when scribes cut too many straight lines into them. Your child may learn those round letters from a grandparent, and reads English all week. A nine-year-old’s chapter book holds about {unknownWordsAt9} words she doesn’t know yet; a seven-year-old meets about {unknownWordsAt7}. Gloss is meant to explain each one simply — and, once Odia is built, in the Odia of home."
+        },
+        "dictionary": {
+          "title": "A lawyer spent three decades on the Odia dictionary",
+          "body": "Gopala Chandra Praharaj, a lawyer by profession, gave around thirty years of his life to the Purnachandra Odia Bhashakosha, the most comprehensive lexicon of Odia. Along the way he added a letter, ୱ (wa), to the script. Its seven volumes are for serious readers. Your child needs something lighter: the English word from tonight’s book, made plain.",
+          "versus": "The Purnachandra Odia Bhashakosha",
+          "rows": [
+            {
+              "traditional": "Seven volumes, for scholars",
+              "gloss": "One app, for a child"
+            },
+            {
+              "traditional": "Odia explained for readers of Odia",
+              "gloss": "English explained in the Odia-and-English of home"
+            },
+            {
+              "traditional": "‘Uncle’ and ‘aunt’, once each",
+              "gloss": "Each uncle and aunt by the Odia name your family uses"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "An Odia voice, offline"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked drawing of exactly this meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Gopala Chandra Praharaj and the Purnachandra Odia Bhashakosha",
+              "url": "https://en.wikipedia.org/wiki/Gopala_Chandra_Praharaj"
+            },
+            {
+              "label": "Odia script: why the letters are round",
+              "url": "https://en.wikipedia.org/wiki/Odia_script"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Pakhala on a hot afternoon",
+          "body": "A word stays longer with a picture, if the picture is right. For “rice”, a bowl of ପଖାଳ (pakhala) on a hot afternoon; for “chariot”, the great chariots of Puri’s Rath Yatra. An image search picks by popularity, not by what fits your child — or what’s safe for them. Every Gloss picture is made for one meaning and looked over before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "spanish",
+      "name": "Spanish",
+      "group": "world",
+      "who": "For families who speak Spanish at home, in the US and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s school books, explained the way your family talks, with the Spanish word beside them.",
+      "roots": "At home it’s abuela, tía and the words from her kitchen; at school it’s English all day. Each year the English gets stronger and the Spanish gets quieter. Gloss puts the Spanish word next to the English one, so a child who learns “harvest” also hears cosecha.",
+      "forFun": null,
+      "builtIntro": "There is no Spanish in Gloss yet. What works today is the English dictionary, and your child can use it now while the Spanish is built:",
+      "built": [
+        {
+          "title": "A safe place to look up English words",
+          "body": "65,019 words checked for children, with no ads and no web results, and it works offline."
+        },
+        {
+          "title": "Practice with the words they looked up",
+          "body": "Flashcards and a picture quiz use only the words your child has already met."
+        }
+      ],
+      "samplesIntro": "A Spanish entry might read like this. Native Spanish speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "embarrassed",
+          "lines": [
+            "Embarrassed quiere decir con vergüenza, apenado.",
+            "Ojo: embarazada quiere decir que va a tener un bebé. Suenan parecido, pero no son lo mismo."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest es la cosecha: cuando la fruta o el trigo están listos, se recogen del campo."
+          ],
+          "picture": "An orchard at picking time."
+        }
+      ],
+      "buys": [
+        "Native Spanish speakers, paid to write and check Spanish for the 5,000 words children look up most",
+        "Meanings in everyday family Spanish, including the words that change from country to country",
+        "Spanish recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Your fourth grader meets about {unknownWordsAt9} new words a chapter",
+          "body": "The first pages of The Wonderful Wizard of Oz bring “solemn”, “evidently” and “plumage”. Some are easy for a child from a Spanish-speaking home: “solemn” is solemne, “evidently” is evidentemente. Others are traps, because “embarrassed” is not embarazada. A seven-year-old meets about {unknownWordsAt7} words like these in a chapter, and a child who has to stop and ask every time soon stops reading."
+        },
+        "dictionary": {
+          "title": "Two big dictionaries, neither made for a child",
+          "body": "The Real Academia Española first published its dictionary in 1780, and it is still the authority on Spanish. The Spanish–English dictionary on the family shelf follows the same model: a word, a translation, an abbreviation or two. Both were written for adults who already read well. We watched our own children, and their friends, give up on that kind of dictionary. Gloss starts from the child.",
+          "versus": "A Spanish–English dictionary",
+          "rows": [
+            {
+              "traditional": "Gives “embarrassed” a translation and moves on",
+              "gloss": "Warns that “embarrassed” and embarazada only look alike"
+            },
+            {
+              "traditional": "One Spanish for every country",
+              "gloss": "Spanish the way your family says it: a car is a carro, a coche or an auto"
+            },
+            {
+              "traditional": "Small print and no sound",
+              "gloss": "Says the English word aloud, and the Spanish one"
+            },
+            {
+              "traditional": "Every meaning at once",
+              "gloss": "Only the meaning your child is reading, in words easier than the word"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Diccionario de la lengua española, first published by the Real Academia Española in 1780",
+              "url": "https://en.wikipedia.org/wiki/Diccionario_de_la_lengua_espa%C3%B1ola"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "One picture, and the right one",
+          "body": "Children remember a word better with a picture beside it; psychologists call it the picture superiority effect. But the picture has to match the meaning. Type “jaguar” into an image search and the cat and the car arrive together, and for plenty of innocent words you can’t know what will come back. Every picture in Gloss is drawn for one meaning and checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "mandarin-chinese",
+      "name": "Mandarin Chinese",
+      "group": "world",
+      "who": "For families who speak Mandarin at home, in the UK, US, Canada, Australia and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Chinese word, its pinyin and a Mandarin voice beside them.",
+      "roots": "Grandparents on a video call speak Mandarin; school speaks English from nine till three. The Chinese thins out a little every year. Gloss shows the Chinese word, its pinyin and a Mandarin voice next to the English one, so “duck” is also 鸭子 yāzi.",
+      "forFun": null,
+      "builtIntro": "There is no Chinese in Gloss yet. The English dictionary works today, and your child can start with it now:",
+      "built": [
+        {
+          "title": "English words, safe to look up",
+          "body": "65,019 words checked for children. No adverts, no web results, and nothing needs the internet."
+        },
+        {
+          "title": "Heard as well as read",
+          "body": "English words are spoken from recordings stored on the phone, so your child hears them said properly."
+        }
+      ],
+      "samplesIntro": "Roughly what a Chinese entry would say. Native Mandarin speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "uncle",
+          "lines": [
+            "爸爸的弟弟是叔叔 (shūshu)，爸爸的哥哥是伯伯 (bóbo)，妈妈的兄弟是舅舅 (jiùjiu)。",
+            "英语里，他们都叫 uncle。"
+          ]
+        },
+        {
+          "word": "threshold",
+          "lines": [
+            "Threshold 就是门槛 (ménkǎn)：进门时要跨过去的那条横木。"
+          ],
+          "picture": "A doorway with its step, seen from inside the house."
+        }
+      ],
+      "buys": [
+        "Native Mandarin speakers, paid to write and check Chinese for the 5,000 words children look up most",
+        "Explanations in the everyday Mandarin your family speaks, with pinyin",
+        "Mandarin recordings by native voices, so every tone is heard",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} words a chapter that a nine-year-old doesn’t know yet",
+          "body": "On the first pages of The Jungle Book a child meets “threshold”, “haunches” and “jackal”. You know what they mean, but explaining “threshold” in Mandarin at bedtime, after a day of work, is hard. At seven a child meets about {unknownWordsAt7} words like these in every chapter. Weekend Chinese school teaches characters; nobody teaches the bridge between the English book and the Chinese at home."
+        },
+        "dictionary": {
+          "title": "From the Kangxi Dictionary to the phone",
+          "body": "The Kangxi Dictionary of 1716 listed 47,043 characters for scholars. The Xinhua Zidian, first published in 1957, became the best-selling dictionary in the world. Both are dictionaries of characters, written for readers who already know a great many of them. An English–Chinese dictionary gives a translation and little more. We saw our own children, and their friends, leave them closed.",
+          "versus": "An English–Chinese dictionary",
+          "rows": [
+            {
+              "traditional": "Translates “uncle” with one word",
+              "gloss": "Shows which uncle: 叔叔 shūshu, 伯伯 bóbo or 舅舅 jiùjiu"
+            },
+            {
+              "traditional": "Tones as marks a young reader may not know",
+              "gloss": "A Mandarin voice says each word, so the tone is heard, not guessed"
+            },
+            {
+              "traditional": "One script, chosen for you",
+              "gloss": "Simplified or traditional characters, the way your family writes"
+            },
+            {
+              "traditional": "A translation and no explanation",
+              "gloss": "The English meaning explained in easy words first"
+            }
+          ],
+          "citations": [
+            {
+              "label": "The Kangxi Dictionary (1716)",
+              "url": "https://en.wikipedia.org/wiki/Kangxi_Dictionary"
+            },
+            {
+              "label": "The Xinhua Zidian (first edition 1957)",
+              "url": "https://en.wikipedia.org/wiki/Xinhua_Dictionary"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A crane is a bird, and a machine",
+          "body": "A picture helps a word stick, because the brain keeps it twice, as a word and as an image; Allan Paivio called this dual coding. It has to be the right picture, though. Search “crane” and birds and building sites arrive mixed together, and some searches bring back things no child should see. Gloss gives each meaning its own picture, and a person checks it.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "arabic",
+      "name": "Arabic",
+      "group": "world",
+      "who": "For families who speak Arabic at home, wherever they live now",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Arabic word, written and spoken, beside them.",
+      "roots": "Grandparents — teta and jiddo, or however your family says it — speak to your child in Arabic, and school speaks English. Without help, English wins. Gloss puts the Arabic word next to the English one, so “duck” is also بطة baṭṭa, said by an Arabic voice.",
+      "forFun": null,
+      "builtIntro": "There is no Arabic in Gloss yet. Your child can use the English dictionary today while the Arabic is built:",
+      "built": [
+        {
+          "title": "Looking up English, safely",
+          "body": "Every one of its 65,019 words is checked for children. There are no adverts and no web results."
+        },
+        {
+          "title": "Words come back to practise",
+          "body": "The words your child looks up return as flashcards and a picture quiz."
+        }
+      ],
+      "samplesIntro": "An Arabic entry could look like this, in the Arabic many families speak. Native speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "uncle",
+          "lines": [
+            "أخو بابا عمّ، وأخو ماما خال.",
+            "بالإنجليزي الاثنين اسمهم uncle."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest يعني الحصاد: لما يستوي القمح أو الثمر، نجمعه من الحقل."
+          ],
+          "picture": "Olives being picked from the tree."
+        }
+      ],
+      "buys": [
+        "Native Arabic speakers, paid to write and check Arabic for the 5,000 words children look up most",
+        "Explanations in Arabic close to what children hear at home, with fuṣḥā beside it",
+        "Arabic recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Around {unknownWordsAt9} words in each chapter are new to a nine-year-old",
+          "body": "Alice’s Adventures in Wonderland opens with a waistcoat, currants and a game of croquet. For a child in Manchester or Michigan, the English is the school’s job; the Arabic is yours, and often their grandmother’s. At seven, about {unknownWordsAt7} words in every chapter are new, and each is a moment when a child asks, or gives up."
+        },
+        "dictionary": {
+          "title": "Arabic has one of the oldest dictionary traditions",
+          "body": "Ibn Manzur completed Lisān al-ʿArab, “the Tongue of the Arabs”, in 1290. It is a monument and, like the English–Arabic dictionary on a shelf at home, it was made for grown readers. Neither explains a word to a seven-year-old, and a child who speaks a dialect at home meets fuṣḥā on every page. Our own children, and their friends, closed that kind of dictionary quickly.",
+          "versus": "An English–Arabic dictionary",
+          "rows": [
+            {
+              "traditional": "Translates into fuṣḥā only",
+              "gloss": "Arabic close to what your child hears at home, with fuṣḥā beside it"
+            },
+            {
+              "traditional": "“Uncle” is one entry",
+              "gloss": "Shows عمّ ʿamm, your father’s brother, and خال khāl, your mother’s"
+            },
+            {
+              "traditional": "Silent on the page",
+              "gloss": "Says the English word and the Arabic one aloud"
+            },
+            {
+              "traditional": "Right-to-left and left-to-right squeezed onto one line",
+              "gloss": "Each language laid out in its own direction, in a child’s size"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Lisān al-ʿArab, completed by Ibn Manzur in 1290",
+              "url": "https://en.wikipedia.org/wiki/Lisan_al-Arab"
+            },
+            {
+              "label": "Modern Standard Arabic (fuṣḥā) and the spoken varieties",
+              "url": "https://en.wikipedia.org/wiki/Modern_Standard_Arabic"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A date is a fruit, and a day",
+          "body": "Seeing a picture with a word gives a child a second way to remember it: the picture superiority effect. But it must be the right picture. Search “date” and fruit, calendars and dinner dates come back together. In Gloss each meaning of “date” has its own picture, and every one is checked before a child sees it.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "french",
+      "name": "French",
+      "group": "world",
+      "who": "For French-speaking families in Canada, the UK, the US and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the French word your family actually says beside them.",
+      "roots": "Mamie on the phone, French on Saturdays, English every other day of the week. Gloss puts the French word next to the English one — “duck” and canard, said by a French voice — so the language from home keeps up with the books from school.",
+      "forFun": null,
+      "builtIntro": "There is no French in Gloss yet. The English dictionary is ready today, and your child can use it now:",
+      "built": [
+        {
+          "title": "English, looked up without the open web",
+          "body": "65,019 words checked for children, no adverts, no search results, and it all works offline."
+        },
+        {
+          "title": "Their own words, practised",
+          "body": "Flashcards and a picture quiz are built from the words your child has looked up."
+        }
+      ],
+      "samplesIntro": "A French entry would read something like this. Native French speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "library",
+          "lines": [
+            "Library, c’est une bibliothèque : on y emprunte des livres.",
+            "Attention : une librairie, c’est un magasin où l’on achète des livres."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest, c’est la récolte : quand les fruits ou le blé sont mûrs, on les ramasse."
+          ],
+          "picture": "A vineyard at the grape harvest."
+        }
+      ],
+      "buys": [
+        "Native French speakers, paid to write and check French for the 5,000 words children look up most",
+        "French the way families say it, in Quebec and in France",
+        "French recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "A nine-year-old meets about {unknownWordsAt9} unfamiliar words a chapter",
+          "body": "The Wind in the Willows begins with “forbearance”, “insatiable” and “bijou”, a French word hiding in an English book. A child who reads in two languages has an advantage there, because many hard English words are cousins of French ones. But “library” is not une librairie, and at seven, about {unknownWordsAt7} new words a chapter is a lot to sort out alone."
+        },
+        "dictionary": {
+          "title": "The dictionary that began with a king",
+          "body": "The Académie française presented the first edition of its dictionary to Louis XIV on 24 August 1694. It set the rules for French for centuries, for adults. The bilingual dictionary at home is its descendant: precise, compact, and hard going for a child. Our own children, and their friends, didn’t reach for it.",
+          "versus": "A French–English dictionary",
+          "rows": [
+            {
+              "traditional": "Translates “library” as bibliothèque and stops",
+              "gloss": "Warns that une librairie is a bookshop"
+            },
+            {
+              "traditional": "The French of France, for everyone",
+              "gloss": "French the way your family says it: in Quebec, déjeuner is breakfast"
+            },
+            {
+              "traditional": "Pronunciation in phonetic symbols",
+              "gloss": "Says the English word and the French one aloud"
+            },
+            {
+              "traditional": "Every sense of a word in a dense column",
+              "gloss": "The sense your child is reading, explained in easy words"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Dictionnaire de l’Académie française, first edition presented in 1694",
+              "url": "https://en.wikipedia.org/wiki/Dictionnaire_de_l%27Acad%C3%A9mie_fran%C3%A7aise"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A mole digs, and a mole sits on a cheek",
+          "body": "A word with a picture is remembered better than a word alone; that is the picture superiority effect. The picture has to match the meaning, and an image search can’t promise that, or promise what else it will show. In Gloss, the mole that digs and the mole on a cheek each get their own picture, checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "portuguese",
+      "name": "Portuguese",
+      "group": "world",
+      "who": "For families who speak Portuguese at home, from Brazil, Portugal and beyond",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Portuguese word — Brazil’s or Portugal’s — beside them.",
+      "roots": "Saudade is the word everyone says English can’t translate. Your child may feel it for the vó they see once a year. Gloss keeps the Portuguese close: “duck” beside pato, said by a Portuguese voice, every time they look a word up.",
+      "forFun": null,
+      "builtIntro": "There is no Portuguese in Gloss yet. What your child can use today is the English dictionary:",
+      "built": [
+        {
+          "title": "A dictionary you can hand over",
+          "body": "65,019 English words, each checked for children, with nothing from the open web and no adverts."
+        },
+        {
+          "title": "Practice from their own reading",
+          "body": "Flashcards and a picture quiz bring back the words your child looked up."
+        }
+      ],
+      "samplesIntro": "A Portuguese entry might go like this. Native speakers from Brazil and Portugal will write and check the real ones:",
+      "samples": [
+        {
+          "word": "train",
+          "lines": [
+            "Train é trem no Brasil e comboio em Portugal.",
+            "É o mesmo veículo: vagões puxados por uma locomotiva."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest é a colheita: quando as frutas ou o milho estão maduros, a gente colhe."
+          ],
+          "picture": "Coffee cherries being picked by hand."
+        }
+      ],
+      "buys": [
+        "Native Portuguese speakers, from Brazil and from Portugal, paid to check the 5,000 words children look up most",
+        "Explanations in the Portuguese your family speaks at home",
+        "Portuguese recordings by native voices, Brazilian and European",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Close to {unknownWordsAt9} new words in one chapter, at nine",
+          "body": "Anne of Green Gables opens with “decorum”, “placidly” and “dissimilarity”. A child from a Portuguese-speaking home has a head start on some, since “placidly” is close to plácido, and none at all on others. A seven-year-old meets about {unknownWordsAt7} of them per chapter. Each one is a question, and the questions come at bedtime, when everyone is tired."
+        },
+        "dictionary": {
+          "title": "The first Portuguese dictionary was written for a king",
+          "body": "Rafael Bluteau’s Vocabulario Portuguez e Latino, published between 1712 and 1721 and dedicated to the king, is considered the first dictionary of Portuguese: about 43,600 entries, in Portuguese and Latin. The dictionaries that followed kept its readers, educated adults. Our own children, and their friends, didn’t open the one on our shelf.",
+          "versus": "A Portuguese–English dictionary",
+          "rows": [
+            {
+              "traditional": "One Portuguese, usually Portugal’s or Brazil’s",
+              "gloss": "The word your family uses: trem in Brazil, comboio in Portugal"
+            },
+            {
+              "traditional": "A translation without an explanation",
+              "gloss": "An explanation in easy words, then the Portuguese"
+            },
+            {
+              "traditional": "No sound at all",
+              "gloss": "Says the English word and the Portuguese one, in a Brazilian or European voice"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture for the meaning your child is reading"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Vocabulario Portuguez e Latino, Rafael Bluteau (1712–1721)",
+              "url": "https://en.wikipedia.org/wiki/Vocabulario_Portuguez_e_Latino"
+            },
+            {
+              "label": "Brazilian Portuguese: trem in Brazil, comboio in Portugal",
+              "url": "https://en.wikipedia.org/wiki/Brazilian_Portuguese"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A mouse runs, and a mouse clicks",
+          "body": "Pictures help words stay, and Allan Paivio’s idea of dual coding explains why: a word with an image is stored two ways. The trouble with image search is that “mouse” brings back animals and computers together, and nobody checks the rest. Gloss draws one picture per meaning, and a person checks each one.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "russian",
+      "name": "Russian",
+      "group": "world",
+      "who": "For families who speak Russian at home, wherever they live now",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Russian word in Cyrillic and a Russian voice beside them.",
+      "roots": "Бабушка reads to them in Russian on Sundays; the rest of the week is English. Gloss puts the Russian beside the English — “duck” and утка (utka), said by a Russian voice — so both languages grow together.",
+      "forFun": null,
+      "builtIntro": "There is no Russian in Gloss yet. The English dictionary works today, so your child can begin with it:",
+      "built": [
+        {
+          "title": "English words without the internet’s risks",
+          "body": "65,019 words checked for children, with no adverts and no web results; it runs offline."
+        },
+        {
+          "title": "What they look up, they practise",
+          "body": "Flashcards and a picture quiz are made from your child’s own looked-up words."
+        }
+      ],
+      "samplesIntro": "Something like this, in Russian. Native Russian speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "perambulator",
+          "lines": [
+            "Perambulator — старое слово для детской коляски.",
+            "Сегодня говорят pram или pushchair."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest — это урожай: когда фрукты или пшеница созрели, их собирают."
+          ],
+          "picture": "Apples being gathered into baskets at a dacha."
+        }
+      ],
+      "buys": [
+        "Native Russian speakers, paid to write and check Russian for the 5,000 words children look up most",
+        "Explanations in the Russian your family speaks, with the forms children actually use",
+        "Russian recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} words a chapter are new at nine",
+          "body": "Peter Pan begins with perambulators, pinafores and “propriety”. A child in London or New York reads them at school in English; at home, the evening is in Russian. For a seven-year-old it is about {unknownWordsAt7} per chapter. Some parents translate, some reach for a phone, and some just say “keep reading”."
+        },
+        "dictionary": {
+          "title": "Dal spent his life on one dictionary",
+          "body": "Vladimir Dal’s Explanatory Dictionary of the Living Great Russian Language, published in 1863–1866, gathered about 220,000 words and 30,000 proverbs. It is a treasure for adults. So is the Russian–English dictionary on the shelf, with its small type and grammar codes. Neither was made for a child, and our own children, and their friends, wouldn’t use them.",
+          "versus": "A Russian–English dictionary",
+          "rows": [
+            {
+              "traditional": "Grammar codes and case endings",
+              "gloss": "A plain explanation, with the Russian word in a sentence"
+            },
+            {
+              "traditional": "Cyrillic and Latin letters that look alike but sound different",
+              "gloss": "Each word said aloud, so Р is heard as r and В as v"
+            },
+            {
+              "traditional": "Only the dictionary form",
+              "gloss": "The forms families use, like кошка and кошечка, cat and kitty"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A checked picture for each meaning"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Dal’s Explanatory Dictionary of the Living Great Russian Language (1863–1866)",
+              "url": "https://en.wikipedia.org/wiki/Explanatory_Dictionary_of_the_Living_Great_Russian_Language"
+            },
+            {
+              "label": "The Russian alphabet",
+              "url": "https://en.wikipedia.org/wiki/Russian_alphabet"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A seal swims, and a seal stamps",
+          "body": "Children remember a word with a picture better, because there are two routes into memory instead of one. But search “seal” and you’ll see the animal, the wax and much else; nobody controls what an image search shows. Every picture in Gloss belongs to one meaning and is checked by a person.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "german",
+      "name": "German",
+      "group": "world",
+      "who": "For German-speaking families living in English-speaking countries",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the German word and a German voice beside them.",
+      "roots": "Oma and Opa on video calls, German at the table, English everywhere else. Gloss puts “duck” and die Ente side by side, said in both languages, so a child doesn’t have to choose.",
+      "forFun": null,
+      "builtIntro": "There is no German in Gloss yet. Your child can use the English dictionary today:",
+      "built": [
+        {
+          "title": "Safe English look-ups",
+          "body": "65,019 words checked for children; no adverts, no web results, nothing that needs a connection."
+        },
+        {
+          "title": "Practice built on their reading",
+          "body": "The words your child has looked up come back as flashcards and a picture quiz."
+        }
+      ],
+      "samplesIntro": "Two German entries, to show the idea. Native German speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "farrier",
+          "lines": [
+            "Ein farrier ist ein Hufschmied: er macht Pferden neue Hufeisen."
+          ]
+        },
+        {
+          "word": "glove",
+          "lines": [
+            "Glove ist der Handschuh: ein Schuh für die Hand.",
+            "Englisch baut das Wort nicht so, Deutsch schon."
+          ],
+          "picture": "A pair of woollen gloves."
+        }
+      ],
+      "buys": [
+        "Native German speakers, paid to write and check German for the 5,000 words children look up most",
+        "Explanations in the German your family speaks, showing how long words are built",
+        "German recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Around {unknownWordsAt9} unfamiliar words in every chapter at nine",
+          "body": "Black Beauty starts with a headstall, a chaise and a farrier. A child who grew up with German has a trick here: English, like German, sometimes builds words from parts, and a headstall is head plus stall, as a Handschuh is a hand-shoe. The trick doesn’t cover everything, and a seven-year-old meets about {unknownWordsAt7} new words in each chapter."
+        },
+        "dictionary": {
+          "title": "The Grimms’ dictionary took 123 years",
+          "body": "The Brothers Grimm began the Deutsches Wörterbuch in 1838; it was finished in 1961, with over 330,000 headwords in 32 volumes. It is to German what the Oxford English Dictionary is to English: magnificent, and for adults. The bilingual dictionary at home is smaller but no friendlier to a child. Our own children, and their friends, left it on the shelf.",
+          "versus": "A German–English dictionary",
+          "rows": [
+            {
+              "traditional": "Lists der, die or das and moves on",
+              "gloss": "Says the article aloud with the word: die Ente, the duck"
+            },
+            {
+              "traditional": "Long words left in one piece",
+              "gloss": "Shows how a word is built: Kühlschrank, cool cupboard, fridge"
+            },
+            {
+              "traditional": "Silent",
+              "gloss": "A German voice for the German word, an English one for the English"
+            },
+            {
+              "traditional": "Every meaning in tiny type",
+              "gloss": "The meaning your child is reading, in words easier than the word"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Deutsches Wörterbuch, begun by the Brothers Grimm in 1838, completed 1961",
+              "url": "https://en.wikipedia.org/wiki/Deutsches_W%C3%B6rterbuch"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A bank by a river, a bank in town — and die Bank you sit on",
+          "body": "A picture helps the word stick; memory researchers call it the picture superiority effect. But it has to be the right picture. Search “bank” and money, rivers and benches come back mixed together, with no promise about what else. Gloss draws each meaning of “bank” separately, and a person checks every picture.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "japanese",
+      "name": "Japanese",
+      "group": "world",
+      "who": "For Japanese families raising children in English-speaking countries",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Japanese word, furigana and a Japanese voice beside them.",
+      "roots": "おばあちゃん calls on Sundays. The kanji practice is on Saturdays. Everything else is in English. Gloss puts the Japanese word beside the English — “duck” and アヒル (ahiru), said by a Japanese voice — so the two languages meet in the same place.",
+      "forFun": null,
+      "builtIntro": "There is no Japanese in Gloss yet. The English dictionary is there today for your child to use:",
+      "built": [
+        {
+          "title": "English you can trust them with",
+          "body": "65,019 words checked for children. No adverts, no web results, and it needs no signal."
+        },
+        {
+          "title": "Review without pressure",
+          "body": "Flashcards and a picture quiz from the words they looked up, with no streaks to keep."
+        }
+      ],
+      "samplesIntro": "A Japanese entry, roughly. Native Japanese speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "duck",
+          "lines": [
+            "農場（のうじょう）のアヒル、池（いけ）の鴨（かも）。",
+            "英語では、どちらも duck です。"
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest は収穫（しゅうかく）：お米や野菜が実ったら、とり入れることです。"
+          ],
+          "picture": "Rice being cut in a paddy in autumn."
+        }
+      ],
+      "buys": [
+        "Native Japanese speakers, paid to write and check Japanese for the 5,000 words children look up most",
+        "Explanations in plain Japanese, with furigana over every kanji",
+        "Japanese recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "About {unknownWordsAt9} words per chapter are new to a nine-year-old",
+          "body": "Pollyanna opens with “composure”, “haughtily” and “fervently”. Saturday school keeps up the kanji; the English chapter book is every other night. At seven, about {unknownWordsAt7} words a chapter are unfamiliar, and a parent asked what “haughtily” means has to explain it in the language the child understands best."
+        },
+        "dictionary": {
+          "title": "Japanese children have their own dictionaries — in Japanese",
+          "body": "The Kōjien, first published in 1955, is Japan’s most trusted dictionary, and Japanese schools give children dictionaries of their own. They explain Japanese words. The English word in your child’s book still meets an English–Japanese dictionary written for adult learners. Our own children, and their friends, didn’t get far with it.",
+          "versus": "An English–Japanese dictionary",
+          "rows": [
+            {
+              "traditional": "Kanji without readings",
+              "gloss": "Furigana over every kanji, so a young reader can read it"
+            },
+            {
+              "traditional": "“Duck” is one entry",
+              "gloss": "アヒル ahiru on the farm and 鴨 kamo on the pond, each with its own picture"
+            },
+            {
+              "traditional": "Silent print",
+              "gloss": "Says the English word and the Japanese one aloud"
+            },
+            {
+              "traditional": "Definitions written for adult learners",
+              "gloss": "An explanation a child can read alone"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Kōjien (first published 1955)",
+              "url": "https://en.wikipedia.org/wiki/K%C5%8Djien"
+            },
+            {
+              "label": "The Japanese writing system: kanji, hiragana and katakana",
+              "url": "https://en.wikipedia.org/wiki/Japanese_writing_system"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "Glasses you drink from, glasses you wear",
+          "body": "A picture next to a word gives memory a second handle; psychologists call it dual coding. Image search can’t tell which glasses your child means, or keep the other results out. Gloss draws every meaning its own picture and checks each one before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "korean",
+      "name": "Korean",
+      "group": "world",
+      "who": "For Korean families raising children in English-speaking countries",
+      "goal": 10000,
+      "promise": "English words from your child’s books, explained simply, with the Korean word in Hangeul and a Korean voice beside them.",
+      "roots": "To an English book, an aunt is an aunt. To your child she is 이모 or 고모, and the difference matters. Gloss shows the Korean beside the English — “duck” and 오리 (ori), said by a Korean voice — so the Korean keeps pace with the English.",
+      "forFun": null,
+      "builtIntro": "There is no Korean in Gloss yet. Your child can use the English dictionary today, while the Korean is built:",
+      "built": [
+        {
+          "title": "A safe English dictionary",
+          "body": "65,019 words checked for children, without adverts or web results, and it works offline."
+        },
+        {
+          "title": "Words that come back",
+          "body": "The words your child looks up return later as flashcards and a picture quiz."
+        }
+      ],
+      "samplesIntro": "What a Korean entry could say. Native Korean speakers will write and check the real ones:",
+      "samples": [
+        {
+          "word": "aunt",
+          "lines": [
+            "엄마의 언니나 여동생은 이모, 아빠의 누나나 여동생은 고모예요.",
+            "영어로는 둘 다 aunt예요."
+          ]
+        },
+        {
+          "word": "harvest",
+          "lines": [
+            "Harvest는 수확이에요. 곡식이나 과일이 익으면 거두어들이는 거예요."
+          ],
+          "picture": "Persimmons being picked in autumn."
+        }
+      ],
+      "buys": [
+        "Native Korean speakers, paid to write and check Korean for the 5,000 words children look up most",
+        "Explanations in easy Korean, written for children",
+        "Korean recordings by native voices, stored on the phone",
+        "Pictures redrawn wherever today’s don’t fit your family’s home"
+      ],
+      "screenshot": null,
+      "pledgeLinks": {
+        "early-backer": "",
+        "lifetime-family": "",
+        "gift-a-family": "",
+        "picture-a-word": "",
+        "patron": ""
+      },
+      "raised": 0,
+      "backers": 0,
+      "nativeReviewed": false,
+      "story": {
+        "moment": {
+          "title": "Each chapter brings about {unknownWordsAt9} new words at age nine",
+          "body": "The Railway Children opens with a stoker, testimonials and gruel. Your child reads it in English at school; Korean school on Saturday, and 할머니 on video calls, keep the Korean going. At seven the count is about {unknownWordsAt7}. Explaining “unjust” in Korean at bedtime takes more than a translation."
+        },
+        "dictionary": {
+          "title": "Hangeul was made so everyone could read",
+          "body": "King Sejong introduced the Korean alphabet in 1446, in a work called Hunminjeongeum, “the correct sounds for the instruction of the people”. Dictionaries went the other way: the Standard Korean Language Dictionary and the English–Korean dictionaries on family shelves are written for adults. Our own children, and their friends, didn’t use them.",
+          "versus": "An English–Korean dictionary",
+          "rows": [
+            {
+              "traditional": "“Aunt” is one entry",
+              "gloss": "Shows 이모 imo, your mother’s sister, and 고모 gomo, your father’s"
+            },
+            {
+              "traditional": "Definitions in grown-up vocabulary",
+              "gloss": "An explanation in easy Korean"
+            },
+            {
+              "traditional": "No sound",
+              "gloss": "Says the English word and the Korean one aloud"
+            },
+            {
+              "traditional": "No pictures",
+              "gloss": "A picture for every meaning, checked by a person"
+            }
+          ],
+          "citations": [
+            {
+              "label": "Hunminjeongeum (1446), which introduced Hangeul",
+              "url": "https://en.wikipedia.org/wiki/Hunminjeongeum"
+            },
+            {
+              "label": "Standard Korean Language Dictionary, National Institute of Korean Language",
+              "url": "https://en.wikipedia.org/wiki/Standard_Korean_Language_Dictionary"
+            }
+          ]
+        },
+        "pictures": {
+          "title": "A pitcher pours, and a pitcher throws",
+          "body": "Children remember words with pictures better than words alone. Search “pitcher” and you’ll get jugs and baseball players together, and an image search makes no promises about what else appears. Each meaning in Gloss has its own picture, checked before it ships.",
+          "citations": [
+            {
+              "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
+              "url": "https://en.wikipedia.org/wiki/Picture_superiority_effect"
+            }
+          ]
+        }
       }
     }
-  ]
+  ],
+  "costReference": {
+    "slug": "british-english",
+    "built": "We built British English first: 65,019 words checked for children, nearly every word spoken, 63,265 words suggested offline, and 1,200 pictures.",
+    "investedUsd": null
+  },
+  "readingEvidence": {
+    "method": "We took ten children’s novels anyone can read for free — Alice’s Adventures in Wonderland, Peter Pan, The Secret Garden, The Jungle Book, Black Beauty, The Wonderful Wizard of Oz, The Railway Children, Anne of Green Gables, Pollyanna and The Wind in the Willows — cut each into chapters of 2,500 words, and counted the words in each chapter that most children learn only after a given age.",
+    "rows": [
+      {
+        "age": 7,
+        "unknownWords": 131,
+        "low": 103,
+        "high": 226,
+        "knownPercent": 91
+      },
+      {
+        "age": 9,
+        "unknownWords": 47,
+        "low": 31,
+        "high": 103,
+        "knownPercent": 97
+      },
+      {
+        "age": 11,
+        "unknownWords": 16,
+        "low": 7,
+        "high": 37,
+        "knownPercent": 99
+      }
+    ],
+    "notes": [
+      "To follow a story on your own, you need to know about 98% of its words; at 95% there is a stranger every 20 words (Hu & Nation, 2000).",
+      "The middle child in a study of ten- and eleven-year-olds read books for 4.6 minutes a day — about 282,000 words a year. The child at the top tenth read 21.1 minutes, about 1.8 million words (Anderson, Wilson & Fielding, 1988).",
+      "Our own rough sum: 282,000 words is about 113 chapters, and at {unknownWordsAt9} new words a chapter that is some 5,000 times a year a child stops at a word."
+    ],
+    "caveat": "Each number is the middle book; the range is the easiest and the hardest. These are older books, and modern ones may have fewer hard words. The ages are adults’ ratings of when they learned each word, so they are averages, not tests of your child. Names are not counted, and a word counts once per chapter.",
+    "citations": [
+      {
+        "label": "Kuperman, Stadthagen-González & Brysbaert (2012), age-of-acquisition ratings for 30,000 English words",
+        "url": "https://doi.org/10.3758/s13428-012-0210-4"
+      },
+      {
+        "label": "The books, from Project Gutenberg",
+        "url": "https://www.gutenberg.org/"
+      },
+      {
+        "label": "Hu & Nation (2000) on 98% coverage, summarised in a replication study",
+        "url": "https://aila2021.dryfta.com/program/abstract-archive/abstract/public/416/unknown-vocabulary-density-reading-comprehension-and-the-98-coverage-figure-replicating-hu-nation-2000"
+      },
+      {
+        "label": "Anderson, Wilson & Fielding (1988), Reading Research Quarterly 23 — table via Corwin",
+        "url": "https://resources.corwin.com/sites/default/files/Figure_6.2_0.pdf"
+      }
+    ]
+  },
+  "storyDefaults": {
+    "risk": {
+      "title": "So you hand over the phone",
+      "body": "A child who won’t open a paper dictionary will happily type into a search box. Then come image results, videos and adverts that were never made for them. In a 2022 survey of American teenagers, 15% said they first saw pornography online at 10 or younger, and 58% of those who had seen it said they had come across it by accident. Gloss is the screen you can hand over instead: 65,019 words checked for children, no adverts, no web results, and it shows you how to lock the tablet to Gloss with the phone’s own Guided Access or screen pinning.",
+      "citations": [
+        {
+          "label": "Common Sense Media, Teens and Pornography (survey of 1,358 US teens aged 13–17, September 2022)",
+          "url": "https://www.commonsensemedia.org/press-releases/new-report-reveals-truths-about-how-teens-engage-with-pornography"
+        }
+      ]
+    },
+    "depths": {
+      "title": "Easy explanations, and the hard ones too",
+      "body": "Simple, More, Deeper and All: the same meaning written four ways. A seven-year-old who finds reading hard starts at Simple. A confident eleven-year-old opens All and meets the full grown-up definition, safely. Every child starts where they are and steps up when they are ready — that is how the muscle builds."
+    },
+    "practice": {
+      "title": "Looking a word up is only half the job",
+      "today": [
+        "Every word your child looks up is saved to their own reader, on the phone",
+        "Flashcards: turn it over, say “Knew it” or “Still learning”, and the stumbles come first",
+        "A picture quiz: see the picture, pick the word",
+        "No streaks and no timers, so there is nothing to lose by taking a month off"
+      ],
+      "next": [
+        "A crossword built only from the words your child already knows",
+        "A letter-tile word game that plays with your child’s own words"
+      ]
+    }
+  }
 }

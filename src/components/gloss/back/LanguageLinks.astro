@@ -1,0 +1,33 @@
+---
+import { languagePath, SUPPORT_EMAIL, type GroupOfLanguages } from "../../../lib/gloss/campaign";
+
+/**
+ * A plain list of language pages by group: the foot of every language page,
+ * and the whole of the directory. Names only — no pitch — so each page's
+ * story stays its own.
+ */
+interface Props {
+  groups: GroupOfLanguages[];
+  title: string;
+}
+
+const { groups, title } = Astro.props;
+const askSubject = encodeURIComponent("A Gloss campaign for my language");
+---
+
+<h2 class="text-2xl font-bold text-text mb-6" style="font-family: 'Lora', serif;">{title}</h2>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  {groups.map((group) => (
+    <div>
+      <h3 class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-3">{group.title}</h3>
+      <ul class="space-y-1">
+        {group.languages.map((language) => (
+          <li><a href={languagePath(language)} class="text-[var(--gloss-sage)] hover:underline">{language.name}</a></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-400 mt-8">
+  Not here? <a href={`mailto:${SUPPORT_EMAIL}?subject=${askSubject}`} class="text-[var(--gloss-sage)] font-semibold hover:underline">Ask for your language</a>. If enough families ask, we’ll open it.
+</p>
