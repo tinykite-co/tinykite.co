@@ -11,6 +11,9 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
+  build: {
+    inlineStylesheets: 'always',
+  },
   redirects: {
     '/tools': '/coming-soon',
     '/router': '/coming-soon',
