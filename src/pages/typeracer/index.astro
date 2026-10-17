@@ -1132,12 +1132,15 @@ const KEYBOARD_ROWS = [
     let currentRaceHasQA = true;
 
     // --- 4-Lane Racers Configuration ---
-    const localRacerId = 'player_' + Math.random().toString(36).substring(2, 8);
+    const localRacerId = 'player_' + Math.random().toString(36).substring(2, 9);
+    const localRacerName = 'Player_' + localRacerId.slice(-4);
+    const localRacerAvatar = '🏎️';
+
     const racers = [
       { id: 'player', name: 'You', avatar: '🏎️', isPlayer: true, progress: 0, currentWpm: 0, rank: null, finishTime: null },
-      { id: 'bot-1', name: 'Cadence_Pro', avatar: '🏎️', isBot: true, targetWpm: 65, progress: 0, currentWpm: 0, rank: null, finishTime: null },
-      { id: 'bot-2', name: 'Oliver_T', avatar: '🚗', isBot: true, targetWpm: 48, progress: 0, currentWpm: 0, rank: null, finishTime: null },
-      { id: 'bot-3', name: 'Jane_Eyre', avatar: '🚕', isBot: true, targetWpm: 78, progress: 0, currentWpm: 0, rank: null, finishTime: null }
+      { id: 'bot-1', name: 'Cadence_Pro', avatar: '🏎️', isBot: true, isPeer: false, targetWpm: 65, progress: 0, currentWpm: 0, rank: null, finishTime: null },
+      { id: 'bot-2', name: 'Oliver_T', avatar: '🚗', isBot: true, isPeer: false, targetWpm: 48, progress: 0, currentWpm: 0, rank: null, finishTime: null },
+      { id: 'bot-3', name: 'Jane_Eyre', avatar: '🚕', isBot: true, isPeer: false, targetWpm: 78, progress: 0, currentWpm: 0, rank: null, finishTime: null }
     ];
 
     function getRandomHumanWpm() {
@@ -1153,6 +1156,8 @@ const KEYBOARD_ROWS = [
 
     function randomizeBots() {
       for (let i = 1; i <= 3; i++) {
+        if (racers[i].isPeer) continue; // Preserve live connected peer!
+
         racers[i].targetWpm = getRandomHumanWpm();
         racers[i].progress = 0;
         racers[i].currentWpm = 0;
@@ -1163,15 +1168,154 @@ const KEYBOARD_ROWS = [
 
         const nameEl = document.getElementById('racer-' + i + '-name');
         const avatarEl = document.getElementById('racer-' + i + '-avatar');
+        const badgeEl = document.getElementById('racer-' + i + '-badge');
         const wpmEl = document.getElementById('racer-' + i + '-wpm');
         const medalEl = document.getElementById('racer-' + i + '-medal');
         const racerEl = document.getElementById('racer-' + i);
 
         if (nameEl) nameEl.textContent = racers[i].name;
         if (avatarEl) avatarEl.textContent = racers[i].avatar;
+        if (badgeEl) {
+          badgeEl.textContent = 'BOT';
+          badgeEl.className = 'text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1 rounded';
+        }
         if (wpmEl) wpmEl.textContent = '0 WPM';
         if (medalEl) medalEl.classList.add('hidden');
         if (racerEl) racerEl.style.left = '0%';
+      }
+    }
+
+    // --- Cross-Tab P2P Multiplayer Networking (BroadcastChannel + LocalStorage fallback) ---
+    let p2pBroadcast = null;
+    let activePeerId = null;
+
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        p2pBroadcast = new BroadcastChannel('tk_typeracer_p2p_v2');
+        p2pBroadcast.onmessage = function(e) {
+          handleP2PPayload(e.data);
+        };
+      }
+    } catch (e) {}
+
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'tk_typeracer_p2p_signal' && e.newValue) {
+        try {
+          const data = JSON.parse(e.newValue);
+          handleP2PPayload(data);
+        } catch (err) {}
+      }
+    });
+
+    function sendP2PMessage(data) {
+      data.senderId = localRacerId;
+      data.timestamp = Date.now();
+      if (p2pBroadcast) {
+        try { p2pBroadcast.postMessage(data); } catch (e) {}
+      }
+      try {
+        localStorage.setItem('tk_typeracer_p2p_signal', JSON.stringify(data));
+      } catch (e) {}
+    }
+
+    function handleP2PPayload(data) {
+      if (!data || data.senderId === localRacerId) return;
+
+      if (data.type === 'LOBBY_JOIN') {
+        activePeerId = data.senderId;
+        promoteLaneToPeer(1, data.name || 'Peer Racer', data.avatar || '🏎️');
+
+        sendP2PMessage({
+          type: 'LOBBY_ACK',
+          targetId: data.senderId,
+          name: localRacerName,
+          avatar: localRacerAvatar,
+          passageIndex: currentPassageIndex
+        });
+
+        updateLobbyPeerCount(2);
+      } else if (data.type === 'LOBBY_ACK') {
+        activePeerId = data.senderId;
+        promoteLaneToPeer(1, data.name || 'Peer Racer', data.avatar || '🏎️');
+
+        if (!isRaceActive && data.passageIndex !== undefined && data.passageIndex !== currentPassageIndex) {
+          loadPassage(data.passageIndex, false);
+        }
+
+        updateLobbyPeerCount(2);
+      } else if (data.type === 'PROGRESS') {
+        if (!activePeerId) {
+          activePeerId = data.senderId;
+          promoteLaneToPeer(1, data.name || 'Peer Racer', data.avatar || '🏎️');
+        }
+        if (data.senderId === activePeerId) {
+          if (!racers[1].isPeer) promoteLaneToPeer(1, data.name || 'Peer Racer', data.avatar || '🏎️');
+          updatePeerRacerProgress(1, data.progress, data.wpm, data.rank);
+        }
+      } else if (data.type === 'FINISH') {
+        if (!activePeerId) {
+          activePeerId = data.senderId;
+          promoteLaneToPeer(1, data.name || 'Peer Racer', data.avatar || '🏎️');
+        }
+        if (data.senderId === activePeerId) {
+          handlePeerFinish(1, data.wpm, data.rank);
+        }
+      }
+    }
+
+    function promoteLaneToPeer(laneIdx, name, avatar) {
+      racers[laneIdx].isBot = false;
+      racers[laneIdx].isPeer = true;
+      racers[laneIdx].id = activePeerId;
+      racers[laneIdx].name = name;
+      racers[laneIdx].avatar = avatar;
+
+      const nameEl = document.getElementById('racer-' + laneIdx + '-name');
+      const avatarEl = document.getElementById('racer-' + laneIdx + '-avatar');
+      const badgeEl = document.getElementById('racer-' + laneIdx + '-badge');
+
+      if (nameEl) nameEl.textContent = name;
+      if (avatarEl) avatarEl.textContent = avatar;
+      if (badgeEl) {
+        badgeEl.textContent = 'PEER · LIVE';
+        badgeEl.className = 'text-[8px] font-black text-white bg-emerald-600 px-1.5 py-0.5 rounded shadow-sm animate-pulse';
+      }
+    }
+
+    function updatePeerRacerProgress(laneIdx, progress, wpm, rank) {
+      racers[laneIdx].progress = progress;
+      racers[laneIdx].currentWpm = wpm;
+
+      const racerEl = document.getElementById('racer-' + laneIdx);
+      const wpmEl = document.getElementById('racer-' + laneIdx + '-wpm');
+      if (racerEl) racerEl.style.left = Math.min(92, progress * 0.92) + '%';
+      if (wpmEl) wpmEl.textContent = wpm + ' WPM';
+
+      updateRaceRankings();
+    }
+
+    function handlePeerFinish(laneIdx, wpm, rank) {
+      racers[laneIdx].progress = 100;
+      racers[laneIdx].currentWpm = wpm;
+      racers[laneIdx].rank = rank;
+      const medalEl = document.getElementById('racer-' + laneIdx + '-medal');
+      if (medalEl) {
+        const medals = { 1: '🥇', 2: '🥈', 3: '🥉', 4: '4th' };
+        medalEl.textContent = medals[rank] || '';
+        medalEl.classList.remove('hidden');
+      }
+      updateRaceRankings();
+    }
+
+    function updateLobbyPeerCount(humanCount) {
+      const summaryEl = document.getElementById('lobby-racers-summary');
+      if (summaryEl) {
+        summaryEl.textContent = '• ' + humanCount + ' Live Players (You + Peer) + 2 Bots ready';
+        summaryEl.classList.remove('hidden');
+      }
+      const statusEl = document.getElementById('lobby-status-text');
+      if (statusEl) {
+        statusEl.innerHTML = '🟢 Peer Joined! Race ready (<span id="lobby-timer-num">Ready</span>)';
       }
     }
 
@@ -1236,6 +1380,7 @@ const KEYBOARD_ROWS = [
     const studentEmailInput = document.getElementById('student-email-input');
 
     // Tabs Navigation
+    let currentAppTab = 'arena';
     const tabBtnArena = document.getElementById('tab-btn-arena');
     const tabBtnLessons = document.getElementById('tab-btn-lessons');
     const tabBtnLibrary = document.getElementById('tab-btn-library');
@@ -1244,6 +1389,7 @@ const KEYBOARD_ROWS = [
     const tabLibraryView = document.getElementById('tab-library-view');
 
     function switchAppTab(tab) {
+      currentAppTab = tab;
       const activeClass = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500';
       const inactiveClass = 'px-5 py-2 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-gray-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500';
 
@@ -1304,7 +1450,7 @@ const KEYBOARD_ROWS = [
     let botSimulationInterval = null;
     let lobbyCountdownInterval = null;
 
-    function loadPassage(index) {
+    function loadPassage(index, announceP2P = true) {
       currentPassageIndex = index;
       currentPassage = passages[currentPassageIndex];
       words = currentPassage.text.split(' ');
@@ -1389,6 +1535,15 @@ const KEYBOARD_ROWS = [
 
       renderPassageWords();
       startLobbyMatchmaking();
+
+      if (announceP2P) {
+        sendP2PMessage({
+          type: 'LOBBY_JOIN',
+          name: localRacerName,
+          avatar: localRacerAvatar,
+          passageIndex: currentPassageIndex
+        });
+      }
     }
 
     function startLobbyMatchmaking() {
@@ -1566,7 +1721,8 @@ const KEYBOARD_ROWS = [
         ? Math.max(0, Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100))
         : 100;
 
-      const progress = Math.min(100, Math.round((currentWordIndex / words.length) * 100));
+      const totalPassageChars = Math.max(1, currentPassage.text.length);
+      const progress = Math.min(100, Math.round((typedChars / totalPassageChars) * 100));
       racers[0].progress = progress;
 
       if (hudWpm) hudWpm.textContent = calculatedWpm.toString();
@@ -1583,6 +1739,16 @@ const KEYBOARD_ROWS = [
       if (playerWpmEl) playerWpmEl.textContent = calculatedWpm + ' WPM';
 
       updateRaceRankings();
+
+      // Realtime cross-tab P2P progress broadcast
+      sendP2PMessage({
+        type: 'PROGRESS',
+        name: localRacerName,
+        avatar: localRacerAvatar,
+        progress: progress,
+        wpm: calculatedWpm,
+        rank: racers[0].rank
+      });
     }
 
     function updateBots() {
@@ -1593,6 +1759,7 @@ const KEYBOARD_ROWS = [
 
       for (let i = 1; i <= 3; i++) {
         const bot = racers[i];
+        if (bot.isPeer) continue; // Peer movement is handled live by P2P messages!
         if (bot.progress >= 100) continue;
 
         const variation = 1 + (Math.sin((Date.now() / 1000) + i) * 0.12);
@@ -1653,6 +1820,13 @@ const KEYBOARD_ROWS = [
           playerMedalEl.classList.remove('hidden');
         }
       }
+
+      // Broadcast finish to peer
+      sendP2PMessage({
+        type: 'FINISH',
+        wpm: racers[0].currentWpm,
+        rank: racers[0].rank
+      });
 
       updateCareerStats(racers[0].currentWpm, racers[0].rank === 1);
 
@@ -2378,9 +2552,11 @@ const KEYBOARD_ROWS = [
 
     // Window keyboard listener when Lessons tab is active
     window.addEventListener('keydown', function(e) {
-      if (tabLessonsView && tabLessonsView.style.display !== 'none') {
-        if (document.activeElement === studentEmailInput || document.activeElement === document.getElementById('library-direct-search')) {
-          return;
+      if (currentAppTab === 'lessons') {
+        if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+          if (document.activeElement !== lessonDrillInput) {
+            return;
+          }
         }
         if (e.key === 'Tab' || e.key === 'Escape' || e.ctrlKey || e.altKey || e.metaKey) return;
         e.preventDefault();
