@@ -1,0 +1,1383 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { PASSAGES } from '../../data/typeracer/passages';
+
+const pageTitle = "11+ TypeRacer | Gutenberg Classic Literature Speed & Comprehension | TinyKite";
+const pageDescription = "Ad-free TypeRacer built for 11+ preparation. Speed-type authentic classic literature passages from Project Gutenberg and master 11+ comprehension and vocabulary with interactive typing drills.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="min-h-screen bg-brand-cream dark:bg-brand-navy pt-24 pb-20 transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+      <!-- Ad-Free & 11+ Gutenberg Top Pill Banner -->
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-white/80 dark:bg-brand-navy-light/80 backdrop-blur-md border border-brand-mist dark:border-white/10 rounded-2xl px-5 py-3 shadow-sm">
+        <div class="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-brand-navy dark:text-brand-cream">
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>
+          <span><strong class="text-emerald-600 dark:text-emerald-400">100% Ad-Free</strong> • Authentic 11+ literature from Project Gutenberg</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-open-library" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-colors">
+            📚 Book Library (<span id="library-count">{PASSAGES.length}</span>)
+          </button>
+          <button id="btn-toggle-sound" class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-colors" title="Toggle Sound">
+            <span id="sound-icon">🔊</span> <span id="sound-label" class="hidden sm:inline">Sound On</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- App Title & Setup Controls -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/20 text-brand-navy dark:text-brand-gold text-xs font-bold uppercase tracking-wider mb-2">
+            🏎️ 11+ Speed & Comprehension
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-black text-brand-navy dark:text-brand-cream tracking-tight">
+            Literature <span class="text-brand-gold">TypeRacer</span>
+          </h1>
+          <p class="text-sm text-brand-slate dark:text-gray-300 mt-1 max-w-xl">
+            Race classic texts tested in GL & CEM 11+ exams. Speed-type the paragraph, then answer comprehension questions by typing!
+          </p>
+        </div>
+
+        <!-- Controls: Pacer and Next Button -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5 bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-brand-navy dark:text-brand-cream shadow-sm">
+            <span class="text-brand-slate dark:text-gray-400">Pacer:</span>
+            <select id="pacer-select" class="bg-transparent font-bold text-brand-navy dark:text-brand-gold focus:outline-none cursor-pointer">
+              <option value="0">Solo (Off)</option>
+              <option value="30">Pacer: 30 WPM (Foundation)</option>
+              <option value="45" selected>Pacer: 45 WPM (11+ Goal)</option>
+              <option value="60">Pacer: 60 WPM (Advanced)</option>
+              <option value="80">Pacer: 80 WPM (Scholar)</option>
+            </select>
+          </div>
+
+          <button id="btn-next-passage" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-xs sm:text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-sm">
+            <span>🎲 Random Book</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- THE RACE TRACK -->
+      <div class="mb-6 bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 rounded-3xl p-5 shadow-sm overflow-hidden">
+        <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400 mb-3 px-1">
+          <span class="flex items-center gap-1.5">🚦 Start Line</span>
+          <span id="race-status-text" class="text-brand-teal dark:text-brand-gold">Ready to Race</span>
+          <span class="flex items-center gap-1.5">🏁 Finish Line</span>
+        </div>
+
+        <div class="relative bg-slate-900/90 dark:bg-black/60 rounded-2xl p-4 border border-slate-800 space-y-4 overflow-hidden">
+          <!-- Road Asphalt Grid / Finish Line Marker -->
+          <div class="absolute right-12 top-0 bottom-0 w-3 bg-[repeating-conic-gradient(#fff_0_90deg,#000_0_180deg)] bg-[length:8px_8px] opacity-40 z-0"></div>
+
+          <!-- LANE 1: PLAYER -->
+          <div class="relative flex items-center h-12 z-10">
+            <div class="absolute inset-x-0 h-1 bg-white/10 rounded-full"></div>
+            <!-- Player Vehicle / Runner -->
+            <div id="player-racer" class="absolute left-0 -translate-y-1 transition-all duration-100 ease-out flex flex-col items-center select-none" style="left: 0%;">
+              <!-- Floating Live WPM Tag -->
+              <span id="player-wpm-pill" class="text-[10px] font-black px-1.5 py-0.5 rounded-full bg-brand-gold text-brand-navy whitespace-nowrap shadow-sm mb-0.5">
+                0 WPM
+              </span>
+              <div class="flex items-center gap-1">
+                <span class="text-2xl filter drop-shadow">🏎️</span>
+                <span class="text-[10px] font-bold text-white bg-slate-800/80 px-1 rounded">You</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LANE 2: PACER BOT -->
+          <div id="pacer-lane" class="relative flex items-center h-10 z-10 border-t border-dashed border-white/10 pt-2">
+            <div class="absolute inset-x-0 h-1 bg-white/10 rounded-full"></div>
+            <!-- Pacer Vehicle -->
+            <div id="pacer-racer" class="absolute left-0 transition-all duration-150 ease-linear flex items-center gap-1 select-none" style="left: 0%;">
+              <span class="text-xl filter drop-shadow">🤖</span>
+              <span id="pacer-label" class="text-[10px] font-semibold text-slate-300 bg-slate-800/80 px-1 rounded whitespace-nowrap">
+                Pacer 45 WPM
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN ARENA: TYPING PARAGRAPH OR QUESTIONS -->
+      <div id="arena-container" class="bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-sm relative transition-all">
+
+        <!-- Citation Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-brand-mist dark:border-white/10 pb-4 mb-5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-gold/15 flex items-center justify-center text-xl">
+              📖
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 id="passage-title" class="text-lg font-bold text-brand-navy dark:text-brand-cream leading-tight">
+                  The Secret Garden
+                </h2>
+                <span id="passage-difficulty" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
+                  Foundation
+                </span>
+              </div>
+              <p id="passage-author" class="text-xs text-brand-slate dark:text-gray-400">
+                by Frances Hodgson Burnett (1911) • Chapter 5
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="btn-toggle-vocab" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20 transition-colors flex items-center gap-1">
+              <span>💡</span> 11+ Vocab (<span id="vocab-count">3</span>)
+            </button>
+            <a id="passage-gutenberg-link" href="https://www.gutenberg.org/ebooks/113" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:text-brand-gold transition-colors inline-flex items-center gap-1" title="Read full book free on Gutenberg.org">
+              <span>Gutenberg #<span id="passage-gutenberg-id">113</span></span> ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Vocabulary Popover (Toggleable) -->
+        <div id="vocab-drawer" class="hidden mb-5 bg-brand-cream/80 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4 text-xs">
+          <h4 class="font-bold text-brand-navy dark:text-brand-cream mb-2 flex items-center gap-1">
+            <span>✨</span> Key 11+ Words in This Text:
+          </h4>
+          <div id="vocab-list" class="grid sm:grid-cols-3 gap-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- PHASE 1: TYPING RACE VIEW -->
+        <div id="typing-race-view">
+          <!-- Live HUD Stats -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <div class="bg-brand-cream/50 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+              <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Speed</span>
+              <span id="hud-wpm" class="text-2xl font-black text-brand-navy dark:text-brand-cream">0</span>
+              <span class="text-[10px] text-brand-slate dark:text-gray-400 font-bold ml-0.5">WPM</span>
+            </div>
+            <div class="bg-brand-cream/50 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+              <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Accuracy</span>
+              <span id="hud-accuracy" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">100</span>
+              <span class="text-[10px] text-brand-slate dark:text-gray-400 font-bold ml-0.5">%</span>
+            </div>
+            <div class="bg-brand-cream/50 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+              <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Time</span>
+              <span id="hud-time" class="text-2xl font-black text-brand-navy dark:text-brand-cream">0:00</span>
+            </div>
+            <div class="bg-brand-cream/50 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-3 text-center">
+              <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Progress</span>
+              <span id="hud-progress" class="text-2xl font-black text-brand-gold">0</span>
+              <span class="text-[10px] text-brand-slate dark:text-gray-400 font-bold ml-0.5">%</span>
+            </div>
+          </div>
+
+          <!-- Passage Text Display Area -->
+          <div id="passage-display" class="relative min-h-[130px] p-5 sm:p-6 bg-brand-cream/30 dark:bg-white/[0.03] border border-brand-mist dark:border-white/10 rounded-2xl text-lg sm:text-xl md:text-2xl leading-relaxed tracking-wide font-normal select-none mb-6 font-sans">
+            <!-- Dynamic Words rendered here -->
+          </div>
+
+          <!-- Typing Input Box -->
+          <div class="relative">
+            <input
+              id="typing-input"
+              type="text"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder="Start typing the passage here to begin the race..."
+              class="w-full px-5 py-4 text-lg sm:text-xl rounded-2xl bg-white dark:bg-brand-navy border-2 border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream focus:border-brand-gold focus:outline-none transition-all shadow-inner font-sans"
+            />
+            <div id="input-helper" class="mt-2 flex items-center justify-between text-xs text-brand-slate dark:text-gray-400 px-1">
+              <span>💡 Tip: Press <kbd class="px-1.5 py-0.5 rounded bg-brand-cream dark:bg-white/10 font-mono text-[10px] border border-brand-mist dark:border-white/10">Space</kbd> after each word to advance. Timer starts on first letter.</span>
+              <span id="typing-error-tag" class="hidden text-rose-500 font-bold">Incorrect letter! Press Backspace to fix.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 2: 11+ QUESTION CHALLENGE VIEW (Initially Hidden) -->
+        <div id="question-challenge-view" class="hidden">
+          <!-- Race Finish Banner -->
+          <div class="mb-6 bg-gradient-to-r from-emerald-500/10 via-brand-gold/10 to-transparent border border-emerald-500/30 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🏁</span>
+              <div>
+                <h3 class="font-bold text-base text-brand-navy dark:text-brand-cream">
+                  Race Complete! Speed: <span id="finish-race-wpm" class="text-emerald-600 dark:text-emerald-400 font-black">0</span> WPM (<span id="finish-race-acc">100%</span> Acc)
+                </h3>
+                <p class="text-xs text-brand-slate dark:text-gray-400">
+                  Pit Stop Challenge: Type the answers to these 11+ exam questions about the passage!
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-gold text-brand-navy">
+                Phase 2: 11+ Comprehension
+              </span>
+            </div>
+          </div>
+
+          <!-- Sticky Text Reference Card -->
+          <div class="mb-6 bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400 flex items-center gap-1">
+                <span>📖</span> Reference Passage:
+              </span>
+              <span class="text-[11px] text-brand-slate dark:text-gray-400">Refer back to find your answers</span>
+            </div>
+            <p id="ref-passage-text" class="text-sm sm:text-base text-brand-navy dark:text-brand-cream leading-relaxed font-sans italic">
+              <!-- Text mirrored here -->
+            </p>
+          </div>
+
+          <!-- Active Question Card -->
+          <div id="question-card" class="bg-white dark:bg-brand-navy border-2 border-brand-gold/50 rounded-2xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <span id="question-step" class="text-xs font-bold uppercase tracking-wider text-brand-gold">
+                Question 1 of 3
+              </span>
+              <span id="question-type-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-teal/15 text-brand-teal dark:text-emerald-300">
+                Vocabulary in Context
+              </span>
+            </div>
+
+            <h3 id="question-prompt" class="text-lg sm:text-xl font-bold text-brand-navy dark:text-brand-cream mb-4">
+              <!-- Prompt text -->
+            </h3>
+
+            <!-- Question Input Box -->
+            <form id="question-form" class="space-y-4">
+              <div class="relative">
+                <input
+                  id="question-input"
+                  type="text"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  placeholder="Type your answer here and press Enter..."
+                  class="w-full px-5 py-3.5 text-base sm:text-lg rounded-xl bg-brand-cream/50 dark:bg-brand-navy-light border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream focus:border-brand-gold focus:outline-none transition-all font-sans"
+                />
+              </div>
+
+              <!-- Question Action Bar -->
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <button type="button" id="btn-show-hint" class="text-xs font-semibold text-brand-slate dark:text-gray-400 hover:text-brand-gold transition-colors flex items-center gap-1">
+                  <span>💡</span> <span id="hint-text-label">Need a hint?</span>
+                </button>
+
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btn-reveal-answer" class="hidden text-xs font-semibold text-brand-slate dark:text-gray-400 hover:text-rose-500 transition-colors">
+                    Reveal Answer
+                  </button>
+                  <button type="submit" id="btn-submit-answer" class="px-5 py-2.5 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-sm">
+                    Submit Answer ↵
+                  </button>
+                </div>
+              </div>
+
+              <!-- Hint Display -->
+              <div id="hint-box" class="hidden mt-2 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-700 dark:text-amber-300">
+                <span class="font-bold">Clue:</span> <span id="hint-content"></span>
+              </div>
+
+              <!-- Answer Feedback Box -->
+              <div id="answer-feedback" class="hidden p-4 rounded-xl text-sm transition-all">
+                <div class="flex items-start gap-2.5">
+                  <span id="feedback-icon" class="text-lg"></span>
+                  <div>
+                    <h4 id="feedback-title" class="font-bold"></h4>
+                    <p id="feedback-explanation" class="text-xs mt-1 leading-relaxed opacity-90"></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- PHASE 3: GRAND RESULTS & SCORECARD (Initially Hidden) -->
+        <div id="grand-results-view" class="hidden">
+          <div class="text-center py-6">
+            <span id="results-badge-icon" class="text-5xl sm:text-6xl inline-block mb-3 animate-bounce">🏆</span>
+            <span id="results-rank-pill" class="block mx-auto w-fit px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-brand-gold text-brand-navy mb-2">
+              11+ Scholarship Grandmaster
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-black text-brand-navy dark:text-brand-cream tracking-tight mb-2">
+              Race Completed!
+            </h2>
+            <p id="results-subtitle" class="text-sm text-brand-slate dark:text-gray-300 max-w-lg mx-auto">
+              Superb performance across speed typing and 11+ English comprehension.
+            </p>
+          </div>
+
+          <!-- Score Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4 text-center">
+              <span class="block text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Typing Speed</span>
+              <span id="final-wpm" class="text-3xl font-black text-brand-navy dark:text-brand-cream">58</span>
+              <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">WPM</span>
+            </div>
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4 text-center">
+              <span class="block text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Accuracy</span>
+              <span id="final-accuracy" class="text-3xl font-black text-emerald-600 dark:text-emerald-400">98</span>
+              <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">%</span>
+            </div>
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4 text-center">
+              <span class="block text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">11+ Questions</span>
+              <span id="final-questions" class="text-3xl font-black text-brand-gold">3/3</span>
+              <span class="text-xs text-brand-slate dark:text-gray-400 font-bold ml-0.5">Correct</span>
+            </div>
+            <div class="bg-brand-cream/60 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-4 text-center">
+              <span class="block text-xs font-bold uppercase tracking-wider text-brand-slate dark:text-gray-400">Total Time</span>
+              <span id="final-time" class="text-3xl font-black text-brand-navy dark:text-brand-cream">46s</span>
+            </div>
+          </div>
+
+          <!-- Vocabulary Reinforcement Card -->
+          <div class="mb-8 bg-brand-cream/40 dark:bg-white/5 border border-brand-mist dark:border-white/10 rounded-2xl p-5">
+            <h4 class="font-bold text-sm text-brand-navy dark:text-brand-cream mb-3 flex items-center gap-2">
+              <span>📚</span> Vocabulary Revision for this Book:
+            </h4>
+            <div id="results-vocab-grid" class="grid sm:grid-cols-3 gap-3">
+              <!-- Dynamically filled with words & definitions -->
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <button id="btn-results-next" class="px-6 py-3 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy font-bold rounded-2xl hover:opacity-90 active:scale-95 transition-all shadow-md">
+              🚀 Next 11+ Race
+            </button>
+            <button id="btn-results-retry" class="px-6 py-3 bg-white dark:bg-white/10 border border-brand-mist dark:border-white/20 text-brand-navy dark:text-brand-cream font-bold rounded-2xl hover:bg-brand-cream/60 dark:hover:bg-white/20 active:scale-95 transition-all">
+              🔁 Retry This Passage
+            </button>
+            <button id="btn-share-score" class="px-5 py-3 bg-brand-teal text-white font-bold rounded-2xl hover:opacity-90 active:scale-95 transition-all flex items-center gap-2">
+              <span>📋</span> <span id="share-btn-text">Share Score</span>
+            </button>
+            <a id="results-gutenberg-btn" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-3 bg-brand-cream dark:bg-white/5 text-brand-navy dark:text-brand-cream border border-brand-mist dark:border-white/10 font-bold rounded-2xl hover:text-brand-gold transition-colors inline-flex items-center gap-1.5">
+              <span>📖 Full Gutenberg Book</span> ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lifetime Career Stats Footer Strip -->
+      <div class="mt-8 bg-white/70 dark:bg-brand-navy-light/70 backdrop-blur-md border border-brand-mist dark:border-white/10 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-brand-navy dark:text-brand-cream shadow-sm">
+        <div class="flex items-center gap-6">
+          <span class="text-brand-slate dark:text-gray-400 uppercase tracking-wider font-bold">Your Career:</span>
+          <div>Races: <strong id="career-races" class="text-brand-navy dark:text-brand-cream">0</strong></div>
+          <div>Best Speed: <strong id="career-best-wpm" class="text-emerald-600 dark:text-emerald-400">0 WPM</strong></div>
+          <div>Average Speed: <strong id="career-avg-wpm" class="text-brand-navy dark:text-brand-cream">0 WPM</strong></div>
+          <div>11+ Solved: <strong id="career-questions" class="text-brand-gold">0</strong></div>
+        </div>
+        <button id="btn-reset-career" class="text-brand-slate dark:text-gray-400 hover:text-rose-500 transition-colors text-[11px]">
+          Reset Stats
+        </button>
+      </div>
+
+      <!-- Explanatory 11+ Gutenberg Guide Section -->
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        <div class="bg-white/60 dark:bg-brand-navy-light/50 border border-brand-mist dark:border-white/10 rounded-2xl p-6">
+          <div class="text-2xl mb-2">📜</div>
+          <h3 class="font-bold text-base text-brand-navy dark:text-brand-cream mb-1">Authentic 11+ Passages</h3>
+          <p class="text-xs text-brand-slate dark:text-gray-400 leading-relaxed">
+            CEM, GL Assessment, and Independent school scholarship exams frequently pull comprehension extracts from Victorian and Edwardian classics. Practicing typing them builds familiarity with archaic syntax and rich vocabulary.
+          </p>
+        </div>
+        <div class="bg-white/60 dark:bg-brand-navy-light/50 border border-brand-mist dark:border-white/10 rounded-2xl p-6">
+          <div class="text-2xl mb-2">⚡</div>
+          <h3 class="font-bold text-base text-brand-navy dark:text-brand-cream mb-1">Dual Speed & Comprehension</h3>
+          <p class="text-xs text-brand-slate dark:text-gray-400 leading-relaxed">
+            Typing builds rapid letter recognition and spelling accuracy. The follow-up typing questions immediately test whether the child absorbed meaning, nuance, and vocabulary while typing quickly.
+          </p>
+        </div>
+        <div class="bg-white/60 dark:bg-brand-navy-light/50 border border-brand-mist dark:border-white/10 rounded-2xl p-6">
+          <div class="text-2xl mb-2">🛡️</div>
+          <h3 class="font-bold text-base text-brand-navy dark:text-brand-cream mb-1">Ad-Free & Safe</h3>
+          <p class="text-xs text-brand-slate dark:text-gray-400 leading-relaxed">
+            Zero third-party ads, zero tracking scripts, and zero distractions. Pure, calm, focused learning built by TinyKite with direct links to free public-domain books on Project Gutenberg.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- PASSAGE LIBRARY MODAL / DRAWER -->
+  <div id="library-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-brand-navy border border-brand-mist dark:border-white/10 rounded-3xl w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-brand-mist dark:border-white/10 flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-black text-brand-navy dark:text-brand-cream">
+            Project Gutenberg 11+ Library
+          </h3>
+          <p class="text-xs text-brand-slate dark:text-gray-400">
+            Select any classic book to race and test comprehension.
+          </p>
+        </div>
+        <button id="btn-close-library" class="w-8 h-8 rounded-full bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream flex items-center justify-center hover:bg-brand-gold/20 font-bold transition-colors">
+          ✕
+        </button>
+      </div>
+
+      <!-- Filter and Search -->
+      <div class="p-4 border-b border-brand-mist dark:border-white/10 bg-brand-cream/30 dark:bg-white/[0.02] flex flex-wrap items-center justify-between gap-3">
+        <input
+          id="library-search"
+          type="text"
+          placeholder="Search by book title or author..."
+          class="flex-1 min-w-[200px] px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-brand-navy-light border border-brand-mist dark:border-white/10 text-brand-navy dark:text-brand-cream focus:outline-none focus:border-brand-gold"
+        />
+        <div class="flex items-center gap-1.5 text-xs">
+          <button class="lib-filter-btn px-2.5 py-1 rounded-lg font-bold bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy" data-filter="all">All</button>
+          <button class="lib-filter-btn px-2.5 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20" data-filter="Foundation">Foundation</button>
+          <button class="lib-filter-btn px-2.5 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20" data-filter="Standard 11+">Standard 11+</button>
+          <button class="lib-filter-btn px-2.5 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20" data-filter="Advanced 11+">Advanced 11+</button>
+        </div>
+      </div>
+
+      <!-- Books Grid Scroll Area -->
+      <div id="library-cards-container" class="p-5 overflow-y-auto space-y-3 flex-1">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded Passages Data -->
+  <script is:inline define:vars={{ initialPassages: PASSAGES }}>
+    window.__11P_PASSAGES__ = initialPassages;
+  </script>
+
+  <!-- TypeRacer Client Application Script -->
+  <script>
+    import type { Passage, Question } from '../../data/typeracer/passages';
+
+    declare global {
+      interface Window {
+        __11P_PASSAGES__: Passage[];
+      }
+    }
+
+    // --- Web Audio API Synth Sound Engine ---
+    class SoundEngine {
+      private ctx: AudioContext | null = null;
+      public enabled: boolean = true;
+
+      private init() {
+        if (!this.ctx && typeof window !== 'undefined') {
+          const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          if (AudioContextClass) {
+            this.ctx = new AudioContextClass();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      public playKeyClick() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(580, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(320, this.ctx.currentTime + 0.03);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.03);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.03);
+        } catch {
+          // ignore audio failure
+        }
+      }
+
+      public playError() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(90, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch {
+          // ignore
+        }
+      }
+
+      public playFinishChime() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+          notes.forEach((freq, idx) => {
+            if (!this.ctx) return;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.08);
+            gain.gain.setValueAtTime(0.15, this.ctx.currentTime + idx * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.08);
+            osc.stop(this.ctx.currentTime + idx * 0.08 + 0.35);
+          });
+        } catch {
+          // ignore
+        }
+      }
+
+      public playCorrect() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const notes = [587.33, 880]; // D5, A5
+          notes.forEach((freq, idx) => {
+            if (!this.ctx) return;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
+            gain.gain.setValueAtTime(0.14, this.ctx.currentTime + idx * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.25);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.1);
+            osc.stop(this.ctx.currentTime + idx * 0.1 + 0.25);
+          });
+        } catch {
+          // ignore
+        }
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    // --- State Variables ---
+    const passages: Passage[] = window.__11P_PASSAGES__ || [];
+    let currentPassageIndex = Math.floor(Math.random() * passages.length);
+    let currentPassage: Passage = passages[currentPassageIndex];
+
+    let words: string[] = [];
+    let currentWordIndex = 0;
+    let currentInput = '';
+    let isRaceActive = false;
+    let isRaceFinished = false;
+    let raceStartTime = 0;
+    let raceEndTime = 0;
+    let totalKeystrokes = 0;
+    let errorKeystrokes = 0;
+    let hudTimerInterval: number | null = null;
+    let pacerInterval: number | null = null;
+    let pacerProgress = 0; // 0 to 100%
+    let pacerWpm = 45;
+
+    // Phase 2 Questions State
+    let currentQuestionIndex = 0;
+    let questionsAnsweredCorrectly = 0;
+    let questionAttemptCount = 0;
+
+    // Career Stats
+    interface CareerStats {
+      races: number;
+      bestWpm: number;
+      totalWpm: number;
+      questionsSolved: number;
+    }
+
+    function getCareerStats(): CareerStats {
+      try {
+        const data = localStorage.getItem('tinykite_typeracer_career');
+        if (data) return JSON.parse(data);
+      } catch {}
+      return { races: 0, bestWpm: 0, totalWpm: 0, questionsSolved: 0 };
+    }
+
+    function saveCareerStats(stats: CareerStats) {
+      try {
+        localStorage.setItem('tinykite_typeracer_career', JSON.stringify(stats));
+      } catch {}
+    }
+
+    function updateCareerUI() {
+      const stats = getCareerStats();
+      const racesEl = document.getElementById('career-races');
+      const bestEl = document.getElementById('career-best-wpm');
+      const avgEl = document.getElementById('career-avg-wpm');
+      const qEl = document.getElementById('career-questions');
+
+      if (racesEl) racesEl.textContent = stats.races.toString();
+      if (bestEl) bestEl.textContent = `${stats.bestWpm} WPM`;
+      if (avgEl) {
+        const avg = stats.races > 0 ? Math.round(stats.totalWpm / stats.races) : 0;
+        avgEl.textContent = `${avg} WPM`;
+      }
+      if (qEl) qEl.textContent = stats.questionsSolved.toString();
+    }
+
+    // --- DOM Elements ---
+    const passageTitle = document.getElementById('passage-title');
+    const passageAuthor = document.getElementById('passage-author');
+    const passageDifficulty = document.getElementById('passage-difficulty');
+    const passageGutenbergId = document.getElementById('passage-gutenberg-id');
+    const passageGutenbergLink = document.getElementById('passage-gutenberg-link') as HTMLAnchorElement | null;
+    const passageDisplay = document.getElementById('passage-display');
+    const typingInput = document.getElementById('typing-input') as HTMLInputElement | null;
+    const typingErrorTag = document.getElementById('typing-error-tag');
+    const raceStatusText = document.getElementById('race-status-text');
+    const playerRacer = document.getElementById('player-racer');
+    const playerWpmPill = document.getElementById('player-wpm-pill');
+    const pacerRacer = document.getElementById('pacer-racer');
+    const pacerLane = document.getElementById('pacer-lane');
+    const pacerLabel = document.getElementById('pacer-label');
+    const pacerSelect = document.getElementById('pacer-select') as HTMLSelectElement | null;
+    const hudWpm = document.getElementById('hud-wpm');
+    const hudAccuracy = document.getElementById('hud-accuracy');
+    const hudTime = document.getElementById('hud-time');
+    const hudProgress = document.getElementById('hud-progress');
+
+    // Vocab Elements
+    const btnToggleVocab = document.getElementById('btn-toggle-vocab');
+    const vocabDrawer = document.getElementById('vocab-drawer');
+    const vocabList = document.getElementById('vocab-list');
+    const vocabCount = document.getElementById('vocab-count');
+
+    // Views
+    const typingRaceView = document.getElementById('typing-race-view');
+    const questionChallengeView = document.getElementById('question-challenge-view');
+    const grandResultsView = document.getElementById('grand-results-view');
+
+    // Question Challenge Elements
+    const refPassageText = document.getElementById('ref-passage-text');
+    const finishRaceWpm = document.getElementById('finish-race-wpm');
+    const finishRaceAcc = document.getElementById('finish-race-acc');
+    const questionStep = document.getElementById('question-step');
+    const questionTypeBadge = document.getElementById('question-type-badge');
+    const questionPrompt = document.getElementById('question-prompt');
+    const questionInput = document.getElementById('question-input') as HTMLInputElement | null;
+    const questionForm = document.getElementById('question-form');
+    const btnShowHint = document.getElementById('btn-show-hint');
+    const hintBox = document.getElementById('hint-box');
+    const hintContent = document.getElementById('hint-content');
+    const answerFeedback = document.getElementById('answer-feedback');
+    const feedbackIcon = document.getElementById('feedback-icon');
+    const feedbackTitle = document.getElementById('feedback-title');
+    const feedbackExplanation = document.getElementById('feedback-explanation');
+    const btnRevealAnswer = document.getElementById('btn-reveal-answer');
+    const btnSubmitAnswer = document.getElementById('btn-submit-answer');
+
+    // Grand Results Elements
+    const finalWpm = document.getElementById('final-wpm');
+    const finalAccuracy = document.getElementById('final-accuracy');
+    const finalQuestions = document.getElementById('final-questions');
+    const finalTime = document.getElementById('final-time');
+    const resultsVocabGrid = document.getElementById('results-vocab-grid');
+    const resultsRankPill = document.getElementById('results-rank-pill');
+    const resultsBadgeIcon = document.getElementById('results-badge-icon');
+    const resultsGutenbergBtn = document.getElementById('results-gutenberg-btn') as HTMLAnchorElement | null;
+    const btnResultsNext = document.getElementById('btn-results-next');
+    const btnResultsRetry = document.getElementById('btn-results-retry');
+    const btnShareScore = document.getElementById('btn-share-score');
+    const shareBtnText = document.getElementById('share-btn-text');
+
+    // Library Modal Elements
+    const btnOpenLibrary = document.getElementById('btn-open-library');
+    const btnCloseLibrary = document.getElementById('btn-close-library');
+    const libraryModal = document.getElementById('library-modal');
+    const libraryCardsContainer = document.getElementById('library-cards-container');
+    const librarySearch = document.getElementById('library-search') as HTMLInputElement | null;
+    const libFilterBtns = document.querySelectorAll('.lib-filter-btn');
+
+    // Audio SFX UI
+    const btnToggleSound = document.getElementById('btn-toggle-sound');
+    const soundIcon = document.getElementById('sound-icon');
+    const soundLabel = document.getElementById('sound-label');
+
+    // Random Book Button
+    const btnNextPassage = document.getElementById('btn-next-passage');
+
+    // --- Sound Settings Persistence ---
+    const savedSound = localStorage.getItem('tinykite_typeracer_sound');
+    if (savedSound === 'off') {
+      sound.enabled = false;
+      if (soundIcon) soundIcon.textContent = '🔇';
+      if (soundLabel) soundLabel.textContent = 'Muted';
+    }
+
+    if (btnToggleSound) {
+      btnToggleSound.addEventListener('click', () => {
+        sound.enabled = !sound.enabled;
+        localStorage.setItem('tinykite_typeracer_sound', sound.enabled ? 'on' : 'off');
+        if (soundIcon) soundIcon.textContent = sound.enabled ? '🔊' : '🔇';
+        if (soundLabel) soundLabel.textContent = sound.enabled ? 'Sound On' : 'Muted';
+      });
+    }
+
+    // --- Reset Career Stats ---
+    const btnResetCareer = document.getElementById('btn-reset-career');
+    if (btnResetCareer) {
+      btnResetCareer.addEventListener('click', () => {
+        if (confirm("Reset your 11+ TypeRacer career stats?")) {
+          saveCareerStats({ races: 0, bestWpm: 0, totalWpm: 0, questionsSolved: 0 });
+          updateCareerUI();
+        }
+      });
+    }
+
+    // --- Initialize / Render Current Passage ---
+    function loadPassage(index: number) {
+      currentPassageIndex = index;
+      currentPassage = passages[currentPassageIndex];
+      words = currentPassage.text.split(' ');
+      currentWordIndex = 0;
+      currentInput = '';
+      isRaceActive = false;
+      isRaceFinished = false;
+      raceStartTime = 0;
+      raceEndTime = 0;
+      totalKeystrokes = 0;
+      errorKeystrokes = 0;
+      pacerProgress = 0;
+
+      if (hudTimerInterval) clearInterval(hudTimerInterval);
+      if (pacerInterval) clearInterval(pacerInterval);
+
+      // Views
+      if (typingRaceView) typingRaceView.classList.remove('hidden');
+      if (questionChallengeView) questionChallengeView.classList.add('hidden');
+      if (grandResultsView) grandResultsView.classList.add('hidden');
+
+      // Update Citation
+      if (passageTitle) passageTitle.textContent = currentPassage.title;
+      if (passageAuthor) passageAuthor.textContent = `by ${currentPassage.author} (${currentPassage.year}) • ${currentPassage.chapter}`;
+      if (passageDifficulty) {
+        passageDifficulty.textContent = currentPassage.difficulty;
+        if (currentPassage.difficulty === 'Foundation') {
+          passageDifficulty.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+        } else if (currentPassage.difficulty === 'Standard 11+') {
+          passageDifficulty.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+        } else {
+          passageDifficulty.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
+        }
+      }
+      if (passageGutenbergId) passageGutenbergId.textContent = currentPassage.gutenbergId.toString();
+      if (passageGutenbergLink) passageGutenbergLink.href = currentPassage.gutenbergUrl;
+
+      // Update Vocab Drawer
+      if (vocabCount) vocabCount.textContent = currentPassage.vocabulary.length.toString();
+      if (vocabList) {
+        vocabList.innerHTML = currentPassage.vocabulary.map(v => `
+          <div class="p-2 rounded-xl bg-white dark:bg-white/5 border border-brand-mist dark:border-white/10">
+            <span class="font-bold text-brand-navy dark:text-brand-cream">${v.word}:</span>
+            <span class="text-brand-slate dark:text-gray-300 ml-1">${v.definition}</span>
+          </div>
+        `).join('');
+      }
+
+      // Reset HUD & Track
+      if (hudWpm) hudWpm.textContent = '0';
+      if (hudAccuracy) hudAccuracy.textContent = '100';
+      if (hudTime) hudTime.textContent = '0:00';
+      if (hudProgress) hudProgress.textContent = '0';
+      if (playerRacer) playerRacer.style.left = '0%';
+      if (playerWpmPill) playerWpmPill.textContent = '0 WPM';
+      if (pacerRacer) pacerRacer.style.left = '0%';
+      if (raceStatusText) raceStatusText.textContent = 'Ready to Race';
+
+      // Reset Input
+      if (typingInput) {
+        typingInput.value = '';
+        typingInput.disabled = false;
+        typingInput.classList.remove('border-rose-500', 'bg-rose-50/50', 'dark:bg-rose-950/20');
+        typingInput.focus();
+      }
+      if (typingErrorTag) typingErrorTag.classList.add('hidden');
+
+      renderPassageWords();
+    }
+
+    // --- Render Passage Letter-by-Letter Display ---
+    function renderPassageWords() {
+      if (!passageDisplay) return;
+
+      const wordsHtml = words.map((word, wIdx) => {
+        if (wIdx < currentWordIndex) {
+          // Completed word
+          return `<span class="text-brand-teal dark:text-emerald-400 font-medium">${escapeHtml(word)}</span>`;
+        } else if (wIdx === currentWordIndex) {
+          // Current active word: render character breakdown
+          const target = word;
+          const typed = currentInput;
+          let charsHtml = '';
+
+          // Compare typed characters against target
+          let isError = false;
+          for (let i = 0; i < target.length; i++) {
+            if (i < typed.length) {
+              if (typed[i] === target[i] && !isError) {
+                // Correctly typed character
+                charsHtml += `<span class="text-brand-teal dark:text-emerald-400 font-bold underline decoration-brand-teal/50 decoration-2">${escapeHtml(target[i])}</span>`;
+              } else {
+                // First error or continued error
+                isError = true;
+                charsHtml += `<span class="bg-rose-500/20 text-rose-600 dark:text-rose-400 font-bold underline decoration-rose-500 decoration-2">${escapeHtml(target[i])}</span>`;
+              }
+            } else {
+              // Untyped remaining characters in current word
+              charsHtml += `<span class="text-brand-navy dark:text-brand-cream">${escapeHtml(target[i])}</span>`;
+            }
+          }
+
+          // If typed is longer than target word (extra erroneous characters)
+          if (typed.length > target.length) {
+            const extra = typed.slice(target.length);
+            charsHtml += `<span class="bg-rose-500/30 text-rose-700 dark:text-rose-300 font-bold line-through">${escapeHtml(extra)}</span>`;
+          }
+
+          return `<span class="inline-block px-1 py-0.5 rounded bg-brand-gold/15 dark:bg-brand-gold/10 ring-1 ring-brand-gold/30">${charsHtml}</span>`;
+        } else {
+          // Upcoming word
+          return `<span class="text-brand-navy/60 dark:text-gray-300">${escapeHtml(word)}</span>`;
+        }
+      }).join(' ');
+
+      passageDisplay.innerHTML = wordsHtml;
+    }
+
+    function escapeHtml(str: string): string {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // --- Typing Input Event Handler ---
+    if (typingInput) {
+      typingInput.addEventListener('keydown', (e) => {
+        // Start race timer on first non-modifier keystroke
+        if (!isRaceActive && !isRaceFinished && e.key.length === 1) {
+          startRace();
+        }
+
+        // Space bar handling
+        if (e.key === ' ' && isRaceActive) {
+          const currentTargetWord = words[currentWordIndex];
+          const typedVal = typingInput.value.trim();
+
+          // If word matches target exactly, advance!
+          if (typedVal === currentTargetWord) {
+            e.preventDefault();
+            sound.playKeyClick();
+            currentWordIndex++;
+            currentInput = '';
+            typingInput.value = '';
+            totalKeystrokes++;
+
+            // If this was the last word, finish!
+            if (currentWordIndex >= words.length) {
+              finishRace();
+              return;
+            }
+
+            renderPassageWords();
+            updateRaceMetrics();
+            return;
+          }
+        }
+      });
+
+      typingInput.addEventListener('input', () => {
+        if (!isRaceActive && !isRaceFinished) {
+          startRace();
+        }
+
+        currentInput = typingInput.value;
+        const currentTargetWord = words[currentWordIndex];
+
+        // Track keystrokes
+        totalKeystrokes++;
+
+        // Check if current input matches the target prefix
+        const isPrefixMatch = currentTargetWord.startsWith(currentInput);
+        if (!isPrefixMatch) {
+          errorKeystrokes++;
+          sound.playError();
+          typingInput.classList.add('border-rose-500', 'bg-rose-50/50', 'dark:bg-rose-950/20');
+          if (typingErrorTag) typingErrorTag.classList.remove('hidden');
+        } else {
+          sound.playKeyClick();
+          typingInput.classList.remove('border-rose-500', 'bg-rose-50/50', 'dark:bg-rose-950/20');
+          if (typingErrorTag) typingErrorTag.classList.add('hidden');
+        }
+
+        // Check if final word is completed (no space required on last word)
+        if (currentWordIndex === words.length - 1 && currentInput === currentTargetWord) {
+          finishRace();
+          return;
+        }
+
+        renderPassageWords();
+        updateRaceMetrics();
+      });
+    }
+
+    // --- Race Lifecycle Functions ---
+    function startRace() {
+      isRaceActive = true;
+      raceStartTime = Date.now();
+      if (raceStatusText) raceStatusText.textContent = '🏁 Racing!';
+
+      // Live HUD Timer
+      hudTimerInterval = window.setInterval(() => {
+        const elapsedSec = Math.floor((Date.now() - raceStartTime) / 1000);
+        const mins = Math.floor(elapsedSec / 60);
+        const secs = elapsedSec % 60;
+        if (hudTime) hudTime.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        updateLiveWpm(elapsedSec);
+      }, 300);
+
+      // Start Pacer Bot
+      startPacer();
+    }
+
+    function startPacer() {
+      if (pacerWpm <= 0) {
+        if (pacerLane) pacerLane.classList.add('hidden');
+        return;
+      }
+      if (pacerLane) pacerLane.classList.remove('hidden');
+      if (pacerLabel) pacerLabel.textContent = `Pacer ${pacerWpm} WPM`;
+
+      // Total characters in passage
+      const totalChars = currentPassage.text.length;
+      // Target characters per second = (WPM * 5) / 60
+      const charsPerSec = (pacerWpm * 5) / 60;
+      const totalPacerSeconds = totalChars / charsPerSec;
+
+      pacerInterval = window.setInterval(() => {
+        if (!isRaceActive) return;
+        const elapsed = (Date.now() - raceStartTime) / 1000;
+        pacerProgress = Math.min(100, (elapsed / totalPacerSeconds) * 100);
+        if (pacerRacer) pacerRacer.style.left = `${Math.min(92, pacerProgress * 0.92)}%`;
+      }, 100);
+    }
+
+    function updateLiveWpm(elapsedSec: number) {
+      if (elapsedSec <= 0) return;
+      // Characters typed in completed words + current matched characters
+      let typedChars = 0;
+      for (let i = 0; i < currentWordIndex; i++) {
+        typedChars += words[i].length + 1; // word + space
+      }
+      typedChars += Math.min(currentInput.length, words[currentWordIndex]?.length || 0);
+
+      const wordsTyped = typedChars / 5;
+      const minutes = elapsedSec / 60;
+      const wpm = Math.round(wordsTyped / minutes);
+
+      if (hudWpm) hudWpm.textContent = Math.max(0, wpm).toString();
+      if (playerWpmPill) playerWpmPill.textContent = `${Math.max(0, wpm)} WPM`;
+    }
+
+    function updateRaceMetrics() {
+      const totalChars = currentPassage.text.length;
+      let completedChars = 0;
+      for (let i = 0; i < currentWordIndex; i++) {
+        completedChars += words[i].length + 1;
+      }
+      completedChars += Math.min(currentInput.length, words[currentWordIndex]?.length || 0);
+
+      const pct = Math.min(100, Math.round((completedChars / totalChars) * 100));
+      if (hudProgress) hudProgress.textContent = pct.toString();
+
+      // Update racer car position (capped at ~92% so it stays within track)
+      if (playerRacer) {
+        playerRacer.style.left = `${Math.min(92, (pct / 100) * 92)}%`;
+      }
+
+      // Accuracy
+      if (totalKeystrokes > 0 && hudAccuracy) {
+        const acc = Math.max(0, Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100));
+        hudAccuracy.textContent = acc.toString();
+      }
+    }
+
+    function finishRace() {
+      isRaceActive = false;
+      isRaceFinished = true;
+      raceEndTime = Date.now();
+
+      if (hudTimerInterval) clearInterval(hudTimerInterval);
+      if (pacerInterval) clearInterval(pacerInterval);
+
+      sound.playFinishChime();
+
+      if (playerRacer) playerRacer.style.left = '92%';
+      if (raceStatusText) raceStatusText.textContent = '🏁 Finished!';
+
+      const elapsedSeconds = Math.max(1, (raceEndTime - raceStartTime) / 1000);
+      const totalWords = currentPassage.text.length / 5;
+      const wpm = Math.round((totalWords / elapsedSeconds) * 60);
+      const accuracy = totalKeystrokes > 0 ? Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100) : 100;
+
+      // Transition to Phase 2: 11+ Question Challenge Sprint after brief celebration!
+      setTimeout(() => {
+        startQuestionPhase(wpm, accuracy);
+      }, 1200);
+    }
+
+    // --- PHASE 2: 11+ QUESTION CHALLENGE ---
+    let raceWpmResult = 0;
+    let raceAccResult = 100;
+
+    function startQuestionPhase(wpm: number, acc: number) {
+      raceWpmResult = wpm;
+      raceAccResult = acc;
+
+      if (typingRaceView) typingRaceView.classList.add('hidden');
+      if (questionChallengeView) questionChallengeView.classList.remove('hidden');
+
+      if (finishRaceWpm) finishRaceWpm.textContent = wpm.toString();
+      if (finishRaceAcc) finishRaceAcc.textContent = `${acc}%`;
+      if (refPassageText) refPassageText.textContent = `"${currentPassage.text}"`;
+
+      currentQuestionIndex = 0;
+      questionsAnsweredCorrectly = 0;
+      questionAttemptCount = 0;
+
+      loadQuestion(0);
+    }
+
+    function loadQuestion(index: number) {
+      currentQuestionIndex = index;
+      const q = currentPassage.questions[currentQuestionIndex];
+      questionAttemptCount = 0;
+
+      if (questionStep) questionStep.textContent = `Question ${index + 1} of ${currentPassage.questions.length}`;
+      if (questionTypeBadge) {
+        const typeLabels: Record<string, string> = {
+          vocabulary: 'Vocabulary in Context',
+          retrieval: 'Fact Retrieval',
+          inference: '11+ Inference & Deduction',
+          grammar: 'Grammar & Literary Devices'
+        };
+        questionTypeBadge.textContent = typeLabels[q.type] || '11+ Comprehension';
+      }
+      if (questionPrompt) questionPrompt.textContent = q.question;
+
+      if (questionInput) {
+        questionInput.value = '';
+        questionInput.disabled = false;
+        questionInput.focus();
+      }
+
+      if (hintBox) hintBox.classList.add('hidden');
+      if (hintContent) hintContent.textContent = q.hint;
+      if (btnRevealAnswer) btnRevealAnswer.classList.add('hidden');
+      if (answerFeedback) answerFeedback.classList.add('hidden');
+      if (btnSubmitAnswer) {
+        btnSubmitAnswer.textContent = 'Submit Answer ↵';
+        btnSubmitAnswer.disabled = false;
+      }
+    }
+
+    if (btnShowHint) {
+      btnShowHint.addEventListener('click', () => {
+        if (hintBox) hintBox.classList.toggle('hidden');
+      });
+    }
+
+    function normalizeAnswer(str: string): string {
+      return str.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, ' ');
+    }
+
+    if (questionForm) {
+      questionForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!questionInput) return;
+
+        const typedAnswer = questionInput.value;
+        if (!typedAnswer.trim()) return;
+
+        const q = currentPassage.questions[currentQuestionIndex];
+        const normalizedInput = normalizeAnswer(typedAnswer);
+        const normalizedTarget = normalizeAnswer(q.answer);
+        const normalizedAcceptable = q.acceptableAnswers.map(a => normalizeAnswer(a));
+
+        const isMatch = normalizedInput === normalizedTarget || normalizedAcceptable.includes(normalizedInput);
+
+        if (isMatch) {
+          // Correct answer!
+          sound.playCorrect();
+          questionsAnsweredCorrectly++;
+          showFeedback(true, "✓ Correct! (+100 pts)", q.explanation);
+
+          // Update career stats for questions
+          const stats = getCareerStats();
+          stats.questionsSolved++;
+          saveCareerStats(stats);
+          updateCareerUI();
+
+          questionInput.disabled = true;
+          if (btnSubmitAnswer) btnSubmitAnswer.disabled = true;
+
+          setTimeout(() => {
+            if (currentQuestionIndex + 1 < currentPassage.questions.length) {
+              loadQuestion(currentQuestionIndex + 1);
+            } else {
+              showGrandResults();
+            }
+          }, 1800);
+        } else {
+          // Incorrect
+          sound.playError();
+          questionAttemptCount++;
+          showFeedback(false, "Not quite right!", `Check the passage carefully and try again. Hint: ${q.hint}`);
+          if (btnRevealAnswer) btnRevealAnswer.classList.remove('hidden');
+        }
+      });
+    }
+
+    if (btnRevealAnswer) {
+      btnRevealAnswer.addEventListener('click', () => {
+        const q = currentPassage.questions[currentQuestionIndex];
+        showFeedback(false, `The answer is: "${q.answer}"`, q.explanation);
+        if (btnSubmitAnswer) {
+          btnSubmitAnswer.textContent = 'Next Question →';
+          btnSubmitAnswer.disabled = false;
+          btnSubmitAnswer.onclick = () => {
+            btnSubmitAnswer.onclick = null;
+            if (currentQuestionIndex + 1 < currentPassage.questions.length) {
+              loadQuestion(currentQuestionIndex + 1);
+            } else {
+              showGrandResults();
+            }
+          };
+        }
+      });
+    }
+
+    function showFeedback(isCorrect: boolean, title: string, explanation: string) {
+      if (!answerFeedback || !feedbackIcon || !feedbackTitle || !feedbackExplanation) return;
+
+      answerFeedback.classList.remove('hidden', 'bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-800', 'dark:text-emerald-200', 'bg-rose-500/10', 'border-rose-500/30', 'text-rose-800', 'dark:text-rose-200');
+
+      if (isCorrect) {
+        answerFeedback.classList.add('bg-emerald-500/10', 'border', 'border-emerald-500/30', 'text-emerald-800', 'dark:text-emerald-200');
+        feedbackIcon.textContent = '🌟';
+      } else {
+        answerFeedback.classList.add('bg-rose-500/10', 'border', 'border-rose-500/30', 'text-rose-800', 'dark:text-rose-200');
+        feedbackIcon.textContent = '⚠️';
+      }
+
+      feedbackTitle.textContent = title;
+      feedbackExplanation.textContent = explanation;
+    }
+
+    // --- PHASE 3: GRAND RESULTS SCREEN ---
+    function showGrandResults() {
+      if (questionChallengeView) questionChallengeView.classList.add('hidden');
+      if (grandResultsView) grandResultsView.classList.remove('hidden');
+
+      const totalElapsedSec = Math.round((Date.now() - raceStartTime) / 1000);
+
+      if (finalWpm) finalWpm.textContent = raceWpmResult.toString();
+      if (finalAccuracy) finalAccuracy.textContent = raceAccResult.toString();
+      if (finalQuestions) finalQuestions.textContent = `${questionsAnsweredCorrectly}/${currentPassage.questions.length}`;
+      if (finalTime) finalTime.textContent = `${totalElapsedSec}s`;
+
+      // Determine 11+ Award Tier
+      let rankTitle = '🥉 Junior 11+ Cadet';
+      let rankIcon = '🎖️';
+      if (raceWpmResult >= 50 && raceAccResult >= 95 && questionsAnsweredCorrectly === currentPassage.questions.length) {
+        rankTitle = '🏆 11+ Scholarship Grandmaster';
+        rankIcon = '🏆';
+      } else if (raceWpmResult >= 38 && raceAccResult >= 90 && questionsAnsweredCorrectly >= 2) {
+        rankTitle = '🥇 Grammar School Ready';
+        rankIcon = '🥇';
+      } else if (raceWpmResult >= 28 && raceAccResult >= 85) {
+        rankTitle = '🥈 11+ Speed Apprentice';
+        rankIcon = '🥈';
+      }
+
+      if (resultsRankPill) resultsRankPill.textContent = rankTitle;
+      if (resultsBadgeIcon) resultsBadgeIcon.textContent = rankIcon;
+
+      // Populate Vocabulary Grid
+      if (resultsVocabGrid) {
+        resultsVocabGrid.innerHTML = currentPassage.vocabulary.map(v => `
+          <div class="p-3 rounded-xl bg-white dark:bg-white/5 border border-brand-mist dark:border-white/10">
+            <span class="font-bold text-brand-navy dark:text-brand-cream block text-xs uppercase tracking-wider mb-1">${v.word}</span>
+            <span class="text-xs text-brand-slate dark:text-gray-300 leading-snug">${v.definition}</span>
+          </div>
+        `).join('');
+      }
+
+      if (resultsGutenbergBtn) {
+        resultsGutenbergBtn.href = currentPassage.gutenbergUrl;
+      }
+
+      // Save Lifetime Stats
+      const stats = getCareerStats();
+      stats.races++;
+      stats.totalWpm += raceWpmResult;
+      if (raceWpmResult > stats.bestWpm) stats.bestWpm = raceWpmResult;
+      saveCareerStats(stats);
+      updateCareerUI();
+    }
+
+    // --- Action Button Listeners ---
+    if (btnResultsNext || btnNextPassage) {
+      const nextFn = () => {
+        let nextIdx = Math.floor(Math.random() * passages.length);
+        if (nextIdx === currentPassageIndex && passages.length > 1) {
+          nextIdx = (nextIdx + 1) % passages.length;
+        }
+        loadPassage(nextIdx);
+      };
+      if (btnResultsNext) btnResultsNext.addEventListener('click', nextFn);
+      if (btnNextPassage) btnNextPassage.addEventListener('click', nextFn);
+    }
+
+    if (btnResultsRetry) {
+      btnResultsRetry.addEventListener('click', () => {
+        loadPassage(currentPassageIndex);
+      });
+    }
+
+    if (btnShareScore) {
+      btnShareScore.addEventListener('click', () => {
+        const text = `🏁 TinyKite 11+ TypeRacer\n📖 Book: ${currentPassage.title} (${currentPassage.author})\n⚡ Speed: ${raceWpmResult} WPM | 🎯 Accuracy: ${raceAccResult}%\n🧠 11+ Questions: ${questionsAnsweredCorrectly}/${currentPassage.questions.length} Correct\nTry it 100% ad-free: https://tinykite.co/typeracer`;
+        navigator.clipboard.writeText(text).then(() => {
+          if (shareBtnText) {
+            const original = shareBtnText.textContent;
+            shareBtnText.textContent = 'Copied to Clipboard! ✓';
+            setTimeout(() => { shareBtnText.textContent = original; }, 2500);
+          }
+        }).catch(() => {
+          alert(text);
+        });
+      });
+    }
+
+    // --- Pacer Selector Change ---
+    if (pacerSelect) {
+      pacerSelect.addEventListener('change', () => {
+        pacerWpm = parseInt(pacerSelect.value, 10);
+        if (!isRaceActive && !isRaceFinished) {
+          if (pacerWpm <= 0) {
+            if (pacerLane) pacerLane.classList.add('hidden');
+          } else {
+            if (pacerLane) pacerLane.classList.remove('hidden');
+            if (pacerLabel) pacerLabel.textContent = `Pacer ${pacerWpm} WPM`;
+          }
+        }
+      });
+    }
+
+    // --- Toggle Vocab Drawer ---
+    if (btnToggleVocab && vocabDrawer) {
+      btnToggleVocab.addEventListener('click', () => {
+        vocabDrawer.classList.toggle('hidden');
+      });
+    }
+
+    // --- Library Modal Logic ---
+    function populateLibraryCards(filter: string = 'all', searchQuery: string = '') {
+      if (!libraryCardsContainer) return;
+
+      const q = searchQuery.toLowerCase().trim();
+      const filtered = passages.filter(p => {
+        const matchFilter = filter === 'all' || p.difficulty === filter;
+        const matchSearch = !q || p.title.toLowerCase().includes(q) || p.author.toLowerCase().includes(q) || p.text.toLowerCase().includes(q);
+        return matchFilter && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        libraryCardsContainer.innerHTML = `<div class="text-center py-10 text-brand-slate text-sm">No books found matching "${escapeHtml(searchQuery)}".</div>`;
+        return;
+      }
+
+      libraryCardsContainer.innerHTML = filtered.map((p) => {
+        const realIdx = passages.findIndex(item => item.id === p.id);
+        return `
+          <div class="p-4 rounded-2xl bg-white dark:bg-white/5 border border-brand-mist dark:border-white/10 hover:border-brand-gold/60 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-bold text-sm text-brand-navy dark:text-brand-cream">${p.title}</h4>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  p.difficulty === 'Foundation' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
+                  p.difficulty === 'Standard 11+' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300' :
+                  'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300'
+                }">${p.difficulty}</span>
+              </div>
+              <p class="text-xs text-brand-slate dark:text-gray-400 mb-2">by ${p.author} (${p.year}) • Gutenberg #${p.gutenbergId}</p>
+              <p class="text-xs text-brand-navy/70 dark:text-gray-300 italic line-clamp-2">"${p.text}"</p>
+            </div>
+            <button class="btn-select-book px-4 py-2 bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy text-xs font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all whitespace-nowrap self-start sm:self-center" data-index="${realIdx}">
+              Race This Book ↵
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      // Add click listeners to book buttons
+      libraryCardsContainer.querySelectorAll('.btn-select-book').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.currentTarget as HTMLElement;
+          const idx = parseInt(target.getAttribute('data-index') || '0', 10);
+          if (libraryModal) libraryModal.classList.add('hidden');
+          loadPassage(idx);
+        });
+      });
+    }
+
+    if (btnOpenLibrary && libraryModal) {
+      btnOpenLibrary.addEventListener('click', () => {
+        libraryModal.classList.remove('hidden');
+        populateLibraryCards();
+      });
+    }
+
+    if (btnCloseLibrary && libraryModal) {
+      btnCloseLibrary.addEventListener('click', () => {
+        libraryModal.classList.add('hidden');
+      });
+    }
+
+    if (librarySearch) {
+      librarySearch.addEventListener('input', () => {
+        populateLibraryCards('all', librarySearch.value);
+      });
+    }
+
+    libFilterBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        libFilterBtns.forEach(b => {
+          b.className = 'lib-filter-btn px-2.5 py-1 rounded-lg font-semibold bg-brand-cream dark:bg-white/10 text-brand-navy dark:text-brand-cream hover:bg-brand-gold/20';
+        });
+        const target = e.currentTarget as HTMLElement;
+        target.className = 'lib-filter-btn px-2.5 py-1 rounded-lg font-bold bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy';
+        const filter = target.getAttribute('data-filter') || 'all';
+        populateLibraryCards(filter, librarySearch?.value || '');
+      });
+    });
+
+    // --- On Initial Load ---
+    updateCareerUI();
+    loadPassage(currentPassageIndex);
+  </script>
+</Layout>
