@@ -26,6 +26,7 @@ export interface Passage {
   year: number;
   gutenbergId: number;
   gutenbergUrl: string;
+  sourceUrl?: string;
   chapter: string;
   difficulty: 'Foundation' | 'Standard' | 'Advanced';
   tags: string[];
