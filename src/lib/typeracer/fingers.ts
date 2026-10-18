@@ -138,10 +138,12 @@ const KEY_TO_FINGER_MAP: Record<string, string> = {
 
   // Right Pinky
   '0': 'right-pinky', ')': 'right-pinky', '-': 'right-pinky', '_': 'right-pinky',
+  '—': 'right-pinky', '–': 'right-pinky', '―': 'right-pinky', '−': 'right-pinky', '‒': 'right-pinky',
   '=': 'right-pinky', '+': 'right-pinky',
   'p': 'right-pinky', 'P': 'right-pinky', '[': 'right-pinky', '{': 'right-pinky',
   ']': 'right-pinky', '}': 'right-pinky', '\\': 'right-pinky', '|': 'right-pinky',
   ';': 'right-pinky', ':': 'right-pinky', '\'': 'right-pinky', '"': 'right-pinky',
+  '’': 'right-pinky', '‘': 'right-pinky', '“': 'right-pinky', '”': 'right-pinky',
   '/': 'right-pinky', '?': 'right-pinky', 'Enter': 'right-pinky', 'Backspace': 'right-pinky',
   'ShiftRight': 'right-pinky'
 };
@@ -157,6 +159,9 @@ export function getFingerForChar(char: string): string {
 }
 
 export function getFingerDescription(fingerKey: string, char: string): string {
+  if (char === '-' || char === '—' || char === '–' || char === '―') {
+    return 'Right Pinky (Hyphen / Dash)';
+  }
   const map: Record<string, string> = {
     'left-pinky': 'Left Pinky',
     'left-ring': 'Left Ring',

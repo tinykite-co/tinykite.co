@@ -89,6 +89,39 @@ export class SoundEngine {
   }
 
   /**
+   * Tactile Mechanical Spacebar Click (Deeper resonance for large stabilizer keycap)
+   */
+  public playSpaceClick(): void {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(480, t);
+      osc.frequency.exponentialRampToValueAtTime(110, t + 0.045);
+
+      gain.gain.setValueAtTime(0.12, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.045);
+    } catch (_) {}
+  }
+
+  /**
+   * Alias for playError to match client engine naming
+   */
+  public playErrorThud(): void {
+    this.playError();
+  }
+
+  /**
    * Carriage Return (Enter ↵) Sound
    */
   public playReturnClick(): void {
