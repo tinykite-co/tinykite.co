@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@refraction-ui/astro/*": ["node_modules/@refraction-ui/astro/*"],
+      "@refraction-ui/*": ["node_modules/@refraction-ui/astro/dist/*"]
     }
   }
 }
