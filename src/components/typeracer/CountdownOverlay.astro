@@ -1,0 +1,33 @@
+---
+/**
+ * CountdownOverlay.astro
+ * 3-2-1 "Ready... Set... GO!" Countdown Overlay with traffic light indicators.
+ * Implements strict background control lockout (Issue #51) to prevent race condition desyncs.
+ */
+---
+<div
+  id="race-countdown-overlay"
+  class="hidden absolute inset-0 z-40 flex flex-col items-center justify-center bg-slate-950/85 backdrop-blur-md rounded-2xl transition-all duration-300 select-none"
+  role="alert"
+  aria-live="assertive"
+>
+  <!-- Traffic Light Circles -->
+  <div class="flex items-center gap-3 mb-2" aria-hidden="true">
+    <span id="countdown-light-red" class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/50 transition-all duration-200"></span>
+    <span id="countdown-light-amber" class="w-4 h-4 rounded-full bg-amber-500/20 border border-amber-500/50 transition-all duration-200"></span>
+    <span id="countdown-light-green" class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/50 transition-all duration-200"></span>
+  </div>
+
+  <!-- Countdown Stage Display -->
+  <div
+    id="countdown-display-text"
+    class="text-5xl sm:text-7xl font-black font-mono tracking-widest text-white drop-shadow-xl scale-100 transition-transform duration-200"
+  >
+    READY
+  </div>
+
+  <!-- Tactile Guidance Subtext -->
+  <p id="countdown-sub-text" class="text-xs sm:text-sm text-slate-300 mt-3 font-medium tracking-wide text-center px-4">
+    Place fingers on home row keys (F & J)...
+  </p>
+</div>

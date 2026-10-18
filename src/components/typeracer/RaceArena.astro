@@ -1,0 +1,239 @@
+---
+/**
+ * RaceArena.astro
+ * Section 1: Live Race Arena & Literary Speed Sprint
+ */
+import type { Passage } from '../../data/typeracer/passages';
+import VocabDrawer from './VocabDrawer.astro';
+import CountdownOverlay from './CountdownOverlay.astro';
+import RaceTrack from './RaceTrack.astro';
+import RacePodiumModal from './RacePodiumModal.astro';
+
+interface Props {
+  initialPassage: Passage;
+}
+
+const { initialPassage } = Astro.props;
+const initialWords = initialPassage.text.split(' ');
+---
+<section id="tab-arena-view" role="tabpanel" aria-labelledby="tab-btn-arena">
+  <div class="refraction-panel p-5 sm:p-7 relative overflow-hidden">
+    <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
+
+    <!-- Book Header Strip -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] dark:border-white/[0.08] pb-3.5 mb-4 pt-1">
+      <div class="flex items-center gap-3 min-w-0">
+        <span class="text-3xl shrink-0 filter drop-shadow" aria-hidden="true">📖</span>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap mb-0.5">
+            <h2 id="passage-title" class="text-lg font-bold text-slate-900 dark:text-white font-serif-literary truncate">
+              {initialPassage.title}
+            </h2>
+            <span id="passage-difficulty" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-300">
+              {initialPassage.difficulty}
+            </span>
+            <span id="race-mode-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-brand-gold/25 text-amber-950 dark:text-amber-200">
+              📖 Story Drill (Passage + Q&A)
+            </span>
+          </div>
+          <p id="passage-author" class="text-xs text-slate-600 dark:text-slate-300 truncate">
+            by {initialPassage.author} ({initialPassage.year}) • {initialPassage.chapter}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="btn-toggle-vocab"
+          type="button"
+          class="refraction-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-white/70 dark:bg-white/10 text-slate-900 dark:text-slate-100 hover:bg-amber-100 dark:hover:bg-white/20 transition-colors flex items-center gap-1.5 border border-black/[0.08] dark:border-white/[0.1] min-h-[44px]"
+        >
+          <span aria-hidden="true">💡</span> Vocab (<span id="vocab-count">{initialPassage.vocabulary.length}</span>)
+        </button>
+        <button
+          id="btn-next-passage"
+          type="button"
+          class="refraction-btn px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 active:scale-95 transition-all flex items-center gap-1 shadow-sm min-h-[44px]"
+        >
+          <span>🎲 Next Story</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Vocabulary Drawer Component -->
+    <VocabDrawer vocabulary={initialPassage.vocabulary} />
+
+    <!-- PHASE 1: 4-LANE CIRCUIT RACING -->
+    <div id="typing-race-view">
+
+      <!-- Matchmaking Lobby Strip -->
+      <div id="lobby-bar" class="mb-3 px-3.5 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-black/[0.06] dark:border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs shadow-sm">
+        <div class="flex items-center gap-2.5">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+          <span id="lobby-status-text" class="font-bold text-slate-900 dark:text-slate-100">
+            Matchmaking: Waiting for other racers... (<span id="lobby-timer-num">5</span>s)
+          </span>
+          <span id="lobby-racers-summary" class="hidden sm:inline text-slate-600 dark:text-slate-300">
+            • 1 Player (You) + 3 Bots ready
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-start-race-now"
+            type="button"
+            class="refraction-btn px-4 py-2 rounded-xl text-xs font-black bg-brand-gold text-slate-950 hover:opacity-90 active:scale-95 transition-all shadow-sm min-h-[44px]"
+          >
+            ⚡ Start Race Now
+          </button>
+          <button
+            id="btn-invite-link"
+            type="button"
+            class="refraction-btn px-3 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-white/10 text-slate-800 dark:text-slate-200 hover:bg-amber-100 transition-all border border-black/[0.08] dark:border-white/[0.1] flex items-center gap-1 min-h-[44px]"
+          >
+            <span aria-hidden="true">🔗</span> <span id="invite-btn-label">Invite Friend</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Race Track & Active Typing Area (Contains Countdown Overlay) -->
+      <div class="relative">
+        <CountdownOverlay />
+        <RaceTrack />
+      </div>
+
+      <!-- Live HUD Statistics Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-white/70 dark:bg-slate-900/60 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl text-xs font-semibold mb-4 shadow-sm">
+        <div class="flex items-center gap-3 sm:gap-5 flex-wrap">
+          <div class="flex items-center gap-1.5">
+            <span class="text-slate-600 dark:text-slate-300 text-[11px] uppercase tracking-wider font-bold">Rank:</span>
+            <span id="hud-rank" class="px-2.5 py-0.5 rounded-lg font-black bg-brand-gold text-slate-950 shadow-sm">
+              1st / 4
+            </span>
+          </div>
+          <div>Speed: <strong id="hud-wpm" class="text-base font-black text-slate-900 dark:text-slate-100 font-mono">0</strong> WPM</div>
+          <div>Accuracy: <strong id="hud-accuracy" class="text-base font-black text-emerald-700 dark:text-emerald-400 font-mono">100</strong>%</div>
+          <div>Time: <strong id="hud-time" class="text-base font-black text-slate-900 dark:text-slate-100 font-mono">0:00</strong></div>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-1.5">
+            <label for="mode-select" class="text-slate-600 dark:text-slate-300 text-[11px]">Race Drill:</label>
+            <select id="mode-select" class="bg-transparent font-bold text-slate-900 dark:text-brand-gold cursor-pointer text-xs focus:outline-none">
+              <option value="random" selected>🎲 Random Q&A (50%)</option>
+              <option value="always">📖 Always with Q&A</option>
+              <option value="sprint">⚡ Speed Sprint Only</option>
+            </select>
+          </div>
+          <div>Progress: <strong id="hud-progress" class="text-base font-black text-amber-600 dark:text-brand-gold font-mono">0</strong>%</div>
+        </div>
+      </div>
+
+      <!-- Literary Passage Reading Text Display (Lora Serif) -->
+      <div
+        id="passage-display"
+        class="p-5 sm:p-6 bg-white/80 dark:bg-slate-900/80 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl font-serif-literary text-lg sm:text-xl leading-relaxed tracking-wide select-none mb-4 min-h-[105px] shadow-sm"
+      >
+        {initialWords.map((word, idx) => (
+          idx === 0 ? (
+            <span class="tr-word-current"><span class="tr-char-pending">{word}</span></span>
+          ) : (
+            <span class="tr-word-upcoming"> {word}</span>
+          )
+        ))}
+      </div>
+
+      <!-- Typing Input Field (Practice Mode: Backspace REQUIRED on error) -->
+      <div class="relative">
+        <label for="typing-input" class="sr-only">Type passage text here</label>
+        <input
+          id="typing-input"
+          type="text"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="Click here and type to race..."
+          class="w-full px-5 py-3.5 text-base sm:text-lg rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-white/20 text-slate-900 dark:text-slate-100 focus:border-amber-500 focus:outline-none transition-all shadow-inner"
+        />
+        <div class="mt-2 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 px-1">
+          <span>💡 In Race Arena: Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-white/10 font-mono text-[10px] border border-black/[0.08] dark:border-white/10">Space</kbd> after each word. Errors turn red and require Backspace.</span>
+          <span id="typing-error-tag" class="text-rose-600 font-bold hidden">Incorrect letter! Press Backspace.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PHASE 2: STORY COMPREHENSION Q&A FOLLOW-UP -->
+    <div id="qa-followup-view" class="hidden">
+      <div class="mb-4 bg-amber-400/15 border border-amber-400/40 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl" aria-hidden="true">📖</span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <span>Passage Finished in <span id="qa-user-rank-badge" class="px-2 py-0.5 rounded-lg bg-brand-gold text-slate-950 font-black text-xs">1st Place!</span></span>
+              <span class="text-xs text-slate-600 dark:text-slate-300 font-normal">(Speed: <strong id="qa-finish-wpm" class="text-emerald-700 dark:text-emerald-400 font-mono">0</strong> WPM)</span>
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300">
+              Follow-Up Context Drill: Type the Question & Answer to practice newlines (Enter ↵) and dialogue punctuation.
+            </p>
+          </div>
+        </div>
+        <button
+          id="btn-skip-qa"
+          type="button"
+          class="refraction-btn px-4 py-2 rounded-xl text-xs font-bold bg-white dark:bg-white/10 border border-black/[0.08] dark:border-white/20 text-slate-800 dark:text-slate-200 hover:bg-slate-50 transition-all flex items-center gap-1 shadow-sm min-h-[44px]"
+        >
+          <span>Skip to Results ➔</span>
+        </button>
+      </div>
+
+      <!-- Q&A Typing Card -->
+      <div class="bg-white dark:bg-slate-900 border-2 border-amber-400/70 rounded-2xl p-5 sm:p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-brand-gold flex items-center gap-1.5">
+            <span aria-hidden="true">✨</span> Literary Context & Comprehension Drill
+          </span>
+          <span id="qa-newline-cue" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900 dark:bg-teal-950/50 dark:text-teal-300">
+            ⌨️ Type Question, then press Enter ↵
+          </span>
+        </div>
+
+        <!-- Q&A Target Text Display -->
+        <div id="qa-display-box" class="p-5 bg-slate-50/70 dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.08] rounded-2xl text-base sm:text-lg leading-relaxed select-none mb-4 font-serif-literary">
+          <div id="qa-line-1" class="mb-3"></div>
+          <div id="qa-line-2"></div>
+        </div>
+
+        <!-- Q&A Typing Input -->
+        <div class="relative">
+          <label for="qa-input" class="sr-only">Type question and answer drill</label>
+          <input
+            id="qa-input"
+            type="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Type the question above and press Enter..."
+            class="w-full px-5 py-3 text-base rounded-xl bg-white dark:bg-slate-800 border border-black/[0.1] dark:border-white/20 text-slate-900 dark:text-slate-100 focus:border-amber-500 focus:outline-none transition-all shadow-inner"
+          />
+          <div class="mt-2 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 px-1">
+            <span id="qa-instruction-label">Type Question first. When finished, press <strong>Enter ↵</strong> to type Answer.</span>
+            <span id="qa-error-tag" class="text-rose-600 font-bold hidden">Incorrect letter! Press Backspace.</span>
+          </div>
+        </div>
+
+        <!-- Context Note Card -->
+        <div id="qa-context-reveal" class="hidden mt-4 p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/30 rounded-2xl text-xs text-emerald-950 dark:text-emerald-200">
+          <div class="font-black text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <span aria-hidden="true">🎓</span> Story Context Explanation:
+          </div>
+          <p id="qa-context-note-text" class="italic leading-relaxed text-sm"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3: 4-RACER PODIUM & RESULTS MODAL -->
+    <RacePodiumModal />
+
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+/**
+ * StoryLibrary.astro
+ * Section 3: 18 Classical Literature Extracts Directory
+ * Implements Issue #40 (clean source attribution) and Issue #42 (accessible keyboard activation).
+ */
+---
+<section id="tab-library-view" role="tabpanel" aria-labelledby="tab-btn-library" class="hidden">
+  <div class="refraction-panel p-5 sm:p-7 relative overflow-hidden">
+    <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] dark:border-white/[0.08] pb-4 mb-5 pt-1">
+      <div>
+        <p class="text-amber-800 dark:text-brand-gold font-bold text-xs uppercase tracking-wider">Classic Story Library</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-serif-literary">
+          18 Classic Literature Extracts
+        </h2>
+      </div>
+      <div>
+        <label for="library-direct-search" class="sr-only">Search stories by title or author</label>
+        <input
+          id="library-direct-search"
+          type="search"
+          placeholder="Search title or author..."
+          class="px-3.5 py-2 text-xs sm:text-sm rounded-xl bg-white dark:bg-slate-800 border border-black/[0.1] dark:border-white/10 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-64 min-h-[44px]"
+        />
+      </div>
+    </div>
+
+    <div id="library-full-grid" class="space-y-3.5">
+      <!-- Populated dynamically with accessible keyboard activation -->
+    </div>
+  </div>
+</section>
