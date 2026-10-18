@@ -19,6 +19,7 @@ import RaceArena from '../../components/typeracer/RaceArena.astro';
 import TypingAcademy from '../../components/typeracer/TypingAcademy.astro';
 import StoryLibrary from '../../components/typeracer/StoryLibrary.astro';
 import CareerFooter from '../../components/typeracer/CareerFooter.astro';
+import HistoryModal from '../../components/typeracer/HistoryModal.astro';
 import { PASSAGES } from '../../data/typeracer/passages';
 
 const pageTitle = "TypeRacer & Touch Typing Academy | Master Typing Speed | TinyKite";
@@ -300,6 +301,9 @@ const clientAppJs = clientBundle.outputFiles[0].text;
     <!-- PERFORMANCE BAR & ACADEMY STARS TRACKER -->
     <CareerFooter />
   </main>
+
+  <!-- LEARNER ACTIVITY & HISTORY MODAL DIALOG -->
+  <HistoryModal />
 
   <!-- Inlined, zero-request TypeScript application engine -->
   <script is:inline set:html={clientAppJs}></script>

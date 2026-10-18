@@ -30,7 +30,14 @@ import {
   getAllLessonRecords,
   getTotalStars,
   saveStudentEmail,
-  getStudentEmail
+  getStudentEmail,
+  getRaceHistory,
+  recordRaceHistory,
+  getAcademyHistory,
+  recordAcademyHistory,
+  clearAllHistory,
+  type RaceRecord,
+  type AcademyHistoryRecord
 } from './storage';
 import { getRandomHumanWpm, simulateBotTick } from './pacing';
 import { CURRICULUM, type LessonDef } from './curriculum';
@@ -174,6 +181,23 @@ let lessonCompleteModal: HTMLElement | null = null;
 let libraryDirectSearch: HTMLInputElement | null = null;
 let libraryFullGrid: HTMLElement | null = null;
 
+let btnOpenHistory: HTMLElement | null = null;
+let btnPodiumHistory: HTMLElement | null = null;
+let historyModal: HTMLElement | null = null;
+let historyModalBackdrop: HTMLElement | null = null;
+let btnCloseHistory: HTMLElement | null = null;
+let tabHistoryRaces: HTMLElement | null = null;
+let tabHistoryAcademy: HTMLElement | null = null;
+let btnClearHistoryData: HTMLElement | null = null;
+let historyViewRaces: HTMLElement | null = null;
+let historyViewAcademy: HTMLElement | null = null;
+let historyRacesList: HTMLElement | null = null;
+let historyRacesEmpty: HTMLElement | null = null;
+let historyAcademyList: HTMLElement | null = null;
+let historyAcademyEmpty: HTMLElement | null = null;
+let historyRaceCount: HTMLElement | null = null;
+let historyAcademyCount: HTMLElement | null = null;
+
 // --- State Variables ---
 function cleanPassageText(text: string): string {
   return text
@@ -231,6 +255,37 @@ let lessonStartTime: number | null = null;
 let p2pBroadcast: BroadcastChannel | null = null;
 let activePeerId: string | null = null;
 
+// Q&A Separate Typing Speed State
+let qaStartTime = 0;
+let qaFinalWpm: number | null = null;
+let hasRecordedCurrentRace = false;
+
+function getRandomStoryFirstPassageIndex(): number {
+  const books = Array.from(new Set(passages.map(p => p.bookId || p.id)));
+  const randomBook = books[Math.floor(Math.random() * books.length)];
+  const idx = passages.findIndex(p => (p.bookId || p.id) === randomBook && (p.partIndex === 1 || !p.partIndex));
+  return idx >= 0 ? idx : Math.floor(Math.random() * passages.length);
+}
+
+function getNextStoryPassageIndex(): number {
+  if (currentPassage.bookId && currentPassage.partIndex && currentPassage.totalParts) {
+    if (currentPassage.partIndex < currentPassage.totalParts) {
+      const nextPartIdx = passages.findIndex(
+        p => p.bookId === currentPassage.bookId && p.partIndex === currentPassage.partIndex! + 1
+      );
+      if (nextPartIdx >= 0) return nextPartIdx;
+    }
+  }
+  // If story completed, pick a different random story
+  const otherBooks = Array.from(new Set(passages.map(p => p.bookId || p.id)))
+    .filter(b => b !== currentPassage.bookId);
+  const nextBook = otherBooks.length > 0
+    ? otherBooks[Math.floor(Math.random() * otherBooks.length)]
+    : currentPassage.bookId;
+  const idx = passages.findIndex(p => (p.bookId || p.id) === nextBook && (p.partIndex === 1 || !p.partIndex));
+  return idx >= 0 ? idx : (currentPassageIndex + 1) % passages.length;
+}
+
 // --- Core Initialization ---
 export function initClientApp(): void {
   cacheDOMElements();
@@ -238,7 +293,7 @@ export function initClientApp(): void {
   initSoundUI();
   initMultiplayerNetworking();
   updateCareerUI();
-  loadPassage(0);
+  loadPassage(getRandomStoryFirstPassageIndex());
   loadLesson(0);
   renderCurriculumGrid();
   renderFullLibrary();
@@ -303,17 +358,35 @@ function cacheDOMElements(): void {
   qaContextReveal = document.getElementById('qa-context-reveal');
   qaContextNoteText = document.getElementById('qa-context-note-text');
 
-  racePodiumModal = document.getElementById('race-podium-modal');
-  podiumRankBadge = document.getElementById('podium-rank-badge');
-  podiumWpmStat = document.getElementById('podium-wpm-stat');
-  podiumAccStat = document.getElementById('podium-acc-stat');
-  podiumTimeStat = document.getElementById('podium-time-stat');
-  btnPodiumRestart = document.getElementById('btn-podium-restart');
-  btnPodiumNextStory = document.getElementById('btn-podium-next-story');
+  racePodiumModal = document.getElementById('race-podium-modal') || document.getElementById('grand-results-view');
+  podiumRankBadge = document.getElementById('podium-rank-badge') || document.getElementById('results-rank-pill');
+  podiumWpmStat = document.getElementById('podium-wpm-stat') || document.getElementById('final-wpm');
+  podiumAccStat = document.getElementById('podium-acc-stat') || document.getElementById('final-accuracy');
+  podiumTimeStat = document.getElementById('podium-time-stat') || document.getElementById('final-time');
+  btnPodiumRestart = document.getElementById('btn-podium-restart') || document.getElementById('btn-results-retry');
+  btnPodiumNextStory = document.getElementById('btn-podium-next-story') || document.getElementById('btn-results-next');
   btnPodiumGotoLessons = document.getElementById('btn-podium-goto-lessons');
-  podiumEmailForm = document.getElementById('podium-email-form') as HTMLFormElement;
-  podiumEmailInput = document.getElementById('podium-email-input') as HTMLInputElement;
-  podiumEmailSuccess = document.getElementById('podium-email-success');
+  podiumEmailForm = (document.getElementById('podium-email-form') || document.getElementById('email-capture-form')) as HTMLFormElement;
+  podiumEmailInput = (document.getElementById('podium-email-input') || document.getElementById('student-email-input')) as HTMLInputElement;
+  podiumEmailSuccess = document.getElementById('podium-email-success') || document.getElementById('email-status-live');
+
+  // History Modal DOM Cache
+  btnOpenHistory = document.getElementById('btn-open-history');
+  btnPodiumHistory = document.getElementById('btn-podium-history');
+  historyModal = document.getElementById('history-modal');
+  historyModalBackdrop = document.getElementById('history-modal-backdrop');
+  btnCloseHistory = document.getElementById('btn-close-history');
+  tabHistoryRaces = document.getElementById('tab-history-races');
+  tabHistoryAcademy = document.getElementById('tab-history-academy');
+  btnClearHistoryData = document.getElementById('btn-clear-history-data');
+  historyViewRaces = document.getElementById('history-view-races');
+  historyViewAcademy = document.getElementById('history-view-academy');
+  historyRacesList = document.getElementById('history-races-list');
+  historyRacesEmpty = document.getElementById('history-races-empty');
+  historyAcademyList = document.getElementById('history-academy-list');
+  historyAcademyEmpty = document.getElementById('history-academy-empty');
+  historyRaceCount = document.getElementById('history-race-count');
+  historyAcademyCount = document.getElementById('history-academy-count');
 
   lessonModuleTag = document.getElementById('lesson-module-tag');
   lessonActiveTitle = document.getElementById('lesson-active-title');
@@ -811,7 +884,10 @@ function loadPassage(index: number): void {
   if (passageTitle) passageTitle.textContent = currentPassage.title;
   if (passageDifficulty) passageDifficulty.textContent = currentPassage.difficulty;
   if (passageAuthor) {
-    passageAuthor.textContent = 'by ' + currentPassage.author + ' (' + currentPassage.year + ') • ' + currentPassage.chapter;
+    const partNote = (currentPassage.partIndex && currentPassage.totalParts)
+      ? ' • Part ' + currentPassage.partIndex + ' of ' + currentPassage.totalParts
+      : '';
+    passageAuthor.textContent = 'by ' + currentPassage.author + ' (' + currentPassage.year + ') • ' + currentPassage.chapter + partNote;
   }
   if (vocabCount) vocabCount.textContent = currentPassage.vocabulary.length.toString();
 
@@ -846,6 +922,8 @@ function resetRaceState(): void {
   isRaceActive = false;
   isRaceFinished = false;
   isCountingDown = false;
+  hasRecordedCurrentRace = false;
+  qaFinalWpm = null;
   clearInterval(hudTimerInterval);
 
   lockoutBackgroundControls(false);
@@ -1062,6 +1140,9 @@ let qaStage: 'question' | 'answer' = 'question';
 let qaTypedInput = '';
 
 function startQAFollowup(userWpm: number): void {
+  qaStartTime = Date.now();
+  qaFinalWpm = null;
+
   if (typingRaceView) typingRaceView.classList.add('hidden');
   if (qaFollowupView) qaFollowupView.classList.remove('hidden');
 
@@ -1161,6 +1242,14 @@ function handleQAInput(e: KeyboardEvent): void {
 
 function finishQADrill(): void {
   soundEngine.playFinishChime(true);
+
+  // Compute Q&A Typing Speed strictly as an independent statistic
+  const qLen = (currentPassage.qaFollowup?.question || '').length;
+  const aLen = (currentPassage.qaFollowup?.answer || '').length;
+  const totalQaChars = qLen + aLen;
+  const elapsedQaMin = Math.max(0.01, (Date.now() - qaStartTime) / 60000);
+  qaFinalWpm = Math.round((totalQaChars / 5) / elapsedQaMin);
+
   if (qaContextReveal && qaContextNoteText) {
     qaContextNoteText.textContent = currentPassage.qaFollowup?.contextNote || 'Context drill complete.';
     qaContextReveal.classList.remove('hidden');
@@ -1176,21 +1265,40 @@ function showRacePodium(): void {
   if (qaFollowupView) qaFollowupView.classList.add('hidden');
   if (racePodiumModal) {
     racePodiumModal.classList.remove('hidden');
-    racePodiumModal.classList.add('flex');
+    racePodiumModal.classList.add('block');
   }
 
   const userRank = racers[0].rank || 1;
   if (podiumRankBadge) {
     podiumRankBadge.textContent = userRank === 1 ? '1st Place! 🏆' : (userRank === 2 ? '2nd Place! 🥈' : (userRank === 3 ? '3rd Place! 🥉' : '4th Place'));
   }
+  const finalPodiumRank = document.getElementById('final-podium-rank');
+  if (finalPodiumRank) {
+    const suffix = userRank === 1 ? 'st' : (userRank === 2 ? 'nd' : (userRank === 3 ? 'rd' : 'th'));
+    finalPodiumRank.textContent = userRank + suffix;
+  }
+
   if (podiumWpmStat) podiumWpmStat.textContent = racers[0].currentWpm.toString();
   const acc = totalKeystrokes > 0 ? Math.max(0, Math.round(((totalKeystrokes - errorKeystrokes) / totalKeystrokes) * 100)) : 100;
   if (podiumAccStat) podiumAccStat.textContent = acc.toString();
 
-  const elapsedSec = Math.round((raceEndTime - raceStartTime) / 1000);
+  const elapsedSec = Math.max(1, Math.round((raceEndTime - raceStartTime) / 1000));
   const mins = Math.floor(elapsedSec / 60);
   const secs = elapsedSec % 60;
   if (podiumTimeStat) podiumTimeStat.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+
+  // Separate Q&A Stat Display
+  const finalQaWpmEl = document.getElementById('final-qa-wpm');
+  const finalQaWpmUnitEl = document.getElementById('final-qa-wpm-unit');
+  if (finalQaWpmEl) {
+    if (qaFinalWpm !== null) {
+      finalQaWpmEl.textContent = qaFinalWpm.toString();
+      if (finalQaWpmUnitEl) finalQaWpmUnitEl.classList.remove('hidden');
+    } else {
+      finalQaWpmEl.textContent = 'N/A';
+      if (finalQaWpmUnitEl) finalQaWpmUnitEl.classList.add('hidden');
+    }
+  }
 
   // Clean original book button (Issue #40)
   const fullBookBtn = document.getElementById('results-full-book-btn') || document.getElementById('results-gutenberg-btn');
@@ -1202,6 +1310,24 @@ function showRacePodium(): void {
   const existingEmail = getStudentEmail();
   if (existingEmail && podiumEmailInput) {
     podiumEmailInput.value = existingEmail;
+  }
+
+  // Record race in local storage
+  if (!hasRecordedCurrentRace && raceEndTime > 0) {
+    const partSuffix = (currentPassage.partIndex && currentPassage.totalParts)
+      ? ` • Part ${currentPassage.partIndex}/${currentPassage.totalParts}`
+      : '';
+    recordRaceHistory({
+      bookTitle: currentPassage.title,
+      chapter: currentPassage.chapter + partSuffix,
+      passageWpm: racers[0].currentWpm,
+      qaWpm: qaFinalWpm,
+      accuracy: acc,
+      rank: userRank,
+      timeSeconds: elapsedSec,
+      hasQA: Boolean(currentRaceHasQA && currentPassage.qaFollowup && qaFinalWpm !== null)
+    });
+    hasRecordedCurrentRace = true;
   }
 }
 
@@ -1494,6 +1620,18 @@ function finishCurrentLesson(): void {
     completedAt: Date.now()
   });
 
+  const lesson = CURRICULUM[currentLessonIndex];
+  if (lesson) {
+    recordAcademyHistory({
+      lessonId: lesson.id,
+      title: lesson.title,
+      level: lesson.level,
+      wpm,
+      accuracy: acc,
+      stars
+    });
+  }
+
   const modalTitle = document.getElementById('lesson-complete-title');
   const modalStars = document.getElementById('lesson-complete-stars');
   const modalWpm = document.getElementById('lesson-complete-wpm');
@@ -1651,6 +1789,200 @@ function updateCareerUI(): void {
   if (elStars) elStars.textContent = stars + ' ⭐';
 }
 
+// --- Learner History Modal Controller ---
+let currentHistoryTab: 'races' | 'academy' = 'races';
+
+function openHistoryModal(initialTab: 'races' | 'academy' = 'races'): void {
+  currentHistoryTab = initialTab;
+  switchHistoryTab(initialTab);
+  renderHistoryModal();
+  if (historyModal) {
+    historyModal.classList.remove('hidden');
+    historyModal.classList.add('flex');
+    btnCloseHistory?.focus();
+  }
+}
+
+function closeHistoryModal(): void {
+  if (historyModal) {
+    historyModal.classList.add('hidden');
+    historyModal.classList.remove('flex');
+  }
+}
+
+function switchHistoryTab(tab: 'races' | 'academy'): void {
+  currentHistoryTab = tab;
+  const isRaces = tab === 'races';
+
+  if (tabHistoryRaces) {
+    tabHistoryRaces.setAttribute('aria-selected', isRaces ? 'true' : 'false');
+    tabHistoryRaces.className = isRaces
+      ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-brand-gold shadow-sm'
+      : 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all';
+  }
+
+  if (tabHistoryAcademy) {
+    tabHistoryAcademy.setAttribute('aria-selected', !isRaces ? 'true' : 'false');
+    tabHistoryAcademy.className = !isRaces
+      ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-brand-gold shadow-sm'
+      : 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all';
+  }
+
+  if (historyViewRaces) historyViewRaces.classList.toggle('hidden', !isRaces);
+  if (historyViewAcademy) historyViewAcademy.classList.toggle('hidden', isRaces);
+}
+
+function renderHistoryModal(): void {
+  renderHistoryRacesList();
+  renderHistoryAcademyList();
+}
+
+function renderHistoryRacesList(): void {
+  const races = getRaceHistory();
+  if (historyRaceCount) historyRaceCount.textContent = races.length.toString();
+
+  const statBest = document.getElementById('hist-stat-best-passage');
+  const statAvg = document.getElementById('hist-stat-avg-passage');
+  const statAvgQa = document.getElementById('hist-stat-avg-qa');
+  const statWins = document.getElementById('hist-stat-wins');
+
+  if (races.length === 0) {
+    if (historyRacesEmpty) historyRacesEmpty.classList.remove('hidden');
+    if (historyRacesList) historyRacesList.innerHTML = '';
+    if (statBest) statBest.textContent = '0 WPM';
+    if (statAvg) statAvg.textContent = '0 WPM';
+    if (statAvgQa) statAvgQa.textContent = '0 WPM';
+    if (statWins) statWins.textContent = '0';
+    return;
+  }
+
+  if (historyRacesEmpty) historyRacesEmpty.classList.add('hidden');
+
+  const bestPassage = Math.max(...races.map((r) => r.passageWpm));
+  const avgPassage = Math.round(races.reduce((acc, r) => acc + r.passageWpm, 0) / races.length);
+  const qaRaces = races.filter((r) => r.qaWpm !== null && r.qaWpm !== undefined);
+  const avgQa = qaRaces.length > 0 ? Math.round(qaRaces.reduce((acc, r) => acc + (r.qaWpm || 0), 0) / qaRaces.length) : null;
+  const wins = races.filter((r) => r.rank === 1).length;
+
+  if (statBest) statBest.textContent = `${bestPassage} WPM`;
+  if (statAvg) statAvg.textContent = `${avgPassage} WPM`;
+  if (statAvgQa) statAvgQa.textContent = avgQa !== null ? `${avgQa} WPM` : 'N/A';
+  if (statWins) statWins.textContent = wins.toString();
+
+  if (historyRacesList) {
+    historyRacesList.innerHTML = races.map((r) => {
+      const rankEmoji = r.rank === 1 ? '🥇' : (r.rank === 2 ? '🥈' : (r.rank === 3 ? '🥉' : '🏁'));
+      const rankText = r.rank === 1 ? '1st' : (r.rank === 2 ? '2nd' : (r.rank === 3 ? '3rd' : `${r.rank}th`));
+      const formattedDate = new Date(r.timestamp).toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const qaDisplay = r.qaWpm !== null && r.qaWpm !== undefined
+        ? `<span class="text-sky-600 dark:text-sky-400 font-bold font-mono">${r.qaWpm} WPM</span>`
+        : `<span class="text-slate-400 dark:text-slate-500 italic">None / Skipped</span>`;
+
+      return (
+        '<div class="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex flex-wrap items-center justify-between gap-3 shadow-sm hover:border-amber-400/40 transition-all">' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-center gap-2 mb-1 flex-wrap">' +
+              '<span class="text-base" aria-hidden="true">' + rankEmoji + '</span>' +
+              '<span class="font-black text-xs px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-800 dark:text-brand-gold">' + rankText + ' Place</span>' +
+              '<h5 class="font-bold text-sm text-slate-900 dark:text-slate-100 font-serif-literary truncate">' + escapeHtml(r.bookTitle) + '</h5>' +
+            '</div>' +
+            '<p class="text-xs text-slate-600 dark:text-slate-400 leading-snug truncate">' + escapeHtml(r.chapter) + ' · <time class="text-slate-500">' + formattedDate + '</time></p>' +
+          '</div>' +
+          '<div class="flex items-center gap-4 text-xs shrink-0">' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Passage</span>' +
+              '<strong class="text-sm font-mono text-emerald-700 dark:text-emerald-400">' + r.passageWpm + ' WPM</strong>' +
+            '</div>' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Q&A Speed</span>' +
+              qaDisplay +
+            '</div>' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Accuracy</span>' +
+              '<span class="font-mono font-bold text-slate-700 dark:text-slate-300">' + r.accuracy + '%</span>' +
+            '</div>' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Time</span>' +
+              '<span class="font-mono text-slate-500">' + r.timeSeconds + 's</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+}
+
+function renderHistoryAcademyList(): void {
+  const history = getAcademyHistory();
+  if (historyAcademyCount) historyAcademyCount.textContent = history.length.toString();
+
+  const statStars = document.getElementById('hist-acad-stars');
+  const statAttempts = document.getElementById('hist-acad-attempts');
+  const statTopWpm = document.getElementById('hist-acad-top-wpm');
+
+  if (history.length === 0) {
+    if (historyAcademyEmpty) historyAcademyEmpty.classList.remove('hidden');
+    if (historyAcademyList) historyAcademyList.innerHTML = '';
+    if (statStars) statStars.textContent = '0 ⭐';
+    if (statAttempts) statAttempts.textContent = '0';
+    if (statTopWpm) statTopWpm.textContent = '0 WPM';
+    return;
+  }
+
+  if (historyAcademyEmpty) historyAcademyEmpty.classList.add('hidden');
+
+  const totalStars = getTotalStars();
+  const topWpm = Math.max(...history.map((h) => h.wpm));
+
+  if (statStars) statStars.textContent = `${totalStars} ⭐`;
+  if (statAttempts) statAttempts.textContent = history.length.toString();
+  if (statTopWpm) statTopWpm.textContent = `${topWpm} WPM`;
+
+  if (historyAcademyList) {
+    historyAcademyList.innerHTML = history.map((h) => {
+      const formattedDate = new Date(h.timestamp).toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const starsDisplay = '⭐'.repeat(h.stars) + '☆'.repeat(3 - h.stars);
+
+      return (
+        '<div class="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex flex-wrap items-center justify-between gap-3 shadow-sm hover:border-amber-400/40 transition-all">' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-center gap-2 mb-1 flex-wrap">' +
+              '<span class="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-brand-gold">Lesson #' + h.lessonId + '</span>' +
+              '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300">' + escapeHtml(h.level) + '</span>' +
+              '<h5 class="font-bold text-sm text-slate-900 dark:text-slate-100 truncate">' + escapeHtml(h.title) + '</h5>' +
+            '</div>' +
+            '<p class="text-xs text-slate-500 leading-snug"><time>' + formattedDate + '</time></p>' +
+          '</div>' +
+          '<div class="flex items-center gap-4 text-xs shrink-0">' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Speed</span>' +
+              '<strong class="text-sm font-mono text-emerald-700 dark:text-emerald-400">' + h.wpm + ' WPM</strong>' +
+            '</div>' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Accuracy</span>' +
+              '<span class="font-mono font-bold text-slate-700 dark:text-slate-300">' + h.accuracy + '%</span>' +
+            '</div>' +
+            '<div class="text-center">' +
+              '<span class="block text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">Stars</span>' +
+              '<span class="font-mono text-amber-500 text-xs">' + starsDisplay + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+}
+
 // --- Global Event Bindings ---
 function bindGlobalEvents(): void {
   // Tab Switchers (Issue #42)
@@ -1683,10 +2015,10 @@ function bindGlobalEvents(): void {
     });
   }
 
-  // Next Passage Button
+  // Next Passage Button (Advances through parts of story)
   if (btnNextPassage) {
     btnNextPassage.addEventListener('click', () => {
-      loadPassage(currentPassageIndex + 1);
+      loadPassage(getNextStoryPassageIndex());
     });
   }
 
@@ -1729,7 +2061,10 @@ function bindGlobalEvents(): void {
 
   // Skip Q&A
   if (btnSkipQa) {
-    btnSkipQa.addEventListener('click', () => showRacePodium());
+    btnSkipQa.addEventListener('click', () => {
+      qaFinalWpm = null;
+      showRacePodium();
+    });
   }
 
   // Q&A Input
@@ -1748,7 +2083,7 @@ function bindGlobalEvents(): void {
   if (btnPodiumNextStory) {
     btnPodiumNextStory.addEventListener('click', () => {
       if (racePodiumModal) racePodiumModal.classList.add('hidden');
-      loadPassage(currentPassageIndex + 1);
+      loadPassage(getNextStoryPassageIndex());
     });
   }
 
@@ -1756,6 +2091,57 @@ function bindGlobalEvents(): void {
     btnPodiumGotoLessons.addEventListener('click', () => {
       if (racePodiumModal) racePodiumModal.classList.add('hidden');
       switchAppTab('lessons');
+    });
+  }
+
+  // History Modal Triggers & Controls
+  if (btnOpenHistory) {
+    btnOpenHistory.addEventListener('click', () => openHistoryModal('races'));
+  }
+  if (btnPodiumHistory) {
+    btnPodiumHistory.addEventListener('click', () => openHistoryModal('races'));
+  }
+  if (btnCloseHistory) {
+    btnCloseHistory.addEventListener('click', closeHistoryModal);
+  }
+  if (historyModalBackdrop) {
+    historyModalBackdrop.addEventListener('click', closeHistoryModal);
+  }
+  if (tabHistoryRaces) {
+    tabHistoryRaces.addEventListener('click', () => switchHistoryTab('races'));
+  }
+  if (tabHistoryAcademy) {
+    tabHistoryAcademy.addEventListener('click', () => switchHistoryTab('academy'));
+  }
+  if (btnClearHistoryData) {
+    btnClearHistoryData.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all typing race and academy history records?')) {
+        clearAllHistory();
+        renderHistoryModal();
+      }
+    });
+  }
+
+  // Escape key to close history modal
+  window.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && historyModal && !historyModal.classList.contains('hidden')) {
+      closeHistoryModal();
+    }
+  });
+
+  // Share Score button
+  const btnShareScore = document.getElementById('btn-share-score');
+  const shareBtnText = document.getElementById('share-btn-text');
+  if (btnShareScore) {
+    btnShareScore.addEventListener('click', () => {
+      const text = `🏎️ I typed at ${racers[0].currentWpm} WPM on TinyKite TypeRacer! Try it: https://tinykite.co/typeracer/`;
+      try {
+        navigator.clipboard.writeText(text);
+        if (shareBtnText) shareBtnText.textContent = 'Copied! ✓';
+        setTimeout(() => {
+          if (shareBtnText) shareBtnText.textContent = 'Share Score';
+        }, 2000);
+      } catch (e) {}
     });
   }
 

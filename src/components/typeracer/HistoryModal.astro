@@ -1,0 +1,139 @@
+---
+/**
+ * HistoryModal.astro
+ * Accessible Refraction UI modal displaying learner's typing race and academy history from localStorage.
+ * Displays separate passage and Q&A speeds.
+ */
+---
+<div
+  id="history-modal"
+  class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="history-modal-title"
+>
+  <!-- Backdrop Blur overlay -->
+  <div id="history-modal-backdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Modal Dialog Container -->
+  <div class="relative w-full max-w-3xl max-h-[90vh] flex flex-col refraction-panel rounded-3xl p-5 sm:p-7 z-10 shadow-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 overflow-hidden">
+    <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
+
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between pb-4 mb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl filter drop-shadow" aria-hidden="true">📜</span>
+        <div>
+          <h3 id="history-modal-title" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-serif-literary">
+            Learner History & Detailed Statistics
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Locally stored activity log across story races and touch typing academy.
+          </p>
+        </div>
+      </div>
+      <button
+        id="btn-close-history"
+        type="button"
+        aria-label="Close history modal"
+        class="refraction-btn w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- History Tabs Switcher -->
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+      <div class="flex items-center gap-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-black/[0.06] dark:border-white/[0.08]" role="tablist">
+        <button
+          id="tab-history-races"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-brand-gold shadow-sm"
+        >
+          🏎️ Story Races (<span id="history-race-count">0</span>)
+        </button>
+        <button
+          id="tab-history-academy"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all"
+        >
+          🎓 Typing Academy (<span id="history-academy-count">0</span>)
+        </button>
+      </div>
+
+      <button
+        id="btn-clear-history-data"
+        type="button"
+        class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:underline px-2 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+      >
+        🗑️ Clear History Logs
+      </button>
+    </div>
+
+    <!-- TAB 1: STORY RACES CONTENT -->
+    <div id="history-view-races" class="flex-1 overflow-y-auto space-y-3 pr-1">
+      <!-- Race Summary Stats Row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3 text-center text-xs">
+        <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Best Passage Speed</span>
+          <span id="hist-stat-best-passage" class="text-base font-black text-amber-700 dark:text-brand-gold font-mono">0 WPM</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-black/[0.06] dark:border-white/[0.08]">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Avg Passage Speed</span>
+          <span id="hist-stat-avg-passage" class="text-base font-black text-slate-900 dark:text-slate-100 font-mono">0 WPM</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Avg Q&A Speed</span>
+          <span id="hist-stat-avg-qa" class="text-base font-black text-sky-700 dark:text-sky-300 font-mono">0 WPM</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Victories (1st)</span>
+          <span id="hist-stat-wins" class="text-base font-black text-emerald-700 dark:text-emerald-400 font-mono">0</span>
+        </div>
+      </div>
+
+      <!-- Race Log List / Table -->
+      <div id="history-races-list" class="space-y-2">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+      <div id="history-races-empty" class="hidden py-10 text-center text-slate-500 dark:text-slate-400 text-xs">
+        <span class="text-3xl block mb-2" aria-hidden="true">🏁</span>
+        <p class="font-bold">No races recorded yet in local storage.</p>
+        <p>Complete a race in the arena to start tracking your individual passage and Q&A speeds!</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: TYPING ACADEMY CONTENT -->
+    <div id="history-view-academy" class="flex-1 overflow-y-auto space-y-3 pr-1 hidden">
+      <!-- Academy Summary Row -->
+      <div class="grid grid-cols-3 gap-2.5 mb-3 text-center text-xs">
+        <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Total Stars</span>
+          <span id="hist-acad-stars" class="text-base font-black text-amber-600 dark:text-amber-400 font-mono">0 ⭐</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-black/[0.06] dark:border-white/[0.08]">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Completed Sessions</span>
+          <span id="hist-acad-attempts" class="text-base font-black text-slate-900 dark:text-slate-100 font-mono">0</span>
+        </div>
+        <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+          <span class="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">Top Academy Speed</span>
+          <span id="hist-acad-top-wpm" class="text-base font-black text-emerald-700 dark:text-emerald-400 font-mono">0 WPM</span>
+        </div>
+      </div>
+
+      <!-- Academy Log List -->
+      <div id="history-academy-list" class="space-y-2">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+      <div id="history-academy-empty" class="hidden py-10 text-center text-slate-500 dark:text-slate-400 text-xs">
+        <span class="text-3xl block mb-2" aria-hidden="true">🎓</span>
+        <p class="font-bold">No academy drills completed yet.</p>
+        <p>Practice ergonomic touch typing in the Academy tab to build muscle memory and earn stars!</p>
+      </div>
+    </div>
+  </div>
+</div>
