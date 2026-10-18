@@ -1,0 +1,23 @@
+---
+/**
+ * CurriculumGrid.astro
+ * 12-Lesson Touch Typing Syllabus Card Grid.
+ * Implements:
+ * - Issue #42: WCAG 2.1 AA Keyboard Activation (Enter/Space on cards)
+ * - Issue #49: Star ratings (1-3 stars) and completion badges
+ */
+---
+<div class="mt-8">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
+      <span>📚</span> 12 Ergonomic Typing Lessons
+    </h3>
+    <span id="academy-summary-badge" class="text-xs font-bold text-slate-600 dark:text-slate-300">
+      0 / 12 Lessons Completed
+    </span>
+  </div>
+
+  <div id="lessons-curriculum-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    <!-- Populated dynamically with star ratings and keyboard handlers -->
+  </div>
+</div>

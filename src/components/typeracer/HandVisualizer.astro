@@ -1,0 +1,139 @@
+---
+/**
+ * HandVisualizer.astro
+ * High-fidelity Ergonomic Anatomical SVG Hand & Finger Guide (Typing.com Inspiration).
+ * Addresses Issue #46: realistic hand contours, resting home row anchors (ASDF JKL;),
+ * and fluid finger depression highlights.
+ */
+---
+<div id="academy-hands-graphic" class="mt-4 p-4 sm:p-5 bg-white/95 dark:bg-slate-900/90 border border-black/[0.08] dark:border-white/[0.12] rounded-2xl shadow-sm select-none">
+  <div class="flex flex-wrap items-center justify-between gap-3 text-xs font-bold text-slate-600 dark:text-slate-300 mb-3 px-1">
+    <div class="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+      <span class="text-amber-500 text-sm" aria-hidden="true">✋</span>
+      <span>Hand & Finger Guide</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">Active Key:</span>
+      <span id="hud-target-key-pill" class="px-2.5 py-0.5 rounded-lg bg-brand-gold text-slate-950 font-black text-sm font-mono shadow-sm">F</span>
+      <span id="hud-target-finger-desc" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Left Index (Home Bump)</span>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-14 py-2">
+    <!-- LEFT HAND ANATOMICAL SVG -->
+    <div class="flex flex-col items-center">
+      <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Left Hand</span>
+      <svg
+        id="hand-svg-left"
+        viewBox="0 0 240 200"
+        class="w-48 sm:w-60 h-auto select-none filter drop-shadow-sm"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Left hand ergonomic touch typing finger guide"
+      >
+        <!-- Wrist & Palm Contour -->
+        <path
+          d="M 50 135 C 45 105, 70 85, 110 85 C 150 85, 185 105, 190 140 C 195 175, 165 195, 120 195 C 75 195, 55 175, 50 135 Z"
+          class="fill-slate-100/90 dark:fill-slate-800/80 stroke-slate-300/80 dark:stroke-slate-700 stroke-2"
+        />
+        <!-- Palm Crease Lines -->
+        <path d="M 75 130 Q 115 150 155 125" class="fill-none stroke-slate-200 dark:stroke-slate-700/60 stroke-2 stroke-linecap-round" />
+        <path d="M 85 145 Q 120 165 160 145" class="fill-none stroke-slate-200 dark:stroke-slate-700/60 stroke-1 stroke-linecap-round" />
+
+        <!-- Pinky Finger (A anchor) - Rose Zone -->
+        <g id="finger-svg-left-pinky" data-finger="left-pinky" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="32" y="60" width="22" height="72" rx="11" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="43" cy="73" r="8" class="fill-rose-500/15" />
+          <text x="43" y="77" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">A</text>
+        </g>
+
+        <!-- Ring Finger (S anchor) - Amber Zone -->
+        <g id="finger-svg-left-ring" data-finger="left-ring" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="64" y="32" width="24" height="98" rx="12" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="76" cy="46" r="8" class="fill-amber-500/15" />
+          <text x="76" y="50" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">S</text>
+        </g>
+
+        <!-- Middle Finger (D anchor) - Emerald Zone -->
+        <g id="finger-svg-left-middle" data-finger="left-middle" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="98" y="16" width="26" height="114" rx="13" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="111" cy="30" r="8" class="fill-emerald-500/15" />
+          <text x="111" y="34" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">D</text>
+        </g>
+
+        <!-- Index Finger (F anchor with tactile bump) - Sky Blue Zone -->
+        <g id="finger-svg-left-index" data-finger="left-index" data-active="true" class="finger-group active-finger cursor-pointer transition-all duration-150">
+          <rect x="134" y="30" width="26" height="100" rx="13" class="fill-amber-400 dark:fill-brand-gold stroke-amber-500 dark:stroke-amber-300 stroke-2 shadow-lg" />
+          <circle cx="147" cy="44" r="8" class="fill-amber-300/40" />
+          <text x="147" y="48" text-anchor="middle" class="text-[11px] font-black fill-slate-950 pointer-events-none">F</text>
+          <!-- Tactile Homing Bump indicator -->
+          <circle cx="147" cy="58" r="2.5" class="fill-slate-900 pointer-events-none" />
+        </g>
+
+        <!-- Thumb (Spacebar) - Purple Zone -->
+        <g id="finger-svg-left-thumb" data-finger="thumb" class="finger-group cursor-pointer transition-all duration-150">
+          <path d="M 170 125 C 178 108, 205 115, 212 130 C 216 142, 205 158, 190 158 C 176 158, 168 142, 170 125 Z" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <text x="194" y="142" text-anchor="middle" class="text-[9px] font-bold fill-slate-500 pointer-events-none">␣</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- RIGHT HAND ANATOMICAL SVG -->
+    <div class="flex flex-col items-center">
+      <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Right Hand</span>
+      <svg
+        id="hand-svg-right"
+        viewBox="0 0 240 200"
+        class="w-48 sm:w-60 h-auto select-none filter drop-shadow-sm"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Right hand ergonomic touch typing finger guide"
+      >
+        <!-- Wrist & Palm Contour -->
+        <path
+          d="M 50 140 C 55 105, 90 85, 130 85 C 170 85, 195 105, 190 135 C 185 175, 165 195, 120 195 C 75 195, 45 175, 50 140 Z"
+          class="fill-slate-100/90 dark:fill-slate-800/80 stroke-slate-300/80 dark:stroke-slate-700 stroke-2"
+        />
+        <!-- Palm Crease Lines -->
+        <path d="M 85 125 Q 125 150 165 130" class="fill-none stroke-slate-200 dark:stroke-slate-700/60 stroke-2 stroke-linecap-round" />
+        <path d="M 80 145 Q 120 165 155 145" class="fill-none stroke-slate-200 dark:stroke-slate-700/60 stroke-1 stroke-linecap-round" />
+
+        <!-- Thumb (Spacebar) - Purple Zone -->
+        <g id="finger-svg-right-thumb" data-finger="thumb" class="finger-group cursor-pointer transition-all duration-150">
+          <path d="M 70 125 C 62 108, 35 115, 28 130 C 24 142, 35 158, 50 158 C 64 158, 72 142, 70 125 Z" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <text x="46" y="142" text-anchor="middle" class="text-[9px] font-bold fill-slate-500 pointer-events-none">␣</text>
+        </g>
+
+        <!-- Index Finger (J anchor with tactile bump) - Sky Blue Zone -->
+        <g id="finger-svg-right-index" data-finger="right-index" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="80" y="30" width="26" height="100" rx="13" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="93" cy="44" r="8" class="fill-sky-500/15" />
+          <text x="93" y="48" text-anchor="middle" class="text-[11px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">J</text>
+          <!-- Tactile Homing Bump indicator -->
+          <circle cx="93" cy="58" r="2.5" class="fill-slate-400 dark:fill-slate-400 pointer-events-none" />
+        </g>
+
+        <!-- Middle Finger (K anchor) - Emerald Zone -->
+        <g id="finger-svg-right-middle" data-finger="right-middle" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="116" y="16" width="26" height="114" rx="13" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="129" cy="30" r="8" class="fill-emerald-500/15" />
+          <text x="129" y="34" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">K</text>
+        </g>
+
+        <!-- Ring Finger (L anchor) - Amber Zone -->
+        <g id="finger-svg-right-ring" data-finger="right-ring" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="152" y="32" width="24" height="98" rx="12" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="164" cy="46" r="8" class="fill-amber-500/15" />
+          <text x="164" y="50" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">L</text>
+        </g>
+
+        <!-- Pinky Finger (; anchor) - Rose Zone -->
+        <g id="finger-svg-right-pinky" data-finger="right-pinky" class="finger-group cursor-pointer transition-all duration-150">
+          <rect x="186" y="60" width="22" height="72" rx="11" class="fill-slate-200/90 dark:fill-slate-700/70 stroke-slate-300 dark:stroke-slate-600 stroke-2" />
+          <circle cx="197" cy="73" r="8" class="fill-rose-500/15" />
+          <text x="197" y="77" text-anchor="middle" class="text-[10px] font-black fill-slate-700 dark:fill-slate-300 pointer-events-none">;</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>

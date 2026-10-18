@@ -1,0 +1,154 @@
+---
+/**
+ * VirtualKeyboard.astro
+ * 3D Tactile Mechanical Virtual Keyboard Guide
+ * Implements:
+ * - Issue #43: Full WCAG 2.1 AA ARIA accessibility and screen reader labels
+ * - Issue #47: Typing.com parity finger-column color coding
+ * - Issue #50: Real-time tactile mistake flash & depression states
+ */
+
+export interface VirtualKey {
+  key: string;
+  shift?: string;
+  label: string;
+  width: string;
+  finger: string;
+  ariaLabel: string;
+  bump?: boolean;
+}
+
+const KEYBOARD_ROWS: VirtualKey[][] = [
+  // Row 1: Numbers & Symbols (14 keys)
+  [
+    { key: '`', shift: '~', label: '`', width: 'w-8 sm:w-11 md:w-12', finger: 'left-pinky', ariaLabel: 'Backtick and tilde key' },
+    { key: '1', shift: '!', label: '1', width: 'w-8 sm:w-11 md:w-12', finger: 'left-pinky', ariaLabel: '1 and exclamation mark key' },
+    { key: '2', shift: '@', label: '2', width: 'w-8 sm:w-11 md:w-12', finger: 'left-ring', ariaLabel: '2 and at symbol key' },
+    { key: '3', shift: '#', label: '3', width: 'w-8 sm:w-11 md:w-12', finger: 'left-middle', ariaLabel: '3 and hash key' },
+    { key: '4', shift: '$', label: '4', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: '4 and dollar key' },
+    { key: '5', shift: '%', label: '5', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: '5 and percent key' },
+    { key: '6', shift: '^', label: '6', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: '6 and caret key' },
+    { key: '7', shift: '&', label: '7', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: '7 and ampersand key' },
+    { key: '8', shift: '*', label: '8', width: 'w-8 sm:w-11 md:w-12', finger: 'right-middle', ariaLabel: '8 and asterisk key' },
+    { key: '9', shift: '(', label: '9', width: 'w-8 sm:w-11 md:w-12', finger: 'right-ring', ariaLabel: '9 and open parenthesis key' },
+    { key: '0', shift: ')', label: '0', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: '0 and close parenthesis key' },
+    { key: '-', shift: '_', label: '-', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Hyphen and underscore key' },
+    { key: '=', shift: '+', label: '=', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Equal and plus key' },
+    { key: 'bksp', shift: '', label: '⌫ Bksp', width: 'w-14 sm:w-18 md:w-20', finger: 'right-pinky', ariaLabel: 'Backspace key' }
+  ],
+  // Row 2: Top Row (14 keys)
+  [
+    { key: 'tab', shift: '', label: 'Tab ⇥', width: 'w-12 sm:w-16 md:w-18', finger: 'left-pinky', ariaLabel: 'Tab key' },
+    { key: 'q', shift: 'Q', label: 'Q', width: 'w-8 sm:w-11 md:w-12', finger: 'left-pinky', ariaLabel: 'Q key' },
+    { key: 'w', shift: 'W', label: 'W', width: 'w-8 sm:w-11 md:w-12', finger: 'left-ring', ariaLabel: 'W key' },
+    { key: 'e', shift: 'E', label: 'E', width: 'w-8 sm:w-11 md:w-12', finger: 'left-middle', ariaLabel: 'E key' },
+    { key: 'r', shift: 'R', label: 'R', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'R key' },
+    { key: 't', shift: 'T', label: 'T', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'T key' },
+    { key: 'y', shift: 'Y', label: 'Y', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'Y key' },
+    { key: 'u', shift: 'U', label: 'U', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'U key' },
+    { key: 'i', shift: 'I', label: 'I', width: 'w-8 sm:w-11 md:w-12', finger: 'right-middle', ariaLabel: 'I key' },
+    { key: 'o', shift: 'O', label: 'O', width: 'w-8 sm:w-11 md:w-12', finger: 'right-ring', ariaLabel: 'O key' },
+    { key: 'p', shift: 'P', label: 'P', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'P key' },
+    { key: '[', shift: '{', label: '[', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Left bracket key' },
+    { key: ']', shift: '}', label: ']', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Right bracket key' },
+    { key: '\\', shift: '|', label: '\\', width: 'w-10 sm:w-14 md:w-16', finger: 'right-pinky', ariaLabel: 'Backslash key' }
+  ],
+  // Row 3: Home Row (13 keys - F and J homing bumps)
+  [
+    { key: 'caps', shift: '', label: 'Caps ⇪', width: 'w-14 sm:w-18 md:w-20', finger: 'left-pinky', ariaLabel: 'Caps lock key' },
+    { key: 'a', shift: 'A', label: 'A', width: 'w-8 sm:w-11 md:w-12', finger: 'left-pinky', ariaLabel: 'A key' },
+    { key: 's', shift: 'S', label: 'S', width: 'w-8 sm:w-11 md:w-12', finger: 'left-ring', ariaLabel: 'S key' },
+    { key: 'd', shift: 'D', label: 'D', width: 'w-8 sm:w-11 md:w-12', finger: 'left-middle', ariaLabel: 'D key' },
+    { key: 'f', shift: 'F', label: 'F', bump: true, width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'F key with raised homing bump' },
+    { key: 'g', shift: 'G', label: 'G', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'G key' },
+    { key: 'h', shift: 'H', label: 'H', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'H key' },
+    { key: 'j', shift: 'J', label: 'J', bump: true, width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'J key with raised homing bump' },
+    { key: 'k', shift: 'K', label: 'K', width: 'w-8 sm:w-11 md:w-12', finger: 'right-middle', ariaLabel: 'K key' },
+    { key: 'l', shift: 'L', label: 'L', width: 'w-8 sm:w-11 md:w-12', finger: 'right-ring', ariaLabel: 'L key' },
+    { key: ';', shift: ':', label: ';', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Semicolon key' },
+    { key: "'", shift: '"', label: "'", width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Apostrophe and quotation mark key' },
+    { key: 'enter', shift: '', label: 'Enter ↵', width: 'w-16 sm:w-22 md:w-26', finger: 'right-pinky', ariaLabel: 'Enter carriage return key' }
+  ],
+  // Row 4: Bottom Row (12 keys)
+  [
+    { key: 'shift-left', shift: '', label: '⇧ Shift', width: 'w-16 sm:w-22 md:w-26', finger: 'left-pinky', ariaLabel: 'Left shift key' },
+    { key: 'z', shift: 'Z', label: 'Z', width: 'w-8 sm:w-11 md:w-12', finger: 'left-pinky', ariaLabel: 'Z key' },
+    { key: 'x', shift: 'X', label: 'X', width: 'w-8 sm:w-11 md:w-12', finger: 'left-ring', ariaLabel: 'X key' },
+    { key: 'c', shift: 'C', label: 'C', width: 'w-8 sm:w-11 md:w-12', finger: 'left-middle', ariaLabel: 'C key' },
+    { key: 'v', shift: 'V', label: 'V', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'V key' },
+    { key: 'b', shift: 'B', label: 'B', width: 'w-8 sm:w-11 md:w-12', finger: 'left-index', ariaLabel: 'B key' },
+    { key: 'n', shift: 'N', label: 'N', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'N key' },
+    { key: 'm', shift: 'M', label: 'M', width: 'w-8 sm:w-11 md:w-12', finger: 'right-index', ariaLabel: 'M key' },
+    { key: ',', shift: '<', label: ',', width: 'w-8 sm:w-11 md:w-12', finger: 'right-middle', ariaLabel: 'Comma and less than key' },
+    { key: '.', shift: '>', label: '.', width: 'w-8 sm:w-11 md:w-12', finger: 'right-ring', ariaLabel: 'Period and greater than key' },
+    { key: '/', shift: '?', label: '/', width: 'w-8 sm:w-11 md:w-12', finger: 'right-pinky', ariaLabel: 'Forward slash and question mark key' },
+    { key: 'shift-right', shift: '', label: '⇧ Shift', width: 'w-16 sm:w-22 md:w-26', finger: 'right-pinky', ariaLabel: 'Right shift key' }
+  ],
+  // Row 5: Thumbs (Spacebar)
+  [
+    { key: ' ', shift: '', label: 'Spacebar', width: 'w-56 sm:w-72 md:w-96', finger: 'thumb', ariaLabel: 'Spacebar key' }
+  ]
+];
+
+function getFingerZoneClass(finger: string): string {
+  if (finger.includes('pinky')) return 'vkey-zone-pinky';
+  if (finger.includes('ring')) return 'vkey-zone-ring';
+  if (finger.includes('middle')) return 'vkey-zone-middle';
+  if (finger.includes('index')) return 'vkey-zone-index';
+  return 'vkey-zone-thumb';
+}
+---
+<div class="p-3 sm:p-4 bg-white/95 dark:bg-slate-900/90 border border-black/[0.08] dark:border-white/[0.12] rounded-2xl shadow-md select-none">
+  <!-- Keyboard Header & Legend -->
+  <div class="flex flex-wrap items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300 mb-3 px-1 gap-2">
+    <div class="flex items-center gap-1.5">
+      <span class="text-amber-500" aria-hidden="true">⌨️</span>
+      <span>3D Visual Mechanical Keyboard Guide</span>
+    </div>
+    <!-- Finger Color Legend (Typing.com Parity) -->
+    <div class="hidden md:flex items-center gap-3 text-[10px] font-semibold">
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-400"></span> Pinky</span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Ring</span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Middle</span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-400"></span> Index</span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Thumb</span>
+    </div>
+  </div>
+
+  <!-- Physical Keyboard Grid -->
+  <div
+    id="visual-keyboard"
+    class="space-y-1.5 sm:space-y-2 select-none py-1 overflow-x-auto"
+    role="region"
+    aria-label="3D visual keyboard with tactile key indicators"
+  >
+    {KEYBOARD_ROWS.map((row) => (
+      <div class="flex justify-center gap-1 sm:gap-1.5 min-w-[620px]">
+        {row.map((k) => (
+          <div
+            class={`vkey-3d h-12 sm:h-14 ${k.width} ${k.bump ? 'vkey-bump' : ''} ${getFingerZoneClass(k.finger)}`}
+            data-key={k.key}
+            data-shift={k.shift}
+            data-finger={k.finger}
+            id={k.key === 'shift-left' ? 'vkey-shift-left' : (k.key === 'shift-right' ? 'vkey-shift-right' : undefined)}
+            role="button"
+            tabindex="-1"
+            aria-label={k.ariaLabel}
+          >
+            {k.shift && (
+              <span class="vkey-shift-label text-[9px] sm:text-[10px] leading-none text-slate-500 dark:text-slate-400 font-semibold absolute top-1 left-1.5 pointer-events-none" aria-hidden="true">
+                {k.shift}
+              </span>
+            )}
+            <span class={`vkey-main-label text-xs sm:text-sm md:text-base font-extrabold ${k.shift ? 'mt-1 sm:mt-1.5' : ''}`} aria-hidden="true">
+              {k.label || k.key.toUpperCase()}
+            </span>
+            {k.bump && (
+              <span class="absolute bottom-1 sm:bottom-1.5 w-3.5 sm:w-4 h-0.5 rounded-full bg-slate-400 dark:bg-slate-400 pointer-events-none" title="Tactile home row bump" aria-hidden="true"></span>
+            )}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

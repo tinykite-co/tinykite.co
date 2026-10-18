@@ -1,0 +1,70 @@
+---
+/**
+ * RaceTrack.astro
+ * 4-lane Circuit Race Track displaying player car and 3 live peers or AI bots.
+ */
+---
+<div class="tr-circuit-track p-3 space-y-2 overflow-hidden mb-4 select-none relative">
+  <div class="tr-finish-line" aria-hidden="true"></div>
+
+  <!-- LANE 0: YOU (Player) -->
+  <div class="relative flex items-center h-8 z-10 bg-amber-400/[0.08] rounded-lg px-1 border-l-2 border-brand-gold">
+    <div class="absolute inset-x-0 h-0.5 bg-amber-400/25 rounded-full"></div>
+    <div id="racer-0" class="tr-racer-car absolute left-0 flex items-center gap-1.5 select-none" style="left: 0%;">
+      <span class="text-xl filter drop-shadow">🏎️</span>
+      <span id="racer-0-wpm" class="text-[10px] font-black px-1.5 py-0.5 rounded-full bg-brand-gold text-slate-950 whitespace-nowrap shadow-sm font-mono">
+        0 WPM
+      </span>
+      <span class="text-[9px] font-bold text-white bg-amber-600 px-1 py-0.5 rounded">You</span>
+      <span id="racer-0-medal" class="hidden text-sm" aria-hidden="true">🥇</span>
+    </div>
+  </div>
+
+  <!-- LANE 1: RACER 2 -->
+  <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/[0.08] pt-1">
+    <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+    <div id="racer-1" class="tr-racer-car absolute left-0 flex items-center gap-1.5 select-none" style="left: 0%;">
+      <span id="racer-1-avatar" class="text-lg filter drop-shadow">🏎️</span>
+      <span id="racer-1-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded font-mono whitespace-nowrap">
+        0 WPM
+      </span>
+      <span id="racer-1-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1.5 py-0.5 rounded truncate max-w-[100px]">
+        Oxford Scholar
+      </span>
+      <span id="racer-1-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1.5 rounded">BOT</span>
+      <span id="racer-1-medal" class="hidden text-sm" aria-hidden="true">🥈</span>
+    </div>
+  </div>
+
+  <!-- LANE 2: RACER 3 -->
+  <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/[0.08] pt-1">
+    <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+    <div id="racer-2" class="tr-racer-car absolute left-0 flex items-center gap-1.5 select-none" style="left: 0%;">
+      <span id="racer-2-avatar" class="text-lg filter drop-shadow">🚗</span>
+      <span id="racer-2-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded font-mono whitespace-nowrap">
+        0 WPM
+      </span>
+      <span id="racer-2-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1.5 py-0.5 rounded truncate max-w-[100px]">
+        Jane Eyre
+      </span>
+      <span id="racer-2-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1.5 rounded">BOT</span>
+      <span id="racer-2-medal" class="hidden text-sm" aria-hidden="true">🥉</span>
+    </div>
+  </div>
+
+  <!-- LANE 3: RACER 4 -->
+  <div class="relative flex items-center h-7 z-10 border-t border-dashed border-white/[0.08] pt-1">
+    <div class="absolute inset-x-0 h-0.5 bg-white/10 rounded-full"></div>
+    <div id="racer-3" class="tr-racer-car absolute left-0 flex items-center gap-1.5 select-none" style="left: 0%;">
+      <span id="racer-3-avatar" class="text-lg filter drop-shadow">🚕</span>
+      <span id="racer-3-wpm" class="text-[9px] font-semibold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded font-mono whitespace-nowrap">
+        0 WPM
+      </span>
+      <span id="racer-3-name" class="text-[9px] font-medium text-slate-400 bg-black/40 px-1.5 py-0.5 rounded truncate max-w-[100px]">
+        Shelley Speedster
+      </span>
+      <span id="racer-3-badge" class="text-[8px] font-bold text-cyan-300 bg-cyan-950/80 px-1.5 rounded">BOT</span>
+      <span id="racer-3-medal" class="hidden text-sm" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>
