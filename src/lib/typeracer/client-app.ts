@@ -1226,17 +1226,42 @@ function loadLesson(index: number): void {
 function renderLessonDisplay(): void {
   if (!lessonTextDisplay) return;
 
+  const rawWords = lessonTargetText.split(' ');
+  let charIdx = 0;
   let html = '';
-  for (let i = 0; i < lessonTargetText.length; i++) {
-    const char = lessonTargetText[i];
-    const displayChar = char === ' ' ? '␣' : escapeHtml(char);
 
-    if (i < lessonTypedIndex) {
-      html += '<span class="text-emerald-700 dark:text-emerald-400 font-bold opacity-90">' + displayChar + '</span>';
-    } else if (i === lessonTypedIndex) {
-      html += '<span id="lesson-active-cursor-char" class="relative inline-block z-10 px-2 py-0.5 mx-0.5 rounded-lg bg-brand-gold text-slate-950 font-black shadow-[0_0_15px_rgba(251,191,36,0.7)] ring-2 ring-amber-300 animate-pulse">' + displayChar + '</span>';
-    } else {
-      html += '<span class="text-slate-500 dark:text-slate-400 font-medium">' + displayChar + '</span>';
+  for (let w = 0; w < rawWords.length; w++) {
+    const word = rawWords[w];
+    let wordHtml = '<span class="inline-block whitespace-nowrap tracking-normal">';
+
+    for (let c = 0; c < word.length; c++) {
+      const char = word[c];
+      const i = charIdx;
+
+      if (i < lessonTypedIndex) {
+        wordHtml += '<span class="text-emerald-700 dark:text-emerald-400 font-bold opacity-90">' + escapeHtml(char) + '</span>';
+      } else if (i === lessonTypedIndex) {
+        wordHtml += '<span id="lesson-active-cursor-char" class="relative inline-block z-10 px-2 py-0.5 mx-0.5 rounded-lg bg-brand-gold text-slate-950 font-black shadow-[0_0_15px_rgba(251,191,36,0.7)] ring-2 ring-amber-300 animate-pulse">' + escapeHtml(char) + '</span>';
+      } else {
+        wordHtml += '<span class="text-slate-500 dark:text-slate-400 font-medium">' + escapeHtml(char) + '</span>';
+      }
+      charIdx++;
+    }
+
+    wordHtml += '</span>';
+    html += wordHtml;
+
+    // Distinct gap between word groups
+    if (w < rawWords.length - 1) {
+      const spaceIdx = charIdx;
+      if (spaceIdx < lessonTypedIndex) {
+        html += '<span class="inline-block mx-2 text-emerald-600/60 dark:text-emerald-400/60 font-mono text-sm select-none">␣</span>';
+      } else if (spaceIdx === lessonTypedIndex) {
+        html += '<span id="lesson-active-cursor-char" class="relative inline-flex items-center gap-1 z-10 px-2.5 py-0.5 mx-2 rounded-lg bg-brand-gold text-slate-950 font-black shadow-[0_0_15px_rgba(251,191,36,0.7)] ring-2 ring-amber-300 animate-pulse text-xs tracking-wider uppercase font-sans">␣ Space</span>';
+      } else {
+        html += '<span class="inline-block mx-2 text-slate-400/50 dark:text-slate-500/50 font-mono text-sm select-none">␣</span>';
+      }
+      charIdx++; // Account for the space character
     }
   }
 

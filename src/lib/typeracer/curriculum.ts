@@ -12,17 +12,17 @@ export const CURRICULUM: LessonDef[] = [
     id: 1,
     level: 'Beginner',
     title: 'Home Row Anchors: F & J',
-    newKeys: ['F', 'J'],
-    tip: 'Feel the tactile homing bumps under your index fingers. Strike with quick, relaxed taps without using the spacebar.',
-    drillText: 'ffffjjjjffjjfjfjfjfjjffjfjfjjffffjjjjfjfj'
+    newKeys: ['F', 'J', 'Space'],
+    tip: 'Feel the tactile homing bumps under your index fingers. Strike in word-sized groups of 4-5 letters, using thumbs for the spacebar gap.',
+    drillText: 'ffff jjjj ffff jjjj ffjj jjff fffff jjjjj fjfj jfjf ffff jjjj'
   },
   {
     id: 2,
     level: 'Beginner',
-    title: 'Adding Space: F, J & Spacebar',
+    title: 'Anchor Rhythm: Extended F & J Flow',
     newKeys: ['Space'],
-    tip: 'Use your thumb to press the spacebar smoothly after each pattern without lifting your hands.',
-    drillText: 'f j f j fj jf f j ff jj ffff jjjj fj jf'
+    tip: 'Build steady tempo across longer alternating patterns. Keep your wrists hovering softly without resting on the desk.',
+    drillText: 'ffjj jjff fjfj jfjf ffff jjjj jfff fjjj ffjj jjff'
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Middle Fingers: D & K',
     newKeys: ['D', 'K'],
     tip: 'Left middle finger strikes D; right middle finger strikes K. Keep index fingers resting lightly on F and J.',
-    drillText: 'dd kk dk kd d k f d j k df jk kf jd'
+    drillText: 'dddd kkkk fddd jkkk dkdk kdkd fdfd jkjk dddk kkkd'
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Ring Fingers: S & L',
     newKeys: ['S', 'L'],
     tip: 'Left ring finger strikes S; right ring finger strikes L. Maintain curved fingers arched over the home row.',
-    drillText: 'ss ll sl ls s l a s d f j k l s l'
+    drillText: 'ssss llll fsll jfsl slsl lsls dsss klll sssl llls'
   },
   {
     id: 5,
@@ -46,7 +46,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Pinky Outposts: A & Semicolon',
     newKeys: ['A', ';'],
     tip: 'Reach slightly outward with your pinkies without shifting your wrists or resting your palms on the desk.',
-    drillText: 'aa ;; a; ;a a s d f j k l ; asdf jkl;'
+    drillText: 'aaaa ;;;; a;a; ;a;a asdf jkl; faaa j;;; aaaa ;;;;'
   },
   {
     id: 6,
@@ -54,7 +54,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Home Row Word Flow',
     newKeys: ['Home Row'],
     tip: 'Combine all eight home row keys into fluid English words without glancing at the keyboard.',
-    drillText: 'ask fall flask salads shall adds lads fall'
+    drillText: 'flask salads shall fall flash salads flask shall'
   },
   {
     id: 7,
@@ -62,7 +62,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Top Row Vowels: E & I',
     newKeys: ['E', 'I'],
     tip: 'Reach upward smoothly with your middle fingers. Left middle finger finds E; right middle finger finds I.',
-    drillText: 'de ki ed ik feed side like file slide life'
+    drillText: 'feed side like file slide life wide kids'
   },
   {
     id: 8,
@@ -70,7 +70,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Top Row Index Reaches: R, T, U, Y',
     newKeys: ['R', 'T', 'U', 'Y'],
     tip: 'Your index fingers control two columns each. Snap back to F and J immediately after every stroke.',
-    drillText: 'fr ft ju jy true rust fruit try stay year'
+    drillText: 'true rust fruit stay year turn just duty true'
   },
   {
     id: 9,
@@ -78,7 +78,7 @@ export const CURRICULUM: LessonDef[] = [
     title: 'Bottom Row: C, V, M, N',
     newKeys: ['C', 'V', 'M', 'N'],
     tip: 'Curl fingers down into the bottom row. Left index drops to V, right index drops to M and N.',
-    drillText: 'fv jm jn view come man cave vain move main'
+    drillText: 'view come cave vain move main calm mean name'
   },
   {
     id: 10,
