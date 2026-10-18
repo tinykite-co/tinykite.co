@@ -175,7 +175,18 @@ let libraryDirectSearch: HTMLInputElement | null = null;
 let libraryFullGrid: HTMLElement | null = null;
 
 // --- State Variables ---
-const passages: Passage[] = PASSAGES;
+function cleanPassageText(text: string): string {
+  return text
+    .replace(/[—–]/g, ', ')
+    .replace(/\s*,\s*,/g, ',')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const passages: Passage[] = PASSAGES.map((p) => ({
+  ...p,
+  text: cleanPassageText(p.text)
+}));
 let currentPassageIndex = 0;
 let currentPassage: Passage = passages[0];
 

@@ -26,6 +26,13 @@ describe('Racer Data - Clean Classical Literature Passages', () => {
       assert.strictEqual(/gutenberg/i.test(p.text), false, `Text of ${p.id} should not mention Gutenberg`);
     }
   });
+
+  test('no passages contain em dashes (—) or en dashes (–)', () => {
+    for (const p of PASSAGES) {
+      assert.strictEqual(p.text.includes('—'), false, `Text of ${p.id} should not contain em dash (—)`);
+      assert.strictEqual(p.text.includes('–'), false, `Text of ${p.id} should not contain en dash (–)`);
+    }
+  });
 });
 
 describe('Racer - Character-Level Progress and Real-Time WPM', () => {
