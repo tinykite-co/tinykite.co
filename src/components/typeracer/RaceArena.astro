@@ -4,7 +4,6 @@
  * Section 1: Live Race Arena & Literary Speed Sprint
  */
 import type { Passage } from '../../data/typeracer/passages';
-import VocabDrawer from './VocabDrawer.astro';
 import CountdownOverlay from './CountdownOverlay.astro';
 import RaceTrack from './RaceTrack.astro';
 import RacePodiumModal from './RacePodiumModal.astro';
@@ -44,13 +43,6 @@ const initialWords = initialPassage.text.split(' ');
 
       <div class="flex items-center gap-2">
         <button
-          id="btn-toggle-vocab"
-          type="button"
-          class="refraction-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-white/70 dark:bg-white/10 text-slate-900 dark:text-slate-100 hover:bg-amber-100 dark:hover:bg-white/20 transition-colors flex items-center gap-1.5 border border-black/[0.08] dark:border-white/[0.1] min-h-[44px]"
-        >
-          <span aria-hidden="true">💡</span> Vocab (<span id="vocab-count">{initialPassage.vocabulary.length}</span>)
-        </button>
-        <button
           id="btn-next-passage"
           type="button"
           class="refraction-btn px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 active:scale-95 transition-all flex items-center gap-1 shadow-sm min-h-[44px]"
@@ -60,9 +52,6 @@ const initialWords = initialPassage.text.split(' ');
       </div>
     </div>
 
-    <!-- Vocabulary Drawer Component -->
-    <VocabDrawer vocabulary={initialPassage.vocabulary} />
-
     <!-- PHASE 1: 4-LANE CIRCUIT RACING -->
     <div id="typing-race-view">
 
@@ -71,7 +60,7 @@ const initialWords = initialPassage.text.split(' ');
         <div class="flex items-center gap-2.5">
           <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
           <span id="lobby-status-text" class="font-bold text-slate-900 dark:text-slate-100">
-            Matchmaking: Waiting for other racers... (<span id="lobby-timer-num">5</span>s)
+            Ready to race! Click "Start Race Now" when ready.
           </span>
           <span id="lobby-racers-summary" class="hidden sm:inline text-slate-600 dark:text-slate-300">
             • 1 Player (You) + 3 Bots ready

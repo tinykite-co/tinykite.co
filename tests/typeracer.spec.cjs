@@ -17,29 +17,55 @@ const assert = require('assert');
   await page.waitForTimeout(500);
 
   // ----------------------------------------------------
-  // TEST 1: Clean UI - No "11+" or "Project Gutenberg"
+  // TEST 1: Clean UI - No Vocab, No Story Library, No 11+ / Gutenberg
   // ----------------------------------------------------
-  console.log('TEST 1: Checking Clean Branding (Zero 11+ or Gutenberg mentions in UI)...');
+  console.log('TEST 1: Checking Clean UI (Zero Vocab, Zero Story Library, Zero 11+ or Gutenberg mentions)...');
   const title = await page.title();
   console.log('   Page Title:', title);
   assert.strictEqual(/11\+/i.test(title), false, 'Page title must not mention 11+');
   assert.strictEqual(/gutenberg/i.test(title), false, 'Page title must not mention Gutenberg');
 
+  // Verify Vocab button and drawer do NOT exist
+  const vocabToggle = await page.$('#btn-toggle-vocab');
+  assert.strictEqual(vocabToggle, null, 'Vocab toggle button must NOT exist in the DOM');
+  const vocabDrawer = await page.$('#vocab-drawer');
+  assert.strictEqual(vocabDrawer, null, 'Vocab drawer must NOT exist in the DOM');
+
+  // Verify Story Library tab and view do NOT exist
+  const libraryTab = await page.$('#tab-btn-library');
+  assert.strictEqual(libraryTab, null, 'Story Library tab button must NOT exist in the DOM');
+  const libraryView = await page.$('#tab-library-view');
+  assert.strictEqual(libraryView, null, 'Story Library panel view must NOT exist in the DOM');
+
   const pageContent = await page.$eval('body', el => el.innerText);
   assert.strictEqual(/11\+\s*English/i.test(pageContent), false, 'Page body must not mention 11+ English');
   assert.strictEqual(/11\+\s*Entrance/i.test(pageContent), false, 'Page body must not mention 11+ Entrance');
   assert.strictEqual(/Project\s*Gutenberg\s*11\+/i.test(pageContent), false, 'Page body must not mention Project Gutenberg 11+');
-  console.log('   ✓ Clean branding test PASSED');
+  console.log('   ✓ Clean UI test (No vocab, no library, clean branding) PASSED');
 
   // ----------------------------------------------------
-  // TEST 2: "Ready... Set... GO!" Countdown Indication
+  // TEST 1.5: Verify Race Does NOT Auto-Start
   // ----------------------------------------------------
-  console.log('TEST 2: Testing Get-Set-GO! Countdown Mechanism...');
+  console.log('TEST 1.5: Verifying race does NOT start automatically (waiting 6 seconds)...');
+  await page.waitForTimeout(6000);
+  const isInputStillDisabled = await page.$eval('#typing-input', el => el.disabled);
+  assert.strictEqual(isInputStillDisabled, true, 'Typing input must remain disabled without clicking Start Race');
+  const countdownHidden = await page.$eval('#race-countdown-overlay', el => el.classList.contains('hidden'));
+  assert.strictEqual(countdownHidden, true, 'Countdown overlay must remain hidden without clicking Start Race');
+  const lobbyStatusText = await page.$eval('#lobby-status-text', el => el.textContent.trim());
+  console.log('   Lobby status text:', lobbyStatusText);
+  assert(lobbyStatusText.includes('Ready to race! Click "Start Race Now" when ready.'), 'Lobby status should prompt user to start race');
+  console.log('   ✓ No-autostart test PASSED');
+
+  // ----------------------------------------------------
+  // TEST 2: "Ready... Set... GO!" Countdown Mechanism & Tab Cancellation
+  // ----------------------------------------------------
+  console.log('TEST 2: Testing Countdown Mechanism and Cancel-On-Tab-Switch...');
   // Click Start Race button
   const startBtn = await page.$('#btn-start-race-now');
   if (startBtn) {
     await startBtn.click();
-    await page.waitForTimeout(100);
+    await page.waitForTimeout(200);
 
     // Look for countdown badge / overlay
     const countdownEl = await page.$('#race-countdown-overlay');
@@ -50,7 +76,25 @@ const assert = require('assert');
     console.log('   Countdown overlay active with label:', text);
     assert(text.includes('READY') || text.includes('SET') || text.includes('GO'), 'Countdown must display Ready, Set or GO');
 
-    // Wait until countdown finishes (approx 2.5s)
+    // TEST: Switching to Typing Academy tab while countdown is active MUST cancel the countdown
+    console.log('   Switching to Typing Academy tab while countdown is active...');
+    await page.click('#tab-btn-lessons');
+    await page.waitForTimeout(400);
+
+    // Wait past when the countdown WOULD have started the race
+    await page.waitForTimeout(3000);
+
+    // Switch back to Arena
+    await page.click('#tab-btn-arena');
+    await page.waitForTimeout(300);
+
+    // Verify race is NOT active and input is disabled
+    const isInputActiveAfterSwitch = await page.$eval('#typing-input', el => !el.disabled);
+    assert.strictEqual(isInputActiveAfterSwitch, false, 'Race must be cancelled when user switches tabs to Typing Academy');
+    console.log('   ✓ Switching tabs successfully stopped/cancelled the race!');
+
+    // Now start the countdown again and let it run to completion
+    await page.click('#btn-start-race-now');
     await page.waitForTimeout(2800);
     const isInputActive = await page.$eval('#typing-input', el => !el.disabled);
     assert.strictEqual(isInputActive, true, 'Input must be unlocked after GO!');
