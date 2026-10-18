@@ -66,33 +66,19 @@ const assert = require('assert');
   assert.strictEqual(passageText.includes('–'), false, 'Passage text must NOT contain en dashes (–)');
   console.log('   ✓ Verified passage has zero em dashes (—) or en dashes (–)');
 
-  const prefixWords = [
-    'She', 'walked', 'round', 'and', 'looked', 'closely', 'at', 'that', 'side', 'of',
-    'the', 'orchard', 'wall,', 'but', 'she', 'only', 'found', 'what', 'she', 'had',
-    'found'
-  ];
-  for (const w of prefixWords) {
-    await page.type('#typing-input', w + ' ', { delay: 5 });
-    await page.waitForTimeout(20);
+  // Read current passage words directly from DOM
+  const words = passageText.trim().split(/\s+/);
+  console.log(`   Typing first 3 words of active passage: "${words.slice(0, 3).join(' ')}"`);
+  for (let i = 0; i < 3; i++) {
+    const w = words[i];
+    await page.type('#typing-input', w + ' ', { delay: 15 });
+    await page.waitForTimeout(100);
+    const completedWords = await page.$$eval('.tr-word-completed', els => els.map(e => e.innerText.trim()));
+    assert.strictEqual(completedWords.includes(w), true, `Word "${w}" should be marked completed`);
   }
-
-  // Target word is 'before,'
-  await page.type('#typing-input', 'before, ', { delay: 10 });
-  await page.waitForTimeout(100);
-
-  // Next word should be 'that'
-  const currentWordText1 = await page.$eval('.tr-word-current', el => el.innerText.trim());
-  assert.strictEqual(currentWordText1, 'that', 'Should advance to "that" after typing "before,"');
-
-  // Type 'that '
-  await page.type('#typing-input', 'that ', { delay: 10 });
-  await page.waitForTimeout(100);
-
-  // Verify that it advanced to the next word 'there'
-  const currentWordText2 = await page.$eval('.tr-word-current', el => el.innerText.trim());
-  console.log('   Advanced cleanly to:', currentWordText2);
-  assert.strictEqual(currentWordText2, 'there', 'Should complete and advance to "there"');
-  console.log('   ✓ Punctuation and word transition completed cleanly with zero em dashes');
+  const nextTargetWord = await page.$eval('.tr-word-current', el => el.innerText.trim());
+  assert.strictEqual(nextTargetWord, words[3], `Should advance cleanly to 4th word "${words[3]}"`);
+  console.log(`   ✓ Advanced cleanly to 4th word "${nextTargetWord}"`);
 
   // ----------------------------------------------------
   // TEST 3: Free Typing Academy (Typing.com Inspired)
@@ -155,7 +141,62 @@ const assert = require('assert');
   console.log('   ✓ Word chunking and spacebar gap advanced cleanly');
 
   // ----------------------------------------------------
-  // TEST 4: Capture Academy & Hands Screenshot
+  // TEST 4: Narrative Continuity Across Story Parts
+  // ----------------------------------------------------
+  console.log('TEST 4: Verifying Narrative Continuity Across Story Parts...');
+  await page.goto('http://localhost:8800/typeracer/typeracer/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(300);
+
+  const initialAuthorText = await page.$eval('#passage-author', el => el.innerText.trim());
+  console.log('   Current story metadata:', initialAuthorText);
+  assert(initialAuthorText.includes('Part 1 of'), 'Should start at Part 1 of the story');
+
+  // Click Next Passage to advance to Part 2 of the same story
+  await page.click('#btn-next-passage');
+  await page.waitForTimeout(300);
+  const part2AuthorText = await page.$eval('#passage-author', el => el.innerText.trim());
+  console.log('   Advanced to:', part2AuthorText);
+  assert(part2AuthorText.includes('Part 2 of'), 'Next passage should advance to Part 2 of the same book');
+  console.log('   ✓ Story progression continuity verified');
+
+  // ----------------------------------------------------
+  // TEST 5: History Modal & LocalStorage Persistence
+  // ----------------------------------------------------
+  console.log('TEST 5: Testing Learner History Modal and LocalStorage Persistence...');
+  await page.click('#btn-open-history');
+  await page.waitForTimeout(200);
+
+  const isModalVisible = await page.$eval('#history-modal', el => !el.classList.contains('hidden'));
+  assert.strictEqual(isModalVisible, true, 'History modal should be visible');
+
+  const tabRaces = await page.$('#tab-history-races');
+  const tabAcademy = await page.$('#tab-history-academy');
+  assert(tabRaces, 'Races tab should exist');
+  assert(tabAcademy, 'Academy tab should exist');
+
+  await page.click('#tab-history-academy');
+  await page.waitForTimeout(100);
+  const isAcademyTabActive = await page.$eval('#tab-history-academy', el => el.getAttribute('aria-selected') === 'true');
+  assert.strictEqual(isAcademyTabActive, true, 'Academy tab should be active');
+
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(200);
+  const isModalClosed = await page.$eval('#history-modal', el => el.classList.contains('hidden'));
+  assert.strictEqual(isModalClosed, true, 'History modal should close on Escape key');
+  console.log('   ✓ History modal tabs, accessibility, and close interaction verified');
+
+  // ----------------------------------------------------
+  // TEST 6: Separate Q&A Speed Metric Stat in Podium
+  // ----------------------------------------------------
+  console.log('TEST 6: Verifying Separate Q&A Metric Stat in Podium...');
+  const qaStatCard = await page.$('#final-qa-wpm');
+  assert(qaStatCard, 'Separate Q&A WPM element must exist on podium');
+  const separateStatLabel = await page.$eval('#final-qa-wpm', el => el.parentElement.innerText);
+  assert(separateStatLabel.includes('Separate Stat'), 'Q&A Speed must clearly display "Separate Stat" label');
+  console.log('   ✓ Separate Q&A speed metric card verified');
+
+  // ----------------------------------------------------
+  // TEST 7: Capture Screenshot
   // ----------------------------------------------------
   const artifactDir = '/Users/arun/.gemini/antigravity-cli/brain/3fa0e544-4dc5-4c9b-9334-3b78080f8eb7';
   await page.screenshot({ path: `${artifactDir}/academy_typing_com_style.png` });

@@ -19,8 +19,34 @@ export interface LessonProgress {
   completedAt: number;
 }
 
+export interface RaceRecord {
+  id: string;
+  timestamp: number;
+  bookTitle: string;
+  chapter: string;
+  passageWpm: number;
+  qaWpm: number | null; // separate stat!
+  accuracy: number;
+  rank: number;
+  timeSeconds: number;
+  hasQA: boolean;
+}
+
+export interface AcademyHistoryRecord {
+  id: string;
+  timestamp: number;
+  lessonId: number;
+  title: string;
+  level: string;
+  wpm: number;
+  accuracy: number;
+  stars: number;
+}
+
 const CAREER_STORAGE_KEY = 'tinykite_typeracer_career';
 const ACADEMY_PROGRESS_KEY = 'tinykite_typeracer_academy_progress';
+const RACE_HISTORY_KEY = 'tinykite_typeracer_race_history';
+const ACADEMY_HISTORY_KEY = 'tinykite_typeracer_academy_history';
 const EMAIL_STORAGE_KEY = 'tinykite_typeracer_student_email';
 
 export function getCareerStats(): CareerStats {
@@ -110,6 +136,63 @@ export function getLessonStarRating(accuracy: number, wpm: number): number {
 export function getTotalStars(): number {
   const records = getAllLessonProgress();
   return Object.values(records).reduce((sum, r) => sum + (r.stars || 0), 0);
+}
+
+export function getRaceHistory(): RaceRecord[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(RACE_HISTORY_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (_) {}
+  return [];
+}
+
+export function recordRaceHistory(entry: Omit<RaceRecord, 'id' | 'timestamp'>): RaceRecord {
+  const history = getRaceHistory();
+  const record: RaceRecord = {
+    ...entry,
+    id: 'race_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    timestamp: Date.now()
+  };
+  history.unshift(record);
+  if (history.length > 100) history.pop();
+
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(RACE_HISTORY_KEY, JSON.stringify(history));
+  }
+  return record;
+}
+
+export function getAcademyHistory(): AcademyHistoryRecord[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(ACADEMY_HISTORY_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (_) {}
+  return [];
+}
+
+export function recordAcademyHistory(entry: Omit<AcademyHistoryRecord, 'id' | 'timestamp'>): AcademyHistoryRecord {
+  const history = getAcademyHistory();
+  const record: AcademyHistoryRecord = {
+    ...entry,
+    id: 'acad_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    timestamp: Date.now()
+  };
+  history.unshift(record);
+  if (history.length > 100) history.pop();
+
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(ACADEMY_HISTORY_KEY, JSON.stringify(history));
+  }
+  return record;
+}
+
+export function clearAllHistory(): void {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem(RACE_HISTORY_KEY);
+    localStorage.removeItem(ACADEMY_HISTORY_KEY);
+  }
 }
 
 export const updateCareerStats = recordRace;
