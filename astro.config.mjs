@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -19,5 +20,19 @@ export default defineConfig({
     '/router': '/coming-soon',
     // The single funding page became one page per language (PR #34).
     '/gloss/support-us': '/gloss/back/',
+  },
+  vite: {
+    resolve: {
+      alias: [
+        {
+          find: /^@refraction-ui\/astro\/(.+)$/,
+          replacement: fileURLToPath(new URL('./node_modules/@refraction-ui/astro/$1', import.meta.url)),
+        },
+        {
+          find: /^@refraction-ui\/(?!astro\b)(.+)$/,
+          replacement: fileURLToPath(new URL('./node_modules/@refraction-ui/astro/dist/$1', import.meta.url)),
+        },
+      ],
+    },
   },
 });

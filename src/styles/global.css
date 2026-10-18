@@ -28,6 +28,31 @@
     --shadow-card: 0 4px 6px -1px rgba(11, 16, 32, 0.08), 0 2px 4px -1px rgba(11, 16, 32, 0.05);
     --shadow-highlight: 0 10px 15px -3px rgba(255, 178, 60, 0.15), 0 4px 6px -2px rgba(11, 16, 32, 0.05);
 
+    /* Refraction UI Design System Tokens — Light */
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 40 45% 95%;
+    --secondary: 171 59% 41%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 36 100% 62%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 40%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 36 100% 62%;
+    --radius: 1.25rem;
+
+    --rfr-card-bg: rgba(255, 255, 255, 0.88);
+    --rfr-card-fg: #0b1020;
+    --rfr-card-border: rgba(255, 255, 255, 0.9);
+    --rfr-button-bg: #0b1020;
+    --rfr-button-fg: #ffffff;
+    --rfr-button-radius: 0.75rem;
+
     /* Brand Gradient */
     --gradient-from: #0b1020;
     --gradient-via: #2aa48f;
@@ -40,8 +65,8 @@
     /* Deep Navy */
     --color-text: #f7f4ee;
     /* Warm Cream */
-    --color-text-muted: #98a2b3;
-    /* Slate light */
+    --color-text-muted: #cbd5e1;
+    /* Slate light (WCAG AA compliant 4.5:1 on navy) */
     --color-primary: #ffb23c;
     /* Kite Gold (readable on navy) */
     --color-secondary: #2aa48f;
@@ -51,10 +76,35 @@
 
     --color-panel-bg: #141b33;
     /* Navy light */
-    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border: rgba(255, 255, 255, 0.12);
 
     --shadow-card: none;
     --shadow-highlight: 0 0 20px rgba(255, 178, 60, 0.15);
+
+    /* Refraction UI Design System Tokens — Dark */
+    --primary: 36 100% 62%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 171 59% 41%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 36 100% 62%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --card: 224 45% 10%;
+    --card-foreground: 40 45% 95%;
+    --popover: 224 45% 10%;
+    --popover-foreground: 40 45% 95%;
+    --muted: 224 35% 18%;
+    --muted-foreground: 218 20% 75%;
+    --border: 224 30% 24%;
+    --input: 224 30% 24%;
+    --ring: 36 100% 62%;
+    --radius: 1.25rem;
+
+    --rfr-card-bg: rgba(14, 20, 38, 0.88);
+    --rfr-card-fg: #f7f4ee;
+    --rfr-card-border: rgba(255, 255, 255, 0.12);
+    --rfr-button-bg: #ffb23c;
+    --rfr-button-fg: #0b1020;
+    --rfr-button-radius: 0.75rem;
 
     /* Brand Dark Gradient */
     --gradient-from: #ffb23c;
@@ -283,6 +333,34 @@
 }
 
 @layer utilities {
+  /* Refraction UI Prismatic Panels & Tactile Components */
+  .refraction-panel {
+    background: var(--rfr-card-bg);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid var(--rfr-card-border);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6), 0 16px 40px -10px rgba(11, 16, 32, 0.08);
+    border-radius: var(--radius);
+  }
+  .dark .refraction-panel {
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 20px 48px -12px rgba(0, 0, 0, 0.55);
+  }
+  .refraction-prismatic-rim {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #ffb23c 0%, #2aa48f 50%, #6366f1 100%);
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+  }
+  .refraction-btn {
+    transition: all 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+  .refraction-btn:active {
+    transform: translateY(1.5px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
   .text-gradient {
     background-clip: text;
     -webkit-background-clip: text;
