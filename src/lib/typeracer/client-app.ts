@@ -96,10 +96,8 @@ function escapeHtml(str: any): string {
 // --- DOM Cache ---
 let tabBtnArena: HTMLElement | null = null;
 let tabBtnLessons: HTMLElement | null = null;
-let tabBtnLibrary: HTMLElement | null = null;
 let tabArenaView: HTMLElement | null = null;
 let tabLessonsView: HTMLElement | null = null;
-let tabLibraryView: HTMLElement | null = null;
 
 let btnSoundToggle: HTMLElement | null = null;
 let soundToggleIcon: HTMLElement | null = null;
@@ -109,10 +107,7 @@ let passageTitle: HTMLElement | null = null;
 let passageDifficulty: HTMLElement | null = null;
 let passageAuthor: HTMLElement | null = null;
 let raceModeBadge: HTMLElement | null = null;
-let btnToggleVocab: HTMLButtonElement | null = null;
 let btnNextPassage: HTMLButtonElement | null = null;
-let vocabDrawer: HTMLElement | null = null;
-let vocabCount: HTMLElement | null = null;
 
 let typingRaceView: HTMLElement | null = null;
 let lobbyBar: HTMLElement | null = null;
@@ -177,9 +172,6 @@ let lessonErrorTag: HTMLElement | null = null;
 let lessonErrorMsg: HTMLElement | null = null;
 let lessonsCurriculumGrid: HTMLElement | null = null;
 let lessonCompleteModal: HTMLElement | null = null;
-
-let libraryDirectSearch: HTMLInputElement | null = null;
-let libraryFullGrid: HTMLElement | null = null;
 
 let btnOpenHistory: HTMLElement | null = null;
 let btnPodiumHistory: HTMLElement | null = null;
@@ -296,17 +288,14 @@ export function initClientApp(): void {
   loadPassage(getRandomStoryFirstPassageIndex());
   loadLesson(0);
   renderCurriculumGrid();
-  renderFullLibrary();
   startLobbyCountdown();
 }
 
 function cacheDOMElements(): void {
   tabBtnArena = document.getElementById('tab-btn-arena');
   tabBtnLessons = document.getElementById('tab-btn-lessons');
-  tabBtnLibrary = document.getElementById('tab-btn-library');
   tabArenaView = document.getElementById('tab-arena-view');
   tabLessonsView = document.getElementById('tab-lessons-view');
-  tabLibraryView = document.getElementById('tab-library-view');
 
   btnSoundToggle = document.getElementById('btn-sound-toggle');
   soundToggleIcon = document.getElementById('sound-toggle-icon');
@@ -316,10 +305,7 @@ function cacheDOMElements(): void {
   passageDifficulty = document.getElementById('passage-difficulty');
   passageAuthor = document.getElementById('passage-author');
   raceModeBadge = document.getElementById('race-mode-badge');
-  btnToggleVocab = document.getElementById('btn-toggle-vocab') as HTMLButtonElement;
   btnNextPassage = document.getElementById('btn-next-passage') as HTMLButtonElement;
-  vocabDrawer = document.getElementById('vocab-drawer');
-  vocabCount = document.getElementById('vocab-count');
 
   typingRaceView = document.getElementById('typing-race-view');
   lobbyBar = document.getElementById('lobby-bar');
@@ -402,16 +388,17 @@ function cacheDOMElements(): void {
   lessonErrorMsg = document.getElementById('lesson-error-msg');
   lessonsCurriculumGrid = document.getElementById('lessons-curriculum-grid');
   lessonCompleteModal = document.getElementById('lesson-complete-modal');
-
-  libraryDirectSearch = document.getElementById('library-direct-search') as HTMLInputElement;
-  libraryFullGrid = document.getElementById('library-full-grid');
 }
 
 // --- Tabs & Navigation (Issue #42) ---
-function switchAppTab(tab: 'arena' | 'lessons' | 'library'): void {
+function switchAppTab(tab: 'arena' | 'lessons'): void {
   const isArena = tab === 'arena';
   const isLessons = tab === 'lessons';
-  const isLibrary = tab === 'library';
+
+  // If user switches away from Arena to Lessons, stop/cancel any active race or countdown!
+  if (isLessons) {
+    resetRaceState();
+  }
 
   if (tabBtnArena) {
     tabBtnArena.setAttribute('aria-selected', isArena ? 'true' : 'false');
@@ -429,17 +416,8 @@ function switchAppTab(tab: 'arena' | 'lessons' | 'library'): void {
       : 'px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px]';
   }
 
-  if (tabBtnLibrary) {
-    tabBtnLibrary.setAttribute('aria-selected', isLibrary ? 'true' : 'false');
-    tabBtnLibrary.tabIndex = isLibrary ? 0 : -1;
-    tabBtnLibrary.className = isLibrary
-      ? 'px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px]'
-      : 'px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px]';
-  }
-
   if (tabArenaView) tabArenaView.classList.toggle('hidden', !isArena);
   if (tabLessonsView) tabLessonsView.classList.toggle('hidden', !isLessons);
-  if (tabLibraryView) tabLibraryView.classList.toggle('hidden', !isLibrary);
 
   if (isLessons) {
     if (lessonDrillInput) {
@@ -591,7 +569,7 @@ function updateLobbyPeerCount(humanCount: number): void {
   }
   const statusEl = document.getElementById('lobby-status-text');
   if (statusEl) {
-    statusEl.innerHTML = '🟢 Peer Joined! Race ready (<span id="lobby-timer-num">Ready</span>)';
+    statusEl.innerHTML = '🟢 Peer Joined! Click "Start Race Now" to race together.';
   }
 }
 
@@ -654,26 +632,28 @@ function handleP2PPayload(data: any): void {
   }
 }
 
-// --- Matchmaking Lobby Countdown ---
-let lobbySeconds = 5;
+// --- Matchmaking Lobby & Countdown Timers ---
 let lobbyInterval: any = null;
+let countdownTimer1: any = null;
+let countdownTimer2: any = null;
+let countdownTimer3: any = null;
+
+function clearCountdownTimers(): void {
+  if (countdownTimer1) clearTimeout(countdownTimer1);
+  if (countdownTimer2) clearTimeout(countdownTimer2);
+  if (countdownTimer3) clearTimeout(countdownTimer3);
+  countdownTimer1 = null;
+  countdownTimer2 = null;
+  countdownTimer3 = null;
+}
 
 function startLobbyCountdown(): void {
-  lobbySeconds = 5;
-  if (lobbyTimerNum) lobbyTimerNum.textContent = '5';
   clearInterval(lobbyInterval);
-
-  lobbyInterval = setInterval(() => {
-    lobbySeconds--;
-    if (lobbyTimerNum) lobbyTimerNum.textContent = lobbySeconds.toString();
-
-    if (lobbySeconds <= 0) {
-      clearInterval(lobbyInterval);
-      if (!isRaceActive && !isCountingDown) {
-        startCountdownSequence();
-      }
-    }
-  }, 1000);
+  clearCountdownTimers();
+  const statusEl = document.getElementById('lobby-status-text');
+  if (statusEl) {
+    statusEl.textContent = 'Ready to race! Click "Start Race Now" when ready.';
+  }
 }
 
 // --- Countdown Mechanism & Background Lockout (Issues #48 & #51) ---
@@ -689,6 +669,7 @@ function startCountdownSequence(broadcast: boolean = true): void {
 
   isCountingDown = true;
   clearInterval(lobbyInterval);
+  clearCountdownTimers();
   if (lobbyBar) lobbyBar.classList.add('opacity-40');
 
   // Issue #51: Lock out background controls during countdown
@@ -709,17 +690,20 @@ function startCountdownSequence(broadcast: boolean = true): void {
   updateCountdownLights('ready');
   soundEngine.playCountdownBeep(false);
 
-  setTimeout(() => {
+  countdownTimer1 = setTimeout(() => {
+    if (!isCountingDown) return;
     // Step 2: SET
     updateCountdownLights('set');
     soundEngine.playCountdownBeep(false);
 
-    setTimeout(() => {
+    countdownTimer2 = setTimeout(() => {
+      if (!isCountingDown) return;
       // Step 3: GO!
       updateCountdownLights('go');
       soundEngine.playCountdownBeep(true);
 
-      setTimeout(() => {
+      countdownTimer3 = setTimeout(() => {
+        if (!isCountingDown) return;
         // Complete & Start Race
         if (raceCountdownOverlay) {
           raceCountdownOverlay.classList.add('hidden');
@@ -742,11 +726,6 @@ function lockoutBackgroundControls(locked: boolean): void {
     btnNextPassage.disabled = locked;
     btnNextPassage.classList.toggle('opacity-50', locked);
     btnNextPassage.classList.toggle('cursor-not-allowed', locked);
-  }
-  if (btnToggleVocab) {
-    btnToggleVocab.disabled = locked;
-    btnToggleVocab.classList.toggle('opacity-50', locked);
-    btnToggleVocab.classList.toggle('cursor-not-allowed', locked);
   }
 }
 
@@ -889,7 +868,6 @@ function loadPassage(index: number): void {
       : '';
     passageAuthor.textContent = 'by ' + currentPassage.author + ' (' + currentPassage.year + ') • ' + currentPassage.chapter + partNote;
   }
-  if (vocabCount) vocabCount.textContent = currentPassage.vocabulary.length.toString();
 
   // Determine Q&A drill availability
   if (followupMode === 'always') currentRaceHasQA = true;
@@ -898,21 +876,6 @@ function loadPassage(index: number): void {
 
   if (raceModeBadge) {
     raceModeBadge.textContent = currentRaceHasQA ? '📖 Story Drill (Passage + Q&A)' : '⚡ Speed Sprint (Passage Only)';
-  }
-
-  // Update Vocab Drawer
-  if (vocabDrawer) {
-    const list = vocabDrawer.querySelector('.grid');
-    if (list) {
-      list.innerHTML = (currentPassage.vocabulary || []).map((v) => (
-        '<div class="p-2.5 rounded-xl bg-white/60 dark:bg-white/5 border border-black/[0.05] dark:border-white/[0.08] text-xs">' +
-          '<div class="flex items-center gap-2 mb-1">' +
-            '<span class="font-bold text-slate-900 dark:text-slate-100 font-serif-literary">' + escapeHtml(v.word) + '</span>' +
-          '</div>' +
-          '<p class="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">' + escapeHtml(v.definition) + '</p>' +
-        '</div>'
-      )).join('');
-    }
   }
 
   resetRaceState();
@@ -924,7 +887,9 @@ function resetRaceState(): void {
   isCountingDown = false;
   hasRecordedCurrentRace = false;
   qaFinalWpm = null;
+  clearCountdownTimers();
   clearInterval(hudTimerInterval);
+  clearInterval(lobbyInterval);
 
   lockoutBackgroundControls(false);
 
@@ -962,7 +927,7 @@ function resetRaceState(): void {
   if (typingInput) {
     typingInput.disabled = true;
     typingInput.value = '';
-    typingInput.placeholder = 'Click "Start Race Now" or wait for matchmaking...';
+    typingInput.placeholder = 'Click "Start Race Now" when ready...';
   }
 
   startLobbyCountdown();
@@ -1717,58 +1682,6 @@ function renderCurriculumGrid(): void {
   });
 }
 
-// --- Story Library Rendering (Issue #40 & #42) ---
-function renderFullLibrary(): void {
-  if (!libraryFullGrid) return;
-
-  const query = libraryDirectSearch ? libraryDirectSearch.value.trim().toLowerCase() : '';
-  const filtered = passages.filter((p) => {
-    if (!query) return true;
-    return p.title.toLowerCase().includes(query) || p.author.toLowerCase().includes(query);
-  });
-
-  if (filtered.length === 0) {
-    libraryFullGrid.innerHTML = '<div class="p-8 text-center text-slate-500">No classic stories match your search.</div>';
-    return;
-  }
-
-  libraryFullGrid.innerHTML = filtered.map((p) => {
-    const origIdx = passages.findIndex((x) => x.id === p.id);
-    const isCurrent = origIdx === currentPassageIndex;
-
-    return (
-      '<div class="p-4 sm:p-5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-black/[0.06] dark:border-white/[0.08] hover:border-amber-400/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">' +
-        '<div class="min-w-0 flex-1">' +
-          '<div class="flex items-center gap-2 flex-wrap mb-1">' +
-            '<h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100 font-serif-literary">' + escapeHtml(p.title) + '</h4>' +
-            '<span class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-gray-300">' + escapeHtml(p.difficulty) + '</span>' +
-            (isCurrent ? '<span class="px-2 py-0.2 rounded-full text-[10px] font-black bg-brand-gold text-slate-950">Current Book</span>' : '') +
-          '</div>' +
-          '<p class="text-xs text-slate-600 dark:text-gray-400 mb-2">by ' + escapeHtml(p.author) + ' (' + p.year + ') • ' + escapeHtml(p.chapter) + '</p>' +
-          '<p class="text-xs text-slate-700 dark:text-gray-300 line-clamp-2 italic font-serif-literary">"' + escapeHtml(p.text) + '"</p>' +
-        '</div>' +
-        '<div class="flex items-center gap-2">' +
-          '<button type="button" class="library-select-btn refraction-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 active:scale-95 transition-all shadow-sm min-h-[44px]" data-orig-idx="' + origIdx + '">' +
-            (isCurrent ? 'Racing Now' : 'Race This Book') +
-          '</button>' +
-          '<a href="' + p.gutenbergUrl + '" target="_blank" rel="noopener noreferrer" class="refraction-btn px-2.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-white/10 text-slate-800 dark:text-slate-200 border border-black/[0.08] dark:border-white/[0.1] hover:text-amber-700 transition-colors inline-flex items-center gap-1 min-h-[44px]" title="Read original text">' +
-            'Full Text ↗' +
-          '</a>' +
-        '</div>' +
-      '</div>'
-    );
-  }).join('');
-
-  // Bind buttons
-  const btns = libraryFullGrid.querySelectorAll('.library-select-btn');
-  btns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const idx = parseInt(btn.getAttribute('data-orig-idx') || '0', 10);
-      loadPassage(idx);
-      switchAppTab('arena');
-    });
-  });
-}
 
 // --- Career Footer UI (Issue #49) ---
 function updateCareerUI(): void {
@@ -1985,13 +1898,12 @@ function renderHistoryAcademyList(): void {
 
 // --- Global Event Bindings ---
 function bindGlobalEvents(): void {
-  // Tab Switchers (Issue #42)
+  // Tab Switchers
   if (tabBtnArena) tabBtnArena.addEventListener('click', () => switchAppTab('arena'));
   if (tabBtnLessons) tabBtnLessons.addEventListener('click', () => switchAppTab('lessons'));
-  if (tabBtnLibrary) tabBtnLibrary.addEventListener('click', () => switchAppTab('library'));
 
   // Keyboard navigation across tabs
-  const tabButtons = [tabBtnArena, tabBtnLessons, tabBtnLibrary].filter(Boolean) as HTMLElement[];
+  const tabButtons = [tabBtnArena, tabBtnLessons].filter(Boolean) as HTMLElement[];
   tabButtons.forEach((btn, idx) => {
     btn.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
@@ -2007,13 +1919,6 @@ function bindGlobalEvents(): void {
       }
     });
   });
-
-  // Vocab Drawer Toggle
-  if (btnToggleVocab && vocabDrawer) {
-    btnToggleVocab.addEventListener('click', () => {
-      vocabDrawer?.classList.toggle('hidden');
-    });
-  }
 
   // Next Passage Button (Advances through parts of story)
   if (btnNextPassage) {
@@ -2208,11 +2113,6 @@ function bindGlobalEvents(): void {
       if (lessonCompleteModal) lessonCompleteModal.classList.add('hidden');
       loadLesson(currentLessonIndex);
     });
-  }
-
-  // Library Search Filter
-  if (libraryDirectSearch) {
-    libraryDirectSearch.addEventListener('input', renderFullLibrary);
   }
 
   // Career Reset
