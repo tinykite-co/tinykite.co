@@ -47,7 +47,7 @@ export const PASSAGES: Passage[] = [
     chapter: 'Chapter 5: The Cry in the Corridor',
     difficulty: 'Foundation',
     tags: ['Mystery', 'Nature', 'Atmosphere'],
-    text: 'She walked round and looked closely at that side of the orchard wall, but she only found what she had found before—that there was no door in it. Then the robin hopped from his swinging spray of ivy on to the top of the wall and opened his beak and sang a loud, lovely trill.',
+    text: 'She walked round and looked closely at that side of the orchard wall, but she only found what she had found before, that there was no door in it. Then the robin hopped from his swinging spray of ivy on to the top of the wall and opened his beak and sang a loud, lovely trill.',
     vocabulary: [
       { word: 'spray', definition: 'A small slender shoot or twig of a plant bearing flowers or leaves' },
       { word: 'trill', definition: 'A vibrating, quavering musical sound made by a bird or voice' },

@@ -58,9 +58,14 @@ const assert = require('assert');
   }
 
   // ----------------------------------------------------
-  // TEST 2.5: Typing Em Dash with Hyphen Key
+  // TEST 2.5: Zero Em Dashes in Passages & Fluid Punctuation
   // ----------------------------------------------------
-  console.log('TEST 2.5: Testing Typing Em Dash using standard Hyphen key (-)...');
+  console.log('TEST 2.5: Verifying Zero Em Dashes in Passages and Fluid Punctuation Typing...');
+  const passageText = await page.$eval('#passage-display', el => el.innerText);
+  assert.strictEqual(passageText.includes('—'), false, 'Passage text must NOT contain em dashes (—)');
+  assert.strictEqual(passageText.includes('–'), false, 'Passage text must NOT contain en dashes (–)');
+  console.log('   ✓ Verified passage has zero em dashes (—) or en dashes (–)');
+
   const prefixWords = [
     'She', 'walked', 'round', 'and', 'looked', 'closely', 'at', 'that', 'side', 'of',
     'the', 'orchard', 'wall,', 'but', 'she', 'only', 'found', 'what', 'she', 'had',
@@ -71,23 +76,23 @@ const assert = require('assert');
     await page.waitForTimeout(20);
   }
 
-  // Now target word is 'before—that'
-  // Type 'before-' using standard hyphen key
-  await page.type('#typing-input', 'before-', { delay: 10 });
+  // Target word is 'before,'
+  await page.type('#typing-input', 'before, ', { delay: 10 });
   await page.waitForTimeout(100);
-  const errorTagVisible = await page.$eval('#typing-error-tag', el => !el.classList.contains('hidden'));
-  assert.strictEqual(errorTagVisible, false, 'Typing hyphen (-) for em dash (—) must NOT trigger an error');
-  console.log('   ✓ Hyphen (-) accepted for em dash (—) without error');
 
-  // Complete word with 'that '
+  // Next word should be 'that'
+  const currentWordText1 = await page.$eval('.tr-word-current', el => el.innerText.trim());
+  assert.strictEqual(currentWordText1, 'that', 'Should advance to "that" after typing "before,"');
+
+  // Type 'that '
   await page.type('#typing-input', 'that ', { delay: 10 });
-  await page.waitForTimeout(200);
+  await page.waitForTimeout(100);
 
   // Verify that it advanced to the next word 'there'
-  const currentWordText = await page.$eval('.tr-word-current', el => el.innerText.trim());
-  console.log('   Advanced to next word:', currentWordText);
-  assert.strictEqual(currentWordText, 'there', 'Word with em dash should complete and advance to next word');
-  console.log('   ✓ Em dash word completed cleanly with standard keyboard hyphen');
+  const currentWordText2 = await page.$eval('.tr-word-current', el => el.innerText.trim());
+  console.log('   Advanced cleanly to:', currentWordText2);
+  assert.strictEqual(currentWordText2, 'there', 'Should complete and advance to "there"');
+  console.log('   ✓ Punctuation and word transition completed cleanly with zero em dashes');
 
   // ----------------------------------------------------
   // TEST 3: Free Typing Academy (Typing.com Inspired)
