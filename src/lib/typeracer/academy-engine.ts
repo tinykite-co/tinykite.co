@@ -1,3 +1,5 @@
+import { charsMatch } from './normalize.ts';
+
 export interface AcademyState {
   lessonId: number;
   drillText: string;
@@ -54,8 +56,8 @@ export function processAcademyKeystroke(state: AcademyState, pressedKey: string)
   state.totalKeystrokes++;
   const targetChar = state.drillText[state.currentIndex];
 
-  // Match key
-  const isMatch = pressedKey === targetChar;
+  // Match key with typographic normalization (e.g. '-' matching em-dash or en-dash)
+  const isMatch = charsMatch(pressedKey, targetChar);
 
   if (isMatch) {
     state.currentIndex++;

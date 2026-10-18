@@ -36,6 +36,13 @@ import { getRandomHumanWpm, simulateBotTick } from './pacing';
 import { CURRICULUM, type LessonDef } from './curriculum';
 import { getFingerForChar, getFingerDescription } from './fingers';
 import { PASSAGES, type Passage } from '../../data/typeracer/passages';
+import {
+  charsMatch,
+  matchesWordProgress,
+  isWordCompleted,
+  alignTypedInput,
+  normalizeString
+} from './normalize';
 
 // Expose passages cleanly for backward-compatibility & testing
 if (typeof window !== 'undefined') {
@@ -880,13 +887,15 @@ function renderPassageDisplay(): void {
   let currentWordHtml = '';
 
   let hasError = false;
+  const alignedInput = alignTypedInput(targetWord, currentInput);
+
   for (let i = 0; i < targetWord.length; i++) {
     const char = targetWord[i];
-    const typedChar = currentInput[i];
+    const typedChar = alignedInput[i];
 
     if (typedChar === undefined) {
       currentWordHtml += '<span class="tr-char-pending">' + escapeHtml(char) + '</span>';
-    } else if (typedChar === char && !hasError) {
+    } else if (charsMatch(typedChar, char) && !hasError) {
       currentWordHtml += '<span class="tr-char-correct text-emerald-700 dark:text-emerald-400 font-bold">' + escapeHtml(char) + '</span>';
     } else {
       hasError = true;
@@ -894,8 +903,8 @@ function renderPassageDisplay(): void {
     }
   }
 
-  if (currentInput.length > targetWord.length) {
-    const extra = currentInput.slice(targetWord.length);
+  if (alignedInput.length > targetWord.length) {
+    const extra = alignedInput.slice(targetWord.length);
     currentWordHtml += '<span class="tr-char-error bg-rose-600 text-white rounded px-0.5 font-bold animate-pulse">' + escapeHtml(extra) + '</span>';
     hasError = true;
   }
@@ -935,7 +944,7 @@ function handleTypingInput(e: Event): void {
   // If user hit space at the end of word
   if (val.endsWith(' ')) {
     const trimmed = val.slice(0, -1);
-    if (trimmed === targetWord) {
+    if (isWordCompleted(targetWord, trimmed)) {
       // Completed word
       soundEngine.playSpaceClick();
       currentWordIndex++;
@@ -952,8 +961,18 @@ function handleTypingInput(e: Event): void {
       soundEngine.playErrorThud();
     }
   } else {
-    // Check for inline error
-    if (!targetWord.startsWith(val)) {
+    // Check if user completed the final word without a trailing space
+    if (currentWordIndex === words.length - 1 && isWordCompleted(targetWord, val)) {
+      soundEngine.playSpaceClick();
+      currentWordIndex++;
+      currentInput = '';
+      if (typingInput) typingInput.value = '';
+      finishPassageRace();
+      return;
+    }
+
+    // Check for inline error with typographic tolerance (e.g. '-' matching '—')
+    if (!matchesWordProgress(targetWord, val)) {
       errorKeystrokes++;
       soundEngine.playErrorThud();
     }
@@ -1075,14 +1094,15 @@ function renderQADisplay(): void {
 function formatTargetAndInput(target: string, input: string): string {
   let html = '';
   let hasError = false;
+  const alignedInput = alignTypedInput(target, input);
 
   for (let i = 0; i < target.length; i++) {
     const char = target[i];
-    const typed = input[i];
+    const typed = alignedInput[i];
 
     if (typed === undefined) {
       html += '<span class="text-slate-500 dark:text-slate-400">' + escapeHtml(char) + '</span>';
-    } else if (typed === char && !hasError) {
+    } else if (charsMatch(typed, char) && !hasError) {
       html += '<span class="text-emerald-700 dark:text-emerald-400 font-bold">' + escapeHtml(char) + '</span>';
     } else {
       hasError = true;
@@ -1098,7 +1118,8 @@ function handleQAInput(e: KeyboardEvent): void {
   if (e.key === 'Enter') {
     e.preventDefault();
     const target = qaStage === 'question' ? (currentPassage.qaFollowup?.question || '') : (currentPassage.qaFollowup?.answer || '');
-    if (qaTypedInput.trim() === target.trim()) {
+    const isMatch = normalizeString(qaTypedInput.trim().toLowerCase()) === normalizeString(target.trim().toLowerCase());
+    if (isMatch) {
       soundEngine.playReturnClick();
       if (qaStage === 'question') {
         qaStage = 'answer';
@@ -1229,6 +1250,17 @@ function findVirtualKeyEl(key: string): HTMLElement | null {
   if (key === 'Enter') return document.querySelector('.vkey-3d[data-key="enter"]');
   if (key === 'Backspace') return document.querySelector('.vkey-3d[data-key="bksp"]');
 
+  // Handle typographic dashes and symbols
+  if (key === '—' || key === '–' || key === '―' || key === '−' || key === '‒') {
+    return document.querySelector('.vkey-3d[data-key="-"]');
+  }
+  if (key === '’' || key === '‘') {
+    return document.querySelector('.vkey-3d[data-key="\'"]');
+  }
+  if (key === '“' || key === '”') {
+    return document.querySelector('.vkey-3d[data-key="\'"]');
+  }
+
   const lower = key.toLowerCase();
   const el = document.querySelector('.vkey-3d[data-key="' + lower + '"]') as HTMLElement | null;
   if (el) return el;
@@ -1286,7 +1318,7 @@ function updateVirtualKeyboardHighlight(): void {
     targetEl.setAttribute('aria-current', 'step');
   }
 
-  const isShiftNeeded = (nextChar >= 'A' && nextChar <= 'Z') || '~!@#$%^&*()_+{}|:"<>?'.includes(nextChar);
+  const isShiftNeeded = (nextChar >= 'A' && nextChar <= 'Z') || '~!@#$%^&*()_+{}|:"<>?'.includes(nextChar) || nextChar === '“' || nextChar === '”';
   if (isShiftNeeded) {
     const finger = targetEl ? targetEl.getAttribute('data-finger') : '';
     const isLeftHand = finger && finger.startsWith('left');
@@ -1304,7 +1336,8 @@ function updateVirtualKeyboardHighlight(): void {
   const hudTargetKeyPill = document.getElementById('hud-target-key-pill');
   const hudTargetFingerDesc = document.getElementById('hud-target-finger-desc');
   if (hudTargetKeyPill) {
-    hudTargetKeyPill.textContent = nextChar === ' ' ? 'Space' : nextChar;
+    const displayLabel = nextChar === ' ' ? 'Space' : (nextChar === '—' || nextChar === '–' ? '- (Dash)' : nextChar);
+    hudTargetKeyPill.textContent = displayLabel;
   }
   if (hudTargetFingerDesc) {
     hudTargetFingerDesc.textContent = fingerDesc;
@@ -1347,7 +1380,7 @@ function handleLessonKey(key: string): void {
     return;
   }
 
-  if (key === expectedChar) {
+  if (charsMatch(key, expectedChar)) {
     // CORRECT KEY: Advance forward!
     lessonTotalKeys++;
     lessonTypedIndex++;

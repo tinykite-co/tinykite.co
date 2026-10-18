@@ -58,6 +58,38 @@ const assert = require('assert');
   }
 
   // ----------------------------------------------------
+  // TEST 2.5: Typing Em Dash with Hyphen Key
+  // ----------------------------------------------------
+  console.log('TEST 2.5: Testing Typing Em Dash using standard Hyphen key (-)...');
+  const prefixWords = [
+    'She', 'walked', 'round', 'and', 'looked', 'closely', 'at', 'that', 'side', 'of',
+    'the', 'orchard', 'wall,', 'but', 'she', 'only', 'found', 'what', 'she', 'had',
+    'found'
+  ];
+  for (const w of prefixWords) {
+    await page.type('#typing-input', w + ' ', { delay: 5 });
+    await page.waitForTimeout(20);
+  }
+
+  // Now target word is 'before—that'
+  // Type 'before-' using standard hyphen key
+  await page.type('#typing-input', 'before-', { delay: 10 });
+  await page.waitForTimeout(100);
+  const errorTagVisible = await page.$eval('#typing-error-tag', el => !el.classList.contains('hidden'));
+  assert.strictEqual(errorTagVisible, false, 'Typing hyphen (-) for em dash (—) must NOT trigger an error');
+  console.log('   ✓ Hyphen (-) accepted for em dash (—) without error');
+
+  // Complete word with 'that '
+  await page.type('#typing-input', 'that ', { delay: 10 });
+  await page.waitForTimeout(200);
+
+  // Verify that it advanced to the next word 'there'
+  const currentWordText = await page.$eval('.tr-word-current', el => el.innerText.trim());
+  console.log('   Advanced to next word:', currentWordText);
+  assert.strictEqual(currentWordText, 'there', 'Word with em dash should complete and advance to next word');
+  console.log('   ✓ Em dash word completed cleanly with standard keyboard hyphen');
+
+  // ----------------------------------------------------
   // TEST 3: Free Typing Academy (Typing.com Inspired)
   // ----------------------------------------------------
   console.log('TEST 3: Testing Touch Typing Academy with Animated Hands & Lockout...');
