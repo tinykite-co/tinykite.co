@@ -150,3 +150,23 @@ export function getFingerForKey(charOrKey: string): FingerInfo {
   const zoneId = KEY_TO_FINGER_MAP[charOrKey] || KEY_TO_FINGER_MAP[charOrKey.toLowerCase()] || 'left-index';
   return FINGER_ZONES[zoneId];
 }
+
+export function getFingerForChar(char: string): string {
+  const info = getFingerForKey(char);
+  return info ? info.fingerId : 'left-index';
+}
+
+export function getFingerDescription(fingerKey: string, char: string): string {
+  const map: Record<string, string> = {
+    'left-pinky': 'Left Pinky',
+    'left-ring': 'Left Ring',
+    'left-middle': 'Left Middle',
+    'left-index': 'Left Index' + (char === 'f' || char === 'F' ? ' (Home Bump)' : ''),
+    'right-index': 'Right Index' + (char === 'j' || char === 'J' ? ' (Home Bump)' : ''),
+    'right-middle': 'Right Middle',
+    'right-ring': 'Right Ring',
+    'right-pinky': 'Right Pinky',
+    'thumb': 'Either Thumb on Spacebar'
+  };
+  return map[fingerKey] || 'Index Finger';
+}
