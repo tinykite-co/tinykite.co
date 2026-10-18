@@ -123,14 +123,31 @@ const assert = require('assert');
   assert.strictEqual(targetKeyAfterWrong.toLowerCase(), 'f', 'Should NOT advance on wrong key!');
   console.log('   ✓ Lockout verified: Did not advance on wrong key');
 
-  // Advance check: Type correct key 'f'
-  console.log('   Typing correct key f...');
-  await page.keyboard.press('f');
+  // Advance check: Type 4 'f' characters to complete 'ffff' and reach the space gap
+  console.log('   Typing 4 f characters to complete first chunk ffff...');
+  await page.keyboard.press('f'); // 1st f
+  await page.waitForTimeout(100);
+  await page.keyboard.press('f'); // 2nd f
+  await page.waitForTimeout(100);
+  await page.keyboard.press('f'); // 3rd f
+  await page.waitForTimeout(100);
+  await page.keyboard.press('f'); // 4th f
   await page.waitForTimeout(150);
 
-  const newTargetKey = await page.$eval('#hud-target-key-pill', el => el.textContent.trim());
-  console.log('   Advanced to next target key:', newTargetKey);
-  console.log('   ✓ Correct key stroke advanced cleanly');
+  // The 5th key should prompt for Space
+  const spacePrompt = await page.$eval('#hud-target-key-pill', el => el.textContent.trim());
+  console.log('   Target key at word gap:', spacePrompt);
+  assert.strictEqual(spacePrompt.toLowerCase(), 'space', 'Target key at gap should prompt for Space');
+
+  // Strike Spacebar to cross the gap
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(100);
+
+  // The next key should now be 'j'
+  const nextWordKey = await page.$eval('#hud-target-key-pill', el => el.textContent.trim());
+  console.log('   Target key for next group:', nextWordKey);
+  assert.strictEqual(nextWordKey.toLowerCase(), 'j', 'Next group target key should be j');
+  console.log('   ✓ Word chunking and spacebar gap advanced cleanly');
 
   // ----------------------------------------------------
   // TEST 4: Capture Academy & Hands Screenshot

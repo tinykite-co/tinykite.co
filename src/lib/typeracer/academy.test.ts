@@ -66,19 +66,28 @@ describe('Typing Academy - Finger Mapping', () => {
 });
 
 describe('Typing Academy - Curriculum Integrity', () => {
-  test('Lesson 1 focuses purely on F and J without spaces', () => {
+  test('Lesson 1 groups F and J into word-sized chunks (4+ letters) with spacing gaps', () => {
     const lesson1 = CURRICULUM[0];
     assert.strictEqual(lesson1.id, 1);
-    assert.strictEqual(lesson1.drillText.includes(' '), false, 'Lesson 1 must NOT contain any spaces');
-    for (const char of lesson1.drillText) {
-      assert(char === 'f' || char === 'j', `Lesson 1 should only contain 'f' or 'j', found: ${char}`);
+    assert.strictEqual(lesson1.drillText.includes(' '), true, 'Lesson 1 must contain spacing gaps between word groups');
+    const words = lesson1.drillText.split(' ');
+    assert(words.length >= 6, 'Lesson 1 should have multiple word groups');
+    for (const w of words) {
+      assert(w.length >= 4, `Each group must be word-sized (4 or more letters), found: ${w} (${w.length})`);
+      for (const char of w) {
+        assert(char === 'f' || char === 'j', `Lesson 1 should only contain 'f' or 'j', found: ${char}`);
+      }
     }
   });
 
-  test('Lesson 2 introduces the spacebar', () => {
-    const lesson2 = CURRICULUM[1];
-    assert.strictEqual(lesson2.id, 2);
-    assert.strictEqual(lesson2.drillText.includes(' '), true, 'Lesson 2 must introduce spaces');
+  test('All beginner lessons feature word-sized chunks (4+ letters)', () => {
+    for (let i = 0; i < 5; i++) {
+      const lesson = CURRICULUM[i];
+      const words = lesson.drillText.split(' ');
+      for (const w of words) {
+        assert(w.length >= 4, `Lesson ${lesson.id} word "${w}" should be at least 4 characters`);
+      }
+    }
   });
 
   test('No lesson titles or tips contain implementation mentions of 11+ or Gutenberg', () => {
