@@ -1,0 +1,474 @@
+---
+/**
+ * StopwatchView.astro
+ * Precision Analog Dual-Chronograph and Digital Telemetry HUD for Desktop Widescreen.
+ * Implements 60fps analog sweep hands, target ghost pacer, 4-card live telemetry HUD,
+ * lap/split analytics table, CSV/clipboard exports, and saved sessions history.
+ */
+
+// Generate 60-second chapter ring ticks and sub-ticks at build time
+const majorTicks = Array.from({ length: 60 }, (_, i) => {
+  const angle = i * 6; // 360 / 60 = 6 deg
+  const isMajor5 = i % 5 === 0;
+  return { i, angle, isMajor5 };
+});
+
+const subSecondTicks = Array.from({ length: 300 }, (_, i) => {
+  if (i % 5 === 0) return null; // omit seconds ticks already rendered
+  return { i, angle: i * 1.2 };
+}).filter((t): t is { i: number; angle: number } => t !== null);
+
+const chapterNumbers = [
+  { val: '60', deg: 0 },
+  { val: '05', deg: 30 },
+  { val: '10', deg: 60 },
+  { val: '15', deg: 90 },
+  { val: '20', deg: 120 },
+  { val: '25', deg: 150 },
+  { val: '30', deg: 180 },
+  { val: '35', deg: 210 },
+  { val: '40', deg: 240 },
+  { val: '45', deg: 270 },
+  { val: '50', deg: 300 },
+  { val: '55', deg: 330 },
+].map(({ val, deg }) => {
+  const rad = (deg * Math.PI) / 180;
+  const radius = 121;
+  const x = Math.round(160 + radius * Math.sin(rad));
+  const y = Math.round(160 - radius * Math.cos(rad) + 4);
+  return { val, x, y };
+});
+
+const subdialTicks = Array.from({ length: 30 }, (_, i) => ({
+  i,
+  angle: i * 12,
+  isMajor: i % 5 === 0,
+}));
+---
+
+<section
+  id="panel-stopwatch"
+  role="tabpanel"
+  aria-labelledby="tab-btn-stopwatch"
+  class="space-y-6"
+>
+  <!-- Desktop 2-Column Responsive Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- LEFT COLUMN (5 cols) — Precision Analog Dual-Chronograph -->
+    <div class="lg:col-span-5 refraction-panel p-6 flex flex-col items-center">
+      <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>
+
+      <div class="w-full flex items-center justify-between mb-3 px-1">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+          Analog Chrono
+        </span>
+        <span class="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+          60S SWEEP · 30M SUB
+        </span>
+      </div>
+
+      <!-- High-Precision SVG Analog Stopwatch Face -->
+      <div class="relative w-full max-w-[310px] aspect-square flex items-center justify-center my-2">
+        <svg
+          class="w-full h-full drop-shadow-md select-none"
+          viewBox="0 0 320 320"
+          aria-hidden="true"
+        >
+          <!-- Outer Bezel & Case Rings -->
+          <circle cx="160" cy="160" r="156" class="fill-slate-100 dark:fill-slate-900 stroke-slate-300 dark:stroke-slate-800" stroke-width="4" />
+          <circle cx="160" cy="160" r="150" class="fill-white dark:fill-slate-950 stroke-slate-200 dark:stroke-slate-800" stroke-width="2" />
+          <circle cx="160" cy="160" r="148" class="fill-none stroke-black/5 dark:stroke-white/5" stroke-width="1" />
+
+          <!-- Sub-second 1/5th tick marks -->
+          <g class="stroke-slate-300 dark:stroke-slate-700" stroke-width="0.8">
+            {subSecondTicks.map((st) => (
+              <line
+                x1="160"
+                y1="13"
+                x2="160"
+                y2="17"
+                transform={`rotate(${st.angle} 160 160)`}
+              />
+            ))}
+          </g>
+
+          <!-- 60-second Chapter Ring Ticks -->
+          <g class="stroke-slate-700 dark:stroke-slate-300">
+            {majorTicks.map((mt) => (
+              <line
+                x1="160"
+                y1="12"
+                x2="160"
+                y2={mt.isMajor5 ? '23' : '19'}
+                stroke-width={mt.isMajor5 ? '2.4' : '1.2'}
+                class={mt.isMajor5 ? 'stroke-slate-900 dark:stroke-slate-100' : 'stroke-slate-500 dark:stroke-slate-400'}
+                transform={`rotate(${mt.angle} 160 160)`}
+              />
+            ))}
+          </g>
+
+          <!-- 5-second Chapter Numbers -->
+          <g class="fill-slate-800 dark:fill-slate-200 text-[11px] font-mono font-bold select-none text-center" text-anchor="middle">
+            {chapterNumbers.map((cn) => (
+              <text x={cn.x} y={cn.y}>{cn.val}</text>
+            ))}
+          </g>
+
+          <!-- Upper 30-Minute Sub-Dial -->
+          <g id="analog-subdial-group">
+            <circle cx="160" cy="108" r="38" class="fill-slate-50 dark:fill-slate-900/90 stroke-slate-300 dark:stroke-slate-700" stroke-width="1.2" />
+            <circle cx="160" cy="108" r="37" class="fill-none stroke-black/5 dark:stroke-white/5" stroke-width="0.7" />
+
+            <!-- Subdial ticks -->
+            {subdialTicks.map((st) => (
+              <line
+                x1="160"
+                y1="72"
+                x2="160"
+                y2={st.isMajor ? '78' : '75'}
+                stroke-width={st.isMajor ? '1.5' : '0.8'}
+                class={st.isMajor ? 'stroke-slate-800 dark:stroke-slate-200' : 'stroke-slate-400 dark:stroke-slate-600'}
+                transform={`rotate(${st.angle} 160 108)`}
+              />
+            ))}
+
+            <!-- Subdial numbers: 30, 10, 20 -->
+            <text x="160" y="86" text-anchor="middle" class="fill-slate-700 dark:fill-slate-300 text-[8px] font-mono font-bold">30</text>
+            <text x="183" y="119" text-anchor="middle" class="fill-slate-700 dark:fill-slate-300 text-[8px] font-mono font-bold">10</text>
+            <text x="137" y="119" text-anchor="middle" class="fill-slate-700 dark:fill-slate-300 text-[8px] font-mono font-bold">20</text>
+
+            <!-- Rotatable 30-Minute Sub-Dial Hand -->
+            <g id="analog-minute-hand" transform="rotate(0 160 108)">
+              <line x1="160" y1="108" x2="160" y2="82" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+              <circle cx="160" cy="108" r="2.5" fill="#f59e0b" />
+            </g>
+          </g>
+
+          <!-- Rotatable Split / Current-Lap Hand (Teal / Cyan) -->
+          <g id="analog-lap-hand" transform="rotate(0 160 160)">
+            <line x1="160" y1="180" x2="160" y2="28" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" />
+            <polygon points="160,22 157.5,30 162.5,30" fill="#06b6d4" />
+            <circle cx="160" cy="160" r="4.5" fill="#06b6d4" />
+          </g>
+
+          <!-- Rotatable Primary Sweep Second Hand (Vibrant Rose) -->
+          <g id="analog-second-hand" transform="rotate(0 160 160)">
+            <line x1="160" y1="190" x2="160" y2="18" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="160" y1="190" x2="160" y2="166" stroke="#f43f5e" stroke-width="4.5" stroke-linecap="round" />
+            <circle cx="160" cy="160" r="5.5" fill="#f43f5e" stroke="#ffffff" stroke-width="1.5" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Dial Legend -->
+      <div class="flex items-center gap-4 text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2 mb-4">
+        <span class="flex items-center gap-1">
+          <span class="w-2.5 h-1 rounded-full bg-rose-500"></span>
+          Sweep Total
+        </span>
+        <span class="flex items-center gap-1">
+          <span class="w-2.5 h-1 rounded-full bg-cyan-500"></span>
+          Lap Hand
+        </span>
+        <span class="flex items-center gap-1">
+          <span class="w-2.5 h-1 rounded-full bg-amber-500"></span>
+          30m Sub
+        </span>
+      </div>
+
+      <!-- Target Ghost Pacer Control -->
+      <div class="w-full pt-4 border-t border-black/[0.08] dark:border-white/[0.08]">
+        <div class="flex items-center justify-between mb-2">
+          <label for="input-target-pace" class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+            <span>🎯</span>
+            Target Ghost Pacer
+          </label>
+          <span
+            id="pace-delta-badge"
+            class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-black/[0.06] dark:border-white/[0.08]"
+          >
+            Pace: Off
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2 mb-2.5">
+          <input
+            type="number"
+            id="input-target-pace"
+            min="1"
+            max="3600"
+            step="1"
+            placeholder="Target pace (sec)"
+            class="flex-1 px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+          />
+        </div>
+
+        <!-- Quick Preset Pills -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button
+            type="button"
+            class="btn-pace-preset px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:text-amber-800 dark:hover:text-amber-300 transition-colors"
+            data-pace="15"
+          >
+            15s
+          </button>
+          <button
+            type="button"
+            class="btn-pace-preset px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:text-amber-800 dark:hover:text-amber-300 transition-colors"
+            data-pace="30"
+          >
+            30s
+          </button>
+          <button
+            type="button"
+            class="btn-pace-preset px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:text-amber-800 dark:hover:text-amber-300 transition-colors"
+            data-pace="60"
+          >
+            60s
+          </button>
+          <button
+            type="button"
+            id="btn-pace-clear"
+            class="px-2 py-1 text-[11px] font-semibold rounded-lg text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 transition-colors ml-auto"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (7 cols) — Digital Readout, Tactile Controls & Telemetry -->
+    <div class="lg:col-span-7 space-y-6">
+      <!-- Main Digital Chrono Card -->
+      <div class="refraction-panel p-6">
+        <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>
+
+        <!-- Card Top Bar: Status, Precision, Save -->
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <span
+            id="sw-status-badge"
+            class="px-3 py-1 text-xs font-black tracking-widest rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30"
+          >
+            READY
+          </span>
+
+          <div class="flex items-center gap-2">
+            <!-- Millisecond Precision Toggle -->
+            <button
+              id="btn-ms-toggle"
+              type="button"
+              class="refraction-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-white/10 transition-all"
+              title="Toggle precision between hundredths (.cc) and milliseconds (.mmm)"
+            >
+              .mmm
+            </button>
+
+            <!-- Save Session Button -->
+            <button
+              id="btn-save-session"
+              type="button"
+              class="refraction-btn px-3 py-1 text-xs font-semibold rounded-lg bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1.5"
+              title="Save current run to session history"
+            >
+              <span>💾</span>
+              <span>Save Run</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Giant Tabular-Nums Digital Readout -->
+        <div class="text-center py-4 select-none">
+          <div class="inline-flex items-baseline justify-center font-mono font-black tabular-nums tracking-tight text-slate-900 dark:text-slate-50">
+            <span id="sw-digital-main" class="text-5xl sm:text-6xl md:text-7xl font-extrabold">00:00</span>
+            <span id="sw-digital-fraction" class="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-500 dark:text-brand-gold ml-1">.000</span>
+          </div>
+
+          <!-- Secondary Current-Lap Readout -->
+          <div class="mt-2 text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
+            <span class="uppercase tracking-widest text-[11px] font-semibold text-cyan-700 dark:text-cyan-400">Current Lap:</span>
+            <span id="sw-current-lap-time" class="tabular-nums font-bold text-slate-800 dark:text-slate-200">00:00.000</span>
+          </div>
+        </div>
+
+        <!-- Large Tactile Action Buttons -->
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-black/[0.08] dark:border-white/[0.08]">
+          <!-- Start / Pause Button -->
+          <button
+            id="btn-sw-start"
+            type="button"
+            class="refraction-btn min-h-[54px] rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all active:scale-95"
+          >
+            <span id="sw-start-icon">▶</span>
+            <span id="sw-start-label">Start</span>
+            <span class="hidden sm:inline-block text-[10px] font-mono opacity-80 border border-white/30 rounded px-1">[Space]</span>
+          </button>
+
+          <!-- Lap Button -->
+          <button
+            id="btn-sw-lap"
+            type="button"
+            disabled
+            class="refraction-btn min-h-[54px] rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-100 disabled:opacity-45 disabled:pointer-events-none hover:bg-slate-300 dark:hover:bg-slate-700 transition-all active:scale-95 border border-black/[0.08] dark:border-white/[0.1]"
+          >
+            <span>🚩</span>
+            <span>Lap</span>
+            <span class="hidden sm:inline-block text-[10px] font-mono opacity-80 border border-black/20 dark:border-white/20 rounded px-1">[L]</span>
+          </button>
+
+          <!-- Reset Button -->
+          <button
+            id="btn-sw-reset"
+            type="button"
+            disabled
+            class="refraction-btn min-h-[54px] rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-100 disabled:opacity-45 disabled:pointer-events-none hover:bg-slate-300 dark:hover:bg-slate-700 transition-all active:scale-95 border border-black/[0.08] dark:border-white/[0.1]"
+          >
+            <span>↺</span>
+            <span>Reset</span>
+            <span class="hidden sm:inline-block text-[10px] font-mono opacity-80 border border-black/20 dark:border-white/20 rounded px-1">[R]</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4-Card Live Telemetry HUD Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <!-- Best Lap -->
+        <div class="refraction-panel p-3.5 text-center">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center justify-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Best Lap
+          </div>
+          <div id="stat-best-lap" class="text-sm sm:text-base font-mono font-bold tabular-nums text-emerald-600 dark:text-emerald-400">
+            --:--.--
+          </div>
+        </div>
+
+        <!-- Slowest Lap -->
+        <div class="refraction-panel p-3.5 text-center">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center justify-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+            Slowest Lap
+          </div>
+          <div id="stat-worst-lap" class="text-sm sm:text-base font-mono font-bold tabular-nums text-rose-600 dark:text-rose-400">
+            --:--.--
+          </div>
+        </div>
+
+        <!-- Average Lap -->
+        <div class="refraction-panel p-3.5 text-center">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+            Average Lap
+          </div>
+          <div id="stat-avg-lap" class="text-sm sm:text-base font-mono font-bold tabular-nums text-slate-800 dark:text-slate-200">
+            --:--.--
+          </div>
+        </div>
+
+        <!-- Consistency & Std Dev -->
+        <div class="refraction-panel p-3.5 text-center">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+            Consistency
+          </div>
+          <div id="stat-consistency" class="text-sm sm:text-base font-mono font-bold tabular-nums text-amber-600 dark:text-brand-gold">
+            --%
+          </div>
+          <div id="stat-stddev" class="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5">
+            σ ±0.0s
+          </div>
+        </div>
+      </div>
+
+      <!-- Lap & Split Telemetry Table Card -->
+      <div id="sw-laps-container" class="refraction-panel p-5">
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <span>📊</span>
+              Recorded Laps & Splits
+            </h3>
+            <span id="sw-lap-count-badge" class="px-2 py-0.5 text-[10px] font-bold font-mono rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              0 Laps
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              id="btn-copy-laps"
+              type="button"
+              class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1"
+            >
+              <span>📋</span>
+              <span>Copy Laps</span>
+            </button>
+            <button
+              id="btn-export-csv"
+              type="button"
+              class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1"
+            >
+              <span>📥</span>
+              <span>Export CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Table -->
+        <div class="max-h-64 overflow-y-auto rounded-xl border border-black/[0.06] dark:border-white/[0.08]">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="sticky top-0 bg-slate-100 dark:bg-slate-900/90 backdrop-blur-xs text-slate-600 dark:text-slate-400 font-bold border-b border-black/[0.08] dark:border-white/[0.08]">
+              <tr>
+                <th class="py-2.5 px-3">Lap</th>
+                <th class="py-2.5 px-3">Lap Time</th>
+                <th class="py-2.5 px-3">Total Split</th>
+                <th class="py-2.5 px-3">Delta vs Avg</th>
+              </tr>
+            </thead>
+            <tbody id="sw-laps-tbody" class="divide-y divide-black/[0.04] dark:divide-white/[0.04] font-mono">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+
+          <!-- Empty State -->
+          <div id="sw-laps-empty" class="py-8 text-center text-slate-400 dark:text-slate-500 text-xs">
+            No laps recorded yet. Press <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300">Space</kbd> to start and <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300">L</kbd> to record a lap.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Sessions History Section -->
+  <div id="sw-saved-sessions-panel" class="refraction-panel p-6 mt-6">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+      <div>
+        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <span>💾</span>
+          Saved Stopwatch Sessions
+        </h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Persistent offline history of your recorded runs and lap splits
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <input
+          type="text"
+          id="input-session-title"
+          placeholder="Session name (e.g. 5K Sprint)"
+          class="flex-1 sm:w-56 px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+        <button
+          id="btn-save-session-submit"
+          type="button"
+          class="refraction-btn px-3 py-1.5 text-xs font-bold rounded-xl bg-brand-navy dark:bg-brand-gold text-white dark:text-slate-950 transition-all flex items-center gap-1 shrink-0"
+        >
+          Save Current
+        </button>
+      </div>
+    </div>
+
+    <!-- Sessions List Container -->
+    <div id="sw-sessions-list" class="space-y-3">
+      <!-- Populated dynamically by client-app.ts -->
+    </div>
+  </div>
+</section>

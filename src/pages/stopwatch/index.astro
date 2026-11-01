@@ -1,0 +1,136 @@
+---
+/**
+ * index.astro
+ * Desktop Web Stopwatch, Timer, Alarm & World Clock Suite
+ *
+ * Decomposed into modular components:
+ * - ClockHeader: Hero header, WCAG tablist, sound toggle, 12/24H format, desk mode
+ * - StopwatchView: Dual-dial analog chronograph with 60fps sweep hands, digital telemetry HUD, laps table
+ * - TimerView: Hero circular countdown progress ring, study presets, multi-timers queue
+ * - AlarmView: Scheduled alarms, repeat days, sound chimes, snooze modal
+ * - WorldClockView: Top Swiss analog desk clock, multi-city world clock grid
+ * - ShortcutFooter: Tactile 3D keycaps shortcut legend
+ * - client-app.ts: Bundled inline for zero-request portability
+ */
+import path from 'node:path';
+import * as esbuild from 'esbuild';
+import Layout from '../../layouts/Layout.astro';
+import ClockHeader from '../../components/stopwatch/ClockHeader.astro';
+import StopwatchView from '../../components/stopwatch/StopwatchView.astro';
+import TimerView from '../../components/stopwatch/TimerView.astro';
+import AlarmView from '../../components/stopwatch/AlarmView.astro';
+import WorldClockView from '../../components/stopwatch/WorldClockView.astro';
+import ShortcutFooter from '../../components/stopwatch/ShortcutFooter.astro';
+
+const pageTitle = "Desktop Stopwatch, Timer, Alarm & World Clock | TinyKite";
+const pageDescription = "Precision analog chronograph with 60fps sweep hands, multi-tasking study timers, scheduled kid alarms, and multi-city world clock. 100% ad-free and built for desktop focus.";
+
+// Bundle client application TypeScript into a portable, zero-request inline script
+const clientBundle = await esbuild.build({
+  entryPoints: [path.resolve('./src/lib/stopwatch/client-app.ts')],
+  bundle: true,
+  format: 'iife',
+  target: 'es2020',
+  write: false,
+});
+const clientAppJs = clientBundle.outputFiles[0]?.text ?? '';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Import Lora font for literary typography matching TinyKite suite -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+
+  <style is:inline>
+    .tk-chrono-root {
+      font-family: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .font-serif-literary {
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    /* Refraction UI Glass Card Base */
+    .refraction-panel {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9), 0 16px 40px -10px rgba(11, 16, 32, 0.08);
+      border-radius: 1.5rem;
+    }
+    .dark .refraction-panel {
+      background: rgba(14, 20, 38, 0.88);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 20px 48px -12px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Specular Prismatic Rim */
+    .refraction-prismatic-rim {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, #ffb23c 0%, #2aa48f 50%, #6366f1 100%);
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
+    }
+
+    /* Tactile Buttons with Refraction Inset */
+    .refraction-btn {
+      transition: all 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+    .refraction-btn:active {
+      transform: translateY(1.5px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 3D Tactile Keycaps */
+    .vkey-3d {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      user-select: none;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      color: #0f172a;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 3px 0 #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 0.06s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.06s ease;
+      cursor: default;
+    }
+    .dark .vkey-3d {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 3px 0 #020617, 0 5px 10px rgba(0, 0, 0, 0.45);
+    }
+  </style>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 tk-chrono-root min-h-screen">
+    <!-- HERO HEADER & UTILITY CONTROLS -->
+    <ClockHeader />
+
+    <!-- TAB PANEL 1: STOPWATCH & ANALOG CHRONO -->
+    <StopwatchView />
+
+    <!-- TAB PANEL 2: COUNTDOWN TIMER & PRESETS -->
+    <TimerView />
+
+    <!-- TAB PANEL 3: ALARMS & SCHEDULER -->
+    <AlarmView />
+
+    <!-- TAB PANEL 4: WORLD CLOCK & TIMEZONES -->
+    <WorldClockView />
+
+    <!-- DESKTOP KEYBOARD SHORTCUTS FOOTER -->
+    <ShortcutFooter />
+  </main>
+
+  <!-- Inlined, zero-request TypeScript application engine -->
+  <script is:inline set:html={clientAppJs}></script>
+</Layout>

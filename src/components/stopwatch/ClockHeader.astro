@@ -1,0 +1,147 @@
+---
+/**
+ * ClockHeader.astro
+ * Hero Header with WCAG 2.1 AA Tablist and Chrono Suite Controls.
+ * Includes live wall-clock badge, 12H/24H format switch, desk mode fullscreen,
+ * and audio effects toggle.
+ */
+---
+
+<header class="text-center mb-6 pt-2 select-none">
+  <!-- Top Bar with Subtitle Pill and Right Utility Controls -->
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4 max-w-5xl mx-auto px-2">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-slate-900/70 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 text-xs font-semibold backdrop-blur-md shadow-xs">
+      <span aria-hidden="true">⏱️</span>
+      <span class="tracking-wide">Desktop Precision Chrono Suite · Stopwatch · Timer · Alarm · World Clock</span>
+    </div>
+
+    <!-- Right-Aligned Utility Controls -->
+    <div class="flex items-center gap-2 flex-wrap justify-center">
+      <!-- Live Local Wall-Clock Badge -->
+      <div
+        id="header-live-clock"
+        class="px-3 py-1 text-xs font-mono font-bold tabular-nums rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 shadow-xs flex items-center gap-1.5"
+        title="Local Wall Clock"
+        aria-label="Current local time"
+      >
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+        <span>--:--:--</span>
+      </div>
+
+      <!-- 12H / 24H Toggle Button -->
+      <button
+        id="btn-format-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-bold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all min-h-[36px]"
+        title="Toggle 12-Hour / 24-Hour Time Format"
+        aria-label="Toggle 12 or 24 hour time format"
+      >
+        12H
+      </button>
+
+      <!-- Fullscreen Desk Mode Toggle -->
+      <button
+        id="btn-fullscreen-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
+        title="Toggle Fullscreen Desk Mode (F)"
+        aria-label="Toggle Fullscreen Desk Mode"
+      >
+        <span aria-hidden="true">⛶</span>
+        <span class="hidden sm:inline">Desk Mode</span>
+      </button>
+
+      <!-- Sound Effects Toggle Button -->
+      <button
+        id="btn-sound-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
+        title="Toggle Chime and Stopwatch Audio Effects (M)"
+        aria-label="Sound effects toggle"
+      >
+        <span id="sound-toggle-icon" aria-hidden="true">🔊</span>
+        <span id="sound-toggle-label" class="hidden sm:inline">Sound On</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero Title -->
+  <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy dark:text-brand-cream mb-2 font-serif-literary">
+    stopwatch<span class="text-brand-gold">.</span>
+  </h1>
+  <p class="text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
+    Ultra-precise dual-dial analog chronograph, multi-tasking study timers, scheduled kid alarms, and multi-city world clock. Designed for desktop focus and tactile precision.
+  </p>
+
+  <!-- TOP APP NAVIGATION TABS (WCAG Accessible Tablist) -->
+  <div class="flex justify-center mt-5">
+    <div
+      role="tablist"
+      aria-label="Chrono Suite Modes"
+      class="inline-flex flex-wrap justify-center rounded-2xl md:rounded-full border border-black/[0.08] dark:border-white/[0.12] p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-xs gap-1"
+    >
+      <button
+        id="tab-btn-stopwatch"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-stopwatch"
+        data-tab="stopwatch"
+        tabindex="0"
+        type="button"
+        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+      >
+        <span>⏱️</span>
+        <span>Stopwatch</span>
+      </button>
+
+      <button
+        id="tab-btn-timer"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-timer"
+        data-tab="timer"
+        tabindex="-1"
+        type="button"
+        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+      >
+        <span>⏳</span>
+        <span>Timer</span>
+      </button>
+
+      <button
+        id="tab-btn-alarm"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-alarm"
+        data-tab="alarm"
+        tabindex="-1"
+        type="button"
+        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+      >
+        <span>⏰</span>
+        <span>Alarm</span>
+        <span
+          id="alarm-active-badge"
+          class="hidden px-1.5 py-0.5 text-[10px] font-black rounded-full bg-amber-500 text-slate-950 shadow-xs"
+          aria-label="Active alarms count"
+        >
+          0
+        </span>
+      </button>
+
+      <button
+        id="tab-btn-worldclock"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-worldclock"
+        data-tab="worldclock"
+        tabindex="-1"
+        type="button"
+        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+      >
+        <span>🌍</span>
+        <span>World Clock</span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,144 @@
+---
+/**
+ * WorldClockView.astro
+ * Top Hero Local Desk Clock Banner and Multi-City Global Timezone Grid.
+ * Displays solar phases, hour offsets vs local, and Swiss-railway-inspired analog desk clock.
+ */
+import { WORLD_CITIES } from '../../lib/stopwatch/config.ts';
+
+// 12 hour tick marks for mini Swiss desk clock
+const miniClockTicks = Array.from({ length: 12 }, (_, i) => ({
+  i,
+  angle: i * 30,
+  isMajor: i % 3 === 0,
+}));
+---
+
+<section
+  id="panel-worldclock"
+  role="tabpanel"
+  aria-labelledby="tab-btn-worldclock"
+  class="space-y-6 hidden"
+>
+  <!-- Top Hero Local Desk Clock Banner -->
+  <div class="refraction-panel p-6">
+    <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+      <!-- Left: Big Local Digital Readout & Timezone -->
+      <div class="md:col-span-8 space-y-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+            Local Desk Clock
+          </span>
+          <span
+            id="local-clock-tz"
+            class="text-xs font-mono text-slate-500 dark:text-slate-400"
+          >
+            System Timezone
+          </span>
+        </div>
+
+        <div
+          id="local-clock-digital"
+          class="text-4xl sm:text-5xl md:text-6xl font-mono font-black tabular-nums tracking-tight text-slate-900 dark:text-slate-50"
+        >
+          --:--:-- --
+        </div>
+
+        <div
+          id="local-clock-date"
+          class="text-sm font-semibold text-slate-600 dark:text-slate-300"
+        >
+          Loading date...
+        </div>
+      </div>
+
+      <!-- Right: Mini Swiss-Railway Style Analog Clock Face -->
+      <div class="md:col-span-4 flex items-center justify-center">
+        <div class="relative w-28 h-28 aspect-square">
+          <svg class="w-full h-full drop-shadow-md select-none" viewBox="0 0 100 100" aria-hidden="true">
+            <!-- Bezel & Dial Face -->
+            <circle cx="50" cy="50" r="48" class="fill-white dark:fill-slate-900 stroke-slate-300 dark:stroke-slate-700" stroke-width="2.5" />
+            <circle cx="50" cy="50" r="45" class="fill-none stroke-black/5 dark:stroke-white/5" stroke-width="0.8" />
+
+            <!-- 12 Hour Ticks -->
+            {miniClockTicks.map((tick) => (
+              <line
+                x1="50"
+                y1="8"
+                x2="50"
+                y2={tick.isMajor ? '16' : '12'}
+                stroke-width={tick.isMajor ? '2.5' : '1.2'}
+                class="stroke-slate-800 dark:stroke-slate-200"
+                transform={`rotate(${tick.angle} 50 50)`}
+              />
+            ))}
+
+            <!-- Hour Hand -->
+            <g id="local-clock-analog-hour" transform="rotate(0 50 50)">
+              <line x1="50" y1="50" x2="50" y2="25" stroke-width="3" stroke-linecap="round" class="stroke-slate-800 dark:stroke-slate-100" />
+            </g>
+
+            <!-- Minute Hand -->
+            <g id="local-clock-analog-minute" transform="rotate(0 50 50)">
+              <line x1="50" y1="50" x2="50" y2="15" stroke-width="2" stroke-linecap="round" class="stroke-slate-800 dark:stroke-slate-100" />
+            </g>
+
+            <!-- Swiss Lollipop Second Hand (Red) -->
+            <g id="local-clock-analog-second" transform="rotate(0 50 50)">
+              <line x1="50" y1="58" x2="50" y2="15" stroke="#e11d48" stroke-width="1.2" />
+              <!-- Lollipop red circle near tip -->
+              <circle cx="50" cy="18" r="3.2" fill="#e11d48" />
+              <!-- Center Pivot Cap -->
+              <circle cx="50" cy="50" r="2.5" fill="#e11d48" />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- World Clock Controls Toolbar -->
+  <div class="refraction-panel p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <!-- Filter Pinned Cities -->
+    <div class="w-full sm:w-64">
+      <input
+        type="text"
+        id="input-filter-cities"
+        placeholder="Filter pinned cities..."
+        class="w-full px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+      />
+    </div>
+
+    <!-- Add / Pin New City -->
+    <div class="flex items-center gap-2 w-full sm:w-auto">
+      <select
+        id="select-add-city"
+        class="flex-1 sm:w-56 px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+      >
+        {WORLD_CITIES.map((city) => (
+          <option value={city.id}>
+            {city.name}, {city.country}
+          </option>
+        ))}
+      </select>
+      <button
+        id="btn-add-city"
+        type="button"
+        class="refraction-btn px-3 py-1.5 text-xs font-bold rounded-xl bg-brand-navy dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 transition-all shrink-0 flex items-center gap-1 shadow-xs"
+      >
+        <span>+</span>
+        <span>Pin City</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- World Clock Multi-City Grid -->
+  <div
+    id="world-clock-grid"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+  >
+    <!-- Rendered dynamically by client-app.ts -->
+  </div>
+</section>
