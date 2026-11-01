@@ -1,0 +1,23 @@
+{
+  "name": "TinyKite Desktop Stopwatch, Timer, Alarm & World Clock",
+  "short_name": "Stopwatch",
+  "description": "100% offline-capable desktop precision stopwatch, study timers, alarms, and world clock.",
+  "start_url": "/stopwatch/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/stopwatch/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

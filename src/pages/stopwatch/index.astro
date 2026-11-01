@@ -37,17 +37,28 @@ const clientAppJs = clientBundle.outputFiles[0]?.text ?? '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <!-- Import Lora font for literary typography matching TinyKite suite -->
+  <!-- PWA Web App Manifest -->
+  <link rel="manifest" href="/stopwatch/manifest.webmanifest" />
+
+  <!-- Non-render-blocking font import with fast Linux system fallbacks for offline execution -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  </noscript>
 
   <style is:inline>
     .tk-chrono-root {
-      font-family: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Satoshi', 'Inter', 'Cantarell', 'Liberation Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     .font-serif-literary {
-      font-family: 'Lora', Georgia, serif;
+      font-family: 'Lora', Georgia, 'Nimbus Roman', 'Liberation Serif', serif;
     }
 
     /* Refraction UI Glass Card Base */

@@ -87,6 +87,7 @@ export class ChronoAppController {
     this.bindAlarm();
     this.bindWorldClock();
     this.bindKeyboardShortcuts();
+    this.initServiceWorkerAndOffline();
 
     this.renderAll();
     this.startTicker();
@@ -1314,6 +1315,8 @@ export class ChronoAppController {
     }
 
     const now = new Date();
+    this.updateAlarmBanner(alarms, now);
+
     const items = alarms.map((alarm) => {
       const { timeText, period } = formatAlarmTime(alarm.hour24, alarm.minute, this.prefs.use24Hour);
       const repeatLabel = formatRepeatDaysLabel(alarm.repeatDays);
@@ -1740,6 +1743,144 @@ export class ChronoAppController {
         }
       }
     });
+  }
+
+  // --- OFFLINE & SERVICE WORKER SUPPORT ---
+
+  private initServiceWorkerAndOffline(): void {
+    if (typeof window === 'undefined') return;
+
+    this.updateOfflineStatus();
+
+    window.addEventListener('online', () => {
+      this.updateOfflineStatus();
+    });
+
+    window.addEventListener('offline', () => {
+      this.updateOfflineStatus();
+    });
+
+    if ('serviceWorker' in navigator) {
+      const swUrl = './sw.js';
+      navigator.serviceWorker
+        .register(swUrl)
+        .then((reg) => {
+          reg.addEventListener('updatefound', () => {
+            const installing = reg.installing;
+            if (installing) {
+              installing.addEventListener('statechange', () => {
+                if (installing.state === 'activated') {
+                  this.updateOfflineStatus();
+                }
+              });
+            }
+          });
+          return navigator.serviceWorker.ready;
+        })
+        .then((readyReg) => {
+          this.updateOfflineStatus();
+          this.cacheActivePageUrls(readyReg);
+        })
+        .catch(() => {
+          // If relative registration fails, fall back to '/sw.js'
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then(() => navigator.serviceWorker.ready)
+            .then((readyReg) => {
+              this.updateOfflineStatus();
+              this.cacheActivePageUrls(readyReg);
+            })
+            .catch(() => {});
+        });
+    }
+  }
+
+  private updateOfflineStatus(): void {
+    const badge = document.getElementById('offline-status-badge');
+    const textEl = document.getElementById('offline-status-text');
+    const dot = document.getElementById('offline-status-dot');
+
+    if (!textEl) return;
+
+    const isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+
+    if (!isOnline) {
+      textEl.textContent = 'Offline Mode';
+      if (dot) {
+        dot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+      }
+      if (badge) {
+        badge.className =
+          'px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shadow-xs flex items-center gap-1.5 transition-colors';
+        badge.title = 'Running in offline mode without internet connection';
+      }
+    } else {
+      textEl.textContent = 'Offline Ready';
+      if (dot) {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+      }
+      if (badge) {
+        badge.className =
+          'px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 shadow-xs flex items-center gap-1.5 transition-colors';
+        badge.title = 'Works 100% offline without internet';
+      }
+    }
+  }
+
+  private cacheActivePageUrls(registration: ServiceWorkerRegistration): void {
+    const urlsToCache: string[] = [];
+
+    // Current page URL and pathname
+    urlsToCache.push(window.location.href);
+    urlsToCache.push(window.location.pathname);
+
+    // Normalize both with and without trailing slash
+    if (window.location.pathname.endsWith('/')) {
+      urlsToCache.push(window.location.pathname.slice(0, -1));
+    } else {
+      urlsToCache.push(`${window.location.pathname}/`);
+    }
+
+    // All script tags
+    document.querySelectorAll<HTMLScriptElement>('script[src]').forEach((s) => {
+      if (s.src) urlsToCache.push(s.src);
+    });
+
+    // All image tags
+    document.querySelectorAll<HTMLImageElement>('img[src]').forEach((img) => {
+      if (img.src) urlsToCache.push(img.src);
+    });
+
+    // All link stylesheets, icons, manifests
+    document.querySelectorAll<HTMLLinkElement>('link[href]').forEach((l) => {
+      if (l.href) urlsToCache.push(l.href);
+    });
+
+    const uniqueUrls = Array.from(new Set(urlsToCache));
+
+    const postToWorker = (sw: ServiceWorker | null): void => {
+      if (sw) {
+        sw.postMessage({
+          type: 'CACHE_URLS',
+          urls: uniqueUrls,
+        });
+      }
+    };
+
+    if (registration.active) {
+      postToWorker(registration.active);
+    } else if (navigator.serviceWorker.controller) {
+      postToWorker(navigator.serviceWorker.controller);
+    }
+
+    if (registration.installing) {
+      registration.installing.addEventListener('statechange', (e: Event) => {
+        const sw = e.target as ServiceWorker | null;
+        if (sw && sw.state === 'activated') {
+          postToWorker(sw);
+        }
+      });
+    }
   }
 }
 

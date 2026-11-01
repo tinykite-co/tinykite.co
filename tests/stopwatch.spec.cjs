@@ -18,12 +18,17 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
 
   const page = await context.newPage();
 
-  // Route root-relative assets to the /stopwatch/ prefix mounted in Pagehub
-  await page.route('**/*', (route) => {
+  // Route root-relative assets to the /stopwatch/ prefix mounted in Pagehub (for page and service worker)
+  await context.route('**/*', async (route) => {
     const url = route.request().url();
     if (url.startsWith('http://localhost:8800/') && !url.startsWith('http://localhost:8800/stopwatch/')) {
       const redirected = url.replace('http://localhost:8800/', 'http://localhost:8800/stopwatch/');
-      return route.continue({ url: redirected });
+      try {
+        const response = await context.request.fetch(redirected);
+        return await route.fulfill({ response });
+      } catch {
+        return route.continue();
+      }
     }
     route.continue();
   });
@@ -44,7 +49,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 1: Clean Load & Header Controls
   // --------------------------------------------------------------------------
-  console.log('\n[1/6] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
+  console.log('\n[1/7] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
   await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
 
@@ -72,7 +77,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 2: Stopwatch Tab (#panel-stopwatch)
   // --------------------------------------------------------------------------
-  console.log('\n[2/6] Testing Stopwatch Tab (#panel-stopwatch)...');
+  console.log('\n[2/7] Testing Stopwatch Tab (#panel-stopwatch)...');
 
   // Verify SVG analog hands and digital readout exist
   const secondHand = await page.$('#analog-second-hand');
@@ -175,7 +180,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 3: Timer Tab (#panel-timer)
   // --------------------------------------------------------------------------
-  console.log('\n[3/6] Testing Timer Tab (#panel-timer)...');
+  console.log('\n[3/7] Testing Timer Tab (#panel-timer)...');
   await page.click('#tab-btn-timer');
   await page.waitForTimeout(200);
 
@@ -232,7 +237,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 4: Alarm Tab (#panel-alarm)
   // --------------------------------------------------------------------------
-  console.log('\n[4/6] Testing Alarm Tab (#panel-alarm)...');
+  console.log('\n[4/7] Testing Alarm Tab (#panel-alarm)...');
   await page.click('#tab-btn-alarm');
   await page.waitForTimeout(200);
 
@@ -268,7 +273,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 5: World Clock Tab (#panel-worldclock)
   // --------------------------------------------------------------------------
-  console.log('\n[5/6] Testing World Clock Tab (#panel-worldclock)...');
+  console.log('\n[5/7] Testing World Clock Tab (#panel-worldclock)...');
   await page.click('#tab-btn-worldclock');
   await page.waitForTimeout(200);
 
@@ -297,7 +302,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 6: Keyboard Shortcuts & /clock/ Alias Route
   // --------------------------------------------------------------------------
-  console.log('\n[6/6] Testing Keyboard Shortcut "1" and /clock/ route...');
+  console.log('\n[6/7] Testing Keyboard Shortcut "1" and /clock/ route...');
   await page.keyboard.press('Digit1');
   await page.waitForTimeout(200);
 
@@ -315,6 +320,93 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   const clockSwPanel = await page.$eval('#panel-stopwatch', (el) => !el.classList.contains('hidden'));
   assert.strictEqual(clockSwPanel, true, 'Expected #panel-stopwatch to be visible on /clock/ route');
   console.log('   ✓ /clock/ route loaded cleanly!');
+
+  // --------------------------------------------------------------------------
+  // TEST 7: True Offline Mode (context.setOffline(true)) & Offline Reload
+  // --------------------------------------------------------------------------
+  console.log('\n[7/7] Testing True Offline Mode & Offline Reload...');
+  // Navigate back to primary stopwatch route and await service worker ready
+  await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(300);
+
+  await page.evaluate(async () => {
+    if ('serviceWorker' in navigator) {
+      await navigator.serviceWorker.ready;
+    }
+  });
+  await page.waitForTimeout(600);
+
+  // Switch context to offline mode
+  console.log('   Switching browser context to offline mode (context.setOffline(true))...');
+  await context.setOffline(true);
+  await page.waitForTimeout(250);
+
+  // Verify #offline-status-text updates to "Offline Mode"
+  const offlineStatusPreReload = await page.$eval('#offline-status-text', (el) => el.textContent.trim());
+  console.log('   Offline status text before reload:', offlineStatusPreReload);
+  assert.strictEqual(
+    offlineStatusPreReload,
+    'Offline Mode',
+    `Expected #offline-status-text to be "Offline Mode", got "${offlineStatusPreReload}"`
+  );
+
+  // Perform a full page reload while offline
+  console.log('   Reloading page while 100% offline (SW cached shell)...');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(400);
+
+  // Verify the reloaded page renders cleanly while offline
+  const isStillOffline = await page.evaluate(() => navigator.onLine === false);
+  assert.strictEqual(isStillOffline, true, 'Navigator should report navigator.onLine === false');
+
+  const reloadedStatus = await page.$eval('#offline-status-text', (el) => el.textContent.trim());
+  console.log('   Offline status text after reload:', reloadedStatus);
+  assert.strictEqual(
+    reloadedStatus,
+    'Offline Mode',
+    `Expected #offline-status-text to be "Offline Mode", got "${reloadedStatus}"`
+  );
+
+  const digitalMainAfterReload = await page.$eval('#sw-digital-main', (el) => el.textContent.trim());
+  console.log('   Digital readout after offline reload:', digitalMainAfterReload);
+  assert.strictEqual(
+    digitalMainAfterReload,
+    '00:00',
+    `Expected #sw-digital-main to be "00:00", got "${digitalMainAfterReload}"`
+  );
+
+  // Verify starting / pausing stopwatch works 100% offline
+  console.log('   Starting stopwatch while offline via #btn-sw-start...');
+  await page.click('#btn-sw-start');
+  await page.waitForTimeout(250);
+
+  const runningBadgeOffline = await page.$eval('#sw-status-badge', (el) => el.textContent.trim());
+  console.log('   Stopwatch status while offline:', runningBadgeOffline);
+  assert.strictEqual(
+    runningBadgeOffline,
+    'RUNNING',
+    `Expected status RUNNING in offline mode, got "${runningBadgeOffline}"`
+  );
+
+  console.log('   Pausing stopwatch while offline...');
+  await page.click('#btn-sw-start');
+  await page.waitForTimeout(100);
+
+  const pausedBadgeOffline = await page.$eval('#sw-status-badge', (el) => el.textContent.trim());
+  assert.strictEqual(
+    pausedBadgeOffline,
+    'PAUSED',
+    `Expected status PAUSED in offline mode, got "${pausedBadgeOffline}"`
+  );
+
+  // Take screenshot of Offline Mode
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'offline_mode_view.png') });
+  console.log('   ✓ Saved offline mode screenshot to offline_mode_view.png');
+
+  // Restore context to online
+  await context.setOffline(false);
+  await page.waitForTimeout(200);
+  console.log('   ✓ Offline mode and offline reload verified 100%!');
 
   console.log('\n=== ALL E2E PLAYWRIGHT TESTS PASSED (100%) ===\n');
   await browser.close();
