@@ -36,9 +36,13 @@ const clientBundle = await esbuild.build({
 const clientAppJs = clientBundle.outputFiles[0]?.text ?? '';
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <!-- PWA Web App Manifest -->
-  <link rel="manifest" href="/stopwatch/manifest.webmanifest" />
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  manifest="/stopwatch.webmanifest"
+  themeColor="#0b1020"
+  appleTouchIcon="/stopwatch/icon-192.png"
+>
 
   <!-- Non-render-blocking font import with fast Linux system fallbacks for offline execution -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -49,7 +49,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 1: Clean Load & Header Controls
   // --------------------------------------------------------------------------
-  console.log('\n[1/7] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
+  console.log('\n[1/8] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
   await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
 
@@ -77,7 +77,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 2: Stopwatch Tab (#panel-stopwatch)
   // --------------------------------------------------------------------------
-  console.log('\n[2/7] Testing Stopwatch Tab (#panel-stopwatch)...');
+  console.log('\n[2/8] Testing Stopwatch Tab (#panel-stopwatch)...');
 
   // Verify SVG analog hands and digital readout exist
   const secondHand = await page.$('#analog-second-hand');
@@ -180,7 +180,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 3: Timer Tab (#panel-timer)
   // --------------------------------------------------------------------------
-  console.log('\n[3/7] Testing Timer Tab (#panel-timer)...');
+  console.log('\n[3/8] Testing Timer Tab (#panel-timer)...');
   await page.click('#tab-btn-timer');
   await page.waitForTimeout(200);
 
@@ -237,7 +237,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 4: Alarm Tab (#panel-alarm)
   // --------------------------------------------------------------------------
-  console.log('\n[4/7] Testing Alarm Tab (#panel-alarm)...');
+  console.log('\n[4/8] Testing Alarm Tab (#panel-alarm)...');
   await page.click('#tab-btn-alarm');
   await page.waitForTimeout(200);
 
@@ -273,7 +273,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 5: World Clock Tab (#panel-worldclock)
   // --------------------------------------------------------------------------
-  console.log('\n[5/7] Testing World Clock Tab (#panel-worldclock)...');
+  console.log('\n[5/8] Testing World Clock Tab (#panel-worldclock)...');
   await page.click('#tab-btn-worldclock');
   await page.waitForTimeout(200);
 
@@ -302,7 +302,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 6: Keyboard Shortcuts & /clock/ Alias Route
   // --------------------------------------------------------------------------
-  console.log('\n[6/7] Testing Keyboard Shortcut "1" and /clock/ route...');
+  console.log('\n[6/8] Testing Keyboard Shortcut "1" and /clock/ route...');
   await page.keyboard.press('Digit1');
   await page.waitForTimeout(200);
 
@@ -324,7 +324,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // --------------------------------------------------------------------------
   // TEST 7: True Offline Mode (context.setOffline(true)) & Offline Reload
   // --------------------------------------------------------------------------
-  console.log('\n[7/7] Testing True Offline Mode & Offline Reload...');
+  console.log('\n[7/8] Testing True Offline Mode & Offline Reload...');
   // Navigate back to primary stopwatch route and await service worker ready
   await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(300);
@@ -407,6 +407,89 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   await context.setOffline(false);
   await page.waitForTimeout(200);
   console.log('   ✓ Offline mode and offline reload verified 100%!');
+
+  // --------------------------------------------------------------------------
+  // TEST 8: PWA Manifest & Installability CDP Verification
+  // --------------------------------------------------------------------------
+  console.log('\n[8/8] Testing Desktop PWA Manifest & Installability via Chromium CDP...');
+  const os = require('os');
+  const fs = require('fs');
+  const http = require('http');
+  const { spawn } = require('child_process');
+
+  const isServerRunning = (url) =>
+    new Promise((resolve) => {
+      const req = http.get(url, (res) => resolve(res.statusCode < 500));
+      req.on('error', () => resolve(false));
+    });
+
+  let spawnedPreview = null;
+  const serverUp = await isServerRunning('http://localhost:4399/stopwatch/');
+  if (!serverUp) {
+    console.log('   Spawning local preview server on port 4399...');
+    spawnedPreview = spawn('npx', ['astro', 'preview', '--port', '4399'], {
+      cwd: path.resolve(__dirname, '..'),
+      stdio: 'ignore',
+      detached: false,
+    });
+    for (let i = 0; i < 30; i++) {
+      await new Promise((r) => setTimeout(r, 250));
+      if (await isServerRunning('http://localhost:4399/stopwatch/')) break;
+    }
+  }
+
+  const pwaTmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'chrome-pwa-e2e-'));
+  const pwaContext = await chromium.launchPersistentContext(pwaTmpDir, {
+    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    headless: true,
+  });
+
+  try {
+    const pwaPage = pwaContext.pages()[0] || (await pwaContext.newPage());
+    console.log('   Navigating to http://localhost:4399/stopwatch/ ...');
+    await pwaPage.goto('http://localhost:4399/stopwatch/', { waitUntil: 'networkidle' });
+    await pwaPage.waitForTimeout(1000);
+
+    const client = await pwaPage.context().newCDPSession(pwaPage);
+    const manifestRes = await client.send('Page.getAppManifest');
+    const installability = await client.send('Page.getInstallabilityErrors');
+
+    console.log('   Manifest URL:', manifestRes.url);
+    console.log('   Manifest errors:', manifestRes.errors);
+    console.log('   Installability errors:', installability.installabilityErrors);
+
+    assert.strictEqual(manifestRes.errors.length, 0, 'Manifest must have 0 parse errors');
+    assert.strictEqual(installability.installabilityErrors.length, 0, 'Chromium must report 0 PWA installability errors');
+    console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /stopwatch/!');
+
+    // Verify /clock/ route as well
+    console.log('   Navigating to http://localhost:4399/clock/ ...');
+    await pwaPage.goto('http://localhost:4399/clock/', { waitUntil: 'networkidle' });
+    await pwaPage.waitForTimeout(1000);
+
+    const clockManifestRes = await client.send('Page.getAppManifest');
+    const clockInstallability = await client.send('Page.getInstallabilityErrors');
+
+    console.log('   Clock Manifest errors:', clockManifestRes.errors);
+    console.log('   Clock Installability errors:', clockInstallability.installabilityErrors);
+
+    assert.strictEqual(clockManifestRes.errors.length, 0, 'Clock Manifest must have 0 parse errors');
+    assert.strictEqual(clockInstallability.installabilityErrors.length, 0, 'Clock must report 0 PWA installability errors');
+    console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /clock/!');
+
+    // Verify In-App Install Button unhidden on beforeinstallprompt
+    const installBtn = await pwaPage.$('#btn-install-pwa');
+    assert(installBtn, 'Expected #btn-install-pwa to exist');
+    const isHidden = await pwaPage.$eval('#btn-install-pwa', (el) => el.classList.contains('hidden'));
+    assert.strictEqual(isHidden, false, 'Expected #btn-install-pwa to be unhidden after beforeinstallprompt');
+    console.log('   ✓ Verified #btn-install-pwa is visible and ready for desktop install!');
+  } finally {
+    await pwaContext.close();
+    fs.rmSync(pwaTmpDir, { recursive: true, force: true });
+    if (spawnedPreview) {
+      spawnedPreview.kill('SIGTERM');
+    }
+  }
 
   console.log('\n=== ALL E2E PLAYWRIGHT TESTS PASSED (100%) ===\n');
   await browser.close();

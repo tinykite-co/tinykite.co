@@ -57,6 +57,7 @@ export class ChronoAppController {
 
   private ringingAlarm: AlarmItem | null = null;
   private cityFilterQuery: string = '';
+  private deferredInstallPrompt: any = null;
 
   public constructor() {
     this.swEngine = new StopwatchEngine();
@@ -1761,9 +1762,10 @@ export class ChronoAppController {
     });
 
     if ('serviceWorker' in navigator) {
-      const swUrl = './sw.js';
+      // Register '/sw.js' with { scope: '/' } first (controls entire origin on production/root preview),
+      // and fall back to relative './sw.js' if root registration fails (e.g. subpath hosting on Pagehub)
       navigator.serviceWorker
-        .register(swUrl)
+        .register('/sw.js', { scope: '/' })
         .then((reg) => {
           reg.addEventListener('updatefound', () => {
             const installing = reg.installing;
@@ -1782,16 +1784,75 @@ export class ChronoAppController {
           this.cacheActivePageUrls(readyReg);
         })
         .catch(() => {
-          // If relative registration fails, fall back to '/sw.js'
+          // If root registration fails, fall back to relative './sw.js'
           navigator.serviceWorker
-            .register('/sw.js')
-            .then(() => navigator.serviceWorker.ready)
+            .register('./sw.js')
+            .then((reg) => {
+              reg.addEventListener('updatefound', () => {
+                const installing = reg.installing;
+                if (installing) {
+                  installing.addEventListener('statechange', () => {
+                    if (installing.state === 'activated') {
+                      this.updateOfflineStatus();
+                    }
+                  });
+                }
+              });
+              return navigator.serviceWorker.ready;
+            })
             .then((readyReg) => {
               this.updateOfflineStatus();
               this.cacheActivePageUrls(readyReg);
             })
             .catch(() => {});
         });
+    }
+
+    // In-app PWA install button handling
+    const installBtn = document.getElementById('btn-install-pwa');
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true;
+
+    if (isStandalone) {
+      if (installBtn) {
+        installBtn.classList.add('hidden');
+        installBtn.classList.remove('inline-flex');
+      }
+    } else {
+      window.addEventListener('beforeinstallprompt', (e: Event) => {
+        e.preventDefault();
+        this.deferredInstallPrompt = e;
+        if (installBtn) {
+          installBtn.classList.remove('hidden');
+          installBtn.classList.add('inline-flex');
+        }
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!this.deferredInstallPrompt) return;
+          this.deferredInstallPrompt.prompt();
+          try {
+            const choiceResult = await this.deferredInstallPrompt.userChoice;
+            if (choiceResult && choiceResult.outcome === 'accepted') {
+              installBtn.classList.add('hidden');
+              installBtn.classList.remove('inline-flex');
+            }
+          } catch {
+            // Ignore prompt dismissal errors
+          }
+          this.deferredInstallPrompt = null;
+        });
+      }
+
+      window.addEventListener('appinstalled', () => {
+        this.deferredInstallPrompt = null;
+        if (installBtn) {
+          installBtn.classList.add('hidden');
+          installBtn.classList.remove('inline-flex');
+        }
+      });
     }
   }
 

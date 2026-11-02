@@ -7,7 +7,7 @@
  * cross-origin font/icon assets.
  */
 
-const CACHE_NAME = 'tinykite-stopwatch-offline-v1';
+const CACHE_NAME = 'tinykite-stopwatch-offline-v3';
 
 const PRECACHE_URLS = [
   './',
@@ -19,8 +19,11 @@ const PRECACHE_URLS = [
   '/favicon.png',
   '/brand/k-tile.svg',
   '/brand/k-tile-cream.svg',
-  '/stopwatch/icon.svg',
+  '/stopwatch.webmanifest',
   '/stopwatch/manifest.webmanifest',
+  '/stopwatch/icon.svg',
+  '/stopwatch/icon-192.png',
+  '/stopwatch/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -226,6 +229,6 @@ self.addEventListener('fetch', (event) => {
         }
         throw err;
       }
-    })
+    })()
   );
 });
