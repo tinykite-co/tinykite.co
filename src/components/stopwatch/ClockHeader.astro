@@ -7,7 +7,7 @@
  */
 ---
 
-<header class="text-center mb-6 pt-2 select-none">
+<header class="text-center mb-4 pt-1 select-none">
   <!-- Top Bar with Subtitle Pill and Right Utility Controls -->
   <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4 max-w-5xl mx-auto px-2">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-slate-900/70 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 text-xs font-semibold backdrop-blur-md shadow-xs">
@@ -74,17 +74,31 @@
         <span id="sound-toggle-label" class="hidden sm:inline">Sound On</span>
       </button>
 
-      <!-- In-App Desktop PWA Install Button -->
+      <!-- In-App Desktop PWA Install Button (Always visible unless standalone) -->
       <button
         id="btn-install-pwa"
         type="button"
-        class="hidden refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500 text-slate-950 hover:bg-amber-400 border border-amber-600 transition-all items-center gap-1 min-h-[36px] shadow-xs cursor-pointer"
+        class="inline-flex refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500 text-slate-950 hover:bg-amber-400 border border-amber-600 transition-all items-center gap-1 min-h-[36px] shadow-xs cursor-pointer"
         title="Install Desktop App"
         aria-label="Install TinyKite Stopwatch as Desktop App"
       >
         <span aria-hidden="true">📲</span>
         <span class="font-bold">Install App</span>
       </button>
+
+      <!-- Open TypeRacer in Browser External Switcher -->
+      <a
+        href="/typeracer/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
+        title="Open TypeRacer in Browser to install as a separate desktop app"
+        aria-label="Open TypeRacer in Browser"
+      >
+        <span aria-hidden="true">🏁</span>
+        <span class="hidden sm:inline">Open TypeRacer in Browser</span>
+        <span class="text-xs opacity-70 font-mono" aria-hidden="true">↗</span>
+      </a>
     </div>
   </div>
 
@@ -165,6 +179,94 @@
         <span>🌍</span>
         <span>World Clock</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Accessible Desktop PWA Installation Guide Modal -->
+  <div
+    id="pwa-install-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="pwa-install-modal-title"
+  >
+    <!-- Modal Backdrop Blur Overlay -->
+    <div id="pwa-install-modal-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- Modal Dialog Panel -->
+    <div class="relative w-full max-w-lg refraction-panel rounded-3xl p-6 sm:p-7 z-10 shadow-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 overflow-hidden text-left">
+      <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl" aria-hidden="true">📲</span>
+          <div>
+            <h3 id="pwa-install-modal-title" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-serif-literary">
+              Install Desktop App
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Run TinyKite Stopwatch as a standalone offline desktop window
+            </p>
+          </div>
+        </div>
+        <button
+          id="btn-close-install-modal"
+          type="button"
+          aria-label="Close install modal"
+          class="refraction-btn w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 transition-colors"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Installation Instructions -->
+      <div class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200 mb-6">
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
+          <span class="text-xl flex-shrink-0" aria-hidden="true">🖥️</span>
+          <div>
+            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">1. Chrome, Edge, Brave & Chromium</strong>
+            <span>Click the <strong>Install icon (⊕ / 🖥️)</strong> on the right side of the address bar, or open <strong>Browser Menu (⋮) → Cast, save, and share → Install page as app...</strong></span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
+          <span class="text-xl flex-shrink-0" aria-hidden="true">🧭</span>
+          <div>
+            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">2. Safari on macOS</strong>
+            <span>Click <strong>File → Add to Dock...</strong> in the top menu bar (or click <strong>Share → Add to Dock</strong>).</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
+          <span class="text-xl flex-shrink-0" aria-hidden="true">🐧</span>
+          <div>
+            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">3. Custom Linux Desktop Launcher</strong>
+            <span>Run <code class="px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono text-[11px] text-amber-700 dark:text-amber-400">chromium --app=https://tinykite.co/stopwatch</code> or install directly from Chromium's address bar.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Footer -->
+      <div class="flex items-center justify-between gap-3 pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex-wrap">
+        <button
+          id="btn-refresh-pwa-cache"
+          type="button"
+          class="refraction-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors flex items-center gap-1.5 border border-black/10 dark:border-white/10 cursor-pointer"
+          title="Unregister stale service workers, clear caches, and reload page"
+        >
+          <span>🔄</span>
+          <span>Refresh Offline Cache & Check Install</span>
+        </button>
+
+        <button
+          id="btn-close-install-modal-footer"
+          type="button"
+          class="refraction-btn px-4 py-2 text-xs font-bold rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
     </div>
   </div>
 </header>

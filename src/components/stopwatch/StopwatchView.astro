@@ -53,9 +53,9 @@ const subdialTicks = Array.from({ length: 30 }, (_, i) => ({
   class="space-y-6"
 >
   <!-- Desktop 2-Column Responsive Layout -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
     <!-- LEFT COLUMN (5 cols) — Precision Analog Dual-Chronograph -->
-    <div class="lg:col-span-5 refraction-panel p-6 flex flex-col items-center">
+    <div class="md:col-span-5 refraction-panel p-6 flex flex-col items-center">
       <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>
 
       <div class="w-full flex items-center justify-between mb-3 px-1">
@@ -69,7 +69,7 @@ const subdialTicks = Array.from({ length: 30 }, (_, i) => ({
       </div>
 
       <!-- High-Precision SVG Analog Stopwatch Face -->
-      <div class="relative w-full max-w-[310px] aspect-square flex items-center justify-center my-2">
+      <div class="relative w-full max-w-[230px] lg:max-w-[270px] mx-auto aspect-square flex items-center justify-center my-2">
         <svg
           class="w-full h-full drop-shadow-md select-none"
           viewBox="0 0 320 320"
@@ -239,7 +239,7 @@ const subdialTicks = Array.from({ length: 30 }, (_, i) => ({
     </div>
 
     <!-- RIGHT COLUMN (7 cols) — Digital Readout, Tactile Controls & Telemetry -->
-    <div class="lg:col-span-7 space-y-6">
+    <div class="md:col-span-7 space-y-6">
       <!-- Main Digital Chrono Card -->
       <div class="refraction-panel p-6">
         <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>

@@ -21,10 +21,10 @@ import CareerFooter from '../../components/typeracer/CareerFooter.astro';
 import HistoryModal from '../../components/typeracer/HistoryModal.astro';
 import { PASSAGES } from '../../data/typeracer/passages';
 
-const pageTitle = "TypeRacer & Touch Typing Academy | Master Typing Speed | TinyKite";
-const pageDescription = "100% ad-free TypeRacer and Touch Typing Academy. Speed-race against live peers and AI racers on classic literature, master ergonomic touch typing with animated hand guides, and level up your typing speed.";
+const pageTitle = "TypeRacer by TinyKite";
+const pageDescription = "Ad-free TypeRacer & Touch Typing Academy by TinyKite. Speed-race against live peers and AI racers on classic literature, master ergonomic touch typing with animated hand guides, and level up your typing speed.";
 
-const initialPassage = PASSAGES[0];
+const initialPassage = PASSAGES[0]!;
 
 // Bundle client application TypeScript into a portable, zero-request inline script
 const clientBundle = await esbuild.build({
@@ -34,10 +34,16 @@ const clientBundle = await esbuild.build({
   target: 'es2020',
   write: false,
 });
-const clientAppJs = clientBundle.outputFiles[0].text;
+const clientAppJs = clientBundle.outputFiles[0]?.text ?? '';
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  manifest="/typeracer.webmanifest"
+  themeColor="#0b1020"
+  appleTouchIcon="/typeracer/icon-192.png"
+>
   <!-- Import Lora font for literary typography matching Gloss and Nesta -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

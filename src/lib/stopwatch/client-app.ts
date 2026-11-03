@@ -58,8 +58,12 @@ export class ChronoAppController {
   private ringingAlarm: AlarmItem | null = null;
   private cityFilterQuery: string = '';
   private deferredInstallPrompt: any = null;
+  private defaultDocumentTitle = 'Desktop Precision Chrono Suite · Stopwatch & Timer | TinyKite';
 
   public constructor() {
+    if (typeof document !== 'undefined' && document.title) {
+      this.defaultDocumentTitle = document.title;
+    }
     this.swEngine = new StopwatchEngine();
     this.timerEngine = new TimerEngine();
     this.soundEngine = new ClockSoundEngine();
@@ -249,14 +253,14 @@ export class ChronoAppController {
     if (swStatus === 'running') {
       const snap = this.swEngine.getSnapshot();
       const timeStr = this.prefs.showMilliseconds ? snap.formattedTotal.fullWithMs : snap.formattedTotal.compact;
-      document.title = `⏱ ${timeStr} · Stopwatch | TinyKite`;
+      document.title = `⏱ ${timeStr} · Clock by TinyKite`;
     } else if (heroTimer && heroTimer.status === 'running') {
       const totalSec = Math.ceil(heroTimer.remainingMs / 1000);
       const m = Math.floor(totalSec / 60);
       const s = totalSec % 60;
-      document.title = `⏳ ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} · Timer | TinyKite`;
+      document.title = `⏳ ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} · Clock by TinyKite`;
     } else {
-      document.title = 'Desktop Precision Chrono Suite · Stopwatch & Timer | TinyKite';
+      document.title = this.defaultDocumentTitle;
     }
   }
 
@@ -1742,6 +1746,14 @@ export class ChronoAppController {
           this.toggleFullscreen();
           break;
         }
+        case 'Escape': {
+          const installModal = document.getElementById('pwa-install-modal');
+          if (installModal && !installModal.classList.contains('hidden')) {
+            e.preventDefault();
+            this.closePwaInstallModal();
+          }
+          break;
+        }
       }
     });
   }
@@ -1767,6 +1779,18 @@ export class ChronoAppController {
       navigator.serviceWorker
         .register('/sw.js', { scope: '/' })
         .then((reg) => {
+          reg.update().catch(() => {});
+          // Unregister stale narrower-scope registrations so /stopwatch/sw.js never shadows root sw.js
+          if (navigator.serviceWorker.getRegistrations) {
+            navigator.serviceWorker.getRegistrations().then((registrations) => {
+              for (const r of registrations) {
+                if (r.scope !== reg.scope && r.scope.includes('/stopwatch/')) {
+                  r.unregister().catch(() => {});
+                }
+              }
+            }).catch(() => {});
+          }
+
           reg.addEventListener('updatefound', () => {
             const installing = reg.installing;
             if (installing) {
@@ -1788,6 +1812,7 @@ export class ChronoAppController {
           navigator.serviceWorker
             .register('./sw.js')
             .then((reg) => {
+              reg.update().catch(() => {});
               reg.addEventListener('updatefound', () => {
                 const installing = reg.installing;
                 if (installing) {
@@ -1814,6 +1839,11 @@ export class ChronoAppController {
       window.matchMedia('(display-mode: standalone)').matches ||
       (window.navigator as any).standalone === true;
 
+    // Adopt prompt captured early in <head> if present
+    if ((window as any).__deferredPwaPrompt) {
+      this.deferredInstallPrompt = (window as any).__deferredPwaPrompt;
+    }
+
     if (isStandalone) {
       if (installBtn) {
         installBtn.classList.add('hidden');
@@ -1823,6 +1853,7 @@ export class ChronoAppController {
       window.addEventListener('beforeinstallprompt', (e: Event) => {
         e.preventDefault();
         this.deferredInstallPrompt = e;
+        (window as any).__deferredPwaPrompt = e;
         if (installBtn) {
           installBtn.classList.remove('hidden');
           installBtn.classList.add('inline-flex');
@@ -1831,28 +1862,85 @@ export class ChronoAppController {
 
       if (installBtn) {
         installBtn.addEventListener('click', async () => {
-          if (!this.deferredInstallPrompt) return;
-          this.deferredInstallPrompt.prompt();
-          try {
-            const choiceResult = await this.deferredInstallPrompt.userChoice;
-            if (choiceResult && choiceResult.outcome === 'accepted') {
-              installBtn.classList.add('hidden');
-              installBtn.classList.remove('inline-flex');
+          const promptEvent = this.deferredInstallPrompt || (window as any).__deferredPwaPrompt;
+          if (promptEvent && typeof promptEvent.prompt === 'function') {
+            promptEvent.prompt();
+            try {
+              const choiceResult = await promptEvent.userChoice;
+              if (choiceResult && choiceResult.outcome === 'accepted') {
+                installBtn.classList.add('hidden');
+                installBtn.classList.remove('inline-flex');
+              }
+            } catch {
+              // Ignore prompt dismissal errors
             }
-          } catch {
-            // Ignore prompt dismissal errors
+            this.deferredInstallPrompt = null;
+            (window as any).__deferredPwaPrompt = null;
+          } else {
+            // No native prompt available -> open accessible install guide modal
+            this.openPwaInstallModal();
           }
-          this.deferredInstallPrompt = null;
         });
       }
 
       window.addEventListener('appinstalled', () => {
         this.deferredInstallPrompt = null;
+        (window as any).__deferredPwaPrompt = null;
+        this.closePwaInstallModal();
         if (installBtn) {
           installBtn.classList.add('hidden');
           installBtn.classList.remove('inline-flex');
         }
       });
+
+      // Desktop PWA Install modal controls
+      const closeModalBtn = document.getElementById('btn-close-install-modal');
+      const closeModalFooterBtn = document.getElementById('btn-close-install-modal-footer');
+      const modalBackdrop = document.getElementById('pwa-install-modal-backdrop');
+      closeModalBtn?.addEventListener('click', () => this.closePwaInstallModal());
+      closeModalFooterBtn?.addEventListener('click', () => this.closePwaInstallModal());
+      modalBackdrop?.addEventListener('click', () => this.closePwaInstallModal());
+
+      const refreshBtn = document.getElementById('btn-refresh-pwa-cache');
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', async () => {
+          refreshBtn.setAttribute('disabled', 'true');
+          refreshBtn.textContent = 'Clearing cache & reloading...';
+          try {
+            if ('serviceWorker' in navigator) {
+              const registrations = await navigator.serviceWorker.getRegistrations();
+              for (const r of registrations) {
+                await r.unregister();
+              }
+            }
+            if ('caches' in window) {
+              const keys = await caches.keys();
+              for (const key of keys) {
+                await caches.delete(key);
+              }
+            }
+          } catch {
+            // Ignore clear errors
+          }
+          window.location.reload();
+        });
+      }
+    }
+  }
+
+  private openPwaInstallModal(): void {
+    const modal = document.getElementById('pwa-install-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+  }
+
+  private closePwaInstallModal(): void {
+    const modal = document.getElementById('pwa-install-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
     }
   }
 

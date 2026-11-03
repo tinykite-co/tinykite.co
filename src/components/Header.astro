@@ -26,7 +26,7 @@ import ThemeToggle from "./ThemeToggle.astro";
     <div class="hidden md:block">
       <ThemeToggle />
     </div>
-    <a href="https://chat.tinykite.co" class="hidden md:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
+    <a href="https://chat.tinykite.co" class="site-header-workspace-btn hidden md:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
       Workspace
     </a>
 
@@ -48,10 +48,18 @@ import ThemeToggle from "./ThemeToggle.astro";
     <div class="flex justify-center py-2">
       <ThemeToggle />
     </div>
-    <a href="https://chat.tinykite.co" class="text-brand-gold font-bold">Workspace</a>
+    <a href="https://chat.tinykite.co" class="site-header-workspace-btn text-brand-gold font-bold">Workspace</a>
   </div>
   </div>
 </header>
+
+<style>
+  @media (display-mode: standalone) {
+    .site-header-workspace-btn {
+      display: none !important;
+    }
+  }
+</style>
 
 <script>
   const menuIcon = document.getElementById("menu-icon");
@@ -71,5 +79,31 @@ import ThemeToggle from "./ThemeToggle.astro";
         mobileMenu.classList.remove("flex");
       });
     });
+  }
+
+  // When running inside an installed PWA window (display-mode: standalone),
+  // open out-of-scope website navigation links in the default browser with target="_blank"
+  // so other TinyKite apps can be launched and installed separately.
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+  if (isStandalone) {
+    const siteHeader = document.getElementById('site-header');
+    if (siteHeader) {
+      const allLinks = siteHeader.querySelectorAll('a');
+      allLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+
+        if (!link.querySelector('.pwa-external-icon') && !link.textContent?.includes('↗')) {
+          const arrow = document.createElement('span');
+          arrow.className = 'pwa-external-icon text-xs opacity-70 ml-0.5 inline-block select-none font-mono';
+          arrow.setAttribute('aria-hidden', 'true');
+          arrow.textContent = '↗';
+          link.appendChild(arrow);
+        }
+      });
+    }
   }
 </script>

@@ -1,13 +1,13 @@
 /**
  * TinyKite Desktop Stopwatch, Timer, Alarm & World Clock - PWA Service Worker
- * Cache Name: tinykite-stopwatch-offline-v1
+ * Cache Name: tinykite-stopwatch-offline-v5
  *
  * Implements offline-first caching for static assets, 2.5s network-first with
  * cache fallback for navigation requests, and safe non-blocking responses for
  * cross-origin font/icon assets.
  */
 
-const CACHE_NAME = 'tinykite-stopwatch-offline-v1';
+const CACHE_NAME = 'tinykite-stopwatch-offline-v5';
 
 const PRECACHE_URLS = [
   './',
@@ -15,12 +15,22 @@ const PRECACHE_URLS = [
   '/stopwatch',
   '/clock/',
   '/clock',
+  '/typeracer/',
+  '/typeracer',
   '/favicon.svg',
   '/favicon.png',
   '/brand/k-tile.svg',
   '/brand/k-tile-cream.svg',
-  '/stopwatch/icon.svg',
+  '/stopwatch.webmanifest',
   '/stopwatch/manifest.webmanifest',
+  '/stopwatch/icon.svg',
+  '/stopwatch/icon-192.png',
+  '/stopwatch/icon-512.png',
+  '/typeracer.webmanifest',
+  '/typeracer/manifest.webmanifest',
+  '/typeracer/icon.svg',
+  '/typeracer/icon-192.png',
+  '/typeracer/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -99,10 +109,10 @@ self.addEventListener('message', (event) => {
   }
 });
 
-function timeoutFetch(request, ms) {
+function timeoutFetch(request, ms, options) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Network timeout')), ms);
-    fetch(request)
+    fetch(request, options)
       .then((res) => {
         clearTimeout(timer);
         resolve(res);
@@ -169,7 +179,7 @@ self.addEventListener('fetch', (event) => {
           : url.href;
 
         try {
-          const networkResponse = await timeoutFetch(request.clone(), 2500);
+          const networkResponse = await timeoutFetch(request.clone(), 2500, { cache: 'no-cache' });
           if (networkResponse && networkResponse.status === 200) {
             await Promise.allSettled([
               cache.put(request, networkResponse.clone()),
@@ -187,13 +197,15 @@ self.addEventListener('fetch', (event) => {
             (await cache.match('./', { ignoreSearch: true })) ||
             (await cache.match('/stopwatch/', { ignoreSearch: true })) ||
             (await cache.match('/stopwatch', { ignoreSearch: true })) ||
+            (await cache.match('/typeracer/', { ignoreSearch: true })) ||
+            (await cache.match('/typeracer', { ignoreSearch: true })) ||
             (await caches.match(request, { ignoreSearch: true }));
 
           if (cached) {
             return cached;
           }
 
-          return new Response('Offline - TinyKite Stopwatch', {
+          return new Response('Offline - TinyKite Desktop Suite', {
             status: 503,
             statusText: 'Service Unavailable',
             headers: { 'Content-Type': 'text/plain' },
@@ -226,6 +238,6 @@ self.addEventListener('fetch', (event) => {
         }
         throw err;
       }
-    })
+    })()
   );
 });

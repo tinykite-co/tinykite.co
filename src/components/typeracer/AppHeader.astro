@@ -6,22 +6,51 @@
  */
 ---
 <header class="text-center mb-6 pt-2 select-none">
-  <div class="flex items-center justify-between mb-2 max-w-2xl mx-auto px-2">
+  <div class="flex items-center justify-between mb-2 max-w-2xl mx-auto px-2 flex-wrap gap-2">
     <p class="text-amber-800 dark:text-brand-gold font-bold tracking-widest uppercase text-[11px] flex items-center gap-1.5">
       <span aria-hidden="true">✨</span> Multiplayer TypeRacer & Touch Typing Academy
     </p>
 
-    <!-- Persistent Sound Effects Toggle (Issue #48) -->
-    <button
-      id="btn-sound-toggle"
-      type="button"
-      class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
-      title="Toggle mechanical typing sound effects"
-      aria-label="Sound effects toggle"
-    >
-      <span id="sound-toggle-icon" aria-hidden="true">🔊</span>
-      <span id="sound-toggle-label" class="hidden sm:inline">Sound On</span>
-    </button>
+    <!-- Controls: Open Clock in Browser, PWA Install, and Sound -->
+    <div class="flex items-center gap-2 flex-wrap justify-end">
+      <!-- Open Clock in Browser External Switcher -->
+      <a
+        href="/stopwatch/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
+        title="Open Clock by TinyKite in Browser to install as a separate desktop app"
+        aria-label="Open Clock in Browser"
+      >
+        <span aria-hidden="true">⏱️</span>
+        <span class="hidden sm:inline">Open Clock</span>
+        <span class="text-xs opacity-70 font-mono" aria-hidden="true">↗</span>
+      </a>
+
+      <!-- In-App Desktop PWA Install Button -->
+      <button
+        id="btn-install-typeracer"
+        type="button"
+        class="hidden refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500 text-slate-950 hover:bg-amber-400 border border-amber-600 transition-all items-center gap-1 min-h-[36px] shadow-xs cursor-pointer"
+        title="Install TypeRacer App"
+        aria-label="Install TypeRacer by TinyKite as Desktop App"
+      >
+        <span aria-hidden="true">📲</span>
+        <span class="font-bold">Install TypeRacer</span>
+      </button>
+
+      <!-- Persistent Sound Effects Toggle (Issue #48) -->
+      <button
+        id="btn-sound-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
+        title="Toggle mechanical typing sound effects"
+        aria-label="Sound effects toggle"
+      >
+        <span id="sound-toggle-icon" aria-hidden="true">🔊</span>
+        <span id="sound-toggle-label" class="hidden sm:inline">Sound On</span>
+      </button>
+    </div>
   </div>
 
   <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy dark:text-brand-cream mb-2.5 font-serif-literary">
@@ -63,3 +92,60 @@
     </div>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const installBtn = document.getElementById('btn-install-typeracer');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone) {
+      if (installBtn) {
+        installBtn.classList.add('hidden');
+        installBtn.classList.remove('inline-flex');
+      }
+      return;
+    }
+
+    let deferredPrompt = window.__deferredPwaPrompt || null;
+    if (deferredPrompt && installBtn) {
+      installBtn.classList.remove('hidden');
+      installBtn.classList.add('inline-flex');
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      window.__deferredPwaPrompt = e;
+      if (installBtn) {
+        installBtn.classList.remove('hidden');
+        installBtn.classList.add('inline-flex');
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        try {
+          const choice = await deferredPrompt.userChoice;
+          if (choice && choice.outcome === 'accepted') {
+            installBtn.classList.add('hidden');
+            installBtn.classList.remove('inline-flex');
+          }
+        } catch {
+          // Ignore cancellation
+        }
+        deferredPrompt = null;
+        window.__deferredPwaPrompt = null;
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      window.__deferredPwaPrompt = null;
+      if (installBtn) {
+        installBtn.classList.add('hidden');
+        installBtn.classList.remove('inline-flex');
+      }
+    });
+  })();
+</script>

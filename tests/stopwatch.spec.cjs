@@ -55,7 +55,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
 
   const title = await page.title();
   console.log('   Page Title:', title);
-  assert(title.includes('Stopwatch'), `Expected title to contain "Stopwatch", got "${title}"`);
+  assert(title.includes('Clock'), `Expected title to contain "Clock", got "${title}"`);
   assert(title.includes('TinyKite'), `Expected title to contain "TinyKite", got "${title}"`);
 
   assert.strictEqual(consoleErrors.length, 0, `Expected 0 console errors, got ${consoleErrors.length}: ${consoleErrors.join(', ')}`);
@@ -165,6 +165,76 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   // Take screenshot of Stopwatch View
   await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'stopwatch_view.png') });
   console.log('   ✓ Saved stopwatch screenshot to stopwatch_view.png');
+
+  // --------------------------------------------------------------------------
+  // TEST 2b: Exact 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA
+  // --------------------------------------------------------------------------
+  console.log('\n[2b] Verifying 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA Button...');
+  await page.setViewportSize({ width: 881, height: 1024 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(300);
+
+  // 1. Verify #btn-install-pwa is visible in header
+  const pwaInstallBtn = await page.$('#btn-install-pwa');
+  assert(pwaInstallBtn, 'Expected #btn-install-pwa to exist');
+  const installBtnVisible = await page.$eval('#btn-install-pwa', (el) => {
+    const style = window.getComputedStyle(el);
+    return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0;
+  });
+  assert.strictEqual(installBtnVisible, true, 'Expected #btn-install-pwa to be visible in header at 881x1024');
+  console.log('   ✓ #btn-install-pwa is visible in header at 881x1024');
+
+  // 2. Verify Analog Chrono and Digital Stopwatch + Start buttons are side-by-side above fold
+  const analogBox = await page.$eval('#analog-second-hand', (el) => {
+    const rect = el.closest('.refraction-panel').getBoundingClientRect();
+    return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height };
+  });
+  const digitalBox = await page.$eval('#sw-digital-main', (el) => {
+    const rect = el.closest('.refraction-panel').getBoundingClientRect();
+    return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height };
+  });
+  const startBtnBox = await page.$eval('#btn-sw-start', (el) => {
+    const rect = el.getBoundingClientRect();
+    return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right };
+  });
+
+  console.log('   Analog Panel Bounding Box:', analogBox);
+  console.log('   Digital Panel Bounding Box:', digitalBox);
+  console.log('   Start Button Bounding Box:', startBtnBox);
+
+  // Side-by-side verification: analog panel should be horizontally to the left of digital panel
+  assert(analogBox.left < digitalBox.left, `Analog panel (left: ${analogBox.left}) should be horizontally to the left of digital panel (left: ${digitalBox.left})`);
+  // Top positions should be aligned side-by-side horizontally
+  const verticalOverlap = Math.abs(analogBox.top - digitalBox.top);
+  assert(verticalOverlap < 100, `Analog and Digital panels should be aligned side-by-side horizontally (top difference was ${verticalOverlap}px)`);
+
+  // Above the fold verification (viewport height = 1024)
+  assert(startBtnBox.bottom < 1024, `Start/Lap/Reset buttons (bottom: ${startBtnBox.bottom}) must be visible above the fold (< 1024px)`);
+  assert(analogBox.bottom < 1024, `Analog dial (bottom: ${analogBox.bottom}) must be visible above the fold (< 1024px)`);
+  console.log('   ✓ Side-by-side layout and above-the-fold controls verified at 881x1024!');
+
+  // Capture screenshot at 881x1024
+  const screenshot881Path = path.join(SCREENSHOT_DIR, 'stopwatch_881x1024.png');
+  await page.screenshot({ path: screenshot881Path });
+  console.log(`   ✓ Saved 881x1024 screenshot to ${screenshot881Path}`);
+
+  // Test opening install guide modal when no native prompt is present
+  console.log('   Testing #btn-install-pwa modal fallback...');
+  await page.click('#btn-install-pwa');
+  await page.waitForTimeout(200);
+  const modalVisible = await page.$eval('#pwa-install-modal', (el) => !el.classList.contains('hidden'));
+  assert.strictEqual(modalVisible, true, 'Expected #pwa-install-modal to open on install button click');
+
+  // Verify modal close
+  await page.click('#btn-close-install-modal');
+  await page.waitForTimeout(200);
+  const modalHiddenAfterClose = await page.$eval('#pwa-install-modal', (el) => el.classList.contains('hidden'));
+  assert.strictEqual(modalHiddenAfterClose, true, 'Expected #pwa-install-modal to close on close button click');
+  console.log('   ✓ PWA Install Guide modal verified cleanly!');
+
+  // Restore desktop widescreen viewport for subsequent tests
+  await page.setViewportSize({ width: 1280, height: 950 });
+  await page.waitForTimeout(200);
 
   // Reset stopwatch
   console.log('   Resetting stopwatch...');
@@ -316,7 +386,7 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   await page.waitForTimeout(300);
 
   const clockTitle = await page.title();
-  assert(clockTitle.includes('Stopwatch') && clockTitle.includes('TinyKite'), 'Clock route must have valid title');
+  assert((clockTitle.includes('Stopwatch') || clockTitle.includes('Clock')) && clockTitle.includes('TinyKite'), 'Clock route must have valid title');
   const clockSwPanel = await page.$eval('#panel-stopwatch', (el) => !el.classList.contains('hidden'));
   assert.strictEqual(clockSwPanel, true, 'Expected #panel-stopwatch to be visible on /clock/ route');
   console.log('   ✓ /clock/ route loaded cleanly!');
@@ -460,6 +530,11 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
 
     assert.strictEqual(manifestRes.errors.length, 0, 'Manifest must have 0 parse errors');
     assert.strictEqual(installability.installabilityErrors.length, 0, 'Chromium must report 0 PWA installability errors');
+    const parsedData = manifestRes.data ? JSON.parse(manifestRes.data) : null;
+    if (parsedData) {
+      console.log('   Manifest name:', parsedData.name);
+      assert.strictEqual(parsedData.name, 'Clock by TinyKite', 'Manifest name must be "Clock by TinyKite"');
+    }
     console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /stopwatch/!');
 
     // Verify /clock/ route as well
@@ -483,6 +558,26 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
     const isHidden = await pwaPage.$eval('#btn-install-pwa', (el) => el.classList.contains('hidden'));
     assert.strictEqual(isHidden, false, 'Expected #btn-install-pwa to be unhidden after beforeinstallprompt');
     console.log('   ✓ Verified #btn-install-pwa is visible and ready for desktop install!');
+
+    // Verify /typeracer/ route PWA manifest & installability
+    console.log('   Navigating to http://localhost:4399/typeracer/ ...');
+    await pwaPage.goto('http://localhost:4399/typeracer/', { waitUntil: 'networkidle' });
+    await pwaPage.waitForTimeout(1000);
+
+    const trManifestRes = await client.send('Page.getAppManifest');
+    const trInstallability = await client.send('Page.getInstallabilityErrors');
+
+    console.log('   TypeRacer Manifest errors:', trManifestRes.errors);
+    console.log('   TypeRacer Installability errors:', trInstallability.installabilityErrors);
+
+    assert.strictEqual(trManifestRes.errors.length, 0, 'TypeRacer Manifest must have 0 parse errors');
+    assert.strictEqual(trInstallability.installabilityErrors.length, 0, 'TypeRacer must report 0 PWA installability errors');
+    const trParsedData = trManifestRes.data ? JSON.parse(trManifestRes.data) : null;
+    if (trParsedData) {
+      console.log('   TypeRacer Manifest name:', trParsedData.name);
+      assert.strictEqual(trParsedData.name, 'TypeRacer by TinyKite');
+    }
+    console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /typeracer/!');
   } finally {
     await pwaContext.close();
     fs.rmSync(pwaTmpDir, { recursive: true, force: true });
