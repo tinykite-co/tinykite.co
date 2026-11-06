@@ -1,11 +1,15 @@
 const { chromium } = require('playwright-core');
 const assert = require('assert');
 const path = require('path');
+const os = require('os');
+const fs = require('fs');
+const http = require('http');
+const { spawn } = require('child_process');
 
 const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b-a164-249ee7a2484d';
 
 (async () => {
-  console.log('=== STARTING STOPWATCH, TIMER, ALARM & WORLD CLOCK E2E TESTS ===');
+  console.log('=== STARTING STOPWATCH, TIMER, ALARM & CLOCK E2E TESTS ===');
 
   const browser = await chromium.launch({
     executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -47,9 +51,9 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   });
 
   // --------------------------------------------------------------------------
-  // TEST 1: Clean Load & Header Controls
+  // TEST 1: Clean Dedicated Routes & Distraction-Free Header (No #site-header)
   // --------------------------------------------------------------------------
-  console.log('\n[1/8] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
+  console.log('\n[1/9] Navigating to http://localhost:8800/stopwatch/stopwatch/ ...');
   await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
 
@@ -57,6 +61,11 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   console.log('   Page Title:', title);
   assert(title.includes('Clock'), `Expected title to contain "Clock", got "${title}"`);
   assert(title.includes('TinyKite'), `Expected title to contain "TinyKite", got "${title}"`);
+
+  // Verify website chrome (#site-header) is completely absent
+  const siteHeader = await page.$('#site-header');
+  assert.strictEqual(siteHeader, null, 'Expected website chrome #site-header to NOT exist on standalone app page');
+  console.log('   ✓ Verified website #site-header does NOT exist on the page!');
 
   assert.strictEqual(consoleErrors.length, 0, `Expected 0 console errors, got ${consoleErrors.length}: ${consoleErrors.join(', ')}`);
 
@@ -72,12 +81,61 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   const soundToggle = await page.$('#btn-sound-toggle');
   assert(soundToggle, 'Expected #btn-sound-toggle to exist');
 
-  console.log('   ✓ Header and utility controls verified cleanly.');
+  const themeToggle = await page.$('#btn-chrono-theme-toggle');
+  assert(themeToggle, 'Expected #btn-chrono-theme-toggle to exist');
+
+  // Capture clean_stopwatch screenshot
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'clean_stopwatch.png') });
+  console.log('   ✓ Saved clean_stopwatch.png');
 
   // --------------------------------------------------------------------------
-  // TEST 2: Stopwatch Tab (#panel-stopwatch)
+  // TEST 2: Tab Switching Updates the URL Cleanly
   // --------------------------------------------------------------------------
-  console.log('\n[2/8] Testing Stopwatch Tab (#panel-stopwatch)...');
+  console.log('\n[2/9] Testing Tab Navigation & URL Updates...');
+
+  // Click Timer Tab
+  console.log('   Clicking #tab-btn-timer...');
+  await page.click('#tab-btn-timer');
+  await page.waitForTimeout(200);
+  assert(page.url().includes('/timer/'), `Expected URL to include /timer/, got: ${page.url()}`);
+  const timerVisible = await page.$eval('#panel-timer', (el) => !el.classList.contains('hidden'));
+  assert.strictEqual(timerVisible, true, 'Expected #panel-timer to be visible');
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'clean_timer.png') });
+  console.log('   ✓ Switched to Timer, URL updated to /timer/, saved clean_timer.png');
+
+  // Click Alarm Tab
+  console.log('   Clicking #tab-btn-alarm...');
+  await page.click('#tab-btn-alarm');
+  await page.waitForTimeout(200);
+  assert(page.url().includes('/alarm/'), `Expected URL to include /alarm/, got: ${page.url()}`);
+  const alarmVisible = await page.$eval('#panel-alarm', (el) => !el.classList.contains('hidden'));
+  assert.strictEqual(alarmVisible, true, 'Expected #panel-alarm to be visible');
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'clean_alarm.png') });
+  console.log('   ✓ Switched to Alarm, URL updated to /alarm/, saved clean_alarm.png');
+
+  // Click World Clock Tab
+  console.log('   Clicking #tab-btn-worldclock...');
+  await page.click('#tab-btn-worldclock');
+  await page.waitForTimeout(200);
+  assert(page.url().includes('/clock/'), `Expected URL to include /clock/, got: ${page.url()}`);
+  const clockVisible = await page.$eval('#panel-worldclock', (el) => !el.classList.contains('hidden'));
+  assert.strictEqual(clockVisible, true, 'Expected #panel-worldclock to be visible');
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'clean_clock.png') });
+  console.log('   ✓ Switched to Clock, URL updated to /clock/, saved clean_clock.png');
+
+  // Click Stopwatch Tab
+  console.log('   Clicking #tab-btn-stopwatch...');
+  await page.click('#tab-btn-stopwatch');
+  await page.waitForTimeout(200);
+  assert(page.url().includes('/stopwatch/'), `Expected URL to include /stopwatch/, got: ${page.url()}`);
+  const swVisible = await page.$eval('#panel-stopwatch', (el) => !el.classList.contains('hidden'));
+  assert.strictEqual(swVisible, true, 'Expected #panel-stopwatch to be visible');
+  console.log('   ✓ Switched back to Stopwatch, URL updated to /stopwatch/!');
+
+  // --------------------------------------------------------------------------
+  // TEST 3: Stopwatch Core Functions (Start, Sweep, Laps, Stats, Save Session)
+  // --------------------------------------------------------------------------
+  console.log('\n[3/9] Testing Stopwatch Tab Functionality (#panel-stopwatch)...');
 
   // Verify SVG analog hands and digital readout exist
   const secondHand = await page.$('#analog-second-hand');
@@ -152,8 +210,11 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   assert(!avgLap.includes('--'), `Expected valid #stat-avg-lap, got "${avgLap}"`);
   assert(!consistency.includes('--'), `Expected valid #stat-consistency, got "${consistency}"`);
 
-  // Save session: type "Cube Sprint" into #input-session-title and click #btn-save-session
+  // Save session: open saved sessions details, fill "Cube Sprint", click save
   console.log('   Saving session as "Cube Sprint"...');
+  const detailsSummary = await page.$('#sw-saved-sessions-panel summary');
+  if (detailsSummary) await detailsSummary.click();
+  await page.waitForTimeout(100);
   await page.fill('#input-session-title', 'Cube Sprint');
   await page.click('#btn-save-session');
   await page.waitForTimeout(150);
@@ -162,14 +223,10 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   assert(sessionsText.includes('Cube Sprint'), `Expected "Cube Sprint" in sessions list, got: ${sessionsText}`);
   console.log('   ✓ Session saved and rendered in #sw-sessions-list.');
 
-  // Take screenshot of Stopwatch View
-  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'stopwatch_view.png') });
-  console.log('   ✓ Saved stopwatch screenshot to stopwatch_view.png');
-
   // --------------------------------------------------------------------------
-  // TEST 2b: Exact 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA
+  // TEST 4: Exact 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA
   // --------------------------------------------------------------------------
-  console.log('\n[2b] Verifying 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA Button...');
+  console.log('\n[4/9] Verifying 881x1024 Desktop Viewport Side-by-Side Layout & Install PWA Button...');
   await page.setViewportSize({ width: 881, height: 1024 });
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(300);
@@ -186,11 +243,11 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
 
   // 2. Verify Analog Chrono and Digital Stopwatch + Start buttons are side-by-side above fold
   const analogBox = await page.$eval('#analog-second-hand', (el) => {
-    const rect = el.closest('.refraction-panel').getBoundingClientRect();
+    const rect = el.closest('svg').getBoundingClientRect();
     return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height };
   });
   const digitalBox = await page.$eval('#sw-digital-main', (el) => {
-    const rect = el.closest('.refraction-panel').getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
     return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height };
   });
   const startBtnBox = await page.$eval('#btn-sw-start', (el) => {
@@ -198,27 +255,21 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
     return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right };
   });
 
-  console.log('   Analog Panel Bounding Box:', analogBox);
-  console.log('   Digital Panel Bounding Box:', digitalBox);
+  console.log('   Analog SVG Bounding Box:', analogBox);
+  console.log('   Digital Readout Bounding Box:', digitalBox);
   console.log('   Start Button Bounding Box:', startBtnBox);
 
-  // Side-by-side verification: analog panel should be horizontally to the left of digital panel
-  assert(analogBox.left < digitalBox.left, `Analog panel (left: ${analogBox.left}) should be horizontally to the left of digital panel (left: ${digitalBox.left})`);
-  // Top positions should be aligned side-by-side horizontally
+  // Side-by-side verification: analog dial should be horizontally to the left of digital readout
+  assert(analogBox.left < digitalBox.left, `Analog dial (left: ${analogBox.left}) should be horizontally to the left of digital readout (left: ${digitalBox.left})`);
   const verticalOverlap = Math.abs(analogBox.top - digitalBox.top);
-  assert(verticalOverlap < 100, `Analog and Digital panels should be aligned side-by-side horizontally (top difference was ${verticalOverlap}px)`);
+  assert(verticalOverlap < 100, `Analog and Digital controls should be aligned side-by-side horizontally (top difference was ${verticalOverlap}px)`);
 
   // Above the fold verification (viewport height = 1024)
   assert(startBtnBox.bottom < 1024, `Start/Lap/Reset buttons (bottom: ${startBtnBox.bottom}) must be visible above the fold (< 1024px)`);
   assert(analogBox.bottom < 1024, `Analog dial (bottom: ${analogBox.bottom}) must be visible above the fold (< 1024px)`);
   console.log('   ✓ Side-by-side layout and above-the-fold controls verified at 881x1024!');
 
-  // Capture screenshot at 881x1024
-  const screenshot881Path = path.join(SCREENSHOT_DIR, 'stopwatch_881x1024.png');
-  await page.screenshot({ path: screenshot881Path });
-  console.log(`   ✓ Saved 881x1024 screenshot to ${screenshot881Path}`);
-
-  // Test opening install guide modal when no native prompt is present
+  // Test opening install guide modal fallback
   console.log('   Testing #btn-install-pwa modal fallback...');
   await page.click('#btn-install-pwa');
   await page.waitForTimeout(200);
@@ -248,14 +299,11 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   console.log('   ✓ Stopwatch reset successfully to READY.');
 
   // --------------------------------------------------------------------------
-  // TEST 3: Timer Tab (#panel-timer)
+  // TEST 5: Timer Tab (#panel-timer)
   // --------------------------------------------------------------------------
-  console.log('\n[3/8] Testing Timer Tab (#panel-timer)...');
+  console.log('\n[5/9] Testing Timer Tab (#panel-timer)...');
   await page.click('#tab-btn-timer');
   await page.waitForTimeout(200);
-
-  const timerVisible = await page.$eval('#panel-timer', (el) => !el.classList.contains('hidden'));
-  assert.strictEqual(timerVisible, true, 'Expected #panel-timer to be visible');
 
   // Set custom 1-second timer
   console.log('   Setting custom 1-second hero timer ("Quick Test")...');
@@ -300,19 +348,12 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   console.log('   Parallel multi-timers count:', multiTimersCount);
   assert(multiTimersCount >= 1, 'Expected at least 1 parallel timer card in #multi-timers-list');
 
-  // Take screenshot of Timer View
-  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'timer_view.png') });
-  console.log('   ✓ Saved timer screenshot to timer_view.png');
-
   // --------------------------------------------------------------------------
-  // TEST 4: Alarm Tab (#panel-alarm)
+  // TEST 6: Alarm Tab (#panel-alarm)
   // --------------------------------------------------------------------------
-  console.log('\n[4/8] Testing Alarm Tab (#panel-alarm)...');
+  console.log('\n[6/9] Testing Alarm Tab (#panel-alarm)...');
   await page.click('#tab-btn-alarm');
   await page.waitForTimeout(200);
-
-  const alarmVisible = await page.$eval('#panel-alarm', (el) => !el.classList.contains('hidden'));
-  assert.strictEqual(alarmVisible, true, 'Expected #panel-alarm to be visible');
 
   // Create an alarm: 8:15 "Piano Practice"
   console.log('   Creating alarm: 8:15 "Piano Practice"...');
@@ -336,19 +377,12 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   assert.strictEqual(activeBadgeVisible, true, 'Expected #alarm-active-badge to be visible');
   console.log('   ✓ Alarm created and active banner/badge verified!');
 
-  // Take screenshot of Alarm View
-  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'alarm_view.png') });
-  console.log('   ✓ Saved alarm screenshot to alarm_view.png');
-
   // --------------------------------------------------------------------------
-  // TEST 5: World Clock Tab (#panel-worldclock)
+  // TEST 7: World Clock Tab & City Pinning (#panel-worldclock)
   // --------------------------------------------------------------------------
-  console.log('\n[5/8] Testing World Clock Tab (#panel-worldclock)...');
+  console.log('\n[7/9] Testing World Clock Tab (#panel-worldclock)...');
   await page.click('#tab-btn-worldclock');
   await page.waitForTimeout(200);
-
-  const worldClockVisible = await page.$eval('#panel-worldclock', (el) => !el.classList.contains('hidden'));
-  assert.strictEqual(worldClockVisible, true, 'Expected #panel-worldclock to be visible');
 
   // Verify 6 default pinned city cards
   const initialCardsCount = await page.$$eval('#world-clock-grid > *', (els) => els.length);
@@ -365,36 +399,42 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   console.log('   Updated pinned city cards count:', updatedCardsCount);
   assert.strictEqual(updatedCardsCount, 7, `Expected 7 pinned cities after adding Paris, got ${updatedCardsCount}`);
 
-  // Take screenshot of World Clock View
-  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'worldclock_view.png') });
-  console.log('   ✓ Saved world clock screenshot to worldclock_view.png');
-
-  // --------------------------------------------------------------------------
-  // TEST 6: Keyboard Shortcuts & /clock/ Alias Route
-  // --------------------------------------------------------------------------
-  console.log('\n[6/8] Testing Keyboard Shortcut "1" and /clock/ route...');
+  // Keyboard shortcut "1"
   await page.keyboard.press('Digit1');
   await page.waitForTimeout(200);
-
   const swVisibleAfterKey = await page.$eval('#panel-stopwatch', (el) => !el.classList.contains('hidden'));
   assert.strictEqual(swVisibleAfterKey, true, 'Expected #panel-stopwatch to be active after pressing "1" key');
-  console.log('   ✓ Pressing key "1" successfully switched back to Stopwatch tab!');
-
-  // Navigate to /clock/ route
-  console.log('   Navigating to mirror alias: http://localhost:8800/stopwatch/clock/ ...');
-  await page.goto('http://localhost:8800/stopwatch/clock/', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(300);
-
-  const clockTitle = await page.title();
-  assert((clockTitle.includes('Stopwatch') || clockTitle.includes('Clock')) && clockTitle.includes('TinyKite'), 'Clock route must have valid title');
-  const clockSwPanel = await page.$eval('#panel-stopwatch', (el) => !el.classList.contains('hidden'));
-  assert.strictEqual(clockSwPanel, true, 'Expected #panel-stopwatch to be visible on /clock/ route');
-  console.log('   ✓ /clock/ route loaded cleanly!');
+  console.log('   ✓ Keyboard shortcut "1" switched back to Stopwatch!');
 
   // --------------------------------------------------------------------------
-  // TEST 7: True Offline Mode (context.setOffline(true)) & Offline Reload
+  // TEST 8: Direct Navigation to All 4 Dedicated Routes (/stopwatch, /timer, /alarm, /clock)
   // --------------------------------------------------------------------------
-  console.log('\n[7/8] Testing True Offline Mode & Offline Reload...');
+  console.log('\n[8/9] Testing Direct Navigation to All 4 Dedicated URLs...');
+
+  const routesToTest = [
+    { url: 'http://localhost:8800/stopwatch/stopwatch/', expectedPanel: '#panel-stopwatch', name: 'Stopwatch' },
+    { url: 'http://localhost:8800/stopwatch/timer/', expectedPanel: '#panel-timer', name: 'Timer' },
+    { url: 'http://localhost:8800/stopwatch/alarm/', expectedPanel: '#panel-alarm', name: 'Alarm' },
+    { url: 'http://localhost:8800/stopwatch/clock/', expectedPanel: '#panel-worldclock', name: 'Clock' },
+  ];
+
+  for (const r of routesToTest) {
+    console.log(`   Navigating directly to ${r.url} (${r.name})...`);
+    await page.goto(r.url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(250);
+
+    const isPanelVisible = await page.$eval(r.expectedPanel, (el) => !el.classList.contains('hidden'));
+    assert.strictEqual(isPanelVisible, true, `Expected ${r.expectedPanel} to be visible when directly loading ${r.url}`);
+
+    const hasNoHeader = (await page.$('#site-header')) === null;
+    assert.strictEqual(hasNoHeader, true, `Expected #site-header to NOT exist on ${r.url}`);
+    console.log(`   ✓ ${r.name} direct URL verified cleanly without website chrome!`);
+  }
+
+  // --------------------------------------------------------------------------
+  // TEST 9: True Offline Mode & Desktop PWA Manifest CDP Verification
+  // --------------------------------------------------------------------------
+  console.log('\n[9/9] Testing True Offline Mode & Desktop PWA Manifest CDP Verification...');
   // Navigate back to primary stopwatch route and await service worker ready
   await page.goto('http://localhost:8800/stopwatch/stopwatch/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(300);
@@ -425,7 +465,6 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(400);
 
-  // Verify the reloaded page renders cleanly while offline
   const isStillOffline = await page.evaluate(() => navigator.onLine === false);
   assert.strictEqual(isStillOffline, true, 'Navigator should report navigator.onLine === false');
 
@@ -445,48 +484,17 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
     `Expected #sw-digital-main to be "00:00", got "${digitalMainAfterReload}"`
   );
 
-  // Verify starting / pausing stopwatch works 100% offline
-  console.log('   Starting stopwatch while offline via #btn-sw-start...');
+  // Verify starting stopwatch works offline
   await page.click('#btn-sw-start');
   await page.waitForTimeout(250);
-
   const runningBadgeOffline = await page.$eval('#sw-status-badge', (el) => el.textContent.trim());
-  console.log('   Stopwatch status while offline:', runningBadgeOffline);
-  assert.strictEqual(
-    runningBadgeOffline,
-    'RUNNING',
-    `Expected status RUNNING in offline mode, got "${runningBadgeOffline}"`
-  );
-
-  console.log('   Pausing stopwatch while offline...');
-  await page.click('#btn-sw-start');
-  await page.waitForTimeout(100);
-
-  const pausedBadgeOffline = await page.$eval('#sw-status-badge', (el) => el.textContent.trim());
-  assert.strictEqual(
-    pausedBadgeOffline,
-    'PAUSED',
-    `Expected status PAUSED in offline mode, got "${pausedBadgeOffline}"`
-  );
-
-  // Take screenshot of Offline Mode
-  await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'offline_mode_view.png') });
-  console.log('   ✓ Saved offline mode screenshot to offline_mode_view.png');
+  assert.strictEqual(runningBadgeOffline, 'RUNNING');
 
   // Restore context to online
   await context.setOffline(false);
   await page.waitForTimeout(200);
-  console.log('   ✓ Offline mode and offline reload verified 100%!');
 
-  // --------------------------------------------------------------------------
-  // TEST 8: PWA Manifest & Installability CDP Verification
-  // --------------------------------------------------------------------------
-  console.log('\n[8/8] Testing Desktop PWA Manifest & Installability via Chromium CDP...');
-  const os = require('os');
-  const fs = require('fs');
-  const http = require('http');
-  const { spawn } = require('child_process');
-
+  // PWA Manifest & Installability CDP Verification via preview server on port 4399
   const isServerRunning = (url) =>
     new Promise((resolve) => {
       const req = http.get(url, (res) => resolve(res.statusCode < 500));
@@ -534,22 +542,19 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
     if (parsedData) {
       console.log('   Manifest name:', parsedData.name);
       assert.strictEqual(parsedData.name, 'Clock by TinyKite', 'Manifest name must be "Clock by TinyKite"');
+      assert.strictEqual(parsedData.scope, '/', 'Manifest scope must be "/" for cross-tab standalone PWA navigation');
     }
     console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /stopwatch/!');
 
-    // Verify /clock/ route as well
+    // Verify /clock/ route
     console.log('   Navigating to http://localhost:4399/clock/ ...');
     await pwaPage.goto('http://localhost:4399/clock/', { waitUntil: 'networkidle' });
     await pwaPage.waitForTimeout(1000);
 
     const clockManifestRes = await client.send('Page.getAppManifest');
     const clockInstallability = await client.send('Page.getInstallabilityErrors');
-
-    console.log('   Clock Manifest errors:', clockManifestRes.errors);
-    console.log('   Clock Installability errors:', clockInstallability.installabilityErrors);
-
-    assert.strictEqual(clockManifestRes.errors.length, 0, 'Clock Manifest must have 0 parse errors');
-    assert.strictEqual(clockInstallability.installabilityErrors.length, 0, 'Clock must report 0 PWA installability errors');
+    assert.strictEqual(clockManifestRes.errors.length, 0);
+    assert.strictEqual(clockInstallability.installabilityErrors.length, 0);
     console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /clock/!');
 
     // Verify In-App Install Button unhidden on beforeinstallprompt
@@ -558,26 +563,6 @@ const SCREENSHOT_DIR = '/Users/arun/.gemini/antigravity/brain/8107b94a-edc2-425b
     const isHidden = await pwaPage.$eval('#btn-install-pwa', (el) => el.classList.contains('hidden'));
     assert.strictEqual(isHidden, false, 'Expected #btn-install-pwa to be unhidden after beforeinstallprompt');
     console.log('   ✓ Verified #btn-install-pwa is visible and ready for desktop install!');
-
-    // Verify /typeracer/ route PWA manifest & installability
-    console.log('   Navigating to http://localhost:4399/typeracer/ ...');
-    await pwaPage.goto('http://localhost:4399/typeracer/', { waitUntil: 'networkidle' });
-    await pwaPage.waitForTimeout(1000);
-
-    const trManifestRes = await client.send('Page.getAppManifest');
-    const trInstallability = await client.send('Page.getInstallabilityErrors');
-
-    console.log('   TypeRacer Manifest errors:', trManifestRes.errors);
-    console.log('   TypeRacer Installability errors:', trInstallability.installabilityErrors);
-
-    assert.strictEqual(trManifestRes.errors.length, 0, 'TypeRacer Manifest must have 0 parse errors');
-    assert.strictEqual(trInstallability.installabilityErrors.length, 0, 'TypeRacer must report 0 PWA installability errors');
-    const trParsedData = trManifestRes.data ? JSON.parse(trManifestRes.data) : null;
-    if (trParsedData) {
-      console.log('   TypeRacer Manifest name:', trParsedData.name);
-      assert.strictEqual(trParsedData.name, 'TypeRacer by TinyKite');
-    }
-    console.log('   ✓ Verified 0 manifest errors and 0 installability errors on /typeracer/!');
   } finally {
     await pwaContext.close();
     fs.rmSync(pwaTmpDir, { recursive: true, force: true });

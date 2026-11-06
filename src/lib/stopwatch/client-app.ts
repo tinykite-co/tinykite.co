@@ -85,7 +85,7 @@ export class ChronoAppController {
   }
 
   public init(): void {
-    this.initFromHash();
+    this.initTabRouting();
     this.bindGlobalControls();
     this.bindStopwatch();
     this.bindTimer();
@@ -106,16 +106,46 @@ export class ChronoAppController {
     this.stopStopwatchRaf();
   }
 
-  // --- TAB NAVIGATION ---
+  // --- TAB NAVIGATION & ROUTING ---
 
-  private initFromHash(): void {
+  private initTabRouting(): void {
     if (typeof window === 'undefined') return;
+
     const hash = window.location.hash.toLowerCase().replace('#', '');
+    const pathname = window.location.pathname.toLowerCase();
+    const rootInitialTab = document.getElementById('chrono-app-root')?.dataset.initialTab as ActiveTab | undefined;
+
+    let initialTab: ActiveTab = 'stopwatch';
     if (hash === 'timer' || hash === 'alarm' || hash === 'worldclock' || hash === 'stopwatch') {
-      this.switchTab(hash, false);
-    } else {
-      this.switchTab('stopwatch', false);
+      initialTab = hash;
+    } else if (pathname.includes('/timer')) {
+      initialTab = 'timer';
+    } else if (pathname.includes('/alarm')) {
+      initialTab = 'alarm';
+    } else if (pathname.includes('/clock')) {
+      initialTab = 'worldclock';
+    } else if (pathname.includes('/stopwatch')) {
+      initialTab = 'stopwatch';
+    } else if (rootInitialTab && ['stopwatch', 'timer', 'alarm', 'worldclock'].includes(rootInitialTab)) {
+      initialTab = rootInitialTab;
     }
+
+    this.switchTab(initialTab, false);
+
+    window.addEventListener('popstate', (e) => {
+      const stateTab = e.state?.tab as ActiveTab | undefined;
+      if (stateTab && ['stopwatch', 'timer', 'alarm', 'worldclock'].includes(stateTab)) {
+        this.switchTab(stateTab, false);
+      } else {
+        const path = window.location.pathname.toLowerCase();
+        let detected: ActiveTab = 'stopwatch';
+        if (path.includes('/timer')) detected = 'timer';
+        else if (path.includes('/alarm')) detected = 'alarm';
+        else if (path.includes('/clock')) detected = 'worldclock';
+        else if (path.includes('/stopwatch')) detected = 'stopwatch';
+        this.switchTab(detected, false);
+      }
+    });
 
     window.addEventListener('hashchange', () => {
       const newHash = window.location.hash.toLowerCase().replace('#', '');
@@ -125,10 +155,27 @@ export class ChronoAppController {
     });
   }
 
-  public switchTab(tab: ActiveTab, updateHash: boolean = true): void {
+  public switchTab(tab: ActiveTab, updateHistory: boolean = true): void {
     this.activeTab = tab;
-    if (updateHash && typeof window !== 'undefined') {
-      history.replaceState(null, '', `#${tab}`);
+
+    const routeSlug = tab === 'worldclock' ? 'clock' : tab;
+    const titles: Record<ActiveTab, string> = {
+      stopwatch: 'Stopwatch · Clock by TinyKite',
+      timer: 'Timer · Clock by TinyKite',
+      alarm: 'Alarm · Clock by TinyKite',
+      worldclock: 'Clock by TinyKite',
+    };
+    if (typeof document !== 'undefined') {
+      document.title = titles[tab] || 'Clock by TinyKite';
+    }
+
+    if (updateHistory && typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      const isSubpath = pathname.startsWith('/stopwatch/');
+      const targetPath = isSubpath ? `/stopwatch/${routeSlug}/` : `/${routeSlug}/`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({ tab }, '', targetPath);
+      }
     }
 
     const tabs: ActiveTab[] = ['stopwatch', 'timer', 'alarm', 'worldclock'];
@@ -143,10 +190,10 @@ export class ChronoAppController {
 
         if (isSelected) {
           btn.className =
-            'tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5';
+            'tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs min-h-[34px] flex items-center gap-1.5 cursor-pointer';
         } else {
           btn.className =
-            'tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5';
+            'tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[34px] flex items-center gap-1.5 cursor-pointer';
         }
       }
 
@@ -297,6 +344,17 @@ export class ChronoAppController {
       });
     }
 
+    // Chrono Theme Toggle
+    const btnTheme = document.getElementById('btn-chrono-theme-toggle');
+    if (btnTheme) {
+      btnTheme.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        try {
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        } catch {}
+      });
+    }
+
     // Tab buttons click
     const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
     tabBtns.forEach((btn) => {
@@ -391,10 +449,10 @@ export class ChronoAppController {
     }
 
     // Ghost Pacer Pills
-    const pacePills = document.querySelectorAll<HTMLButtonElement>('.btn-pace-preset');
+    const pacePills = document.querySelectorAll<HTMLButtonElement>('.btn-pace-preset, .pace-preset-btn');
     pacePills.forEach((pill) => {
       pill.addEventListener('click', () => {
-        const paceStr = pill.getAttribute('data-pace');
+        const paceStr = pill.getAttribute('data-pace') || pill.getAttribute('data-seconds');
         const pace = paceStr ? parseFloat(paceStr) : 0;
         if (inputPace) inputPace.value = String(pace);
         this.prefs.targetPaceSeconds = pace > 0 ? pace : null;
@@ -404,7 +462,7 @@ export class ChronoAppController {
       });
     });
 
-    const btnPaceClear = document.getElementById('btn-pace-clear');
+    const btnPaceClear = document.getElementById('btn-pace-clear') || document.getElementById('btn-clear-pace');
     if (btnPaceClear) {
       btnPaceClear.addEventListener('click', () => {
         if (inputPace) inputPace.value = '';
@@ -434,6 +492,10 @@ export class ChronoAppController {
     const btnSaveSession = document.getElementById('btn-save-session');
     if (btnSaveSession) {
       btnSaveSession.addEventListener('click', () => {
+        const details = document.getElementById('sw-saved-sessions-panel') as HTMLDetailsElement | null;
+        if (details && details.tagName.toLowerCase() === 'details' && !details.open) {
+          details.open = true;
+        }
         this.saveCurrentSession();
       });
     }
@@ -754,6 +816,10 @@ export class ChronoAppController {
     const session = this.swEngine.createSavedSession(title);
     this.storage.saveSession(session);
     if (titleInput) titleInput.value = '';
+    const details = document.getElementById('sw-saved-sessions-panel') as HTMLDetailsElement | null;
+    if (details && details.tagName.toLowerCase() === 'details') {
+      details.open = true;
+    }
     this.renderSavedSessionsList();
   }
 

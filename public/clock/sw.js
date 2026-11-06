@@ -1,18 +1,22 @@
 /**
  * TinyKite Desktop Stopwatch, Timer, Alarm & World Clock - PWA Service Worker
- * Cache Name: tinykite-stopwatch-offline-v5
+ * Cache Name: tinykite-stopwatch-offline-v7
  *
  * Implements offline-first caching for static assets, 2.5s network-first with
  * cache fallback for navigation requests, and safe non-blocking responses for
  * cross-origin font/icon assets.
  */
 
-const CACHE_NAME = 'tinykite-stopwatch-offline-v5';
+const CACHE_NAME = 'tinykite-stopwatch-offline-v7';
 
 const PRECACHE_URLS = [
   './',
   '/stopwatch/',
   '/stopwatch',
+  '/timer/',
+  '/timer',
+  '/alarm/',
+  '/alarm',
   '/clock/',
   '/clock',
   '/typeracer/',

@@ -1,9 +1,13 @@
 ---
 /**
  * /clock/index.astro
- * Canonical mirror route for /stopwatch, rendering the unified Chrono Suite.
+ * Dedicated Clock route for Clock by TinyKite.
  */
-import StopwatchPage from '../stopwatch/index.astro';
+import ChronoAppShell from '../../components/stopwatch/ChronoAppShell.astro';
 ---
 
-<StopwatchPage />
+<ChronoAppShell
+  initialTab="worldclock"
+  pageTitle="Clock by TinyKite"
+  pageDescription="Distraction-free desktop clock and world timezone tracker."
+/>

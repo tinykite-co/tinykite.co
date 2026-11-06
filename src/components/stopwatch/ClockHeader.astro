@@ -1,134 +1,49 @@
 ---
 /**
  * ClockHeader.astro
- * Hero Header with WCAG 2.1 AA Tablist and Chrono Suite Controls.
- * Includes live wall-clock badge, 12H/24H format switch, desk mode fullscreen,
- * and audio effects toggle.
+ * Sleek, single-row Desktop App Bar with segmented tab pill navigation and quiet utility tools.
+ * Distraction-free: removes marketing headlines, slogans, and external navigation links.
  */
 ---
 
-<header class="text-center mb-4 pt-1 select-none">
-  <!-- Top Bar with Subtitle Pill and Right Utility Controls -->
-  <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4 max-w-5xl mx-auto px-2">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-slate-900/70 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 text-xs font-semibold backdrop-blur-md shadow-xs">
-      <span aria-hidden="true">⏱️</span>
-      <span class="tracking-wide">Desktop Precision Chrono Suite · Stopwatch · Timer · Alarm · World Clock</span>
-    </div>
-
-    <!-- Right-Aligned Utility Controls -->
-    <div class="flex items-center gap-2 flex-wrap justify-center">
-      <!-- Live Local Wall-Clock Badge -->
-      <div
-        id="header-live-clock"
-        class="px-3 py-1 text-xs font-mono font-bold tabular-nums rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 shadow-xs flex items-center gap-1.5"
-        title="Local Wall Clock"
-        aria-label="Current local time"
-      >
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
-        <span>--:--:--</span>
+<header class="mb-6 select-none max-w-4xl mx-auto">
+  <div class="flex items-center justify-between gap-3 px-1 py-1">
+    <!-- Left: Compact App Identity (Non-navigating) -->
+    <div class="flex items-center gap-2.5 shrink-0">
+      <div class="w-8 h-8 rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center text-base shadow-xs select-none">
+        ⏰
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white">Clock</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">by TinyKite</span>
       </div>
 
-      <!-- Offline Status Pill -->
+      <!-- Subtle Offline Status Dot & Hidden Screen Reader Texts -->
       <div
         id="offline-status-badge"
-        class="px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 shadow-xs flex items-center gap-1.5 transition-colors"
+        class="ml-1 flex items-center gap-1.5"
         title="Works 100% offline without internet"
         aria-label="Offline readiness status"
       >
-        <span id="offline-status-dot" class="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
-        <span id="offline-status-text">Offline Ready</span>
+        <span id="offline-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 transition-colors" aria-hidden="true"></span>
+        <span id="offline-status-text" class="sr-only">Offline Ready</span>
       </div>
-
-      <!-- 12H / 24H Toggle Button -->
-      <button
-        id="btn-format-toggle"
-        type="button"
-        class="refraction-btn px-2.5 py-1 text-xs font-bold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all min-h-[36px]"
-        title="Toggle 12-Hour / 24-Hour Time Format"
-        aria-label="Toggle 12 or 24 hour time format"
-      >
-        12H
-      </button>
-
-      <!-- Fullscreen Desk Mode Toggle -->
-      <button
-        id="btn-fullscreen-toggle"
-        type="button"
-        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
-        title="Toggle Fullscreen Desk Mode (F)"
-        aria-label="Toggle Fullscreen Desk Mode"
-      >
-        <span aria-hidden="true">⛶</span>
-        <span class="hidden sm:inline">Desk Mode</span>
-      </button>
-
-      <!-- Sound Effects Toggle Button -->
-      <button
-        id="btn-sound-toggle"
-        type="button"
-        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
-        title="Toggle Chime and Stopwatch Audio Effects (M)"
-        aria-label="Sound effects toggle"
-      >
-        <span id="sound-toggle-icon" aria-hidden="true">🔊</span>
-        <span id="sound-toggle-label" class="hidden sm:inline">Sound On</span>
-      </button>
-
-      <!-- In-App Desktop PWA Install Button (Always visible unless standalone) -->
-      <button
-        id="btn-install-pwa"
-        type="button"
-        class="inline-flex refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500 text-slate-950 hover:bg-amber-400 border border-amber-600 transition-all items-center gap-1 min-h-[36px] shadow-xs cursor-pointer"
-        title="Install Desktop App"
-        aria-label="Install TinyKite Stopwatch as Desktop App"
-      >
-        <span aria-hidden="true">📲</span>
-        <span class="font-bold">Install App</span>
-      </button>
-
-      <!-- Open TypeRacer in Browser External Switcher -->
-      <a
-        href="/typeracer/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-white/10 transition-all flex items-center gap-1 min-h-[36px]"
-        title="Open TypeRacer in Browser to install as a separate desktop app"
-        aria-label="Open TypeRacer in Browser"
-      >
-        <span aria-hidden="true">🏁</span>
-        <span class="hidden sm:inline">Open TypeRacer in Browser</span>
-        <span class="text-xs opacity-70 font-mono" aria-hidden="true">↗</span>
-      </a>
+      <span id="header-live-clock" class="sr-only">--:--:--</span>
     </div>
-  </div>
 
-  <!-- Hero Title -->
-  <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy dark:text-brand-cream mb-2 font-serif-literary">
-    stopwatch<span class="text-brand-gold">.</span>
-  </h1>
-  <p class="text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
-    Ultra-precise dual-dial analog chronograph, multi-tasking study timers, scheduled kid alarms, and multi-city world clock. Designed for desktop focus and tactile precision.
-  </p>
-
-  <!-- TOP APP NAVIGATION TABS (WCAG Accessible Tablist) -->
-  <div class="flex justify-center mt-5">
-    <div
-      role="tablist"
-      aria-label="Chrono Suite Modes"
-      class="inline-flex flex-wrap justify-center rounded-2xl md:rounded-full border border-black/[0.08] dark:border-white/[0.12] p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-xs gap-1"
-    >
+    <!-- Center: Clean Segmented Pill Tab Bar -->
+    <nav class="flex items-center p-1 rounded-full bg-slate-200/60 dark:bg-slate-800/60 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md" role="tablist" aria-label="Clock tools navigation">
       <button
         id="tab-btn-stopwatch"
         role="tab"
         aria-selected="true"
         aria-controls="panel-stopwatch"
         data-tab="stopwatch"
-        tabindex="0"
-        type="button"
-        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-brand-navy dark:bg-brand-gold text-brand-cream dark:text-brand-navy shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+        data-route="/stopwatch"
+        class="tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs min-h-[34px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>⏱️</span>
-        <span>Stopwatch</span>
+        <span class="hidden sm:inline">Stopwatch</span>
       </button>
 
       <button
@@ -137,12 +52,12 @@
         aria-selected="false"
         aria-controls="panel-timer"
         data-tab="timer"
+        data-route="/timer"
         tabindex="-1"
-        type="button"
-        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+        class="tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[34px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>⏳</span>
-        <span>Timer</span>
+        <span class="hidden sm:inline">Timer</span>
       </button>
 
       <button
@@ -151,16 +66,15 @@
         aria-selected="false"
         aria-controls="panel-alarm"
         data-tab="alarm"
+        data-route="/alarm"
         tabindex="-1"
-        type="button"
-        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+        class="tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[34px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>⏰</span>
-        <span>Alarm</span>
+        <span class="hidden sm:inline">Alarm</span>
         <span
           id="alarm-active-badge"
-          class="hidden px-1.5 py-0.5 text-[10px] font-black rounded-full bg-amber-500 text-slate-950 shadow-xs"
-          aria-label="Active alarms count"
+          class="hidden ml-1 px-1.5 py-0.2 rounded-full bg-amber-500 text-slate-950 text-[10px] font-bold"
         >
           0
         </span>
@@ -172,17 +86,78 @@
         aria-selected="false"
         aria-controls="panel-worldclock"
         data-tab="worldclock"
+        data-route="/clock"
         tabindex="-1"
-        type="button"
-        class="tab-btn px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all text-slate-700 dark:text-slate-300 hover:text-brand-navy dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 min-h-[44px] flex items-center gap-1.5"
+        class="tab-btn px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[34px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🌍</span>
-        <span>World Clock</span>
+        <span class="hidden sm:inline">Clock</span>
+      </button>
+    </nav>
+
+    <!-- Right: Quiet Utility Controls -->
+    <div class="flex items-center gap-1.5 shrink-0">
+      <!-- 12H / 24H Toggle -->
+      <button
+        id="btn-format-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-bold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all min-h-[34px] cursor-pointer"
+        title="Toggle 12-Hour / 24-Hour Format"
+        aria-label="Toggle 12 or 24 hour time format"
+      >
+        12H
+      </button>
+
+      <!-- Sound Effects Toggle Button -->
+      <button
+        id="btn-sound-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all min-h-[34px] flex items-center gap-1 cursor-pointer"
+        title="Toggle Sound Effects (M)"
+        aria-label="Sound effects toggle"
+      >
+        <span id="sound-toggle-icon" aria-hidden="true">🔊</span>
+        <span id="sound-toggle-label" class="sr-only">Sound On</span>
+      </button>
+
+      <!-- Fullscreen Desk Mode Toggle -->
+      <button
+        id="btn-fullscreen-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all min-h-[34px] flex items-center justify-center cursor-pointer"
+        title="Fullscreen Desk Mode (F)"
+        aria-label="Toggle Fullscreen Desk Mode"
+      >
+        <span aria-hidden="true">⛶</span>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button
+        id="btn-chrono-theme-toggle"
+        type="button"
+        class="refraction-btn px-2.5 py-1 text-xs font-semibold rounded-full bg-white/80 dark:bg-slate-900/80 border border-black/[0.08] dark:border-white/[0.12] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all min-h-[34px] flex items-center justify-center cursor-pointer"
+        title="Toggle Dark / Light Theme"
+        aria-label="Toggle theme"
+      >
+        <span class="dark:hidden" aria-hidden="true">🌙</span>
+        <span class="hidden dark:inline" aria-hidden="true">☀️</span>
+      </button>
+
+      <!-- PWA Install Button -->
+      <button
+        id="btn-install-pwa"
+        type="button"
+        class="refraction-btn px-3 py-1 text-xs font-bold rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all min-h-[34px] flex items-center gap-1 shadow-xs cursor-pointer"
+        title="Install Desktop App"
+        aria-label="Install Clock as Desktop App"
+      >
+        <span aria-hidden="true">📲</span>
+        <span>Install</span>
       </button>
     </div>
   </div>
 
-  <!-- Accessible Desktop PWA Installation Guide Modal -->
+  <!-- PWA Install Modal (Hidden DOM fallback) -->
   <div
     id="pwa-install-modal"
     class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
@@ -190,23 +165,18 @@
     aria-modal="true"
     aria-labelledby="pwa-install-modal-title"
   >
-    <!-- Modal Backdrop Blur Overlay -->
     <div id="pwa-install-modal-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"></div>
-
-    <!-- Modal Dialog Panel -->
-    <div class="relative w-full max-w-lg refraction-panel rounded-3xl p-6 sm:p-7 z-10 shadow-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 overflow-hidden text-left">
+    <div class="relative w-full max-w-lg refraction-panel rounded-3xl p-6 z-10 shadow-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 overflow-hidden text-left">
       <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
-
-      <!-- Header -->
       <div class="flex items-center justify-between pb-3 mb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
         <div class="flex items-center gap-3">
           <span class="text-3xl" aria-hidden="true">📲</span>
           <div>
-            <h3 id="pwa-install-modal-title" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-serif-literary">
+            <h3 id="pwa-install-modal-title" class="text-lg font-bold text-slate-900 dark:text-white">
               Install Desktop App
             </h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">
-              Run TinyKite Stopwatch as a standalone offline desktop window
+              Run Clock by TinyKite as a standalone offline desktop window
             </p>
           </div>
         </div>
@@ -214,55 +184,33 @@
           id="btn-close-install-modal"
           type="button"
           aria-label="Close install modal"
-          class="refraction-btn w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 transition-colors"
+          class="refraction-btn w-8 h-8 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 transition-colors cursor-pointer"
         >
           ✕
         </button>
       </div>
-
-      <!-- Installation Instructions -->
       <div class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200 mb-6">
-        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
-          <span class="text-xl flex-shrink-0" aria-hidden="true">🖥️</span>
-          <div>
-            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">1. Chrome, Edge, Brave & Chromium</strong>
-            <span>Click the <strong>Install icon (⊕ / 🖥️)</strong> on the right side of the address bar, or open <strong>Browser Menu (⋮) → Cast, save, and share → Install page as app...</strong></span>
-          </div>
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08]">
+          <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">Chrome, Edge, Brave & Chromium</strong>
+          <span>Click the <strong>Install icon (⊕ / 🖥️)</strong> in the address bar, or open <strong>Menu (⋮) → Cast, save, and share → Install page as app...</strong></span>
         </div>
-
-        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
-          <span class="text-xl flex-shrink-0" aria-hidden="true">🧭</span>
-          <div>
-            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">2. Safari on macOS</strong>
-            <span>Click <strong>File → Add to Dock...</strong> in the top menu bar (or click <strong>Share → Add to Dock</strong>).</span>
-          </div>
-        </div>
-
-        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08] flex items-start gap-3">
-          <span class="text-xl flex-shrink-0" aria-hidden="true">🐧</span>
-          <div>
-            <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">3. Custom Linux Desktop Launcher</strong>
-            <span>Run <code class="px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono text-[11px] text-amber-700 dark:text-amber-400">chromium --app=https://tinykite.co/stopwatch</code> or install directly from Chromium's address bar.</span>
-          </div>
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-black/[0.06] dark:border-white/[0.08]">
+          <strong class="font-bold text-slate-900 dark:text-white block mb-0.5">Safari on macOS</strong>
+          <span>Click <strong>File → Add to Dock...</strong> in the top menu bar (or Share → Add to Dock).</span>
         </div>
       </div>
-
-      <!-- Actions Footer -->
-      <div class="flex items-center justify-between gap-3 pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex-wrap">
+      <div class="flex items-center justify-between gap-3 pt-3 border-t border-black/[0.08] dark:border-white/[0.08]">
         <button
           id="btn-refresh-pwa-cache"
           type="button"
-          class="refraction-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors flex items-center gap-1.5 border border-black/10 dark:border-white/10 cursor-pointer"
-          title="Unregister stale service workers, clear caches, and reload page"
+          class="refraction-btn px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 transition-colors border border-black/10 dark:border-white/10 cursor-pointer"
         >
-          <span>🔄</span>
-          <span>Refresh Offline Cache & Check Install</span>
+          🔄 Refresh Offline Cache
         </button>
-
         <button
           id="btn-close-install-modal-footer"
           type="button"
-          class="refraction-btn px-4 py-2 text-xs font-bold rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors cursor-pointer"
+          class="refraction-btn px-4 py-1.5 text-xs font-bold rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors cursor-pointer"
         >
           Close
         </button>

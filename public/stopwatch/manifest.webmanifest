@@ -4,7 +4,7 @@
   "short_name": "Clock",
   "description": "Desktop Stopwatch, Timer, Alarm & World Clock by TinyKite.",
   "start_url": "/stopwatch/",
-  "scope": "/stopwatch/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0b1020",

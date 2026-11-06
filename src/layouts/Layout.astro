@@ -10,6 +10,7 @@ interface Props {
   manifest?: string;
   themeColor?: string;
   appleTouchIcon?: string;
+  hideSiteChrome?: boolean;
 }
 
 const { 
@@ -19,6 +20,7 @@ const {
   manifest,
   themeColor,
   appleTouchIcon,
+  hideSiteChrome = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -79,6 +81,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Standalone PWA Desktop App Mode Styling -->
     <style is:global>
       @media (display-mode: standalone) {
+        #site-header,
+        header,
         footer {
           display: none !important;
         }
@@ -86,9 +90,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </style>
   </head>
   <body class="bg-background text-text antialiased">
-    <Header />
+    {!hideSiteChrome && <Header />}
     <slot />
-    <Footer />
+    {!hideSiteChrome && <Footer />}
     <script>
       import Lenis from 'lenis';
 

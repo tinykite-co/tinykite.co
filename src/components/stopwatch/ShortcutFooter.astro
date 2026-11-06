@@ -1,86 +1,40 @@
 ---
 /**
  * ShortcutFooter.astro
- * Tactile 3D Keycap Keyboard Shortcut Legend for Desktop Users.
+ * Quiet, single-line keyboard shortcut bar for desktop productivity.
  */
 ---
 
-<footer class="mt-8 mb-4 select-none">
-  <div class="refraction-panel p-4 max-w-5xl mx-auto">
-    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
-      <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
-        <span>⌨️</span>
-        Desktop Keyboard Shortcuts
-      </span>
-      <span class="text-[11px] text-slate-400 dark:text-slate-500">
-        Active across all Chrono tools
-      </span>
+<footer class="mt-6 mb-2 select-none">
+  <div class="text-center text-xs text-slate-400 dark:text-slate-500 flex items-center justify-center flex-wrap gap-x-4 gap-y-1.5 font-medium">
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">Space</kbd>
+      <span>Start/Pause</span>
     </div>
-
-    <!-- Keycap Legend Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 text-center">
-      <!-- Space: Start / Pause -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="vkey-3d px-3 py-0.5 text-xs font-bold font-mono min-w-[54px] h-[26px] mb-1">
-          Space
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Start / Pause
-        </div>
-      </div>
-
-      <!-- L: Lap / +1 Min -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="vkey-3d px-2.5 py-0.5 text-xs font-bold font-mono min-w-[28px] h-[26px] mb-1">
-          L
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Lap / +1m
-        </div>
-      </div>
-
-      <!-- R: Reset -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="vkey-3d px-2.5 py-0.5 text-xs font-bold font-mono min-w-[28px] h-[26px] mb-1">
-          R
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Reset Tool
-        </div>
-      </div>
-
-      <!-- 1 - 4: Tabs -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="flex items-center gap-1 mb-1">
-          <div class="vkey-3d px-1.5 py-0.5 text-xs font-bold font-mono min-w-[20px] h-[26px]">1</div>
-          <div class="vkey-3d px-1.5 py-0.5 text-xs font-bold font-mono min-w-[20px] h-[26px]">2</div>
-          <div class="vkey-3d px-1.5 py-0.5 text-xs font-bold font-mono min-w-[20px] h-[26px]">3</div>
-          <div class="vkey-3d px-1.5 py-0.5 text-xs font-bold font-mono min-w-[20px] h-[26px]">4</div>
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Switch Tabs
-        </div>
-      </div>
-
-      <!-- M: Audio Mute -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="vkey-3d px-2.5 py-0.5 text-xs font-bold font-mono min-w-[28px] h-[26px] mb-1">
-          M
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Mute / Unmute
-        </div>
-      </div>
-
-      <!-- F: Fullscreen Desk Mode -->
-      <div class="flex flex-col items-center p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
-        <div class="vkey-3d px-2.5 py-0.5 text-xs font-bold font-mono min-w-[28px] h-[26px] mb-1">
-          F
-        </div>
-        <div class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-          Desk Mode
-        </div>
-      </div>
+    <span class="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">L</kbd>
+      <span>Lap</span>
+    </div>
+    <span class="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">R</kbd>
+      <span>Reset</span>
+    </div>
+    <span class="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">1–4</kbd>
+      <span>Mode</span>
+    </div>
+    <span class="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">M</kbd>
+      <span>Mute</span>
+    </div>
+    <span class="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
+    <div class="flex items-center gap-1.5">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300 border border-black/10 dark:border-white/10">F</kbd>
+      <span>Fullscreen</span>
     </div>
   </div>
 </footer>

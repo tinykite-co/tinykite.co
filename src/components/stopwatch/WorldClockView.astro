@@ -1,8 +1,9 @@
 ---
 /**
  * WorldClockView.astro
- * Top Hero Local Desk Clock Banner and Multi-City Global Timezone Grid.
- * Displays solar phases, hour offsets vs local, and Swiss-railway-inspired analog desk clock.
+ * Focused, distraction-free World Clock & Timezones.
+ * Features a Swiss-railway style analog desk clock, local digital display,
+ * integrated city filtering and pinning controls, and 3-column world city grid.
  */
 import { WORLD_CITIES } from '../../lib/stopwatch/config.ts';
 
@@ -18,18 +19,18 @@ const miniClockTicks = Array.from({ length: 12 }, (_, i) => ({
   id="panel-worldclock"
   role="tabpanel"
   aria-labelledby="tab-btn-worldclock"
-  class="space-y-6 hidden"
+  class="space-y-6 max-w-4xl mx-auto hidden"
 >
-  <!-- Top Hero Local Desk Clock Banner -->
-  <div class="refraction-panel p-6">
-    <div class="refraction-prismatic-rim -mt-6 -mx-6 mb-5"></div>
+  <!-- Hero Local Desk Clock Card with Integrated Filter & Pin Toolbar -->
+  <div class="refraction-panel p-6 sm:p-7 relative overflow-hidden">
+    <div class="refraction-prismatic-rim absolute top-0 inset-x-0"></div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
       <!-- Left: Big Local Digital Readout & Timezone -->
-      <div class="md:col-span-8 space-y-2">
+      <div class="md:col-span-8 space-y-1.5">
         <div class="flex items-center gap-2 flex-wrap">
           <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
-            Local Desk Clock
+            Local Time
           </span>
           <span
             id="local-clock-tz"
@@ -41,7 +42,7 @@ const miniClockTicks = Array.from({ length: 12 }, (_, i) => ({
 
         <div
           id="local-clock-digital"
-          class="text-4xl sm:text-5xl md:text-6xl font-mono font-black tabular-nums tracking-tight text-slate-900 dark:text-slate-50"
+          class="text-4xl sm:text-5xl md:text-6xl font-mono font-black tabular-nums tracking-tight text-slate-900 dark:text-slate-50 select-none"
         >
           --:--:-- --
         </div>
@@ -56,7 +57,7 @@ const miniClockTicks = Array.from({ length: 12 }, (_, i) => ({
 
       <!-- Right: Mini Swiss-Railway Style Analog Clock Face -->
       <div class="md:col-span-4 flex items-center justify-center">
-        <div class="relative w-28 h-28 aspect-square">
+        <div class="relative w-28 h-28 aspect-square select-none">
           <svg class="w-full h-full drop-shadow-md select-none" viewBox="0 0 100 100" aria-hidden="true">
             <!-- Bezel & Dial Face -->
             <circle cx="50" cy="50" r="48" class="fill-white dark:fill-slate-900 stroke-slate-300 dark:stroke-slate-700" stroke-width="2.5" />
@@ -88,53 +89,51 @@ const miniClockTicks = Array.from({ length: 12 }, (_, i) => ({
             <!-- Swiss Lollipop Second Hand (Red) -->
             <g id="local-clock-analog-second" transform="rotate(0 50 50)">
               <line x1="50" y1="58" x2="50" y2="15" stroke="#e11d48" stroke-width="1.2" />
-              <!-- Lollipop red circle near tip -->
               <circle cx="50" cy="18" r="3.2" fill="#e11d48" />
-              <!-- Center Pivot Cap -->
               <circle cx="50" cy="50" r="2.5" fill="#e11d48" />
             </g>
           </svg>
         </div>
       </div>
     </div>
+
+    <!-- Integrated Search & Pin Controls Toolbar (No separate floating card!) -->
+    <div class="mt-6 pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
+      <!-- Filter Cities Input -->
+      <div class="w-full sm:w-60">
+        <input
+          type="text"
+          id="input-filter-cities"
+          placeholder="Filter pinned cities..."
+          class="w-full px-3 py-1.5 text-xs rounded-xl bg-slate-100/80 dark:bg-slate-900 border border-black/[0.1] dark:border-white/[0.12] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        />
+      </div>
+
+      <!-- Pin New City Dropdown & Button -->
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <select
+          id="select-add-city"
+          class="flex-1 sm:w-52 px-3 py-1.5 text-xs rounded-xl bg-slate-100/80 dark:bg-slate-900 border border-black/[0.1] dark:border-white/[0.12] text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-1 focus:ring-amber-500"
+        >
+          {WORLD_CITIES.map((city) => (
+            <option value={city.id}>
+              {city.name}, {city.country}
+            </option>
+          ))}
+        </select>
+        <button
+          id="btn-add-city"
+          type="button"
+          class="refraction-btn px-3 py-1.5 text-xs font-bold rounded-xl bg-amber-500 text-slate-950 hover:bg-amber-400 transition-all shrink-0 flex items-center gap-1 shadow-xs cursor-pointer"
+        >
+          <span>+</span>
+          <span>Pin City</span>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- World Clock Controls Toolbar -->
-  <div class="refraction-panel p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-    <!-- Filter Pinned Cities -->
-    <div class="w-full sm:w-64">
-      <input
-        type="text"
-        id="input-filter-cities"
-        placeholder="Filter pinned cities..."
-        class="w-full px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
-      />
-    </div>
-
-    <!-- Add / Pin New City -->
-    <div class="flex items-center gap-2 w-full sm:w-auto">
-      <select
-        id="select-add-city"
-        class="flex-1 sm:w-56 px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/[0.12] dark:border-white/[0.15] text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
-      >
-        {WORLD_CITIES.map((city) => (
-          <option value={city.id}>
-            {city.name}, {city.country}
-          </option>
-        ))}
-      </select>
-      <button
-        id="btn-add-city"
-        type="button"
-        class="refraction-btn px-3 py-1.5 text-xs font-bold rounded-xl bg-brand-navy dark:bg-brand-gold text-white dark:text-slate-950 hover:opacity-90 transition-all shrink-0 flex items-center gap-1 shadow-xs"
-      >
-        <span>+</span>
-        <span>Pin City</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- World Clock Multi-City Grid -->
+  <!-- World Clock Multi-City 3-Column Grid -->
   <div
     id="world-clock-grid"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
