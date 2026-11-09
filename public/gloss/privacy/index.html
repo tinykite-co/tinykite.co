@@ -25,7 +25,7 @@
 <main>
   <p class="muted"><a href="/">← Gloss</a> · TinyKite</p>
   <h1>Privacy Policy</h1>
-  <p class="muted">Gloss by TinyKite · Last updated: 10 October 2026</p>
+  <p class="muted">Gloss by TinyKite · Last updated: 10 November 2026</p>
 
   <div class="card">
     <h2>Summary</h2>
@@ -72,7 +72,7 @@
 
   <h2>5a. A TinyKite account, and linking a reader (optional, for grown-ups)</h2>
   <p>Gloss works fully without any account, and always will. Some TinyKite apps offer an optional sign-in with a <strong>TinyKite account</strong> — one account shared across TinyKite apps. If a version of Gloss offers this, it is for parents and caregivers, it is always skippable, and signing in by itself adds exactly one thing to what TinyKite holds: the account itself (your email address and sign-in credentials, kept by our identity service). Signing in does not, on its own, upload anything a reader has looked up.</p>
-  <p><strong>Creating or joining a household.</strong> A signed-in grown-up can create a household (choosing a name for it, such as a family name) or join one another adult created, using a short code that adult shares with them directly — TinyKite never chooses or suggests who joins a household. Everyone in a household can see the others' role (owner, adult, member) and whether they have joined yet, alongside a shortened, meaningless copy of their account reference — never a name, email address or anything else identifying. A grown-up can leave a household at any time (an owner must first hand ownership to someone else or delete the household, since a household cannot be left without anyone responsible for it).</p>
+  <p><strong>Creating or joining a household.</strong> A signed-in grown-up can create a household (choosing a name for it, such as a family name) or join one another adult created, using a short code that adult shares with them directly — TinyKite never chooses or suggests who joins a household. The household roster includes stable account references, display names, membership roles and status. Display names help parents choose the correct child across Gloss and Nesta; contact details are not shown in the roster. A grown-up can leave a household at any time (an owner must first hand ownership to someone else or delete the household, since a household cannot be left without anyone responsible for it).</p>
   <p><strong>Linking a reader.</strong> Once signed in and a household exists, a grown-up can additionally choose to <strong>link</strong> one reader on this device to that TinyKite household. Linking is a second, separate, explicit choice — it is never automatic just from signing in or from creating a household, and a child is never shown the option or asked to make it. Before anything is sent, the app shows plainly what linking means; once you confirm, and only for that one reader:</p>
   <ul>
     <li><strong>The reader's card.</strong> The name you gave this reader on this device, their colour, and their reading level (an age band such as 7–9 — never the birth year), so the household can tell its readers apart.</li>
@@ -86,8 +86,38 @@
   <p>You can unlink a reader at any time from Grown-ups → Linked readers. Unlinking stops sync immediately, and the words and the reader card (name, colour, reading level) TinyKite held for that reader are erased.</p>
   <p>The account is managed at <a href="https://accounts.tinykite.co/account">accounts.tinykite.co/account</a>: download the data the account holds, change your password, or delete the account. Deleting the account from inside Gloss (Grown-ups &rarr; Delete your TinyKite Account) first erases the synced words held for every reader you had linked; the account page on the web deletes the account only, so unlink your readers in Gloss first, or email us and we will erase their words for you. Either way, deleting the account — like linking and unlinking — removes your sign-in from every TinyKite app that uses it. Every way to delete, and what each one erases, is set out at <a href="/gloss/delete/">tinykite.co/gloss/delete</a>. A 30-day grace period applies to the deletion; sign in again within it to cancel and keep the account. Children are never asked to create an account in Gloss, and are never shown the linking screen — both are actions only a signed-in grown-up can take.</p>
 
+
+  <h3>Shared household, parent verification and child-account consent</h3>
+  <p>Gloss and Nesta use one TinyKite household and the same child account ID.
+  A signed-in parent can reuse an existing managed child, or create one after
+  reviewing the child-account notice and explicitly confirming parental authority.
+  New managed accounts require a server-verified account security factor and a
+  fresh password confirmation. Phone or passkey verification is an account
+  security check; it does not alone establish adult age or legal guardianship.</p>
+  <p>For a new managed child account the parent supplies a display name (a nickname
+  is enough), birth date and country. TinyKite identity stores these with a hidden
+  technical username to apply jurisdiction-sensitive age protections. We do not
+  ask the child for an email address, phone number or password. Birth date and
+  country are not copied into the messaging, Calendar or Gloss reader profiles.</p>
+  <p>Identity retains the consenting account and child references, notice version,
+  verified-factor evidence, fresh-authentication result, grant and withdrawal
+  timestamps, and security metadata such as IP address and user-agent. We retain
+  consent and security audit evidence where required to demonstrate how consent
+  was obtained or withdrawn, including after account deletion.</p>
+  <p>Creating a child account does not enable every app's data sharing. Each app
+  requests its own permissions for that child's data. A child connects a device
+  with a short-lived setup code and a parent's approval; device credentials are
+  scoped to that child and product. The parent never shares their own session.</p>
+  <p>From <strong>Children and consent</strong>, a parent can withdraw account-level
+  consent across TinyKite. Connected child access stops; withdrawal itself does
+  not erase stored app data. App-specific sharing can be disabled separately.
+  For access, correction, deletion or help restoring consent, contact
+  <a href="mailto:support@tinykite.co">support@tinykite.co</a>. Existing child
+  accounts keep their IDs; we do not represent legacy account creation as a
+  newly verified consent record.</p>
+
   <h2>6. Children</h2>
-  <p>Gloss is designed to be usable by young readers with a parent or caregiver nearby. Reader profiles (a chosen name, an optional birth year for the starting reading level) live on the device — TinyKite never receives the birth year, and receives a reader's name, colour and reading level only if a grown-up links that reader (section&nbsp;5a) — builds no profile of any child, and collects no personal information from children for marketing. The app asks for no device permissions beyond network access. The three optional signals in section&nbsp;5 carry no identifiers, and none of them carries a time, so nothing we receive from those can be arranged into what one child did on one day. Reader-typed text can leave the device two ways, both bounded the same way: the functional word lookup (section&nbsp;5), which happens for any word not yet on the device — and again, later, for a word already downloaded whose picture is still to come — whether or not &ldquo;Help grow the word pack&rdquo; is on; and a searched word Gloss had no entry for anywhere, sent only if that switch was on. Neither ever sends what was typed unless it is shaped like a word — a typed sentence never leaves the device, by the same structural rule, in either case. The lookup counts carry words from Gloss’s own dictionary — the entry that was opened, not the letters a child typed to reach it — and no free text of any kind. Problem reports carry no typed text at all, and neither does the daily word-list download, which sends only a dictionary code. Signing in to a TinyKite account and linking a reader (section&nbsp;5a) are both actions only a signed-in grown-up can take from a Grown-ups area behind a gate; a child using Gloss is never asked to sign in and is never shown the linking screen.</p>
+  <p>Gloss is designed to be usable by young readers with a parent or caregiver nearby. Reader profiles (a chosen name, an optional birth year for the starting reading level) live on the device — the local reading-level birth year is not uploaded; managed child-account birth dates are handled separately as described above. Gloss receives a reader's name, colour and reading level only if a grown-up links that reader (section&nbsp;5a) We do not use this information for marketing or targeted advertising. The app asks for no device permissions beyond network access. The three optional signals in section&nbsp;5 carry no identifiers, and none of them carries a time, so nothing we receive from those can be arranged into what one child did on one day. Reader-typed text can leave the device two ways, both bounded the same way: the functional word lookup (section&nbsp;5), which happens for any word not yet on the device — and again, later, for a word already downloaded whose picture is still to come — whether or not &ldquo;Help grow the word pack&rdquo; is on; and a searched word Gloss had no entry for anywhere, sent only if that switch was on. Neither ever sends what was typed unless it is shaped like a word — a typed sentence never leaves the device, by the same structural rule, in either case. The lookup counts carry words from Gloss’s own dictionary — the entry that was opened, not the letters a child typed to reach it — and no free text of any kind. Problem reports carry no typed text at all, and neither does the daily word-list download, which sends only a dictionary code. Child-account setup and linked-reader sharing (section&nbsp;5a) require a signed-in parent and the relevant server checks. A child can connect with a parent-approved setup code without providing parent credentials.</p>
 
   <h2>7. Your choices</h2>
   <ul>
