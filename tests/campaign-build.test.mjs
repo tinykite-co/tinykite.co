@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 const read = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 test('only interest and backer entry pages; retired pricing redirects', () => {
-  assert.match(read('pricing'), /url=\/gloss\/back\//);
+  assert.match(read('pricing'), /url=\/gloss\/interest\//);
   for (const path of ['gloss/interest','gloss/back']) {
     assert.match(read(path), /Year 13/);
     assert.doesNotMatch(read(path), /buy\.stripe\.com|5,000|£4\.99\/month|Gloss Plus|Family for life/);

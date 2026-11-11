@@ -11,7 +11,7 @@ Gloss and future TinyKite apps. Beta remains free.
   and feature requests.
 - `/gloss/back/`: shared dictionary goals, transparent cost explorer, proposed
   discounted rewards, language choices, Gloss/Nesta membership and feature requests.
-- `/pricing/` redirects to backers. There is no standalone pricing offer.
+- `/pricing/` redirects to express interest. There is no standalone pricing offer.
 - One household subscription includes Gloss, Nesta and future TinyKite family
   products. Beta remains free. Nesta is described as a household-first messenger
   with specific adult-approved contacts, not an absolute safety guarantee.
