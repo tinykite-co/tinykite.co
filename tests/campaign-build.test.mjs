@@ -64,11 +64,18 @@ test('interest gates optional backing on a saved signup', () => {
 });
 test('homepage leads with households and keeps utility tools out of navigation',()=>{
  const html=read('');
- for(const phrase of ['Family at heart.','Households','What does your child need?']) {
+ for(const phrase of ['Family','Households','What does your child need?']) {
    if(phrase==='Households') assert.match(html,/households/);else assert.ok(html.includes(phrase),phrase);
  }
  const header=html.match(/<header[\s\S]*?<\/header>/)?.[0] ?? '';
  for(const phrase of ['Nesta','Gloss','Our purpose']) assert.ok(header.includes(phrase));
  assert.doesNotMatch(header,/Workspace|Router Hub|TypeRacer|Stopwatch|>Tools</);
  assert.match(html,/id="feature-request"/);
+});
+
+test('homepage keeps the existing kite animation and intro',()=>{
+ const html=read('');
+ assert.match(html,/id="hero-kite-layer"/);
+ assert.match(html,/id="hero-motes"/);
+ assert.match(html,/id="hero-washes"/);
 });

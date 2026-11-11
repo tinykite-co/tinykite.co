@@ -1,18 +1,15 @@
 ---
 import { buttonVariants } from "@refraction-ui/astro";
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Preloader from "../components/Preloader.astro";
 import FeatureRequestForm from "../components/gloss/interest/FeatureRequestForm.astro";
 import "../components/gloss/interest/campaign.css";
 ---
 <Layout title="TinyKite — built with family at heart" description="Useful tools for children, built around the people who care for them. Nesta connects households. Gloss helps young readers understand their world." selfHostedFonts nativeScroll>
+  <Preloader />
   <main class="family-home gloss-campaign">
-    <section class="gc-shell family-hero">
-      <p class="gc-eyebrow">Small people. A world of possibility.</p>
-      <h1>Family at heart.<br /><span>From the very beginning.</span></h1>
-      <p class="hero-intro">A child wants to call a friend. Understand a word. Make a plan of their own.</p>
-      <p class="gc-muted hero-story">We’re building the everyday tools that help them do those things—with their grown-ups beside them. A little more independence. A world that opens at their pace.</p>
-      <div class="family-actions"><a href="#nesta" class:list={[buttonVariants({size:"lg"}),"gc-action"]}>Meet Nesta ↓</a><a href="/gloss/" class="gc-link">Discover Gloss ↗</a></div>
-    </section>
+    <Hero />
     <section id="nesta" class="gc-shell family-products" aria-labelledby="nesta-title">
       <article class="gc-panel nesta-story">
         <p class="gc-eyebrow">Nesta · households, connected</p>
