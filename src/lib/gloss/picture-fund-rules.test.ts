@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { validatePictureFund, liveRewardLink, type PictureFund } from "./picture-fund-rules.ts";
+import { validatePictureFund, liveRewardLink, annualRewardSaving, type PictureFund } from "./picture-fund-rules.ts";
 const source = JSON.parse(readFileSync(new URL('../../data/gloss/picture-campaign.json', import.meta.url), 'utf8')) as PictureFund;
 const fixture = (): PictureFund => structuredClone(source);
 test('single shared fund and fixed-term family rewards', () => {
@@ -43,4 +43,15 @@ test('rejects separate funds and invalid reward/budget configurations', () => {
     (f: PictureFund) => { f.tiers[0]!.months = 12; },
   ];
   for (const mutate of mutations) { const fund = fixture(); mutate(fund); assert.throws(() => validatePictureFund(fund)); }
+});
+
+test('backer savings compare only discounted annual memberships', () => {
+  const fund = fixture();
+  const founding = fund.tiers.find(tier => tier.id === 'founding-family')!;
+  assert.deepEqual(annualRewardSaving(founding, 49), { plannedPrice: 49, saving: 10 });
+  assert.deepEqual(annualRewardSaving(fund.tiers.find(tier => tier.id === 'two-families')!, 49), { plannedPrice: 98, saving: 20 });
+  for (const id of ['supporter', 'word-sponsor']) assert.equal(annualRewardSaving(fund.tiers.find(tier => tier.id === id)!, 49), null);
+  assert.equal(annualRewardSaving({ ...founding, price: 49 }, 49), null);
+  assert.equal(annualRewardSaving({ ...founding, months: 24 }, 49), null);
+  for (const annualPrice of [0, -1, NaN, Infinity]) assert.equal(annualRewardSaving(founding, annualPrice), null);
 });

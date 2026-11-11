@@ -35,3 +35,13 @@ test('appearance includes system choice and a stored-free default', () => {
   assert.match(read('pricing'), /option value="system"/);
   assert.match(read('pricing'), /prefers-color-scheme: dark/);
 });
+
+test('founding rewards show first-year savings against planned prices', () => {
+  const html = read('gloss/back');
+  assert.match(html, /Save £10 on the first paid year/);
+  assert.match(html, /Save £20 on the first paid year/);
+  assert.match(html, /£39/);
+  assert.match(html, /£78/);
+  assert.match(html, /first paid year only/);
+  assert.match(html, /not a previous selling price/);
+});

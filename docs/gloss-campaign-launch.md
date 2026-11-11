@@ -10,7 +10,9 @@ Gloss and future TinyKite apps. Beta remains free.
 - `/pricing/`, `/family/`, campaign: share `src/components/family/FamilyPlan.astro`
   and `src/data/family/plan.ts`. Planned £4.99/month or £49/year; no beta charge.
 - `src/data/gloss/picture-campaign.json`: one funding target (`picture-dictionary`),
-  GBP one-time rewards. The `languages` array is a compatibility boundary for the
+  GBP one-time rewards. Founding family: £39 for one household’s first paid year
+  (planned standard £49); two households: £78 (planned standard £98). The
+  discounts apply to the first paid year after beta, with no automatic renewal. The `languages` array is a compatibility boundary for the
   recovered Stripe script, not separate language funds.
 - Legacy `campaigns.json` now supplies language expansion content only. Its tiers
   and payment URLs are empty. Existing language URLs remain useful and indexed.

@@ -25,3 +25,11 @@ export function liveRewardLink(fund: PictureFund, tierId: string): string | null
     return url.origin === "https://buy.stripe.com" && /^\/[A-Za-z0-9]+$/.test(url.pathname) && !url.search && !url.hash ? link : null;
   } catch { return null; }
 }
+
+/** Compare a one-year reward with the planned annual household price, not a past sale price. */
+export function annualRewardSaving(reward: Reward, annualHouseholdPrice: number): { plannedPrice: number; saving: number } | null {
+  if (reward.months !== 12 || reward.households <= 0 || !Number.isFinite(annualHouseholdPrice) || annualHouseholdPrice <= 0) return null;
+  const plannedPrice = annualHouseholdPrice * reward.households;
+  const saving = plannedPrice - reward.price;
+  return saving > 0 ? { plannedPrice, saving } : null;
+}

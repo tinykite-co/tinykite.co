@@ -1,8 +1,11 @@
+const annualHouseholdPrice = 49;
+
 /** One household plan shared by every TinyKite family app and marketing surface. */
 export const familyPlan = {
   name: "TinyKite Family",
   monthly: "£4.99",
-  yearly: "£49",
+  yearly: `£${annualHouseholdPrice}`,
+  yearlyAmount: annualHouseholdPrice,
   betaPrice: "Free during beta",
   signupUrl: "https://accounts.tinykite.co/login/?mode=signup",
   description: "Nesta, Gloss and future TinyKite apps. One subscription for your household.",
