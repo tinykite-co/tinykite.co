@@ -3,5 +3,5 @@ import { campaign } from "../../../../lib/gloss/campaign";
 export function getStaticPaths() {
   return campaign.languages.map(language => ({params:{slug:language.slug},props:{language:language.name}}));
 }
-return Astro.redirect(`/gloss/interest/?language=${encodeURIComponent(Astro.props.language)}`);
+return Astro.redirect(`/gloss/?language=${encodeURIComponent(Astro.props.language)}`);
 ---

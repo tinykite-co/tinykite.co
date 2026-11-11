@@ -1,307 +1,68 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import DeviceFrame from "../../components/DeviceFrame.astro";
-import catalog from "../../data/gloss/features.json";
-
-const { product, videoBase = "", parts, journeys = [] } = catalog;
-
-/** Base name → platform file. demo_foo.mp4 + android → demo_foo_android.mp4 */
-function platformSrc(base: string, video: string, platform: "android" | "ios"): string {
-  const stem = video.replace(/\.mp4$/i, "");
-  return `${base}${stem}_${platform}.mp4`;
-}
-
-function hasVideo(video: unknown): boolean {
-  return typeof video === "string" && video.length > 0 && Boolean(videoBase);
-}
+import { buttonVariants } from "@refraction-ui/astro";
+import BackPage from "../../components/gloss/back/BackPage.astro";
+import FamilyMembership from "../../components/gloss/interest/FamilyMembership.astro";
+import FeatureRequestForm from "../../components/gloss/interest/FeatureRequestForm.astro";
+import PracticeStory from "../../components/gloss/interest/PracticeStory.astro";
+import InterestForm from "../../components/gloss/interest/InterestForm.astro";
+import SilentDemo from "../../components/gloss/demo/SilentDemo.astro";
+import "../../components/gloss/interest/campaign.css";
+const waysToHelp = [
+  { number: "01", title: "Bring your reading", body: "Tell us the words that stop a story in its tracks—from a first picture book to the books studied through Year 13." },
+  { number: "02", title: "Bring your language", body: "A language from home, a regional variety, or one you’re learning. Help us make the dictionary useful far beyond English." },
+  { number: "03", title: "Bring your eye", body: "Review a meaning, offer image-generation credits, or contribute pictures made from an agreed brief. Every contribution still needs checking." },
+];
 ---
-
-<Layout
-  title={`${product.name} — ${product.tagline}`}
-  description={product.dek}
-  image={product.icon}
->
-  <main class="min-h-screen bg-background gloss-page">
-    <!-- Hero -->
-    <section class="relative pt-32 pb-16 px-6 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-b from-[#2a7a66]/8 via-transparent to-transparent pointer-events-none"></div>
-      <div class="container mx-auto max-w-4xl text-center relative z-10">
-        <img
-          src={product.icon}
-          alt="Gloss app icon"
-          width="96"
-          height="96"
-          class="mx-auto mb-6 rounded-[22.5%] shadow-lg"
-        />
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-text" style="font-family: 'Lora', serif;">
-          {product.name.toLowerCase()}<span class="text-[var(--gloss-sage)]">.</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
-          {product.tagline}
-        </p>
-        <p class="text-gray-500 text-base max-w-2xl mx-auto mb-8">
-          {product.dek}
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#feature-1"
-            class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity"
-          >
-            See how it works
-          </a>
-          <span class="text-sm text-gray-500 px-3 py-1 rounded-full border border-gray-200 dark:border-white/10">
-            {product.platforms}
-          </span>
-        </div>
-        <p class="text-gray-500 text-sm mt-4">
-          Works offline · no account · no ads · no tracking
-        </p>
+<BackPage title="A picture dictionary for your world — Gloss" description="Express interest in Gloss: a vetted picture dictionary for books read through Year 13 and grown-ups learning another language. Choose the languages that matter to you.">
+  <div class="gloss-campaign">
+    <header class="gc-shell gc-hero interest-hero">
+      <div class="interest-kicker"><span class="gc-eyebrow">Words worth understanding</span><a href="#see-gloss" class="gc-link text-sm">See it work ↓</a></div>
+      <h1 class="gc-title mt-7">A little picture.<br /><span class="interest-title-accent">A much bigger world.</span></h1>
+      <div class="interest-intro">
+        <p class="text-lg leading-relaxed">For the word that interrupts a story. The idea that’s hard to explain. The language you want to keep close.</p>
+        <p class="gc-muted leading-relaxed">Gloss is building a vetted picture dictionary for young readers, with the ambition to cover every word in the books they read through Year 13—and help grown-ups learn another language, too.</p>
       </div>
-    </section>
+      <div class="mt-7 flex flex-wrap items-center gap-4">
+        <a href="#reading-interest" class:list={[buttonVariants({ size: "lg" }), "gc-action interest-primary"]}>I’m interested <span aria-hidden="true">↓</span></a>
+        <span class="gc-muted text-sm">No payment. No account needed.</span>
+      </div>
+    </header>
 
-    <!-- Feature catalog -->
-    <section class="py-12 px-6">
-      <div class="container mx-auto max-w-5xl">
-        <div class="text-center mb-4">
-          <h2 class="text-3xl md:text-4xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">
-            Everything Gloss does, in the order you meet it
-          </h2>
-          <p class="text-gray-600 dark:text-gray-400 text-lg max-w-xl mx-auto">
-            {product.note}
-          </p>
+    <div id="see-gloss" class="gc-shell interest-demo"><SilentDemo /><p class="gc-muted mt-3 text-xs">Captured from the live Gloss beta on 11 November 2026. Some entries are still awaiting pictures. No audio plays; pause or explore one step at a time.</p></div>
+
+    <PracticeStory />
+    <FamilyMembership />
+
+    <section class="gc-shell interest-connect gc-grid" aria-labelledby="interest-connection">
+      <div>
+        <p class="gc-eyebrow">Made with a world of readers</p>
+        <h2 id="interest-connection" class="mt-4 text-3xl font-bold leading-tight">Your words.<br />Your language.<br />Your part in the story.</h2>
+        <p class="gc-muted mt-5 max-w-md leading-relaxed">One shared dictionary project. Many ways to help it grow. Tell us what would make Gloss useful in your home, classroom or next chapter.</p>
+        <div class="mt-9 space-y-7">
+          {waysToHelp.map(way => <article class="interest-way">
+            <span class="gc-eyebrow">{way.number}</span>
+            <div><h3 class="font-semibold">{way.title}</h3><p class="gc-muted mt-2 text-sm leading-relaxed">{way.body}</p></div>
+          </article>)}
+        </div>
+        <div class="interest-note mt-9">
+          <p class="font-semibold">A language doesn’t need to be “big” to matter.</p>
+          <p class="gc-muted mt-2 text-sm leading-relaxed">The chooser is a starting point. Add the regional variety, community language or writing system you want us to consider. We’ll need speakers who know it well to review the work.</p>
         </div>
 
-        <!-- Page-level platform switcher (same pattern as Nesta): swaps every
-             demo between the Android and iPhone captures. Defaults to the
-             visitor's phone OS; remembered in localStorage. -->
-        <div class="flex justify-center mb-12">
-          <div
-            role="tablist"
-            aria-label="Preview platform"
-            class="inline-flex rounded-full border border-gray-200 dark:border-white/[0.1] p-1 bg-white dark:bg-white/[0.03]"
-          >
-            <button
-              type="button"
-              role="tab"
-              data-platform="ios"
-              aria-selected="true"
-              class="gloss-platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
-            >
-              iPhone
-            </button>
-            <button
-              type="button"
-              role="tab"
-              data-platform="android"
-              aria-selected="false"
-              class="gloss-platform-tab px-6 py-2 rounded-full text-sm font-medium transition-colors"
-            >
-              Android
-            </button>
-          </div>
-        </div>
-
-        {parts.map((part) => (
-          <div class="mt-16">
-            <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-2">
-              {part.kicker}
-            </p>
-            <h3 class="text-2xl md:text-3xl font-bold text-text mb-2" style="font-family: 'Lora', serif;">
-              {part.title}
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mb-8">{part.dek}</p>
-
-            <div class="flex flex-col gap-6">
-              {part.features.map((feature) => (
-                <article
-                  id={`feature-${feature.number}`}
-                  class="rounded-2xl border p-6 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06]"
-                >
-                  <div class="flex flex-col sm:flex-row gap-6">
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-start gap-4">
-                        <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-[#2a7a66]/10 text-[var(--gloss-sage)] flex items-center justify-center text-sm font-bold">
-                          {feature.number.toString().padStart(2, "0")}
-                        </span>
-                        <div class="min-w-0">
-                          <h4 class="text-text font-semibold text-lg mb-2 leading-snug">
-                            {feature.title}
-                          </h4>
-                          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-3">
-                            {feature.summary}
-                          </p>
-                          {feature.entry && (
-                            <p class="inline-block text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/[0.06] text-gray-600 dark:text-gray-400">
-                              {feature.entry}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    {hasVideo(feature.video) ? (
-                      <div class="gloss-demo-slot w-full sm:w-56 flex-shrink-0">
-                        <div class="gloss-frame gloss-frame--ios" data-frame="ios">
-                          <DeviceFrame device="iphone" orientation="portrait">
-                            <video
-                              class="demo-video"
-                              controls
-                              playsinline
-                              preload="metadata"
-                              data-base={videoBase}
-                              data-video={feature.video as string}
-                              src={platformSrc(videoBase, feature.video as string, "ios")}
-                              title={`${feature.title} — iPhone`}
-                            ></video>
-                          </DeviceFrame>
-                        </div>
-                        <div class="gloss-frame gloss-frame--android" data-frame="android" hidden>
-                          <DeviceFrame device="android-phone" orientation="portrait">
-                            <video
-                              class="demo-video"
-                              controls
-                              playsinline
-                              preload="metadata"
-                              data-base={videoBase}
-                              data-video={feature.video as string}
-                              src={platformSrc(videoBase, feature.video as string, "android")}
-                              title={`${feature.title} — Android`}
-                            ></video>
-                          </DeviceFrame>
-                        </div>
-                      </div>
-                    ) : (
-                      feature.screenshot && (
-                        <img
-                          src={feature.screenshot}
-                          alt={feature.title}
-                          class="w-full sm:w-48 flex-shrink-0 rounded-xl border border-gray-100 dark:border-white/[0.06] bg-[var(--gloss-paper)] object-cover object-top max-h-80"
-                          loading="lazy"
-                        />
-                      )
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        ))}
       </div>
+      <InterestForm />
     </section>
-
-    <!-- Everyday moments -->
-    <section class="py-16 px-6 bg-[#f7f3ea]/40 dark:bg-white/[0.02]">
-      <div class="container mx-auto max-w-5xl">
-        <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">
-          Everyday moments
-        </h2>
-        <p class="text-gray-600 dark:text-gray-400 mb-10 max-w-2xl">
-          A few common ways families use Gloss — at the table, on the sofa, or when a hard word stops the story.
-        </p>
-        <div class="grid md:grid-cols-2 gap-5">
-          {journeys.map((journey) => (
-            <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
-              <h3 class="font-semibold text-text mb-3">{journey.name}</h3>
-              <ol class="space-y-2">
-                {journey.steps.map((step, i) => (
-                  <li class="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#2a7a66]/10 text-[var(--gloss-sage)] text-xs font-bold flex items-center justify-center">
-                      {i + 1}
-                    </span>
-                    <span class="leading-relaxed pt-0.5">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Closing CTA -->
-    <section class="py-20 px-6 text-center">
-      <div class="container mx-auto max-w-2xl">
-        <h2 class="text-3xl font-bold text-text mb-4" style="font-family: 'Lora', serif;">
-          One word. Instant meaning. Back to reading.
-        </h2>
-        <p class="text-gray-600 dark:text-gray-400 mb-8">
-          Calm and private. Type a few letters if saying the word is hard — then back to the book.
-        </p>
-        <a
-          href="#feature-1"
-          class="inline-block px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity"
-        >
-          Explore the features
-        </a>
-        <p class="text-gray-600 dark:text-gray-400 mt-10">
-          No ads, no tracking. Help give every word a picture, in your family’s language —
-          <a href="/gloss/interest/" class="font-semibold text-[var(--gloss-sage)] hover:underline">express interest</a>.
-        </p>
-      </div>
-    </section>
-  </main>
-</Layout>
-
+    <FeatureRequestForm />
+  </div>
+</BackPage>
 <style>
-  /* Sage & Honey brand accent — scoped so site-wide tokens stay untouched. */
-  .gloss-page {
-    --gloss-sage: #2a7a66;
-    --gloss-teal: #387a88;
-    --gloss-honey: #e8a512;
-    --gloss-paper: #f7f3ea;
-  }
-
-  .gloss-platform-tab {
-    color: rgb(107 114 128);
-  }
-  .gloss-platform-tab.is-active {
-    background: var(--gloss-sage);
-    color: #fff;
-  }
-
-  .gloss-demo-slot :global(.device-frame) {
-    margin: 0 auto;
-    max-width: 240px;
-  }
+  .interest-kicker { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; }
+  .interest-title-accent { color: var(--gc-accent); }
+  .interest-intro { margin-top: 2rem; display: grid; gap: 1.25rem; max-width: 62rem; }
+  .interest-primary { color: hsl(var(--primary-foreground)); }
+  .interest-demo { margin-bottom: clamp(3rem, 7vw, 6rem); }
+  .interest-connect { padding-bottom: clamp(3rem, 7vw, 6rem); }
+  .interest-way { display: grid; grid-template-columns: 1.8rem minmax(0,1fr); gap: .75rem; }
+  .interest-note { border-left: 2px solid var(--gc-accent); padding-left: 1.25rem; max-width: 30rem; }
+  @media (min-width: 700px) { .interest-intro { grid-template-columns: 1fr 1fr; gap: 3rem; } }
 </style>
-
-<script is:inline>
-  (function () {
-    const KEY = "gloss-demo-platform";
-    const tabs = Array.from(document.querySelectorAll(".gloss-platform-tab"));
-    const frames = Array.from(document.querySelectorAll("[data-frame]"));
-
-    function detectDefault() {
-      const stored = localStorage.getItem(KEY);
-      if (stored === "ios" || stored === "android") return stored;
-      const ua = navigator.userAgent || "";
-      if (/Android/i.test(ua)) return "android";
-      if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
-      if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) {
-        return "ios";
-      }
-      return "ios";
-    }
-
-    function apply(next) {
-      localStorage.setItem(KEY, next);
-      tabs.forEach((tab) => {
-        const active = tab.dataset.platform === next;
-        tab.classList.toggle("is-active", active);
-        tab.setAttribute("aria-selected", active ? "true" : "false");
-      });
-      frames.forEach((frame) => {
-        const match = frame.dataset.frame === next;
-        frame.hidden = !match;
-        if (!match) {
-          const video = frame.querySelector("video");
-          if (video && !video.paused) video.pause();
-        }
-      });
-    }
-
-    tabs.forEach((tab) =>
-      tab.addEventListener("click", () => apply(tab.dataset.platform)),
-    );
-    apply(detectDefault());
-  })();
-</script>

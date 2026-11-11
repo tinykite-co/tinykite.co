@@ -6,7 +6,7 @@ Gloss and future TinyKite apps. Beta remains free.
 
 ## Public configuration
 
-- `/gloss/interest/`: real-screen silent walkthrough, existing practice and clearly
+- `/gloss/` (old `/gloss/interest/` redirects here): real-screen silent walkthrough, existing practice and clearly
   labelled planned games, worldwide language preference form, family membership,
   and feature requests.
 - `/gloss/back/`: shared dictionary goals, transparent cost explorer, proposed
@@ -27,11 +27,21 @@ Gloss and future TinyKite apps. Beta remains free.
   See [production cost report](gloss-production-costs.md). These are not quotes or
   a confirmed fundraising target. No existing or donated assets are deducted.
 - Existing language links redirect to the interest form with that preference filled.
-- Interest and feature-request forms prepare an email draft with a selectable-copy
-  fallback. Nothing is submitted until the person sends their email. The interest-first journey
-  asks the visitor to confirm they have sent it, then offers optional backing; it
-  cannot verify email delivery. No fake success
-  state, contact database, child details or payment reservation.
+- Interest is now email-first. The form calls the generated Connect service on
+  `https://gloss-edge.tinykite.co`, saves to PostgreSQL, then shows optional backing.
+  `/gloss/how-to-use/` retains the previous guide. Existing animation and captures
+  are unchanged. The homepage and shared navigation now lead with households,
+  Nesta, Gloss, our purpose and parent suggestions.
+- A same-tab opaque receipt lets visitors save language/reward preferences without
+  entering their email again. Only the receipt hash is stored server-side; email
+  is never put in browser storage or URLs. The browser stops reusing receipts after
+  24 hours. Signup errors preserve the input and do not reveal a success state.
+- Email ownership is not verified by signup; no automatic mailer is enabled.
+  Verification and unsubscribe delivery must precede campaign mail automation.
+  Synthetic live QA addresses use `@testing.tinykite.invalid` and are excluded
+  from genuine interest through the backend `synthetic` flag.
+- Feature requests still prepare an email draft with a copy fallback; those are
+  sent only when the visitor chooses to send them in their email app.
 
 ## Actual product evidence
 

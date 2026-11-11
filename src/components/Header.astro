@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+const links = [{href:"/nesta/", label:"Nesta"}, {href:"/gloss/", label:"Gloss"}, {href:"/#our-purpose", label:"Our purpose"}];
 ---
 
 <header id="site-header" class="sticky top-0 z-50 w-full backdrop-blur-md bg-brand-cream/80 dark:bg-brand-navy/80 border-b border-brand-mist dark:border-white/10 transition-all duration-300">
@@ -14,12 +15,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   <!-- Desktop Navigation -->
   <nav class="hidden lg:flex items-center gap-5 text-brand-slate dark:text-gray-300 text-sm font-medium">
-    <a href="/gloss/interest/" class="text-text hover:underline">Gloss</a>
-    <a href="/apps" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Apps</a>
-    <a href="/typeracer" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">TypeRacer</a>
-    <a href="/stopwatch" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Stopwatch</a>
-    <a href="/tools" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Tools</a>
-    <a href="/router" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Router Hub</a>
+    {links.map(link => <a href={link.href} class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">{link.label}</a>)}
   </nav>
 
   <!-- CTA & Theme Toggle -->
@@ -27,12 +23,12 @@ import ThemeToggle from "./ThemeToggle.astro";
     <div class="hidden lg:block">
       <ThemeToggle />
     </div>
-    <a href="https://chat.tinykite.co" class="site-header-workspace-btn hidden lg:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
-      Workspace
+    <a href="/#feature-request" class="site-header-suggestion-btn hidden lg:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
+      What does your child need?
     </a>
 
     <!-- Mobile Menu Icon -->
-    <button id="menu-icon" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-brand-navy dark:text-brand-cream focus:outline-none">
+    <button id="menu-icon" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden p-3 text-brand-navy dark:text-brand-cream focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
@@ -41,23 +37,18 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden absolute top-full mt-4 right-0 w-full bg-brand-cream/95 dark:bg-brand-navy/95 border border-brand-mist dark:border-white/10 rounded-2xl p-6 flex-col gap-4 text-center backdrop-blur-xl shadow-xl">
-    <a href="/gloss/interest/" class="text-text hover:underline">Gloss</a>
-    <a href="/apps" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Apps</a>
-    <a href="/typeracer" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">TypeRacer</a>
-    <a href="/stopwatch" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Stopwatch</a>
-    <a href="/tools" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Tools</a>
-    <a href="/router" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Router Hub</a>
+    {links.map(link => <a href={link.href} class="text-brand-navy dark:text-brand-cream text-lg font-medium">{link.label}</a>)}
     <div class="flex justify-center py-2">
       <ThemeToggle />
     </div>
-    <a href="https://chat.tinykite.co" class="site-header-workspace-btn text-brand-gold font-bold">Workspace</a>
+    <a href="/#feature-request" class="site-header-suggestion-btn text-brand-gold font-bold">What does your child need?</a>
   </div>
   </div>
 </header>
 
 <style>
   @media (display-mode: standalone) {
-    .site-header-workspace-btn {
+    .site-header-suggestion-btn {
       display: none !important;
     }
   }

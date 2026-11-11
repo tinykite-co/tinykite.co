@@ -6,21 +6,21 @@ import { BACKER_PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from "../../../lib/glo
 import "../interest/campaign.css";
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
-const isInterest = Astro.url.pathname.includes('/interest');
+const isInterest = Astro.url.pathname.replace(/\/$/, '') === '/gloss';
 ---
 <Layout title={title} description={description} image={catalog.product.icon} hideSiteChrome selfHostedFonts nativeScroll>
   <div class="gloss-page gloss-campaign campaign-frame">
     <header class="campaign-header">
       <div class="gc-shell campaign-navigation">
-        <a href="/gloss/interest/" class="campaign-brand" aria-label="Gloss by TinyKite"><span class="campaign-g">g<span>·</span></span><span>gloss<span class="campaign-by">by tinykite</span></span></a>
-        <nav aria-label="Gloss campaign"><a href="/gloss/interest/" aria-current={isInterest ? 'page' : undefined}>Express interest</a>{!isInterest && <a href="/gloss/back/" aria-current="page">Backers</a>}</nav>
+        <a href="/gloss/" class="campaign-brand" aria-label="Gloss by TinyKite"><span class="campaign-g">g<span>·</span></span><span>gloss<span class="campaign-by">by tinykite</span></span></a>
+        <nav aria-label="Gloss campaign"><a href="/gloss/" aria-current={isInterest ? 'page' : undefined}>Express interest</a>{!isInterest && <a href="/gloss/back/" aria-current="page">Backers</a>}</nav>
         <ThemeToggle />
       </div>
     </header>
     <main><slot /></main>
     <footer class="gc-shell campaign-footer">
       <div><strong>Built with family at heart.</strong><p class="gc-muted">From the very beginning. By Tiny Kite LTD.</p></div>
-      <div class="campaign-footer-links"><a href={TERMS_PATH}>Terms</a><a href={BACKER_PRIVACY_PATH}>Privacy</a><a href={`mailto:${SUPPORT_EMAIL}`}>Get in touch</a><a href="https://gloss.tinykite.co/">Try Gloss ↗</a></div>
+      <div class="campaign-footer-links"><a href="/">TinyKite</a><a href="/gloss/how-to-use/">How to use Gloss</a><a href={TERMS_PATH}>Terms</a><a href={BACKER_PRIVACY_PATH}>Privacy</a><a href={`mailto:${SUPPORT_EMAIL}`}>Get in touch</a><a href="https://gloss.tinykite.co/">Try Gloss ↗</a></div>
     </footer>
   </div>
 </Layout>

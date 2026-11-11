@@ -1,60 +1,50 @@
 ---
+import { buttonVariants } from "@refraction-ui/astro";
 import Layout from "../layouts/Layout.astro";
-import Preloader from "../components/Preloader.astro";
-import Hero from "../components/Hero.astro";
-import AppShowcase from "../components/AppShowcase.astro";
-import Principles from "../components/Principles.astro";
-import About from "../components/About.astro";
+import FeatureRequestForm from "../components/gloss/interest/FeatureRequestForm.astro";
+import "../components/gloss/interest/campaign.css";
 ---
-
-<Layout title="TinyKite - We build tomorrow.">
-  <Preloader />
-  <main class="bg-brand-cream min-h-screen text-brand-navy selection:bg-brand-gold selection:text-brand-navy">
-    <Hero />
-    <AppShowcase />
-    <Principles />
-    <About />
-
-    <!-- Scroll progress rail (trajectory-style section dots) -->
-    <nav id="scroll-rail" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-center gap-3 bg-white/50 dark:bg-white/10 backdrop-blur-md px-2.5 py-4 rounded-full border border-brand-navy/10" aria-label="Section navigation">
-      <a href="#hero" data-rail="hero" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="Top"></a>
-      <a href="#apps" data-rail="apps" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="Apps"></a>
-      <a href="#principles" data-rail="principles" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="One Account"></a>
-      <a href="#about" data-rail="about" class="rail-dot w-2 h-2 rounded-full bg-brand-navy/25 transition-all duration-300 hover:scale-125" aria-label="About"></a>
-    </nav>
-
-    <script>
-      // Highlight the rail dot for the section currently in view
-      (() => {
-        const dots = Array.from(document.querySelectorAll('.rail-dot')) as HTMLElement[];
-        const sections = dots
-          .map((d) => document.getElementById(d.dataset.rail || ''))
-          .filter((el): el is HTMLElement => !!el);
-        if (!dots.length || !sections.length) return;
-
-        let ticking = false;
-        const update = () => {
-          ticking = false;
-          const mid = window.scrollY + window.innerHeight * 0.4;
-          let active = 0;
-          sections.forEach((s, i) => {
-            if (s.offsetTop <= mid) active = i;
-          });
-          dots.forEach((d, i) => {
-            const on = i === active;
-            d.style.backgroundColor = on ? '#ffb23c' : '';
-            d.style.transform = on ? 'scale(1.6)' : '';
-            d.classList.toggle('bg-brand-navy/25', !on);
-          });
-        };
-        window.addEventListener('scroll', () => {
-          if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-          }
-        }, { passive: true });
-        update();
-      })();
-    </script>
+<Layout title="TinyKite — built with family at heart" description="Useful tools for children, built around the people who care for them. Nesta connects households. Gloss helps young readers understand their world." selfHostedFonts nativeScroll>
+  <main class="family-home gloss-campaign">
+    <section class="gc-shell family-hero">
+      <p class="gc-eyebrow">Small people. A world of possibility.</p>
+      <h1>Family at heart.<br /><span>From the very beginning.</span></h1>
+      <p class="hero-intro">A child wants to call a friend. Understand a word. Make a plan of their own.</p>
+      <p class="gc-muted hero-story">We’re building the everyday tools that help them do those things—with their grown-ups beside them. A little more independence. A world that opens at their pace.</p>
+      <div class="family-actions"><a href="#nesta" class:list={[buttonVariants({size:"lg"}),"gc-action"]}>Meet Nesta ↓</a><a href="/gloss/" class="gc-link">Discover Gloss ↗</a></div>
+    </section>
+    <section id="nesta" class="gc-shell family-products" aria-labelledby="nesta-title">
+      <article class="gc-panel nesta-story">
+        <p class="gc-eyebrow">Nesta · households, connected</p>
+        <h2 id="nesta-title">Their people.<br />Within reach.</h2>
+        <p>A grandparent. Your closest friends. The family from school. Nesta starts with the households you know, and the specific people you approve for your child.</p>
+        <p class="gc-muted">We’re building a messenger where children can stay in touch on their own device, without borrowing your phone or opening up their world to strangers.</p>
+        <ol class="household-steps"><li><span>01</span>Connect your household with another.</li><li><span>02</span>Parents approve who each child can contact.</li><li><span>03</span>Children find their people in one simple place.</li></ol>
+        <p class="gc-muted product-note">In beta. Our direction: messaging, calls and family plans together. Availability varies as we build and test.</p>
+        <a href="/nesta/" class="gc-link">Explore Nesta ↗</a>
+      </article>
+      <article class="gc-panel gloss-story">
+        <p class="gc-eyebrow">Gloss · little pictures, bigger understanding</p>
+        <h2>The next word<br />opens a door.</h2>
+        <p>A picture dictionary for young readers, and grown-ups learning another language. A place to understand a word, hear it, save it and practise it.</p>
+        <p class="gc-muted">Our ambition is a reviewed library for the words children meet in books through Year 13, with languages that keep home close. Useful explanations to return to, without asking an AI to invent an answer each time.</p>
+        <div class="gloss-word"><span aria-hidden="true">g<span>·</span></span><p>Look it up.<br />Picture it.<br />Make it yours.</p></div>
+        <a href="/gloss/" class="gc-link">Watch Gloss work & express interest ↗</a>
+      </article>
+    </section>
+    <section id="our-purpose" class="gc-shell family-purpose" aria-labelledby="purpose-title">
+      <p class="gc-eyebrow">Why TinyKite exists</p>
+      <h2 id="purpose-title">Give them the tools.<br /><span>Let them grow.</span></h2>
+      <div class="purpose-copy"><p>“Tiny” is where a child begins, not a limit on who they can become. We want useful tools to be within every child’s reach, designed around their curiosity and the people who care for them.</p><p class="gc-muted">An ordinary need shouldn’t require your phone, an open social feed, or an unreviewed AI conversation. We’re building focused spaces for learning and connection, with family guidance part of the design from the start.</p></div>
+      <div class="family-promise"><strong>One family. One membership.</strong><p class="gc-muted">Gloss, Nesta and the family products we build next will belong to one membership. Free while we’re in beta. Optional backing helps us build; it isn’t required to try Gloss.</p></div>
+    </section>
+    <FeatureRequestForm />
   </main>
 </Layout>
+<style>
+@font-face{font-family:Nunito;src:url('/fonts/nunito-latin.woff2') format('woff2');font-weight:200 900;font-display:swap}
+:global(body){font-family:Nunito,system-ui,sans-serif}
+.family-home{--gloss-sage:#2a7a66;background:var(--gc-paper)}:global(.dark) .family-home{--gloss-sage:#80cbb5}
+.family-hero{padding-block:clamp(4rem,9vw,8rem)}h1{font-size:clamp(2.65rem,6.7vw,5.6rem);font-weight:800;letter-spacing:-.05em;line-height:1.06;margin-top:1.5rem;max-width:60rem;text-wrap:balance}h1 span,.family-purpose h2 span{color:var(--gc-accent)}.hero-intro{font-size:clamp(1.2rem,2.2vw,1.65rem);max-width:42rem;margin-top:2rem;line-height:1.5}.hero-story{max-width:39rem;margin-top:1rem;line-height:1.8}.family-actions .gc-action{color:hsl(var(--primary-foreground))}.family-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;margin-top:2rem}.family-products{display:grid;grid-template-columns:1.15fr 1fr;gap:1.5rem;align-items:stretch}.family-products article{display:flex;flex-direction:column;gap:1.2rem;padding:clamp(1.5rem,4vw,3rem)}h2{font-size:clamp(2rem,3.8vw,3.25rem);line-height:1.12;font-weight:750;letter-spacing:-.04em}.family-products p{line-height:1.75}.family-products a{margin-top:auto;font-weight:700}.nesta-story{border-top:4px solid var(--gc-accent)}.gloss-story{border-top:4px solid var(--color-brand-gold,#bd861e)}.household-steps{display:grid;gap:1rem;margin-block:.5rem}.household-steps li{display:flex;gap:1rem;align-items:baseline}.household-steps span{font-size:.75rem;color:var(--gc-accent);font-weight:800}.product-note{font-size:.78rem}.gloss-word{display:flex;gap:1.5rem;align-items:center;padding-block:1rem}.gloss-word>span{font-size:5rem;font-weight:800;color:var(--gc-accent);line-height:1}.gloss-word>span span{color:var(--color-brand-gold,#bd861e)}.gloss-word p{font-weight:700}.family-purpose{padding-block:clamp(4rem,8vw,7rem)}.family-purpose h2{margin-top:1rem}.purpose-copy{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;line-height:1.9;margin-top:2rem}.family-promise{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--gc-border);max-width:45rem}.family-promise strong{font-size:1.3rem}.family-promise p{margin-top:.7rem;line-height:1.8}
+@media(max-width:760px){.family-products,.purpose-copy{grid-template-columns:1fr}.purpose-copy{gap:1rem}.family-hero{padding-top:3rem}}
+</style>

@@ -3,29 +3,43 @@ import { buttonVariants } from "@refraction-ui/astro";
 import { pictureFund, pounds } from "../../../lib/gloss/picture-fund";
 import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
 import { WORLD_LANGUAGES } from "./languages";
-import { INTEREST_ROLES, MAX_LANGUAGE_CHOICES, MAX_LANGUAGE_LENGTH, MAX_MESSAGE_LENGTH } from "./interest-rules";
+import { MAX_LANGUAGE_CHOICES, MAX_LANGUAGE_LENGTH } from "./interest-rules";
 import "./campaign.css";
 
 interface Props { mode?: "reader" | "backer"; id?: string; }
 const { mode = "reader", id = mode === "backer" ? "backing-interest" : "reading-interest" } = Astro.props;
 const fieldId = (field: string) => `${id}-${field}`;
-const configuration = JSON.stringify({ recipient: SUPPORT_EMAIL, rewards: mode === "backer" ? pictureFund.tiers : [], currency: pictureFund.currency, mode });
+const configuration = JSON.stringify({ rewards: pictureFund.tiers, mode, endpoint: import.meta.env.PUBLIC_INTEREST_API_URL || "https://gloss-edge.tinykite.co" });
 ---
 <form id={id} class="gc-panel interest-form gc-flow" data-gloss-interest data-mode={mode} data-configuration={configuration} aria-labelledby={fieldId("title")}>
   <header>
     <p class="gc-eyebrow">{mode === "backer" ? "Your backing, your interests" : "Let’s build this together"}</p>
-    <h2 id={fieldId("title")} class="mt-3 text-2xl font-bold">{mode === "backer" ? "Choose what matters to you" : "Tell us what would help you"}</h2>
+    <h2 id={fieldId("title")} class="mt-3 text-2xl font-bold">{mode === "backer" ? "Your optional backing preferences" : "Be part of the story"}</h2>
     <p class="gc-muted mt-3 text-sm leading-relaxed">Interest only, for grown-ups. No payment, no reservation, and no child’s personal information.</p>
   </header>
 
-  {mode === "backer" && <div data-reward-field>
+  <div data-signup-fields>
+    <label class="gc-label" for={fieldId("email")}>Your email address</label>
+    <input id={fieldId("email")} name="email" data-interest-email type="email" autocomplete="email" inputmode="email" maxlength="254" required class="gc-input" placeholder="you@example.com" aria-describedby={fieldId("notice")} />
+    <p id={fieldId("notice")} class="gc-muted mt-3 text-xs leading-relaxed">By choosing “Express interest”, you ask Tiny Kite LTD to keep you updated about Gloss, Nesta and our family products. This saves your email; it doesn’t create an account or start a subscription. Ask us to remove it at any time. <a class="gc-link" href="/gloss/back/privacy/">Privacy</a></p>
+    <button type="submit" data-register-interest class:list={[buttonVariants({size:"lg"}),"gc-action interest-submit mt-4 w-full"]}>Express interest</button>
+  </div>
+  <p data-save-status class="gc-muted text-sm leading-relaxed" role="status" aria-live="polite"></p>
+  <section data-optional-backing hidden class="optional-backing" aria-labelledby={fieldId("optional-title")}>
+    <h3 id={fieldId("optional-title")} data-optional-heading tabindex="-1" class="text-xl font-bold">You’re on the list. Thank you.</h3>
+    <p class="gc-muted mt-3 text-sm leading-relaxed">You can stop here, or help shape what comes next. No payment or commitment.</p>
+    {mode === "reader" && <div class="mt-4"><a data-optional-backing-link href="/gloss/back/" class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action w-full"]}>Explore optional backing ↗</a><a href="https://gloss.tinykite.co/" class="gc-link mt-4 inline-block text-sm">Or try Gloss now ↗</a></div>}
+  </section>
+  <div data-preferences hidden class="gc-flow">
+    <p class="gc-eyebrow">Make it yours · optional</p>
+  <div data-reward-field>
     <label class="gc-label" for={fieldId("reward")}>Your preferred backer reward</label>
     <select id={fieldId("reward")} name="reward" class="gc-input" data-reward-select>
       <option value="">I’m interested; I haven’t chosen a reward</option>
       {pictureFund.tiers.map(reward => <option value={reward.id}>{reward.title} · {pounds(reward.price)}</option>)}
     </select>
     <p class="gc-muted mt-2 text-xs">The prices are proposed one-off rewards. We aren’t taking payments yet.</p>
-  </div>}
+  </div>
 
   <fieldset class="min-w-0">
     <legend class="gc-label">Which languages belong in your world?</legend>
@@ -48,41 +62,9 @@ const configuration = JSON.stringify({ recipient: SUPPORT_EMAIL, rewards: mode =
     <p class="gc-muted mt-3 text-xs leading-relaxed">Your choices help us plan. They don’t earmark funding or promise that a language is ready.</p>
   </fieldset>
 
-  <div>
-    <label class="gc-label" for={fieldId("role")}>What brings you here?</label>
-    <select id={fieldId("role")} name="role" class="gc-input" data-interest-role>
-      {Object.entries(INTEREST_ROLES).filter(([value]) => mode === "backer" || value !== "backer").map(([value, label]) => <option value={value} selected={value === (mode === "backer" ? "backer" : "reader")}>{label}</option>)}
-    </select>
+    <button type="submit" data-save-preferences class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action w-full"]}>Save my preferences</button>
+    <p data-preference-status role="status" aria-live="polite" class="gc-muted text-sm"></p>
   </div>
-  <div>
-    <label class="gc-label" for={fieldId("message")}>Anything you’d like us to know? <span class="gc-muted font-normal">Optional</span></label>
-    <textarea id={fieldId("message")} name="message" data-interest-message class="gc-input" rows="3" maxlength={MAX_MESSAGE_LENGTH} placeholder="A difficult word, a language variety, or how you’d like to help…"></textarea>
-    <p class="gc-muted mt-2 text-xs">Please don’t include children’s details, passwords, API keys or account access.</p>
-  </div>
-  <div>
-    <a data-email-draft href={`mailto:${SUPPORT_EMAIL}?subject=Gloss%3A%20expression%20of%20interest`} class:list={[buttonVariants({ size: "lg" }), "gc-action interest-submit w-full"]}>Open my email draft <span aria-hidden="true">↗</span></a>
-    <p data-handoff-status class="gc-muted mt-3 text-xs leading-relaxed" role="status">Your email app opens with these preferences. Nothing reaches us until you review and send the email.</p>
-  </div>
-  <details class="email-fallback" data-interest-fallback>
-    <summary class="cursor-pointer text-sm font-medium">No email app set up?</summary>
-    <p class="gc-muted mt-3 text-sm">Write to <a href={`mailto:${SUPPORT_EMAIL}`} class="gc-link">{SUPPORT_EMAIL}</a> using your usual email service. You can copy your draft below.</p>
-    <label class="sr-only" for={fieldId("draft")}>Your email draft to copy</label>
-    <textarea id={fieldId("draft")} data-draft-preview readonly class="gc-input mt-3 text-sm" rows="7"></textarea>
-  </details>
-  {mode === "reader" && <>
-    <div data-interest-confirmation hidden class="interest-confirmation">
-      <p class="gc-muted text-sm leading-relaxed">After you’ve sent your email, you can continue here.</p>
-      <button type="button" data-confirm-interest class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action mt-3 w-full"]}>I’ve sent my interest email</button>
-      <p class="gc-muted mt-2 text-xs leading-relaxed">This is your confirmation; we can’t verify email delivery here.</p>
-    </div>
-    <section data-optional-backing hidden class="optional-backing" aria-labelledby={fieldId("optional-title")}>
-      <p class="gc-eyebrow">An optional next step</p>
-      <h3 id={fieldId("optional-title")} data-optional-heading tabindex="-1" class="mt-3 text-xl font-bold">Want to help us build it?</h3>
-      <p class="gc-muted mt-3 text-sm leading-relaxed">If you’d also like to support the picture dictionary, you can explore the proposed backer rewards. There’s no obligation, and payments aren’t open.</p>
-      <a data-optional-backing-link href="/gloss/back/" class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action mt-4 w-full"]}>Explore optional backing <span aria-hidden="true">↗</span></a>
-      <a href="https://gloss.tinykite.co/" class="gc-link mt-4 inline-block text-sm font-semibold">Skip this and try Gloss ↗</a>
-    </section>
-  </>}
   <noscript><p class="gc-muted text-sm">The language selector needs JavaScript. You can still email <a class="gc-link" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> with your language preferences{mode === "backer" ? " and the reward you’re interested in" : ""}.</p></noscript>
 </form>
 <script>
@@ -107,6 +89,6 @@ const configuration = JSON.stringify({ recipient: SUPPORT_EMAIL, rewards: mode =
   .interest-submit { color: hsl(var(--primary-foreground)); white-space: normal; height: auto; }
   .email-fallback { border-top: 1px solid var(--gc-border); padding-top: 1rem; }
   .interest-confirmation,.optional-backing { border-top: 1px solid var(--gc-border); padding-top: 1.5rem; }
-  .interest-confirmation[hidden],.optional-backing[hidden] { display: none; }
+  [data-preferences][hidden],[data-signup-fields][hidden],.optional-backing[hidden] { display: none; }
   @media (max-width: 359px) { .language-options { grid-template-columns: minmax(0,1fr); } }
 </style>

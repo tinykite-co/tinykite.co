@@ -1,14 +1,13 @@
-import { buildInterestMailto, interestPrefill, matchingLanguages, normalizeLanguage, searchableLanguage, MAX_LANGUAGE_CHOICES, type InterestDraft, type InterestRole, type MailtoConfiguration } from "./interest-rules";
-import { advanceInterestJourney, optionalBackingLink, type InterestJourney, type InterestJourneyEvent } from "./interest-journey";
+import { interestPrefill, matchingLanguages, normalizeLanguage, searchableLanguage, MAX_LANGUAGE_CHOICES } from "./interest-rules";
+import { registerInterest, updatePreferences, readReceipt, rememberReceipt, newReceipt, type InterestReceipt } from "./interest-api";
 
-/** Required controls are local to one form so both modes can safely coexist. */
+/** Find a required control within its own form. */
 function control<ElementType extends Element>(form: HTMLFormElement, selector: string): ElementType {
   const element = form.querySelector<ElementType>(selector);
   if (!element) throw new Error(`Missing interest form control: ${selector}`);
   return element;
 }
-
-/** Attach progressive-enhancement behavior once to each interest form. */
+/** Initialize each email-first form once. */
 export function initializeInterestForms(): void {
   document.querySelectorAll<HTMLFormElement>("[data-gloss-interest]").forEach(form => {
     if (form.dataset['initialized']) return;
@@ -16,70 +15,52 @@ export function initializeInterestForms(): void {
     initializeInterestForm(form);
   });
 }
-
+function showSaved(form: HTMLFormElement): void {
+  control<HTMLElement>(form,'[data-signup-fields]').hidden = true;
+  control<HTMLInputElement>(form,'[data-interest-email]').required = false;
+  control<HTMLElement>(form,'[data-optional-backing]').hidden = false;
+  control<HTMLElement>(form,'[data-preferences]').hidden = false;
+}
 function initializeInterestForm(form: HTMLFormElement): void {
-  const configuration = JSON.parse(form.dataset['configuration'] ?? '{}') as MailtoConfiguration;
+  const configuration = JSON.parse(form.dataset['configuration'] ?? '{}') as {endpoint:string; rewards:{id:string}[]};
   const prefill = interestPrefill(location.search, configuration.rewards.map(reward => reward.id));
-  const selectedLanguages = new Set(prefill.languages);
-  const rewardSelect = form.querySelector<HTMLSelectElement>('[data-reward-select]');
-  if (rewardSelect) rewardSelect.value = prefill.rewardId;
-  if (prefill.rewardId && rewardSelect) {
-    control<HTMLElement>(form, '[data-reward-field]').hidden = false;
-    control<HTMLSelectElement>(form, '[data-interest-role]').value = 'backer';
-  }
-  const updateDraft = () => renderDraft(form, configuration, selectedLanguages, rewardSelect?.value ?? '');
-  const updateLanguages = () => { renderLanguages(form, selectedLanguages); updateDraft(); };
-  attachLanguageControls(form, selectedLanguages, updateLanguages);
-  form.addEventListener('input', updateDraft);
-  form.addEventListener('change', updateDraft);
-  form.addEventListener('submit', event => event.preventDefault());
-  attachRewardControls(form, configuration, rewardSelect, updateDraft);
-  if (form.dataset['mode'] === 'reader') attachInterestJourney(form);
-  updateLanguages();
-}
-
-function renderDraft(form: HTMLFormElement, configuration: MailtoConfiguration, selectedLanguages: Set<string>, rewardId: string): void {
-  const draft: InterestDraft = {
-    languages: [...selectedLanguages], rewardId,
-    role: control<HTMLSelectElement>(form, '[data-interest-role]').value as InterestRole,
-    message: control<HTMLTextAreaElement>(form, '[data-interest-message]').value,
-  };
-  const href = buildInterestMailto(draft, configuration);
-  control<HTMLAnchorElement>(form, '[data-email-draft]').href = href;
-  control<HTMLTextAreaElement>(form, '[data-draft-preview]').value = new URL(href).searchParams.get('body') ?? '';
-  const backingLink = form.querySelector<HTMLAnchorElement>('[data-optional-backing-link]');
-  if (backingLink) backingLink.href = optionalBackingLink([...selectedLanguages], backingLink.href);
-}
-
-function attachInterestJourney(form: HTMLFormElement): void {
-  let state: InterestJourney = 'editing';
-  const confirmation = control<HTMLElement>(form, '[data-interest-confirmation]');
-  const backing = control<HTMLElement>(form, '[data-optional-backing]');
-  const advance = (event: InterestJourneyEvent) => {
-    state = advanceInterestJourney(state, event);
-    confirmation.hidden = state !== 'handoff';
-    backing.hidden = state !== 'self-confirmed';
-  };
-  control<HTMLAnchorElement>(form, '[data-email-draft]').addEventListener('click', () => advance('draft-opened'));
-  const fallback = control<HTMLDetailsElement>(form, '[data-interest-fallback]');
-  fallback.addEventListener('toggle', () => { if (fallback.open) advance('fallback-opened'); });
-  control<HTMLButtonElement>(form, '[data-confirm-interest]').addEventListener('click', () => {
-    advance('confirm-sent');
-    if (state === 'self-confirmed') control<HTMLElement>(form, '[data-optional-heading]').focus();
-  });
-}
-
-function attachRewardControls(form: HTMLFormElement, configuration: MailtoConfiguration, select: HTMLSelectElement | null, update: () => void): void {
-  if (select) document.querySelectorAll<HTMLAnchorElement>('[data-reward-id]').forEach(link => {
-    link.addEventListener('click', () => {
-      const rewardId = link.dataset['rewardId'] ?? '';
-      if (!configuration.rewards.some(reward => reward.id === rewardId)) return;
-      select.value = rewardId;
-      update();
-    });
-  });
-  control<HTMLAnchorElement>(form, '[data-email-draft]').addEventListener('click', () => {
-    control<HTMLElement>(form, '[data-handoff-status]').textContent = 'Your email app should open. Review and send the draft there; nothing has been submitted or reserved on this page.';
+  let receipt: InterestReceipt = readReceipt() ?? newReceipt();
+  const selectedLanguages = new Set(prefill.languages.length ? prefill.languages : receipt.languages);
+  const reward = control<HTMLSelectElement>(form,'[data-reward-select]');
+  reward.value = prefill.rewardId || receipt.rewardId;
+  attachLanguageControls(form, selectedLanguages, () => renderLanguages(form,selectedLanguages));
+  renderLanguages(form,selectedLanguages);
+  if (receipt.saved) showSaved(form);
+  document.querySelectorAll<HTMLAnchorElement>('[data-reward-id]').forEach(link => link.addEventListener('click',()=>{
+    const rewardId=link.dataset['rewardId'] ?? '';
+    if(configuration.rewards.some(item=>item.id===rewardId)) reward.value=rewardId;
+  }));
+  let submitting=false;
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if(submitting || !form.reportValidity()) return;
+    submitting=true;
+    const wasSaved=receipt.saved;
+    const status=control<HTMLElement>(form, wasSaved ? '[data-preference-status]' : '[data-save-status]');
+    const buttons=form.querySelectorAll<HTMLButtonElement>('button[type="submit"]');
+    buttons.forEach(button=>button.disabled=true);
+    status.textContent='Saving…';
+    try {
+      if(wasSaved) {
+        await updatePreferences(configuration.endpoint,receipt.token,[...selectedLanguages],reward.value);
+        receipt={...receipt,languages:[...selectedLanguages],rewardId:reward.value};
+        status.textContent='Your preferences are saved. No payment or reservation has been made.';
+      } else {
+        await registerInterest(configuration.endpoint,control<HTMLInputElement>(form,'[data-interest-email]').value,receipt.token);
+        receipt={...receipt,saved:true};
+        status.textContent='Your interest has been saved.';
+        showSaved(form);
+        control<HTMLElement>(form,'[data-optional-heading]').focus();
+      }
+      rememberReceipt(receipt);
+    } catch(error) {
+      status.textContent=error instanceof Error ? error.message : 'We couldn’t save this. Please try again.';
+    } finally { submitting=false;buttons.forEach(button=>button.disabled=false); }
   });
 }
 

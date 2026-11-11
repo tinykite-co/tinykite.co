@@ -6,51 +6,19 @@ import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
 const LAST_UPDATED = "11 November 2026";
 
 const sections = [
-  {
-    title: "Who we are",
-    body: ["Tiny Kite LTD (“TinyKite”), a company in the United Kingdom, runs the Gloss picture-dictionary campaign and decides what happens to backers’ details."],
-  },
-  {
-    title: "What we keep",
-    body: [
-      "Your name, email address, country, the reward tier, the amount, and the date. Stripe sends us these when you pay.",
-      "We never see or keep your card details. Stripe handles the payment under its own privacy policy.",
-    ],
-  },
-  {
-    title: "Why we keep it",
-    body: [
-      "To deliver your rewards, to send you campaign updates and the spending report you were promised, and to handle cancellations or refunds under the terms of your pledge. This is our contract with you.",
-      "If you email to offer credits, images or language review, we keep your message and contact details so we can coordinate that contribution. Never send account credentials.",
-      "To keep the tax and accounting records UK law requires.",
-      "If you choose a reward that names your family, we use the name you give us for that, and only that.",
-    ],
-  },
-  {
-    title: "Who sees it",
-    body: ["Stripe, which processes the payment. Nobody else. We don’t sell backers’ details or use them for advertising."],
-  },
-  {
-    title: "How long we keep it",
-    body: ["Six years after the payment, because UK tax law requires it. Then we delete it."],
-  },
-  {
-    title: "Your rights",
-    body: [
-      `You can ask for a copy of your details, ask us to correct them, or stop campaign emails at any time, by emailing ${SUPPORT_EMAIL}. You can complain to the Information Commissioner’s Office (ico.org.uk).`,
-    ],
-  },
-  {
-    title: "Children",
-    body: ["Only adults can back a campaign. We don’t knowingly take payment from, or keep details about, children here. How the app treats children’s information is in the Gloss Privacy Policy."],
-  },
+  { title: "Who we are", body: ["Tiny Kite LTD runs this interest list for Gloss, Nesta and future TinyKite family products."] },
+  { title: "What expressing interest saves", body: ["Your email address, the product, the date and the version of the signup notice you agreed to. If you choose to save them, we also keep your language preferences and preferred proposed backer reward. We do not ask for children’s details.", "Submitting the form does not create an account, verify ownership of your email, reserve a reward or take a payment. Backing is a preview; payments are not open."] },
+  { title: "Why we keep it", body: ["You ask us to keep you updated about these family products. Optional preferences help us understand what people would like us to build. You can withdraw that request at any time.", "If you send a feature suggestion or offer to help by email, we keep your message so we can respond and coordinate with you."] },
+  { title: "Storage and access", body: ["Interest is stored in TinyKite’s backend on Microsoft Azure. Authorized TinyKite operators can access it to manage interest and requests. We do not sell this list or publish email addresses.", "Your browser keeps an opaque receipt and your saved preferences in this tab’s session storage so you can continue to the backing page without entering your email again. The form stops using that receipt after one day. We do not put your email in the page address or browser storage."] },
+  { title: "Removal and corrections", body: [`We keep your expression of interest while we manage this beta and campaign, unless you ask us to remove it earlier. To withdraw interest, correct your details or request a copy or deletion, email ${SUPPORT_EMAIL} from the address you used. We will handle the request without requiring a TinyKite account.`, "If paid backing opens later, its payment and retention terms will be presented before you pay."] },
+  { title: "For grown-ups", body: ["This list is for adults. Please do not submit children’s email addresses, names, conversations or other personal information. The app’s separate privacy notice covers using Gloss itself."] },
 ];
 ---
 
-<BackPage title="Backer privacy notice — Gloss" description="What TinyKite keeps about people who back the Gloss picture dictionary, and why.">
+<BackPage title="Interest & backing privacy notice — Gloss" description="What TinyKite saves when you express interest, and how to ask us to remove it.">
   <section class="pt-32 pb-12 px-6">
     <div class="container mx-auto max-w-2xl">
-      <h1 class="text-4xl font-bold mb-2 text-text" style="font-family: 'Lora', serif;">Backer privacy notice</h1>
+      <h1 class="text-4xl font-bold mb-2 text-text" style="font-family: 'Lora', serif;">Interest & backing privacy notice</h1>
       <p class="text-sm text-gray-500 mb-8">Last updated: {LAST_UPDATED}. For the app itself, see the <a href="/gloss/privacy/" class="text-[var(--gloss-sage)] hover:underline">Gloss Privacy Policy</a>.</p>
       {sections.map((section) => (
         <div class="mb-6">
