@@ -15,7 +15,8 @@ const fieldId = (field: string) => `${id}-${field}`;
     <div><label class="gc-label" for={fieldId("benefit")}>How would that help? <span class="gc-muted font-normal">Optional</span></label><textarea id={fieldId("benefit")} name="benefit" data-feature-benefit maxlength={FEATURE_BENEFIT_LIMIT} rows="2" class="gc-input" placeholder="Tell us about the moment it would make easier."></textarea></div>
     <div><button type="submit" class:list={[buttonVariants({size:"lg"}),"gc-action feature-request-submit"]}>Open my email draft <span aria-hidden="true">↗</span></button><p data-feature-status class="gc-muted mt-3 text-xs leading-relaxed" role="status">This opens your email app. Nothing is submitted until you review the draft and send it yourself.</p></div>
     <details class="feature-request-fallback"><summary>No email app set up?</summary><p class="gc-muted mt-3 text-sm leading-relaxed">Copy the draft below into your usual email service and send it to <a href={`mailto:${SUPPORT_EMAIL}`} class="gc-link">{SUPPORT_EMAIL}</a>.</p><label class="sr-only" for={fieldId("draft")}>Feature request draft to copy</label><textarea id={fieldId("draft")} data-feature-preview readonly rows="8" class="gc-input mt-3 text-sm" placeholder="Your draft will appear here as you describe your idea."></textarea></details>
-    <noscript><p class="gc-muted text-sm">This draft builder needs JavaScript. Email your idea directly to <a class="gc-link" href={`mailto:${SUPPORT_EMAIL}?subject=TinyKite%20feature%20idea`}>{SUPPORT_EMAIL}</a>.</p><style>.feature-request-submit{display:none!important}</style></noscript>
+    <noscript><p class="gc-muted text-sm">This draft builder needs JavaScript. Email your idea directly to <a class="gc-link" href={`mailto:${SUPPORT_EMAIL}?subject=TinyKite%20feature%20idea`}>{SUPPORT_EMAIL}</a>.</p><style>
+  form { scroll-margin-top: 6rem; }.feature-request-submit{display:none!important}</style></noscript>
   </form>
 </section>
 <script>
