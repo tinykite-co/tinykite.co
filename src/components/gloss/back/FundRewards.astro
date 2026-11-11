@@ -4,17 +4,17 @@ import { pictureFund, pounds } from "../../../lib/gloss/picture-fund";
 import { liveRewardLink } from "../../../lib/gloss/picture-fund-rules";
 import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
 ---
-<div class="grid gap-4 sm:grid-cols-2">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
   {pictureFund.tiers.map((tier) => {
     const checkout = liveRewardLink(pictureFund, tier.id);
     const contact = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Gloss campaign: ${tier.title}`)}`;
-    return <article class="flex flex-col rounded-2xl border border-border bg-card p-6">
+    return <article class="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-6">
       <p class="text-sm text-muted-foreground">One-off backing</p>
       <h3 class="mt-2 text-xl font-bold text-text">{tier.title}</h3>
       <p class="mt-3 text-3xl font-bold text-text">{pounds(tier.price)}</p>
       <ul class="my-6 flex-1 space-y-3 text-text">{tier.benefits.map(benefit => <li>· {benefit}</li>)}</ul>
       <p class="mb-4 text-sm text-muted-foreground">{tier.months ? "Fixed-term membership. No automatic renewal." : "A contribution only; no paid membership included."}</p>
-      <a href={checkout ?? contact} class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12 whitespace-normal text-center"]}>{checkout ? `Back for ${pounds(tier.price)}` : `Register interest: ${tier.title}`}</a>
+      <a href={checkout ?? contact} class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12 h-auto py-3 max-w-full !whitespace-normal text-center"]}>{checkout ? `Back for ${pounds(tier.price)}` : `Register interest: ${tier.title}`}</a>
     </article>;
   })}
 </div>

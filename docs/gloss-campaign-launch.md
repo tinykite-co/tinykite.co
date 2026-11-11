@@ -66,7 +66,8 @@ publication rights. Never solicit credentials or assume credits can be transferr
 
 ## Verification
 
-94 site tests and 45 Stripe tests passed; production Astro build succeeded.
+94 site tests, 4 built-page regressions and 45 Stripe tests passed; production Astro build succeeded.
 Astro check reports the same 135 pre-existing errors on unchanged HEAD and this
-revision; no errors added by this change. Responsive browser checks are recorded
-in the task. No real payment or paid entitlement has been claimed as tested.
+revision; no errors added by this change. Responsive browser checks covered 320px and 390px phones, 820px tablets and
+1280px desktops, in light and dark appearances. Checks caught and corrected
+tablet header crowding and unwrapped reward labels on 320px phones. No real payment or paid entitlement has been claimed as tested.
