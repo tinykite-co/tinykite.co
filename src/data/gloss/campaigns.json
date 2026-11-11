@@ -24,10 +24,10 @@
           "body": "We re-checked all 65,019 words against a guide for what is suitable for children."
         }
       ],
-      "samplesIntro": "Pictures are the gap: 1,200 words have one. Your backing pays for the next 5,000, and for the games that bring words back.",
+      "samplesIntro": "Pictures are a work in progress. Our goal is to cover every word in the books young readers read through Year 13, with pictures matched to meanings.",
       "samples": [],
       "buys": [
-        "A checked picture for each of the 5,000 words British children look up most",
+        "Reviewed pictures for the meanings of words encountered in books read through Year 13",
         "UK teachers and parents, paid to check those words, their pictures and their sounds",
         "A crossword and a letter-tile game built from each child’s own words",
         "A year of servers for the British dictionary"
@@ -87,7 +87,7 @@
         },
         "pictures": {
           "title": "A picture isn’t a shortcut",
-          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and cricket bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships. 1,200 words have one today; this campaign pays for 5,000.",
+          "body": "People remember pictures better than words — psychologists call it the picture superiority effect. One explanation, Allan Paivio’s dual coding, is that a word with a picture is stored twice: once as language and once as an image. But it has to be the right picture. Search “bat” and cricket bats and animals arrive together; search an innocent word and you can’t know what comes back. In Gloss each picture belongs to one meaning and is checked before it ships. Our goal is vocabulary coverage across the books young readers read through Year 13. Funding helps us expand and review the picture library towards that goal.",
           "citations": [
             {
               "label": "The picture superiority effect, with references to Paivio’s dual-coding research",
@@ -142,7 +142,7 @@
         }
       ],
       "buys": [
-        "American spellings and an American voice for the most-read 5,000 words",
+        "American spellings and an American voice for vocabulary in books read through Year 13",
         "American meanings for every word where America means something else",
         "US teachers and parents, paid to check the American dictionary",
         "A crossword and a letter-tile game built from each kid’s own words"
@@ -271,7 +271,7 @@
         }
       ],
       "buys": [
-        "Australian teachers and parents, paid to check the 5,000 words children here look up most",
+        "Australian teachers and parents, paid to check vocabulary in books read through Year 13",
         "Australian words and meanings, added where the British ones don’t fit",
         "Every one of those words recorded in an Australian voice",
         "Pictures redrawn where today’s don’t look like home"
@@ -373,7 +373,7 @@
         }
       ],
       "buys": [
-        "Canadian teachers and parents, paid to check the 5,000 words kids here look up most",
+        "Canadian teachers and parents, paid to check vocabulary in books read through Year 13",
         "Canadian spellings and words, so the dictionary agrees with your child’s teacher",
         "Those words recorded in a Canadian voice",
         "Pictures redrawn where today’s don’t match life in Canada"
@@ -478,7 +478,7 @@
         }
       ],
       "buys": [
-        "Indian teachers and parents, paid to check the 5,000 words children look up most",
+        "Indian teachers and parents, paid to check vocabulary in books read through Year 13",
         "Indian English meanings, written beside the book’s meanings",
         "Recordings in an Indian English voice",
         "Pictures redrawn wherever today’s don’t look like an Indian home"
@@ -580,7 +580,7 @@
         }
       ],
       "buys": [
-        "New Zealand teachers and parents, paid to check the 5,000 words children here look up most",
+        "New Zealand teachers and parents, paid to check vocabulary in books read through Year 13",
         "Māori speakers, paid to check every te reo Māori word and how it’s said",
         "New Zealand words, recorded in a New Zealand voice",
         "Pictures redrawn wherever today’s don’t look like Aotearoa"
@@ -677,7 +677,7 @@
         }
       ],
       "buys": [
-        "Irish teachers and parents, paid to check the 5,000 words children here look up most",
+        "Irish teachers and parents, paid to check vocabulary in books read through Year 13",
         "Irish English words and meanings, written in",
         "Recordings in an Irish voice",
         "Pictures redrawn wherever today’s don’t look like Ireland"
@@ -779,7 +779,7 @@
         }
       ],
       "buys": [
-        "South African teachers and parents, paid to check the 5,000 words children look up most",
+        "South African teachers and parents, paid to check vocabulary in books read through Year 13",
         "South African words and meanings added, from tekkies to braai",
         "Recordings in a South African voice",
         "Pictures redrawn wherever today’s don’t look like South Africa"
@@ -876,7 +876,7 @@
         }
       ],
       "buys": [
-        "Nigerian teachers and parents, paid to check the 5,000 words children look up most",
+        "Nigerian teachers and parents, paid to check vocabulary in books read through Year 13",
         "Nigerian English words and meanings, written in",
         "Recordings in a Nigerian voice",
         "Pictures redrawn wherever today’s don’t look like a Nigerian home"
@@ -983,7 +983,7 @@
       ],
       "buys": [
         "Native Hindi speakers, paid to check every Hindi word and recording already in Gloss",
-        "Hinglish meanings for the 5,000 words children look up most, written at a stated level of politeness",
+        "Hinglish meanings for vocabulary in books read through Year 13, written at a stated level of politeness",
         "A Hindi voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit your family’s home"
       ],
@@ -1089,7 +1089,7 @@
       ],
       "buys": [
         "Native Telugu speakers, paid to check every Telugu word and recording already in Gloss",
-        "Tenglish meanings for the 5,000 words children look up most",
+        "Tenglish meanings for vocabulary in books read through Year 13",
         "A Telugu voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Telugu home: food, clothes, homes, festivals"
       ],
@@ -1188,7 +1188,7 @@
       ],
       "buys": [
         "Native Tamil speakers, paid to check every Tamil word and recording already in Gloss",
-        "Meanings in spoken Tamil for the 5,000 words children look up most",
+        "Meanings in spoken Tamil for vocabulary in books read through Year 13",
         "A Tamil voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Tamil home"
       ],
@@ -1293,7 +1293,7 @@
         }
       ],
       "buys": [
-        "Native Bengali speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Bengali speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "A Bengali voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Bengali home"
       ],
@@ -1390,7 +1390,7 @@
         }
       ],
       "buys": [
-        "Native Marathi speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Marathi speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "A Marathi voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Marathi home"
       ],
@@ -1487,7 +1487,7 @@
         }
       ],
       "buys": [
-        "Native Gujarati speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Gujarati speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "A Gujarati voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Gujarati home"
       ],
@@ -1589,7 +1589,7 @@
         }
       ],
       "buys": [
-        "Native Urdu speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Urdu speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "An Urdu voice recorded for each of those words",
         "Urdu laid out right to left, in Nastaliq, on every screen it appears",
         "Pictures redrawn wherever today’s picture doesn’t fit an Urdu-speaking home"
@@ -1687,7 +1687,7 @@
         }
       ],
       "buys": [
-        "Native Kannada speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Kannada speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "A Kannada voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Kannada home"
       ],
@@ -1780,7 +1780,7 @@
         }
       ],
       "buys": [
-        "Native Malayalam speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Malayalam speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "A Malayalam voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Malayali home"
       ],
@@ -1881,7 +1881,7 @@
         }
       ],
       "buys": [
-        "Native Punjabi speakers, paid to write and check meanings for the 5,000 words children look up most, in Gurmukhi",
+        "Native Punjabi speakers, paid to write and check meanings for vocabulary in books read through Year 13, in Gurmukhi",
         "A Punjabi voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit a Punjabi home"
       ],
@@ -1979,7 +1979,7 @@
         }
       ],
       "buys": [
-        "Native Odia speakers, paid to write and check meanings for the 5,000 words children look up most",
+        "Native Odia speakers, paid to write and check meanings for vocabulary in books read through Year 13",
         "An Odia voice recorded for each of those words",
         "Pictures redrawn wherever today’s picture doesn’t fit an Odia home"
       ],
@@ -2081,7 +2081,7 @@
         }
       ],
       "buys": [
-        "Native Spanish speakers, paid to write and check Spanish for the 5,000 words children look up most",
+        "Native Spanish speakers, paid to write and check Spanish for vocabulary in books read through Year 13",
         "Meanings in everyday family Spanish, including the words that change from country to country",
         "Spanish recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2176,7 +2176,7 @@
         }
       ],
       "buys": [
-        "Native Mandarin speakers, paid to write and check Chinese for the 5,000 words children look up most",
+        "Native Mandarin speakers, paid to write and check Chinese for vocabulary in books read through Year 13",
         "Explanations in the everyday Mandarin your family speaks, with pinyin",
         "Mandarin recordings by native voices, so every tone is heard",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2275,7 +2275,7 @@
         }
       ],
       "buys": [
-        "Native Arabic speakers, paid to write and check Arabic for the 5,000 words children look up most",
+        "Native Arabic speakers, paid to write and check Arabic for vocabulary in books read through Year 13",
         "Explanations in Arabic close to what children hear at home, with fuṣḥā beside it",
         "Arabic recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2374,7 +2374,7 @@
         }
       ],
       "buys": [
-        "Native French speakers, paid to write and check French for the 5,000 words children look up most",
+        "Native French speakers, paid to write and check French for vocabulary in books read through Year 13",
         "French the way families say it, in Quebec and in France",
         "French recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2469,7 +2469,7 @@
         }
       ],
       "buys": [
-        "Native Portuguese speakers, from Brazil and from Portugal, paid to check the 5,000 words children look up most",
+        "Native Portuguese speakers, from Brazil and from Portugal, paid to check vocabulary in books read through Year 13",
         "Explanations in the Portuguese your family speaks at home",
         "Portuguese recordings by native voices, Brazilian and European",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2568,7 +2568,7 @@
         }
       ],
       "buys": [
-        "Native Russian speakers, paid to write and check Russian for the 5,000 words children look up most",
+        "Native Russian speakers, paid to write and check Russian for vocabulary in books read through Year 13",
         "Explanations in the Russian your family speaks, with the forms children actually use",
         "Russian recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2667,7 +2667,7 @@
         }
       ],
       "buys": [
-        "Native German speakers, paid to write and check German for the 5,000 words children look up most",
+        "Native German speakers, paid to write and check German for vocabulary in books read through Year 13",
         "Explanations in the German your family speaks, showing how long words are built",
         "German recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2762,7 +2762,7 @@
         }
       ],
       "buys": [
-        "Native Japanese speakers, paid to write and check Japanese for the 5,000 words children look up most",
+        "Native Japanese speakers, paid to write and check Japanese for vocabulary in books read through Year 13",
         "Explanations in plain Japanese, with furigana over every kanji",
         "Japanese recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"
@@ -2861,7 +2861,7 @@
         }
       ],
       "buys": [
-        "Native Korean speakers, paid to write and check Korean for the 5,000 words children look up most",
+        "Native Korean speakers, paid to write and check Korean for vocabulary in books read through Year 13",
         "Explanations in easy Korean, written for children",
         "Korean recordings by native voices, stored on the phone",
         "Pictures redrawn wherever today’s don’t fit your family’s home"

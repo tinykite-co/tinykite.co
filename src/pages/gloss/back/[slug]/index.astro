@@ -16,7 +16,7 @@ const contact = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`I can hel
     <h1 class="mt-4 text-4xl font-bold text-text">Gloss in {language.name}</h1>
     <p class="mt-5 text-lg leading-relaxed text-text">{language.promise}</p>
     <p class="mt-4 text-muted-foreground">This is proposed work, not a separate fundraiser. All backing supports the shared dictionary. Language preferences help us prioritise; they do not reserve funds or guarantee a delivery date.</p>
-    <div class="my-8 rounded-2xl border border-border bg-card p-6"><h2 class="text-xl font-bold text-text">Additional working budget</h2><p class="mt-3 text-3xl font-bold text-text">US {dollars(language.goal)}</p><p class="mt-3 text-muted-foreground">An initial estimate on top of the shared foundation, not a supplier quote. Native-speaker and production quotes will refine the scope and cost before we commission work.</p></div>
+    <div class="my-8 rounded-2xl border border-border bg-card p-6"><h2 class="text-xl font-bold text-text">Additional working budget</h2><p class="mt-3 text-3xl font-bold text-text">US {dollars(language.goal)}</p><p class="mt-3 text-muted-foreground">An initial allowance to begin this language expansion, not a supplier quote or the total cost of covering every word through Year 13. Native-speaker and production quotes will refine the scope and cost before we commission work.</p></div>
     {language.roots && <p class="mb-8 text-lg leading-relaxed text-text">{language.roots}</p>}
     <h2 class="text-2xl font-bold text-text">What we want to add</h2>
     <ul class="my-5 space-y-3 text-text">{language.buys.map(item => <li>· {item}</li>)}</ul>

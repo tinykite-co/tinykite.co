@@ -1,12 +1,12 @@
 /** One-off rewards, never recurring Stripe subscriptions. */
 export interface Reward { id: string; price: number; title: string; months: number; households: number; benefits: string[]; }
 /** A single shared funding target; regional languages are estimates, not separate funds. */
-export interface PictureFund { campaignId: string; currency: string; status: string; goal: number; pictureGoal: number; tiers: Reward[]; languages: { slug: string; name: string; pledgeLinks: Record<string, string>; raised: number; backers: number }[]; }
+export interface PictureFund { campaignId: string; currency: string; status: string; goal: number; coverageGoal: string; tiers: Reward[]; languages: { slug: string; name: string; pledgeLinks: Record<string, string>; raised: number; backers: number }[]; }
 /** Fail the build if configuration could misrepresent rewards or publish test checkout. */
 export function validatePictureFund(fund: PictureFund): PictureFund {
   if (fund.languages.length !== 1 || fund.languages[0]?.slug !== "picture-dictionary") throw new Error("Exactly one shared dictionary fund is required");
   if (!["preview", "open"].includes(fund.status)) throw new Error("Unknown campaign status");
-  if (fund.currency !== "gbp" || fund.goal <= 0 || fund.pictureGoal <= 0) throw new Error("Invalid funding budget");
+  if (fund.currency !== "gbp" || fund.goal <= 0 || !fund.coverageGoal.trim()) throw new Error("Invalid funding budget");
   if (!fund.tiers.length || new Set(fund.tiers.map(tier => tier.id)).size !== fund.tiers.length) throw new Error("Unique reward tiers required");
   for (const tier of fund.tiers) {
     if (!Number.isInteger(tier.price) || tier.price <= 0 || tier.months < 0 || tier.households < 0) throw new Error("Invalid reward");

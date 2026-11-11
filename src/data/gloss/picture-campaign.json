@@ -4,7 +4,6 @@
   "siteBaseUrl": "https://tinykite.co",
   "status": "preview",
   "goal": 10000,
-  "pictureGoal": 5000,
   "tiers": [
     {
       "id": "supporter",
@@ -70,5 +69,6 @@
       "raised": 0,
       "backers": 0
     }
-  ]
+  ],
+  "coverageGoal": "Every word in the books young readers read through Year 13"
 }

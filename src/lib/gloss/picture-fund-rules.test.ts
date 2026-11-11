@@ -36,7 +36,7 @@ test('rejects separate funds and invalid reward/budget configurations', () => {
     (f: PictureFund) => { f.status = 'unknown'; },
     (f: PictureFund) => { f.currency = 'usd'; },
     (f: PictureFund) => { f.goal = 0; },
-    (f: PictureFund) => { f.pictureGoal = 0; },
+    (f: PictureFund) => { f.coverageGoal = ""; },
     (f: PictureFund) => { f.tiers = []; },
     (f: PictureFund) => { f.tiers.push(structuredClone(f.tiers[0]!)); },
     (f: PictureFund) => { f.tiers[0]!.price = -1; },

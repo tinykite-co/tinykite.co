@@ -15,8 +15,8 @@ Gloss and future TinyKite apps. Beta remains free.
 - Legacy `campaigns.json` now supplies language expansion content only. Its tiers
   and payment URLs are empty. Existing language URLs remain useful and indexed.
 - Budget figures are planning allowances carried forward from the previous draft,
-  not validated quotations. The foundation is a £10,000 working target for 5,000
-  pictured English words; language estimates remain explicitly USD, not converted.
+  not validated quotations. The goal is every word encountered in books read from early reading through
+  Year 13. £10,000 is an initial funding target, not a total coverage estimate; language estimates remain explicitly USD, not converted.
 
 ## Payment launch remains closed
 
