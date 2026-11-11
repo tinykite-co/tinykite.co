@@ -1,0 +1,19 @@
+{
+  "asOf": "2026-11-11",
+  "currency": "USD",
+  "snapshot": { "date": "2026-09-11", "commit": "cc95c34c21", "headwords": 30714, "meanings": 88741, "singlePictures": 30282, "contrastPictures": 18574, "motionMeanings": 36504, "translationCharacters": 75986782 },
+  "limits": { "minimumMeanings": 1000, "maximumMeanings": 300000 },
+  "translationUsdPerMillionCharacters": 20,
+  "video": { "meanings": 1000, "seconds": 4, "silentUsdPerSecond": 0.08 },
+  "scenarios": [
+    { "id": "lean", "label": "Lean", "description": "Fewer panels, batch generation, a brief review.", "motionPanels": 1, "flashAttempts": 1.2, "proAttempts": 0, "flashUsd": 0.0336, "proUsd": 0.0672, "automationUsdPerPanel": 0.001, "reviewMinutes": 0.5, "reviewUsdPerHour": 20, "reserve": 0.15, "translationPasses": 1, "videoAttempts": 1 },
+    { "id": "working", "label": "Working", "description": "Two-panel actions, selective retries, a fuller review.", "motionPanels": 2, "flashAttempts": 1.5, "proAttempts": 0.15, "flashUsd": 0.0672, "proUsd": 0.1344, "automationUsdPerPanel": 0.002, "reviewMinutes": 1.5, "reviewUsdPerHour": 30, "reserve": 0.2, "translationPasses": 1.5, "videoAttempts": 2 },
+    { "id": "difficult", "label": "Difficult", "description": "More panels, more retries, more editorial attention.", "motionPanels": 3, "flashAttempts": 2, "proAttempts": 0.8, "flashUsd": 0.0672, "proUsd": 0.1344, "automationUsdPerPanel": 0.004, "reviewMinutes": 3, "reviewUsdPerHour": 40, "reserve": 0.3, "translationPasses": 2, "videoAttempts": 3 }
+  ],
+  "sources": [
+    { "label": "Google image and verification rates", "url": "https://cloud.google.com/model-garden/pricing" },
+    { "label": "Google translation rates", "url": "https://cloud.google.com/products/translate/pricing" },
+    { "label": "Veo video rates and units", "url": "https://developers.cloudflare.com/ai/models/google/veo-3.1-fast/" },
+    { "label": "Subscription image limits", "url": "https://learn.chatgpt.com/docs/image-generation" }
+  ]
+}

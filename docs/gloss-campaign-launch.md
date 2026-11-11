@@ -6,19 +6,47 @@ Gloss and future TinyKite apps. Beta remains free.
 
 ## Public configuration
 
-- `/gloss/back/`: the shared campaign, goals, rewards, language estimates and offers of credits/review.
-- `/pricing/`, `/family/`, campaign: share `src/components/family/FamilyPlan.astro`
-  and `src/data/family/plan.ts`. Planned £4.99/month or £49/year; no beta charge.
-- `src/data/gloss/picture-campaign.json`: one funding target (`picture-dictionary`),
-  GBP one-time rewards. Founding family: £39 for one household’s first paid year
-  (planned standard £49); two households: £78 (planned standard £98). The
-  discounts apply to the first paid year after beta, with no automatic renewal. The `languages` array is a compatibility boundary for the
-  recovered Stripe script, not separate language funds.
-- Legacy `campaigns.json` now supplies language expansion content only. Its tiers
-  and payment URLs are empty. Existing language URLs remain useful and indexed.
-- Budget figures are planning allowances carried forward from the previous draft,
-  not validated quotations. The goal is every word encountered in books read from early reading through
-  Year 13. £10,000 is an initial funding target, not a total coverage estimate; language estimates remain explicitly USD, not converted.
+- `/gloss/interest/`: real-screen silent walkthrough, existing practice and clearly
+  labelled planned games, worldwide language preference form, family membership,
+  and feature requests.
+- `/gloss/back/`: shared dictionary goals, transparent cost explorer, proposed
+  discounted rewards, language choices, Gloss/Nesta membership and feature requests.
+- `/pricing/` redirects to backers. There is no standalone pricing offer.
+- One household subscription includes Gloss, Nesta and future TinyKite family
+  products. Beta remains free. Nesta is described as a household-first messenger
+  with specific adult-approved contacts, not an absolute safety guarantee.
+- `src/data/gloss/picture-campaign.json`: GBP one-time reward proposals. Founding
+  family £39 vs planned £49 for its first paid year; two households £78 vs £98.
+  Included years begin after beta, with no automatic renewal. The `languages`
+  array is legacy Stripe CLI compatibility, not individual fundraising pots.
+- Funding goal is null in preview. The old arbitrary £10,000 target is removed.
+  Scope is every word encountered in books through Year 13, subject to a defined
+  reading corpus and coverage audit. See [vocabulary audit](gloss-vocabulary-audit.md).
+- Interactive costs use the measured 88,741-meaning sample and explicit assumptions,
+  in USD. Image attempts, paid review, translation and optional video are separated.
+  See [production cost report](gloss-production-costs.md). These are not quotes or
+  a confirmed fundraising target. No existing or donated assets are deducted.
+- Existing language links redirect to the interest form with that preference filled.
+- Interest and feature-request forms prepare an email draft with a selectable-copy
+  fallback. Nothing is submitted until the person sends their email. The interest-first journey
+  asks the visitor to confirm they have sent it, then offers optional backing; it
+  cannot verify email delivery. No fake success
+  state, contact database, child details or payment reservation.
+
+## Actual product evidence
+
+Walkthrough captures come from the production Flutter web app at 390 × 844 on
+11 November 2026. They preserve the actual light app appearance, including missing
+media outside the illustrated duck example. The surrounding page follows system
+appearance with System/Light/Dark controls; screenshots are not recoloured mocks.
+The book is an illustrative reading context, not an automatic book-import feature.
+
+Flashcards and picture/meaning quizzes use saved lookups. Both quiz targets and
+options come from the chosen reader's history; quiz meanings currently use the
+word's leading meaning, so do not claim exact encountered-sense testing.
+[Issue #611](https://github.com/tinykite-co/monorepo/issues/611) defines the planned
+“Use words I've read” generator, under [#610](https://github.com/tinykite-co/monorepo/issues/610).
+Crosswords and other games are planned, not shipped by this website change.
 
 ## Payment launch remains closed
 
@@ -68,8 +96,15 @@ publication rights. Never solicit credentials or assume credits can be transferr
 
 ## Verification
 
-94 site tests, 4 built-page regressions and 45 Stripe tests passed; production Astro build succeeded.
-Astro check reports the same 135 pre-existing errors on unchanged HEAD and this
-revision; no errors added by this change. Responsive browser checks covered 320px and 390px phones, 820px tablets and
-1280px desktops, in light and dark appearances. Checks caught and corrected
-tablet header crowding and unwrapped reward labels on 320px phones. No real payment or paid entitlement has been claimed as tested.
+Validation evidence is recorded in the release commit and local test logs. The
+site's pre-existing Astro type-check failures are outside this campaign; changed
+campaign components must introduce none. No real payment, reward fulfilment or
+native-store release is claimed as tested by this website change.
+
+11 November release checks: 128 site unit tests and 8 built-page regressions passed;
+Astro production build passed. Full Astro check retained its 135 existing errors,
+with no errors in the changed campaign files. Browser checks covered 320/390px
+phones, 820px tablet and 1280px desktop; light, dark and System controls; real
+screen playback, pause and step controls; budget inputs; international/custom
+language choices; reward prefill; feature draft validation; and interest-first
+optional backing with language carryover. No email or payment was sent in QA.

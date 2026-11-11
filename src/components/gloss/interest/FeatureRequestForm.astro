@@ -1,0 +1,60 @@
+---
+import { buttonVariants } from "@refraction-ui/astro";
+import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
+import { FEATURE_PRODUCTS, FEATURE_REQUEST_LIMIT, FEATURE_BENEFIT_LIMIT } from "./feature-request-rules";
+import "./campaign.css";
+interface Props { id?: string; }
+const { id = "feature-request" } = Astro.props;
+const fieldId = (field: string) => `${id}-${field}`;
+---
+<section class="gc-shell feature-request" aria-labelledby={fieldId("title")}>
+  <div class="feature-request-intro"><p class="gc-eyebrow">What would make family life a little easier?</p><h2 id={fieldId("title")}>The next good idea<br />could be yours.</h2><p class="gc-muted">A reading tool you wish existed. A better way to keep in touch. Something small that would help your family every day. Tell us what you’d like to see in Gloss, Nesta or a future TinyKite app.</p><p class="feature-request-aside gc-muted">We’ll consider ideas as we plan. A suggestion isn’t a promise that we’ll build it, or a delivery date.</p></div>
+  <form class="gc-panel gc-flow" id={id} data-feature-request data-recipient={SUPPORT_EMAIL} aria-label="Feature request email draft">
+    <div><label class="gc-label" for={fieldId("product")}>Which app is your idea for?</label><select id={fieldId("product")} name="product" class="gc-input" data-feature-product>{Object.entries(FEATURE_PRODUCTS).map(([value,label]) => <option value={value}>{label}</option>)}</select></div>
+    <div><label class="gc-label" for={fieldId("idea")}>What would you like it to do?</label><textarea id={fieldId("idea")} name="idea" data-feature-idea required maxlength={FEATURE_REQUEST_LIMIT} rows="4" class="gc-input" placeholder="For example: let me pick a few saved words to practise together…" aria-describedby={fieldId("privacy")}></textarea><p id={fieldId("privacy")} class="gc-muted mt-2 text-xs leading-relaxed">For grown-ups. Please leave out children’s names, private conversations, passwords and account details.</p></div>
+    <div><label class="gc-label" for={fieldId("benefit")}>How would that help? <span class="gc-muted font-normal">Optional</span></label><textarea id={fieldId("benefit")} name="benefit" data-feature-benefit maxlength={FEATURE_BENEFIT_LIMIT} rows="2" class="gc-input" placeholder="Tell us about the moment it would make easier."></textarea></div>
+    <div><button type="submit" class:list={[buttonVariants({size:"lg"}),"gc-action feature-request-submit"]}>Open my email draft <span aria-hidden="true">↗</span></button><p data-feature-status class="gc-muted mt-3 text-xs leading-relaxed" role="status">This opens your email app. Nothing is submitted until you review the draft and send it yourself.</p></div>
+    <details class="feature-request-fallback"><summary>No email app set up?</summary><p class="gc-muted mt-3 text-sm leading-relaxed">Copy the draft below into your usual email service and send it to <a href={`mailto:${SUPPORT_EMAIL}`} class="gc-link">{SUPPORT_EMAIL}</a>.</p><label class="sr-only" for={fieldId("draft")}>Feature request draft to copy</label><textarea id={fieldId("draft")} data-feature-preview readonly rows="8" class="gc-input mt-3 text-sm" placeholder="Your draft will appear here as you describe your idea."></textarea></details>
+    <noscript><p class="gc-muted text-sm">This draft builder needs JavaScript. Email your idea directly to <a class="gc-link" href={`mailto:${SUPPORT_EMAIL}?subject=TinyKite%20feature%20idea`}>{SUPPORT_EMAIL}</a>.</p><style>.feature-request-submit{display:none!important}</style></noscript>
+  </form>
+</section>
+<script>
+  import { buildFeatureRequestDraft } from "./feature-request-rules";
+  for (const form of document.querySelectorAll<HTMLFormElement>("[data-feature-request]")) {
+    if (form.dataset["initialized"]) continue;
+    form.dataset["initialized"] = "true";
+    const product = form.querySelector<HTMLSelectElement>("[data-feature-product]")!;
+    const idea = form.querySelector<HTMLTextAreaElement>("[data-feature-idea]")!;
+    const benefit = form.querySelector<HTMLTextAreaElement>("[data-feature-benefit]")!;
+    const preview = form.querySelector<HTMLTextAreaElement>("[data-feature-preview]")!;
+    const status = form.querySelector<HTMLElement>("[data-feature-status]")!;
+    const createDraft = () => buildFeatureRequestDraft({ product: product.value, request: idea.value, benefit: benefit.value }, form.dataset["recipient"]!);
+    const refreshDraft = () => {
+      idea.setCustomValidity("");
+      const draft = createDraft();
+      preview.value = draft ? `To: ${form.dataset["recipient"]}\nSubject: ${draft.subject}\n\n${draft.body}` : "";
+    };
+    form.addEventListener("input", refreshDraft);
+    form.addEventListener("change", refreshDraft);
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const draft = createDraft();
+      if (!draft) { idea.setCustomValidity("Please describe your feature idea."); idea.reportValidity(); return; }
+      status.textContent = "Your email app should open with the draft. Please review and send it there; nothing has been submitted here. If it doesn’t open, copy the draft below.";
+      window.location.href = draft.href;
+    });
+    refreshDraft();
+  }
+</script>
+<style>
+  .feature-request { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(2rem,5vw,4rem); align-items: start; padding-block: clamp(3rem,6vw,5rem); }
+  .feature-request-intro h2 { margin-top: 1rem; font-size: clamp(2rem,4vw,3.3rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 700; }
+  .feature-request-intro > p:not(:first-child) { margin-top: 1.3rem; line-height: 1.8; font-size: .95rem; }
+  .feature-request-intro .feature-request-aside { border-left: 2px solid var(--gc-accent); padding-left: 1rem; margin-top: 2rem; font-size: .8rem; }
+  .feature-request form { scroll-margin-top: 6rem; }
+  .feature-request-submit { width: 100%; color: hsl(var(--primary-foreground)); }
+  .feature-request-fallback { border-top: 1px solid var(--gc-border); padding-top: 1rem; }
+  .feature-request-fallback summary { cursor: pointer; font-size: .85rem; font-weight: 600; }
+  .feature-request textarea { resize: vertical; }
+  @media (max-width: 800px) { .feature-request { grid-template-columns: minmax(0,1fr); } }
+</style>

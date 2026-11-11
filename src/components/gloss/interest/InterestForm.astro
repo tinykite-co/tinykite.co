@@ -1,0 +1,112 @@
+---
+import { buttonVariants } from "@refraction-ui/astro";
+import { pictureFund, pounds } from "../../../lib/gloss/picture-fund";
+import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
+import { WORLD_LANGUAGES } from "./languages";
+import { INTEREST_ROLES, MAX_LANGUAGE_CHOICES, MAX_LANGUAGE_LENGTH, MAX_MESSAGE_LENGTH } from "./interest-rules";
+import "./campaign.css";
+
+interface Props { mode?: "reader" | "backer"; id?: string; }
+const { mode = "reader", id = mode === "backer" ? "backing-interest" : "reading-interest" } = Astro.props;
+const fieldId = (field: string) => `${id}-${field}`;
+const configuration = JSON.stringify({ recipient: SUPPORT_EMAIL, rewards: mode === "backer" ? pictureFund.tiers : [], currency: pictureFund.currency, mode });
+---
+<form id={id} class="gc-panel interest-form gc-flow" data-gloss-interest data-mode={mode} data-configuration={configuration} aria-labelledby={fieldId("title")}>
+  <header>
+    <p class="gc-eyebrow">{mode === "backer" ? "Your backing, your interests" : "Let’s build this together"}</p>
+    <h2 id={fieldId("title")} class="mt-3 text-2xl font-bold">{mode === "backer" ? "Choose what matters to you" : "Tell us what would help you"}</h2>
+    <p class="gc-muted mt-3 text-sm leading-relaxed">Interest only, for grown-ups. No payment, no reservation, and no child’s personal information.</p>
+  </header>
+
+  {mode === "backer" && <div data-reward-field>
+    <label class="gc-label" for={fieldId("reward")}>Your preferred backer reward</label>
+    <select id={fieldId("reward")} name="reward" class="gc-input" data-reward-select>
+      <option value="">I’m interested; I haven’t chosen a reward</option>
+      {pictureFund.tiers.map(reward => <option value={reward.id}>{reward.title} · {pounds(reward.price)}</option>)}
+    </select>
+    <p class="gc-muted mt-2 text-xs">The prices are proposed one-off rewards. We aren’t taking payments yet.</p>
+  </div>}
+
+  <fieldset class="min-w-0">
+    <legend class="gc-label">Which languages belong in your world?</legend>
+    <p id={fieldId("language-help")} class="gc-muted mb-3 text-sm leading-relaxed">Choose up to {MAX_LANGUAGE_CHOICES}. All languages are welcome, including regional varieties and ones not listed here.</p>
+    <div data-selected-languages class="selected-languages" aria-label="Selected languages"></div>
+    <label class="sr-only" for={fieldId("search")}>Search languages or regional varieties</label>
+    <div class="language-search">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+      <input class="gc-input" id={fieldId("search")} type="search" data-language-search placeholder="Search: Spanish, Arabic, Welsh…" maxlength={MAX_LANGUAGE_LENGTH} aria-describedby={fieldId("language-help")} autocomplete="off" />
+    </div>
+    <div class="language-options" data-language-options data-lenis-prevent aria-label="Available languages">
+      {WORLD_LANGUAGES.map(language => <label class="language-option" data-language-option>
+        <input type="checkbox" name="language" value={language} data-language-choice />
+        <span>{language}</span>
+      </label>)}
+    </div>
+    <p data-no-languages class="gc-muted mt-3 text-sm" hidden>No matching language listed. You can add your language or regional variety below.</p>
+    <button type="button" class="add-language" data-add-language hidden></button>
+    <p data-language-status class="gc-muted mt-3 text-xs" role="status" aria-live="polite">No preference yet. You can leave this open.</p>
+    <p class="gc-muted mt-3 text-xs leading-relaxed">Your choices help us plan. They don’t earmark funding or promise that a language is ready.</p>
+  </fieldset>
+
+  <div>
+    <label class="gc-label" for={fieldId("role")}>What brings you here?</label>
+    <select id={fieldId("role")} name="role" class="gc-input" data-interest-role>
+      {Object.entries(INTEREST_ROLES).filter(([value]) => mode === "backer" || value !== "backer").map(([value, label]) => <option value={value} selected={value === (mode === "backer" ? "backer" : "reader")}>{label}</option>)}
+    </select>
+  </div>
+  <div>
+    <label class="gc-label" for={fieldId("message")}>Anything you’d like us to know? <span class="gc-muted font-normal">Optional</span></label>
+    <textarea id={fieldId("message")} name="message" data-interest-message class="gc-input" rows="3" maxlength={MAX_MESSAGE_LENGTH} placeholder="A difficult word, a language variety, or how you’d like to help…"></textarea>
+    <p class="gc-muted mt-2 text-xs">Please don’t include children’s details, passwords, API keys or account access.</p>
+  </div>
+  <div>
+    <a data-email-draft href={`mailto:${SUPPORT_EMAIL}?subject=Gloss%3A%20expression%20of%20interest`} class:list={[buttonVariants({ size: "lg" }), "gc-action interest-submit w-full"]}>Open my email draft <span aria-hidden="true">↗</span></a>
+    <p data-handoff-status class="gc-muted mt-3 text-xs leading-relaxed" role="status">Your email app opens with these preferences. Nothing reaches us until you review and send the email.</p>
+  </div>
+  <details class="email-fallback" data-interest-fallback>
+    <summary class="cursor-pointer text-sm font-medium">No email app set up?</summary>
+    <p class="gc-muted mt-3 text-sm">Write to <a href={`mailto:${SUPPORT_EMAIL}`} class="gc-link">{SUPPORT_EMAIL}</a> using your usual email service. You can copy your draft below.</p>
+    <label class="sr-only" for={fieldId("draft")}>Your email draft to copy</label>
+    <textarea id={fieldId("draft")} data-draft-preview readonly class="gc-input mt-3 text-sm" rows="7"></textarea>
+  </details>
+  {mode === "reader" && <>
+    <div data-interest-confirmation hidden class="interest-confirmation">
+      <p class="gc-muted text-sm leading-relaxed">After you’ve sent your email, you can continue here.</p>
+      <button type="button" data-confirm-interest class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action mt-3 w-full"]}>I’ve sent my interest email</button>
+      <p class="gc-muted mt-2 text-xs leading-relaxed">This is your confirmation; we can’t verify email delivery here.</p>
+    </div>
+    <section data-optional-backing hidden class="optional-backing" aria-labelledby={fieldId("optional-title")}>
+      <p class="gc-eyebrow">An optional next step</p>
+      <h3 id={fieldId("optional-title")} data-optional-heading tabindex="-1" class="mt-3 text-xl font-bold">Want to help us build it?</h3>
+      <p class="gc-muted mt-3 text-sm leading-relaxed">If you’d also like to support the picture dictionary, you can explore the proposed backer rewards. There’s no obligation, and payments aren’t open.</p>
+      <a data-optional-backing-link href="/gloss/back/" class:list={[buttonVariants({variant:"outline",size:"lg"}),"gc-action mt-4 w-full"]}>Explore optional backing <span aria-hidden="true">↗</span></a>
+      <a href="https://gloss.tinykite.co/" class="gc-link mt-4 inline-block text-sm font-semibold">Skip this and try Gloss ↗</a>
+    </section>
+  </>}
+  <noscript><p class="gc-muted text-sm">The language selector needs JavaScript. You can still email <a class="gc-link" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> with your language preferences{mode === "backer" ? " and the reward you’re interested in" : ""}.</p></noscript>
+</form>
+<script>
+  import { initializeInterestForms } from "./interest-controller";
+  initializeInterestForms();
+</script>
+<style>
+  .interest-form { scroll-margin-top: 6rem; }
+  .language-search { position: relative; }
+  .language-search svg { position: absolute; width: 1.2rem; height: 1.2rem; inset: 1rem auto auto 1rem; color: var(--gc-muted); pointer-events: none; }
+  .language-search input { padding-left: 2.8rem; }
+  .language-options { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: .25rem; max-height: 13.5rem; overflow-y: auto; overscroll-behavior: contain; padding: .55rem .15rem; margin-top: .5rem; border-block: 1px solid var(--gc-border); }
+  .language-option { display: flex; min-width: 0; gap: .6rem; align-items: center; min-height: 2.75rem; padding: .5rem; border-radius: .55rem; font-size: .85rem; line-height: 1.3; cursor: pointer; }
+  .language-option:hover, .language-option:has(input:checked) { background: color-mix(in srgb, var(--gc-accent) 10%, transparent); }
+  .language-option input { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; accent-color: var(--gc-accent); }
+  .language-option[hidden] { display: none; }
+  .selected-languages { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .selected-languages:not(:empty) { margin-bottom: .75rem; }
+  .selected-languages :global(button) { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid var(--gc-accent); border-radius: 99rem; padding: .55rem .75rem; color: var(--gc-ink); background: color-mix(in srgb, var(--gc-accent) 8%, var(--gc-panel)); font-size: .8rem; max-width: 100%; overflow-wrap: anywhere; text-align: left; }
+  .add-language { margin-top: .65rem; border: 1px dashed var(--gc-accent); border-radius: .65rem; min-height: 2.75rem; padding: .65rem 1rem; width: 100%; color: var(--gc-accent); font-size: .85rem; overflow-wrap: anywhere; text-align: left; }
+  .add-language[hidden] { display: none; }
+  .interest-submit { color: hsl(var(--primary-foreground)); white-space: normal; height: auto; }
+  .email-fallback { border-top: 1px solid var(--gc-border); padding-top: 1rem; }
+  .interest-confirmation,.optional-backing { border-top: 1px solid var(--gc-border); padding-top: 1.5rem; }
+  .interest-confirmation[hidden],.optional-backing[hidden] { display: none; }
+  @media (max-width: 359px) { .language-options { grid-template-columns: minmax(0,1fr); } }
+</style>

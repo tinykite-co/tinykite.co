@@ -11,6 +11,8 @@ interface Props {
   themeColor?: string;
   appleTouchIcon?: string;
   hideSiteChrome?: boolean;
+  selfHostedFonts?: boolean;
+  nativeScroll?: boolean;
 }
 
 const { 
@@ -21,6 +23,8 @@ const {
   themeColor,
   appleTouchIcon,
   hideSiteChrome = false,
+  selfHostedFonts = false,
+  nativeScroll = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -70,7 +74,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:image" content={new URL(image, Astro.site)} />
      
     <!-- Satoshi (brand typeface) via Fontshare -->
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    {!selfHostedFonts && <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">}
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -90,7 +94,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     </style>
   </head>
-  <body class="bg-background text-text antialiased">
+  <body class="bg-background text-text antialiased" data-native-scroll={nativeScroll ? "true" : undefined}>
     {!hideSiteChrome && <Header />}
     <slot />
     {!hideSiteChrome && <Footer />}
@@ -98,7 +102,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       import Lenis from 'lenis';
 
       // Buttery smooth scrolling (skipped for reduced-motion users)
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (document.body.dataset.nativeScroll !== 'true' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const lenis = new Lenis({ anchors: true, lerp: 0.1 });
         const raf = (time: number) => {
           lenis.raf(time);

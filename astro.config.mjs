@@ -20,6 +20,7 @@ export default defineConfig({
     '/router': '/coming-soon',
     // The single funding page became one page per language (PR #34).
     '/gloss/support-us': '/gloss/back/',
+    '/pricing': '/gloss/back/',
   },
   vite: {
     resolve: {

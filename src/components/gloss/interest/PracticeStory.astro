@@ -1,0 +1,84 @@
+---
+interface Props { id?: string; }
+const { id = "practice-story" } = Astro.props;
+const plannedFormats = [
+  { title: "Little crosswords", detail: "Clues built around the meanings a reader has met.", mark: "crossword" },
+  { title: "Letter games", detail: "Put a familiar word together, then use it in a fresh sentence.", mark: "letters" },
+  { title: "Meaning connections", detail: "Explore how familiar words fit together—and how they differ.", mark: "connections" },
+];
+---
+<section class="gc-shell practice-story" aria-labelledby={`${id}-title`}>
+  <div class="practice-intro">
+    <p class="gc-eyebrow">A word met. A meaning remembered.</p>
+    <h2 id={`${id}-title`}>Their own words.<br /><span>A little more familiar.</span></h2>
+    <p class="gc-muted">A word can make sense in a story, then slip away. Gloss brings back the words saved in each reader’s history for a little practice, at their own pace.</p>
+  </div>
+
+  <div class="practice-journey">
+    <div class="practice-now">
+      <div class="practice-types">
+      <article class="practice-card">
+        <div class="practice-card-heading"><h3>Flashcards</h3><span class="status-pill">In Gloss today</span></div>
+        <p class="gc-muted">Recall a meaning. Turn the card. Keep practising the words that still feel new.</p>
+      </article>
+
+      <article class="practice-card">
+        <div class="practice-card-heading"><h3>Picture &amp; meaning quiz</h3><span class="status-pill">In Gloss today</span></div>
+        <p class="gc-muted">A picture or definition gives the clue. Both the question and its answer choices come from the reader’s saved words.</p>
+      </article>
+      </div>
+      <figure class="practice-capture"><img src="/gloss/screenshots/walkthrough/quiz-light.jpg" width="390" height="844" loading="lazy" alt="Actual Gloss picture quiz: a photograph of a bear above the saved-word choices duck, apple and bear." /><figcaption>Real beta quiz, shown in the app’s light appearance.</figcaption></figure>
+    </div>
+    <p class="practice-caption gc-muted">Current practice needs at least three available words. Choose today, the last 7 or 30 days, or all saved words.</p>
+  </div>
+
+  <div class="practice-next">
+    <div class="practice-next-heading"><div><p class="gc-eyebrow">What we want to build next</p><h3>More ways to make a word stick.</h3></div><span class="planned-label">Planned · not available yet</span></div>
+    <div class="planned-formats">
+      {plannedFormats.map(format => <article>
+        <div class:list={["format-mark", format.mark]} aria-hidden="true">
+          {format.mark === "crossword" ? <><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></> : format.mark === "letters" ? <><b>A</b><b>B</b><b>C</b></> : <><i></i><span>↔</span><i></i></>}
+        </div>
+        <h4>{format.title}</h4><p class="gc-muted">{format.detail}</p>
+      </article>)}
+    </div>
+    <p class="practice-promise">The plan: choose <strong>“Use words I’ve read”</strong> and build from that reader’s saved vocabulary—including any words needed to fill a puzzle. If those words don’t fit, offer a smaller game or practice cards.</p>
+    <p class="practice-scope gc-muted">“Read” means saved lookups, not every word in a book. New games will need suitable reviewed content and testing before release.</p>
+  </div>
+</section>
+<style>
+  .practice-story { padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .practice-intro { max-width: 43rem; }
+  .practice-intro h2 { margin-top: 1rem; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 700; }
+  .practice-intro h2 span { color: var(--gc-accent); }
+  .practice-intro > p:last-child { margin-top: 1.3rem; line-height: 1.75; max-width: 39rem; }
+  .practice-journey { margin-top: 2.5rem; }
+  .practice-now { display: grid; gap: 1.25rem; grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr); align-items: center; }
+  .practice-types { display: grid; gap: 1.25rem; }
+  .practice-capture { margin: 0; justify-self: center; max-width: 230px; }
+  .practice-capture img { display: block; width: 100%; height: auto; object-fit: contain; border: 1px solid var(--gc-border); border-radius: 1rem; }
+  .practice-capture figcaption { color: var(--gc-muted); font-size: .7rem; line-height: 1.6; text-align: center; margin-top: .7rem; }
+  .practice-card { min-width: 0; padding: clamp(1.1rem, 3vw, 2rem); background: var(--gc-panel); border: 1px solid var(--gc-border); border-radius: 1.5rem; }
+  .practice-card-heading { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; justify-content: space-between; }
+  .practice-card h3 { font-size: 1.05rem; font-weight: 700; }
+  .status-pill { font-size: .65rem; font-weight: 700; color: var(--gc-accent); border-radius: 2rem; background: color-mix(in srgb,var(--gc-accent) 10%,transparent); padding: .3rem .6rem; }
+  .practice-card > p { margin-top: 1rem; font-size: .85rem; line-height: 1.7; }
+  .practice-caption { text-align: center; font-size: .75rem; line-height: 1.65; max-width: 40rem; margin: 1.25rem auto 0; }
+  .practice-next { border-top: 1px solid var(--gc-border); padding-top: 2.5rem; margin-top: 3rem; }
+  .practice-next-heading { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  .practice-next-heading h3 { font-size: clamp(1.35rem, 3vw, 1.8rem); font-weight: 700; margin-top: .55rem; letter-spacing: -.02em; }
+  .planned-label { color: var(--gc-muted); font-size: .75rem; border: 1px dashed var(--gc-border); border-radius: 2rem; padding: .5rem .8rem; }
+  .planned-formats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; margin-block: 2rem; }
+  .planned-formats h4 { font-weight: 700; margin-block: .9rem .5rem; }
+  .planned-formats p { font-size: .85rem; line-height: 1.7; }
+  .format-mark { color: var(--gc-accent); height: 2.8rem; display: flex; align-items: center; gap: .25rem; }
+  .format-mark.crossword { display: grid; width: 2.8rem; grid-template-columns: repeat(3,1fr); gap: 3px; }
+  .crossword i { border: 1px solid var(--gc-accent); border-radius: 2px; aspect-ratio: 1; }
+  .crossword i:nth-child(3),.crossword i:nth-child(7) { visibility: hidden; }
+  .letters b { border: 1px solid var(--gc-border); background: var(--gc-panel); border-radius: .35rem; padding: .25rem .5rem; font-size: .85rem; transform: rotate(-7deg); }
+  .letters b:nth-child(2) { transform: rotate(5deg); }
+  .connections i { display: block; width: 1.4rem; height: 1.4rem; border: 1px solid var(--gc-accent); border-radius: 50%; }
+  .practice-promise { border-left: 2px solid var(--gc-accent); padding-left: 1rem; max-width: 52rem; font-size: .9rem; line-height: 1.75; }
+  .practice-scope { margin-top: .8rem; font-size: .75rem; line-height: 1.65; }
+  @media (max-width: 640px) { .practice-now,.planned-formats { grid-template-columns: minmax(0,1fr); } .practice-card-heading { align-items: flex-start; } .planned-formats article { display: grid; grid-template-columns: 4rem minmax(0,1fr); column-gap: .7rem; } .planned-formats .format-mark { grid-row: span 2; margin-top: .25rem; } .planned-formats h4 { margin-top: 0; } }
+</style>

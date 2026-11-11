@@ -1,0 +1,224 @@
+---
+import { buttonVariants } from "@refraction-ui/astro";
+import configuration from "../../../data/gloss/production-costs.json";
+import { calculateProductionCosts, formatUsd } from "./cost-model";
+import "../interest/campaign.css";
+
+interface Props { id?: string; }
+const { id = "production-costs" } = Astro.props;
+const initial = calculateProductionCosts(configuration.snapshot.meanings, "working", configuration);
+const integer = (value: number) => Math.round(value).toLocaleString("en-US");
+const rows = [
+  { key: "images", label: "Picture generation", detail: "Including assumed retries", value: initial.images },
+  { key: "automation", label: "Prompts & automated checks", detail: "A small usage allowance", value: initial.automation },
+  { key: "editorial", label: "Editorial review", detail: "Assumed paid human time", value: initial.editorial },
+  { key: "reserve", label: "Uncertainty reserve", detail: "Room for the unexpected", value: initial.reserve },
+];
+---
+<section id={id} class="gloss-campaign cost-explorer" data-cost-explorer aria-labelledby={`${id}-title`}>
+  <header class="cost-heading">
+    <p class="gc-eyebrow">An open notebook, not a funding promise</p>
+    <h2 id={`${id}-title`}>What would it take?</h2>
+    <p class="gc-muted">A useful picture dictionary needs more than generated pictures. Explore the cost of creating them, checking them, and making sure they teach the right meaning.</p>
+  </header>
+
+  <div class="cost-layout">
+    <div class="gc-panel cost-controls">
+      <fieldset>
+        <legend class="gc-label">Choose a planning scenario</legend>
+        <div class="scenario-options">
+          {configuration.scenarios.map(scenario => <label class="scenario-option">
+            <input type="radio" name={`${id}-scenario`} value={scenario.id} checked={scenario.id === "working"} data-cost-scenario />
+            <span>{scenario.label}</span>
+          </label>)}
+        </div>
+        <p class="scenario-description gc-muted" data-cost-description>{initial.scenario.description}</p>
+      </fieldset>
+      <div class="meaning-control">
+        <label class="gc-label" for={`${id}-meanings`}>Meanings to work on</label>
+        <div class="meaning-number-row">
+          <input id={`${id}-meanings`} class="gc-input" type="number" inputmode="numeric" min={configuration.limits.minimumMeanings} max={configuration.limits.maximumMeanings} step="1" value={initial.meanings} data-cost-meanings aria-describedby={`${id}-scope`} />
+          <span class="gc-muted">meanings</span>
+        </div>
+        <input class="meaning-slider" type="range" min={configuration.limits.minimumMeanings} max={configuration.limits.maximumMeanings} step="1" value={initial.meanings} aria-label="Number of meanings to estimate" data-cost-range />
+        <div class="range-captions gc-muted" aria-hidden="true"><span>1,000</span><span>300,000</span></div>
+        <p id={`${id}-scope`} class="gc-muted cost-small">One word can have several meanings. We estimate <strong data-cost-panels>{integer(initial.panels)}</strong> picture panels for this selection, including comparisons and action sequences.</p>
+        <button type="button" data-cost-reset class:list={[buttonVariants({ variant: "ghost", size: "sm" }), "cost-reset"]}>Reset to measured sample</button>
+      </div>
+      <p class="snapshot-note gc-muted">The starting point is an older local snapshot: <strong>88,741 meanings across 30,714 headwords</strong>, measured in September 2026. It is neither today’s verified inventory nor a complete count of vocabulary through Year 13.</p>
+    </div>
+
+    <div class="gc-panel allocation-panel">
+      <p class="gc-eyebrow">Core picture dictionary</p>
+      <div class="allocation-total"><output data-cost-total aria-live="polite" aria-label="Core planning allocation in US dollars">{formatUsd(initial.total)}</output><span>USD</span></div>
+      <p class="allocation-caption">Planning allocation · not a confirmed funding goal</p>
+      <dl class="cost-breakdown">
+        {rows.map(row => <div><dt>{row.label}<small>{row.detail}</small></dt><dd data-cost-value={row.key}>{formatUsd(row.value)}</dd></div>)}
+      </dl>
+      <p class="gc-muted cost-small">Human review is a major part of the work. The model uses paid time; donated expertise could reduce the cash needed, while keeping the review essential.</p>
+    </div>
+  </div>
+
+  <div class="cost-additions">
+    <article class="gc-panel additional-card">
+      <p class="gc-eyebrow">Additional · per language</p>
+      <h3>A language that feels like home</h3>
+      <p class="gc-muted cost-small">For the selected meanings, translating all four explanation depths and examples. A shorter mother-tongue bridge would be a different scope.</p>
+      <dl class="cost-breakdown compact">
+        <div><dt>Machine drafting</dt><dd data-cost-language-draft>{formatUsd(initial.language.drafting)}</dd></div>
+        <div><dt>Native-speaker review</dt><dd data-cost-language-review>{formatUsd(initial.language.nativeReview)}</dd></div>
+      </dl>
+      <p class="additional-total"><strong data-cost-language-total>{formatUsd(initial.language.subtotal)}</strong> <span class="gc-muted">USD per language, before extras</span></p>
+      <p class="gc-muted cost-small">Pictures are shared where appropriate. Cultural adaptation, language setup, pronunciation and reserve are extra. Reviewer availability and actual cost vary by language; a preference is not a delivery promise.</p>
+    </article>
+    <article class="gc-panel additional-card">
+      <p class="gc-eyebrow">Optional stretch goal</p>
+      <h3>When a word needs motion</h3>
+      <p class="gc-muted cost-small">A separate milestone: <strong>1,000 motion meanings</strong>, with four-second, silent 720p clips. This does not grow with the picture estimate above.</p>
+      <div class="video-estimate"><strong data-cost-video>{formatUsd(initial.video.generation)}</strong><span class="gc-muted">USD · generation only</span></div>
+      <p class="gc-muted cost-small"><span data-cost-video-attempts>{initial.video.attempts}</span> generated attempt(s) per accepted clip assumed. Reviewing, editing, encoding and delivery are additional.</p>
+      <p class="gc-muted cost-small">Only if the budget permits, and where motion helps a learner understand. The core allocation above does not include videos or extra languages.</p>
+    </article>
+  </div>
+
+  <details class="cost-assumptions">
+    <summary>Open the assumptions & sources <span aria-hidden="true">+</span></summary>
+    <div class="assumptions-content">
+      <div>
+        <h3>What changes between scenarios?</h3>
+        <p class="gc-muted cost-small">These are planning assumptions, not measured success rates or supplier quotes. “Difficult” is a sensitivity scenario, not a maximum bill.</p>
+        <dl class="assumptions-list">
+          <div><dt>Still panels per motion meaning</dt><dd data-cost-motion-panels>{initial.scenario.motionPanels}</dd></div>
+          <div><dt>Average Flash + Pro render attempts per panel</dt><dd data-cost-render-attempts>{initial.scenario.flashAttempts} + {initial.scenario.proAttempts}</dd></div>
+          <div><dt>Review time per meaning</dt><dd><span data-cost-review-minutes>{initial.scenario.reviewMinutes}</span> minutes</dd></div>
+          <div><dt>Assumed reviewer rate</dt><dd><span data-cost-review-rate>{formatUsd(initial.scenario.reviewUsdPerHour)}</span>/hour</dd></div>
+          <div><dt>Core uncertainty reserve</dt><dd><span data-cost-reserve-percent>{initial.scenario.reserve * 100}</span>%</dd></div>
+          <div><dt>Translation draft-equivalent passes</dt><dd data-cost-translation-passes>{initial.scenario.translationPasses}</dd></div>
+        </dl>
+      </div>
+      <div class="source-notes">
+        <h3>How we calculated it</h3>
+        <p class="gc-muted cost-small">We scale the snapshot’s mix: 30,282 single-picture meanings, 18,574 comparisons with two panels, and 36,504 motion meanings. Non-depictable meanings still need editorial review. No existing assets or unconfirmed donated credits are subtracted.</p>
+        <p class="gc-muted cost-small">1K image outputs use Flash at $0.0672 each ($0.0336 in the lean batch scenario) and Pro at $0.1344. Automated checks and prompt usage add an allowance. Full translation drafting uses 75.99 million measured source characters per snapshot, at $20 per million per target language.</p>
+        <p class="gc-muted cost-small">New lexical authoring, specialist commissioning beyond the assumed review time, engineering, hosting and taxes are excluded. Actual acceptance rates and expert time need a measured pilot. Subscription generation can contribute limited batches; it is not unlimited free production.</p>
+        <p class="gc-muted cost-small">Rates checked 11 November 2026. All estimates here are USD. Any proposed GBP backer rewards are separate; no currency conversion is implied.</p>
+        <ul class="cost-sources">{configuration.sources.map(source => <li><a class="gc-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.label}<span class="sr-only"> (opens in a new tab)</span></a></li>)}</ul>
+      </div>
+    </div>
+  </details>
+  <noscript><p class="gc-muted cost-small">JavaScript is needed to adjust this calculator. The displayed working scenario uses the measured 88,741-meaning snapshot.</p></noscript>
+</section>
+
+<script>
+  import configuration from "../../../data/gloss/production-costs.json";
+  import { calculateProductionCosts, formatUsd } from "./cost-model";
+
+  function initializeCostExplorer(root: HTMLElement) {
+    if (root.dataset.initialized) return;
+    root.dataset.initialized = "true";
+    const numberInput = root.querySelector<HTMLInputElement>("[data-cost-meanings]")!;
+    const slider = root.querySelector<HTMLInputElement>("[data-cost-range]")!;
+    const radios = root.querySelectorAll<HTMLInputElement>("[data-cost-scenario]");
+    const write = (selector: string, value: string) => { const element = root.querySelector<HTMLElement>(selector); if (element) element.textContent = value; };
+    const selectedScenario = () => root.querySelector<HTMLInputElement>("[data-cost-scenario]:checked")?.value ?? "working";
+
+    function render(value: string | number, normalizeField = false) {
+      const result = calculateProductionCosts(value, selectedScenario(), configuration);
+      slider.value = String(result.meanings);
+      if (normalizeField) numberInput.value = String(result.meanings);
+      write("[data-cost-total]", formatUsd(result.total));
+      write("[data-cost-description]", result.scenario.description);
+      write("[data-cost-panels]", Math.round(result.panels).toLocaleString("en-US"));
+      for (const key of ["images", "automation", "editorial", "reserve"] as const) write(`[data-cost-value="${key}"]`, formatUsd(result[key]));
+      renderAdditions(result);
+      renderAssumptions(result.scenario);
+    }
+
+    function renderAdditions(result: ReturnType<typeof calculateProductionCosts>) {
+      write("[data-cost-language-draft]", formatUsd(result.language.drafting));
+      write("[data-cost-language-review]", formatUsd(result.language.nativeReview));
+      write("[data-cost-language-total]", formatUsd(result.language.subtotal));
+      write("[data-cost-video]", formatUsd(result.video.generation));
+      write("[data-cost-video-attempts]", String(result.video.attempts));
+    }
+
+    function renderAssumptions(scenario: ReturnType<typeof calculateProductionCosts>["scenario"]) {
+      write("[data-cost-motion-panels]", String(scenario.motionPanels));
+      write("[data-cost-render-attempts]", `${scenario.flashAttempts} + ${scenario.proAttempts}`);
+      write("[data-cost-review-minutes]", String(scenario.reviewMinutes));
+      write("[data-cost-review-rate]", formatUsd(scenario.reviewUsdPerHour));
+      write("[data-cost-reserve-percent]", String(scenario.reserve * 100));
+      write("[data-cost-translation-passes]", String(scenario.translationPasses));
+    }
+
+    slider.addEventListener("input", () => render(slider.value, true));
+    numberInput.addEventListener("input", () => { if (numberInput.validity.valid && numberInput.value) render(numberInput.value); });
+    numberInput.addEventListener("change", () => render(numberInput.value, true));
+    radios.forEach(radio => radio.addEventListener("change", () => render(numberInput.value, true)));
+    root.querySelector("[data-cost-reset]")?.addEventListener("click", () => {
+      radios.forEach(radio => { radio.checked = radio.value === "working"; });
+      render(configuration.snapshot.meanings, true);
+    });
+  }
+  document.querySelectorAll<HTMLElement>("[data-cost-explorer]").forEach(initializeCostExplorer);
+  document.addEventListener("astro:page-load", () => document.querySelectorAll<HTMLElement>("[data-cost-explorer]").forEach(initializeCostExplorer));
+</script>
+
+<style>
+  .cost-explorer { scroll-margin-top: 6rem; }
+  .cost-heading { max-width: 45rem; margin-bottom: 2rem; }
+  .cost-heading h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; margin-block: .75rem 1rem; }
+  .cost-heading > p:last-child { line-height: 1.7; }
+  .cost-layout, .cost-additions { display: grid; gap: 1rem; }
+  .cost-layout > *, .cost-additions > * { min-width: 0; }
+  .scenario-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35rem; padding: .3rem; border: 1px solid var(--gc-border); border-radius: 1rem; background: var(--gc-paper); }
+  .scenario-option { position: relative; display: flex; align-items: center; justify-content: center; min-height: 2.8rem; padding: .6rem .25rem; border-radius: .7rem; cursor: pointer; font-size: .85rem; font-weight: 600; }
+  .scenario-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .scenario-option:has(input:checked) { background: color-mix(in srgb, var(--gc-accent) 18%, var(--gc-panel)); color: var(--gc-ink); box-shadow: inset 0 0 0 1px var(--gc-accent); }
+  .scenario-option:has(input:focus-visible) { outline: 3px solid var(--gc-accent); outline-offset: 2px; }
+  .scenario-description { font-size: .85rem; line-height: 1.5; margin-top: .8rem; min-height: 2.6em; }
+  .meaning-control { margin-top: 1.8rem; }
+  .meaning-number-row { display: flex; align-items: center; gap: .75rem; }
+  .meaning-number-row input { width: min(65%, 12rem); font-size: 1.6rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .meaning-number-row > span { font-size: .85rem; }
+  .meaning-slider { width: 100%; min-height: 2.75rem; margin-top: .65rem; accent-color: var(--gc-accent); cursor: pointer; }
+  .range-captions { display: flex; justify-content: space-between; font-size: .7rem; margin-bottom: 1rem; }
+  .cost-small { font-size: .82rem; line-height: 1.65; }
+  .cost-reset { margin-top: .7rem; color: var(--gc-ink); min-height: 2.75rem; white-space: normal; height: auto; text-decoration: underline; text-underline-offset: .2em; }
+  .snapshot-note { font-size: .76rem; line-height: 1.65; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--gc-border); }
+  .allocation-panel { background: color-mix(in srgb, var(--gc-accent) 6%, var(--gc-panel)); }
+  .allocation-total { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .allocation-total output { font-size: clamp(2.3rem, 4.5vw, 4rem); line-height: 1.1; letter-spacing: -.05em; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .allocation-total > span { font-size: .8rem; color: var(--gc-muted); }
+  .allocation-caption { font-size: .77rem; line-height: 1.5; margin-top: .6rem; color: var(--gc-muted); }
+  .cost-breakdown { margin-block: 1.8rem; }
+  .cost-breakdown > div { display: flex; justify-content: space-between; align-items: start; gap: .75rem; padding-block: .85rem; border-bottom: 1px solid var(--gc-border); }
+  .cost-breakdown dt { font-size: .85rem; }
+  .cost-breakdown dt small { display: block; color: var(--gc-muted); font-size: .72rem; margin-top: .2rem; }
+  .cost-breakdown dd { font-size: .95rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cost-additions { margin-top: 1rem; }
+  .additional-card h3 { font-size: 1.4rem; line-height: 1.25; font-weight: 600; letter-spacing: -.02em; margin-block: .75rem; }
+  .compact { margin-block: 1rem; }
+  .additional-total { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin-bottom: 1rem; }
+  .additional-total strong { font-size: 1.6rem; letter-spacing: -.03em; }
+  .additional-total span { font-size: .75rem; }
+  .video-estimate { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem; margin-block: 1.5rem 1rem; }
+  .video-estimate strong { font-size: 2.3rem; font-weight: 600; letter-spacing: -.03em; }
+  .video-estimate span { font-size: .8rem; }
+  .additional-card > p + p { margin-top: 1rem; }
+  .cost-assumptions { margin-top: 1.5rem; border-block: 1px solid var(--gc-border); }
+  .cost-assumptions summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4rem; cursor: pointer; font-size: .9rem; font-weight: 600; list-style: none; }
+  .cost-assumptions summary::-webkit-details-marker { display: none; }
+  .cost-assumptions summary:focus-visible { outline: 3px solid var(--gc-accent); outline-offset: 3px; }
+  .cost-assumptions[open] summary > span { transform: rotate(45deg); }
+  .assumptions-content { display: grid; gap: 1.8rem; padding-block: .5rem 1.5rem; }
+  .assumptions-content h3 { font-size: 1rem; font-weight: 600; margin-bottom: .75rem; }
+  .assumptions-list { margin-top: 1rem; font-size: .76rem; }
+  .assumptions-list > div { display: flex; align-items: start; justify-content: space-between; gap: 1rem; padding-block: .55rem; border-bottom: 1px solid var(--gc-border); }
+  .assumptions-list dt { color: var(--gc-muted); max-width: 70%; }
+  .assumptions-list dd { text-align: right; font-variant-numeric: tabular-nums; }
+  .source-notes > p + p { margin-top: .85rem; }
+  .cost-sources { display: flex; flex-wrap: wrap; gap: .7rem 1.2rem; margin-top: 1rem; font-size: .75rem; line-height: 1.6; list-style: none; }
+  @media (min-width: 760px) { .cost-layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); } .cost-additions, .assumptions-content { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (forced-colors: active) { .scenario-option:has(input:checked) { outline: 2px solid Highlight; } }
+</style>

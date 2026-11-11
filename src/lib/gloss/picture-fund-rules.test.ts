@@ -17,13 +17,13 @@ test('preview cannot publish checkout even with a live-looking URL', () => {
 });
 test('rejects sandbox, foreign, malformed and missing checkout URLs', () => {
   for (const link of ['', 'https://buy.stripe.com/test_abc', 'https://evil.example/abc', 'http://buy.stripe.com/abc', 'https://buy.stripe.com@evil.example/abc', 'bad', 'https://buy.stripe.com/abc?test=true']) {
-    const fund = fixture(); fund.status = 'open'; fund.languages[0]!.pledgeLinks['supporter'] = link;
+    const fund = fixture(); fund.status = 'open'; fund.goal = 10000; fund.languages[0]!.pledgeLinks['supporter'] = link;
     assert.equal(liveRewardLink(fund, 'supporter'), null);
     assert.throws(() => validatePictureFund(fund));
   }
 });
 test('open fund requires live checkout for every known tier', () => {
-  const fund = fixture(); fund.status = 'open';
+  const fund = fixture(); fund.status = 'open'; fund.goal = 10000;
   fund.tiers.forEach(tier => { fund.languages[0]!.pledgeLinks[tier.id] = 'https://buy.stripe.com/abc123'; });
   assert.equal(validatePictureFund(fund), fund);
   assert.equal(liveRewardLink(fund, 'unknown'), null);

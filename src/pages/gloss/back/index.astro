@@ -3,73 +3,65 @@ import { buttonVariants } from "@refraction-ui/astro";
 import BackPage from "../../../components/gloss/back/BackPage.astro";
 import BackingRules from "../../../components/gloss/back/BackingRules.astro";
 import FundRewards from "../../../components/gloss/back/FundRewards.astro";
-import FamilyPlan from "../../../components/family/FamilyPlan.astro";
-import { campaign, dollars, languagePath, languagesByGroup, SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
-import { pictureFund, pounds } from "../../../lib/gloss/picture-fund";
-const groups = languagesByGroup(campaign.languages.filter(language => language.group !== "english"));
-const contact = (subject: string) => `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}`;
-const goals = [
-  { number: "01", title: "See the meaning", body: "Our goal is to cover every word that appears in the books young readers read, from their first books through Year 13. Give different meanings their own pictures: the bat that flies and the bat used in a game." },
-  { number: "02", title: "Trust what you see", body: "Check the picture against its meaning, the explanation and its suitability for young readers. Fix doubtful entries before publishing them. Keep a way to report mistakes." },
-  { number: "03", title: "Carry your language with you", body: "Add regional-language meanings and pronunciation alongside English, reviewed by native speakers. One familiar picture can connect a new English word with a word from home." },
+import FamilyMembership from "../../../components/gloss/interest/FamilyMembership.astro";
+import FeatureRequestForm from "../../../components/gloss/interest/FeatureRequestForm.astro";
+import PracticeStory from "../../../components/gloss/interest/PracticeStory.astro";
+import InterestForm from "../../../components/gloss/interest/InterestForm.astro";
+import CostExplorer from "../../../components/gloss/budget/CostExplorer.astro";
+const difficultWords = [
+  {word:"reluctant",kind:"A feeling",meaning:"Not wanting to do something, or slow to agree.",picture:"A story can show the difference between wanting to join in and holding back."},
+  {word:"inference",kind:"An idea",meaning:"A conclusion you reach from clues and what you already know.",picture:"The footprints, the open gate, the missing dog. The picture helps a learner connect the clues."},
+  {word:"orbit",kind:"A relationship",meaning:"The curved path one object follows around another in space.",picture:"A sequence can make the path visible; motion may make it clearer still."},
+  {word:"irony",kind:"A distinction",meaning:"A surprising difference between what is expected and what happens.",picture:"Context and contrast matter. A decorative picture alone cannot explain every meaning."},
 ];
 ---
-<BackPage title="Help build the picture dictionary — Gloss" description="Back a vetted picture dictionary for young readers and grown-ups learning another language. One shared campaign, with TinyKite Family rewards and regional-language expansion plans.">
-  <section class="px-5 py-12 sm:px-8 sm:py-20">
-    <div class="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1.4fr_0.6fr] md:items-center">
-      <div>
-        <p class="text-sm font-semibold uppercase tracking-wide text-[var(--gloss-sage)]">Gloss · A dictionary worth building together</p>
-        <h1 class="mt-4 text-4xl font-bold leading-tight text-text sm:text-6xl">A word. A picture.<br />A world that makes sense.</h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-text">Help us build a vetted picture dictionary for young readers—and for grown-ups finding their feet in a new language.</p>
-        <p class="mt-4 max-w-xl leading-relaxed text-muted-foreground">Instead of asking ChatGPT or Gemini to make a fresh picture every time, open a picture made for that meaning, checked, and ready to use again. More time understanding. Less time prompting.</p>
-        <div class="mt-7 flex flex-wrap gap-3">
-          <a href="#rewards" class:list={[buttonVariants({ size: "lg" }), "campaign-primary min-h-12"]}>Explore backer rewards</a>
-          <a href="https://gloss.tinykite.co/" class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12 h-auto py-3 max-w-full !whitespace-normal text-center"]}>Try Gloss free</a>
-        </div>
-        <p class="mt-4 text-sm text-muted-foreground">Free during beta · No card needed · Backing is optional</p>
-      </div>
-      <figure class="mx-auto max-w-64">
-        <img src="/gloss/screenshots/app/03-duck-article.png" width="1170" height="2532" alt="A Gloss dictionary entry for duck, with a picture, pronunciation and short meanings" class="w-full rounded-3xl border border-border shadow-lg" />
-        <figcaption class="mt-3 text-center text-sm text-muted-foreground">An existing Gloss entry. Not every word has a picture yet—that’s what we’re building.</figcaption>
-      </figure>
+<BackPage title="Help build a dictionary worth understanding — Gloss backers" description="Back a reviewed picture dictionary for reading through Year 13. Explore transparent picture, translation and optional video costs, discounted family rewards, and choose your languages.">
+  <header class="gc-shell gc-hero backer-hero">
+    <p class="gc-eyebrow">A world of words. Built together.</p>
+    <h1 class="gc-title mt-5">Help the next word<br /><span>make sense.</span></h1>
+    <div class="backer-intro">
+      <p class="text-lg leading-relaxed">A dictionary for every word a young reader meets in books through Year 13. Pictures made for the meaning. Explanations that grow with the reader. Languages that keep home close.</p>
+      <p class="gc-muted leading-relaxed">We’re building towards that ambition, not claiming complete coverage today. Backing will help create and review a shared library, so learners can return to a useful answer instead of generating a new one each time.</p>
     </div>
+    <div class="mt-7 flex flex-wrap items-center gap-4"><a href="#rewards" class:list={[buttonVariants({size:"lg"}),"gc-action backer-primary"]}>Explore backer rewards ↓</a><a class="gc-link text-sm" href="/gloss/interest/#see-gloss">See Gloss in motion ↗</a></div>
+    <p class="gc-muted mt-4 text-sm">Express interest today. Payments aren’t open.</p>
+  </header>
+
+  <section class="gc-shell backer-section" aria-labelledby="meaning-first">
+    <div class="section-heading"><div><p class="gc-eyebrow">Not just apple and chair</p><h2 id="meaning-first">The words that need<br />a little more thought.</h2></div><p class="gc-muted">Feelings. Abstract ideas. Words with several meanings. The right answer may need a picture, a contrast, a sequence—or carefully chosen words.</p></div>
+    <div class="word-studies">{difficultWords.map((word,index)=><article><div class="study-top"><span>0{index+1}</span><span>{word.kind}</span></div><h3>{word.word}<span>·</span></h3><p class="study-meaning">{word.meaning}</p><p class="gc-muted study-picture">{word.picture}</p></article>)}</div>
+    <p class="gc-muted mt-4 text-xs">Illustrative teaching examples, not claims that these entries already have approved pictures. Generated work still needs review.</p>
   </section>
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="goals">
-    <h2 id="goals" class="text-3xl font-bold text-text">What we’re working towards</h2>
-    <div class="mt-7 grid gap-5 md:grid-cols-3">{goals.map(goal => <article class="rounded-2xl border border-border bg-card p-6"><p class="text-sm font-semibold text-[var(--gloss-sage)]">{goal.number}</p><h3 class="mt-3 text-xl font-bold text-text">{goal.title}</h3><p class="mt-3 leading-relaxed text-muted-foreground">{goal.body}</p></article>)}</div>
-    <p class="mt-5 leading-relaxed text-muted-foreground">AI can help draft pictures and explanations. Generation is not the same as vetting: each entry needs checks, and translations need native-speaker review before we call them finished.</p>
+
+  <section class="gc-shell backer-section" aria-labelledby="funding-plan">
+    <div class="section-heading"><div><p class="gc-eyebrow">One shared project</p><h2 id="funding-plan">Pictures first.<br />A world of languages next.</h2></div><p class="gc-muted">Choose the languages that matter to you when you express interest in backing. Those preferences guide priorities; they are not separate fundraising pots.</p></div>
+    <ol class="funding-path">
+      <li><span>01</span><div><h3>Make and vet the pictures</h3><p>Work meaning by meaning. Generate, check, revise and connect the picture to the right explanation. Abstract or sensitive meanings need particular care.</p></div></li>
+      <li><span>02</span><div><h3>Connect languages, not just labels</h3><p>Reuse pictures where they fit. Add translations, explanations and examples with native-speaker review. Every language and regional variety is welcome.</p></div></li>
+      <li><span>03</span><div><h3>Add motion where it teaches more</h3><p>An optional stretch goal, if the budget permits. Short videos for actions and changes that still pictures struggle to show—not video for its own sake.</p></div></li>
+    </ol>
   </section>
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="home-language">
-    <div class="rounded-3xl border border-border bg-card p-6 sm:p-10">
-      <p class="text-sm font-semibold uppercase tracking-wide text-[var(--gloss-sage)]">English for the book. Your language for the connection.</p>
-      <h2 id="home-language" class="mt-3 max-w-2xl text-3xl font-bold text-text">Help their reading grow without leaving their mother tongue behind.</h2>
-      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-text">A child meets a word in an English story. The picture makes the idea visible; the word in your family’s language connects it to conversations at home. Our aim is to support English reading and keep regional vocabulary growing alongside it.</p>
-      <p class="mt-4 max-w-3xl leading-relaxed text-muted-foreground">The same approach can help a grown-up learning another language: start with a meaning you can see, hear the word, and revisit it. These bilingual expansions are planned, not available in every language today.</p>
-    </div>
-  </section>
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="budget">
-    <h2 id="budget" class="text-3xl font-bold text-text">One campaign. A clear path to more languages.</h2>
-    <p class="mt-4 max-w-3xl leading-relaxed text-muted-foreground">Contributions go into one shared picture-dictionary project. The working budget below shows the foundation and the additional cost of each language; these aren’t separate fundraisers.</p>
-    <article class="my-7 rounded-2xl border border-border bg-card p-6"><p class="text-sm text-muted-foreground">First stage · working fundraising target</p><p class="mt-2 text-3xl font-bold text-text">{pounds(pictureFund.goal)}</p><h3 class="mt-3 text-xl font-bold text-text">{pictureFund.coverageGoal}</h3><p class="mt-3 max-w-3xl text-muted-foreground">A growing dictionary for readers from their first books through Year 13, with explanations and pictures matched to each meaning. This initial funding target supports picture creation, review and publishing; it is not the total cost of complete coverage. We’ll publish actual costs and progress.</p></article>
-    <h3 class="text-xl font-bold text-text">Additional language budgets</h3>
-    <p class="mt-3 max-w-3xl text-muted-foreground">These estimates are in addition to the shared foundation, carried forward from our initial language planning. The campaign rewards are in GBP; these estimates are in USD, not a currency conversion. Native-speaker quotes will refine them before work is commissioned.</p>
-    <div class="mt-6 grid gap-6 md:grid-cols-2">{groups.map(group => <div class="rounded-2xl border border-border bg-card p-5"><h4 class="mb-3 font-bold text-text">{group.title}</h4><ul class="divide-y divide-border">{group.languages.map(language => <li class="flex items-start justify-between gap-3 py-3"><a href={languagePath(language)} class="min-w-0 text-text underline decoration-border underline-offset-4">{language.name}</a><span class="shrink-0 text-sm text-muted-foreground">+ US {dollars(language.goal)}</span></li>)}</ul></div>)}</div>
-    <p class="mt-5 text-muted-foreground">Budgets cover translation by meaning, native-speaker review, pronunciation and culturally appropriate picture adjustments. Tell us which language matters to you: <a class="underline" href={contact("Gloss: our family’s language")}>share your language</a>. Interest guides priorities; it does not earmark your contribution.</p>
-  </section>
-  <section id="rewards" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-12 sm:px-8">
-    <h2 class="text-3xl font-bold text-text">Back the dictionary. Bring your family along.</h2>
-    <p class="mb-7 mt-4 max-w-3xl leading-relaxed text-muted-foreground">Make a one-off contribution and choose a reward. Here’s exactly what each one includes. Family memberships cover Nesta, Gloss and future TinyKite apps. Your membership year starts after the free beta, so free time doesn’t use up your reward.</p>
+
+  <div class="gc-shell backer-section"><CostExplorer /></div>
+
+  <FamilyMembership />
+
+  <section id="rewards" class="gc-shell backer-section" aria-labelledby="reward-title">
+    <div class="section-heading"><div><p class="gc-eyebrow">A thank-you for getting us there</p><h2 id="reward-title">Back the words.<br />Bring your family.</h2></div><p class="gc-muted">One-off backing, with a clear reward. Family memberships cover Nesta, Gloss and future TinyKite apps. Your included year starts after the free beta.</p></div>
     <FundRewards />
   </section>
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="credits">
-    <div class="rounded-3xl border border-border bg-card p-6 sm:p-10">
-      <h2 id="credits" class="text-3xl font-bold text-text">Spare credits? A little time? A language you love?</h2>
-      <p class="mt-4 max-w-3xl leading-relaxed text-text">Unused image-generation credits could help us make more pictures. If your provider permits it, you can generate from an agreed brief in your own account and contribute the resulting images. Native speakers, teachers and parents can also help review words and pictures.</p>
-      <p class="mt-4 max-w-3xl text-muted-foreground">Please don’t send passwords, API keys or account access. Credits aren’t always transferable. Contact us first so we can agree the brief, permitted use and rights to publish. Every contribution still goes through review.</p>
-      <a class:list={[buttonVariants({ variant: "outline", size: "lg" }), "mt-6 min-h-12"]} href={contact("I can help Gloss with credits, images or review")}>I’d like to help</a>
-    </div>
+
+  <PracticeStory />
+
+  <section class="gc-shell backer-section backing-form-layout" aria-labelledby="backing-languages">
+    <div class="backing-form-story"><p class="gc-eyebrow">Your language belongs here</p><h2 id="backing-languages">Welsh at home.<br />Swahili with family.<br />A new language<br /><span>just for you.</span></h2><p class="gc-muted mt-5 leading-relaxed">Tell us which languages and regional varieties you want to see. We’ll need people who know the words, the culture and the context—not just a machine translation.</p><div class="credits-note"><h3>Spare credits or a little expertise?</h3><p class="gc-muted">Choose how you’d like to help. You can offer review time or generate agreed pictures in your own account where the provider permits it. We’ll agree the brief and publication rights first.</p><p class="gc-muted">Please never share passwords, API keys or account access. Donated work still goes through review.</p></div></div>
+    <InterestForm mode="backer" id="backing-interest" />
   </section>
-  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8"><h2 class="mb-6 text-3xl font-bold text-text">One subscription when beta ends</h2><FamilyPlan /></section>
-  <section class="mx-auto max-w-3xl px-5 py-12 sm:px-8"><h2 class="mb-6 text-3xl font-bold text-text">How backing works</h2><BackingRules /></section>
+  <section class="gc-shell backer-section backer-rules"><h2>Before anyone pays</h2><BackingRules /></section>
+  <FeatureRequestForm />
 </BackPage>
-<style>.campaign-primary { color: hsl(var(--primary-foreground)); }</style>
+<style>
+.backer-hero h1 span,.backing-form-story h2 span{color:var(--gc-accent)}.backer-intro{display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:65rem;margin-top:2rem}.backer-primary{color:hsl(var(--primary-foreground))}.backer-section{padding-block:clamp(2.5rem,6vw,5rem);scroll-margin-top:2rem}.section-heading{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:end;margin-bottom:2rem}.section-heading h2,.backing-form-story h2{font-size:clamp(1.9rem,3.7vw,3rem);font-weight:750;letter-spacing:-.035em;line-height:1.15;margin-top:.7rem}.section-heading>p{line-height:1.75;max-width:32rem}.word-studies{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--gc-border);border-radius:1.5rem;overflow:hidden;background:var(--gc-panel)}.word-studies article{padding:1.4rem;border-right:1px solid var(--gc-border);min-width:0}.word-studies article:last-child{border:0}.study-top{display:flex;gap:.5rem;justify-content:space-between;font-size:.65rem;letter-spacing:.04em;text-transform:uppercase;color:var(--gc-muted)}.word-studies h3{font-size:1.75rem;font-weight:700;letter-spacing:-.045em;margin:1.5rem 0 .8rem}.word-studies h3 span{color:var(--gc-accent)}.study-meaning{font-size:.9rem;line-height:1.55;min-height:5.5rem}.study-picture{border-top:1px solid var(--gc-border);margin-top:1rem;padding-top:1rem;font-size:.79rem;line-height:1.6}.funding-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}.funding-path li{display:flex;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--gc-accent)}.funding-path li>span{font-size:.75rem;color:var(--gc-accent);padding-top:.2rem}.funding-path h3{font-size:1.1rem;font-weight:700}.funding-path p{color:var(--gc-muted);font-size:.88rem;line-height:1.7;margin-top:.7rem}.backing-form-layout{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(2rem,6vw,5rem);align-items:start}.backing-form-story{max-width:31rem}.credits-note{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--gc-border)}.credits-note h3{font-size:1.1rem;font-weight:700}.credits-note p{font-size:.85rem;line-height:1.7;margin-top:.7rem}.backer-rules{max-width:48rem}.backer-rules h2{font-size:1.6rem;font-weight:750;margin-bottom:1.5rem}
+@media(max-width:950px){.word-studies{grid-template-columns:repeat(2,minmax(0,1fr))}.word-studies article{border-bottom:1px solid var(--gc-border)}.word-studies article:nth-child(2){border-right:0}.word-studies article:nth-child(3){border-bottom:0}.study-meaning{min-height:3rem}.backing-form-layout{grid-template-columns:1fr}.backing-form-story{max-width:45rem}}
+@media(max-width:680px){.backer-intro,.section-heading,.funding-path{grid-template-columns:1fr;gap:1.2rem}.section-heading{margin-bottom:1.4rem}.word-studies{grid-template-columns:1fr}.word-studies article{border-right:0;border-bottom:1px solid var(--gc-border)!important}.word-studies article:last-child{border-bottom:0!important}.study-meaning{min-height:0}.word-studies h3{margin-top:1rem}.backer-hero h1{font-size:clamp(2.45rem,9vw,3.8rem)}}
+</style>

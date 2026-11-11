@@ -1,39 +1,41 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import ThemeToggle from "../../ThemeToggle.astro";
 import catalog from "../../../data/gloss/features.json";
-import { BACK_HUB_PATH, BACKER_PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from "../../../lib/gloss/campaign";
-
-/** The frame every backing page shares: layout, Gloss colours, footer links. */
-interface Props {
-  title: string;
-  description: string;
-}
-
+import { BACKER_PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from "../../../lib/gloss/campaign";
+import "../interest/campaign.css";
+interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
-const { product } = catalog;
+const isInterest = Astro.url.pathname.includes('/interest');
 ---
-
-<Layout title={title} description={description} image={product.icon}>
-  <main class="min-h-screen bg-background gloss-page">
-    <slot />
-    <footer class="py-12 px-6 text-center text-sm text-gray-500">
-      <a href="/gloss/" class="hover:underline">About Gloss</a> ·
-      <a href={BACK_HUB_PATH} class="hover:underline">Campaign</a> ·
-      <a href={TERMS_PATH} class="hover:underline">Terms</a> ·
-      <a href="/gloss/privacy/" class="hover:underline">Privacy</a> ·
-      <a href={BACKER_PRIVACY_PATH} class="hover:underline">Backer privacy</a> ·
-      <a href={`mailto:${SUPPORT_EMAIL}`} class="hover:underline">{SUPPORT_EMAIL}</a>
+<Layout title={title} description={description} image={catalog.product.icon} hideSiteChrome selfHostedFonts nativeScroll>
+  <div class="gloss-page gloss-campaign campaign-frame">
+    <header class="campaign-header">
+      <div class="gc-shell campaign-navigation">
+        <a href="/gloss/interest/" class="campaign-brand" aria-label="Gloss by TinyKite"><span class="campaign-g">g<span>·</span></span><span>gloss<span class="campaign-by">by tinykite</span></span></a>
+        <nav aria-label="Gloss campaign"><a href="/gloss/interest/" aria-current={isInterest ? 'page' : undefined}>Express interest</a>{!isInterest && <a href="/gloss/back/" aria-current="page">Backers</a>}</nav>
+        <ThemeToggle />
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="gc-shell campaign-footer">
+      <div><strong>Built with family at heart.</strong><p class="gc-muted">From the very beginning. By Tiny Kite LTD.</p></div>
+      <div class="campaign-footer-links"><a href={TERMS_PATH}>Terms</a><a href={BACKER_PRIVACY_PATH}>Privacy</a><a href={`mailto:${SUPPORT_EMAIL}`}>Get in touch</a><a href="https://gloss.tinykite.co/">Try Gloss ↗</a></div>
     </footer>
-  </main>
+  </div>
 </Layout>
-
 <style is:global>
-  /* Sage & Honey accent, the same tokens as /gloss/. */
-  .gloss-page {
-    --gloss-sage: #2a7a66;
-    --gloss-teal: #387a88;
-    --gloss-honey: #e8a512;
-    --gloss-paper: #f7f3ea;
-  }
-  :root.dark .gloss-page { --gloss-sage: #80cbb5; --gloss-teal: #8fc9d4; }
+  @font-face{font-family:Nunito;src:url('/fonts/nunito-latin.woff2') format('woff2');font-style:normal;font-weight:200 900;font-display:swap}
+  .gloss-page{--gloss-sage:#2a7a66;--gloss-teal:#387a88;--gloss-honey:#a67612;--gloss-paper:#f7f3ea;font-family:Nunito,system-ui,sans-serif}
+  :root.dark .gloss-page{--gloss-sage:#80cbb5;--gloss-teal:#8fc9d4;--gloss-honey:#e8bc63}
+</style>
+<style>
+  .campaign-header{border-bottom:1px solid var(--gc-border);background:var(--gc-paper)}
+  .campaign-navigation{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:1.2rem}
+  .campaign-brand{display:flex;align-items:center;gap:.6rem;font-size:1.25rem;font-weight:800;line-height:1.1;letter-spacing:-.04em}
+  .campaign-g{display:grid;place-items:center;position:relative;font-size:2.15rem;background:var(--gc-accent);color:var(--gc-paper);border-radius:13px;width:44px;height:44px;padding-bottom:7px}.campaign-g span{position:absolute;right:6px;bottom:2px;font-size:1.2rem}
+  .campaign-by{display:block;font-size:.57rem;letter-spacing:.05em;font-weight:600;margin-top:.2rem}
+  nav{display:flex;gap:.4rem}nav a{padding:.6rem .8rem;border-radius:30px;font-size:.88rem;font-weight:700}nav a[aria-current=page]{background:color-mix(in srgb,var(--gc-accent) 12%,transparent);color:var(--gc-accent)}
+  .campaign-footer{display:flex;justify-content:space-between;gap:2rem;padding-block:2rem;border-top:1px solid var(--gc-border);font-size:.8rem}.campaign-footer strong{font-size:1rem}.campaign-footer p{margin-top:.4rem}.campaign-footer-links{display:flex;gap:1.3rem;flex-wrap:wrap;align-items:center}.campaign-footer a:hover{text-decoration:underline}
+  @media(max-width:520px){.campaign-navigation{flex-wrap:wrap;padding-block:1rem}.campaign-brand{flex:1}nav{order:3;justify-content:center;width:100%}nav a{flex:1;text-align:center}.campaign-footer{flex-direction:column;gap:1.5rem}}
 </style>

@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-11",
+  "currency": "USD",
+  "is_quote": false,
+  "source_snapshot": {
+    "commit": "cc95c34c21",
+    "date": "2026-09-11",
+    "headwords": 30714,
+    "entries": 88741,
+    "depictable_entries": 85360,
+    "single_picture_intent": 30282,
+    "contrast_intent": 18574,
+    "motion_intent": 36504,
+    "live_index_cached_headwords": 63265,
+    "existing_assets_subtracted": 0
+  },
+  "scenarios": [
+    {
+      "name": "lean",
+      "motion_panels": 1,
+      "flash_attempts": 1.2,
+      "pro_attempts": 0,
+      "flash_rate": 0.0336,
+      "pro_rate": 0.0672,
+      "overhead_per_panel": 0.001,
+      "review_minutes": 0.5,
+      "review_hourly_usd": 20,
+      "contingency": 0.15,
+      "panels": 103934,
+      "image_api_usd": 4190.618879999999,
+      "prompt_verification_allowance_usd": 103.934,
+      "review_usd": 14790.166666666666,
+      "subtotal_usd": 19084.719546666667,
+      "with_contingency_usd": 21947.427478666665,
+      "headword_index_projected_total_usd": 45207.52749358099
+    },
+    {
+      "name": "working",
+      "motion_panels": 2,
+      "flash_attempts": 1.5,
+      "pro_attempts": 0.15,
+      "flash_rate": 0.0672,
+      "pro_rate": 0.1344,
+      "overhead_per_panel": 0.002,
+      "review_minutes": 1.5,
+      "review_hourly_usd": 30,
+      "contingency": 0.2,
+      "panels": 140438,
+      "image_api_usd": 16987.38048,
+      "prompt_verification_allowance_usd": 280.87600000000003,
+      "review_usd": 66555.75,
+      "subtotal_usd": 83824.00648,
+      "with_contingency_usd": 100588.80777599999,
+      "headword_index_projected_total_usd": 207193.81793151784
+    },
+    {
+      "name": "difficult",
+      "motion_panels": 3,
+      "flash_attempts": 2,
+      "pro_attempts": 0.8,
+      "flash_rate": 0.0672,
+      "pro_rate": 0.1344,
+      "overhead_per_panel": 0.004,
+      "review_minutes": 3,
+      "review_hourly_usd": 40,
+      "contingency": 0.3,
+      "panels": 176942,
+      "image_api_usd": 42805.80864,
+      "prompt_verification_allowance_usd": 707.768,
+      "review_usd": 177482.0,
+      "subtotal_usd": 220995.57663999998,
+      "with_contingency_usd": 287294.249632,
+      "headword_index_projected_total_usd": 591771.5277387666
+    }
+  ],
+  "sources": {
+    "images": "https://cloud.google.com/model-garden/pricing",
+    "translation": "https://cloud.google.com/products/translate/pricing",
+    "storage": "https://developers.cloudflare.com/r2/pricing/",
+    "subscription": "https://learn.chatgpt.com/docs/image-generation",
+    "video_units": "https://developers.cloudflare.com/ai/models/google/veo-3.1-fast/",
+    "payments": "https://stripe.com/gb/pricing"
+  },
+  "translation": {
+    "measured_core_source_characters": 75986782,
+    "label_characters": 1406191,
+    "definition_characters": 37773171,
+    "example_characters": 36807420,
+    "rate_usd_per_million_source_characters_per_language": 20,
+    "single_pass_full_core_usd": 1519.73564,
+    "scope_note": "Machine drafting comparator; native review, cultural adaptation, setup, pronunciation and UI work additional."
+  },
+  "video": {
+    "motion_meanings": 36504,
+    "seconds_per_clip": 4,
+    "fast_720p_silent_usd_per_second": 0.08,
+    "fast_720p_audio_usd_per_second": 0.1,
+    "silent_generation_usd_by_attempts": [
+      11681.28,
+      23362.56,
+      35043.840000000004
+    ],
+    "audio_generation_usd_by_attempts": [
+      14601.6,
+      29203.2,
+      43804.8
+    ]
+  },
+  "exclusions": [
+    "New lexical authoring and corpus licensing",
+    "Specialist editorial commissioning beyond assumed review time",
+    "Per-language cultural adaptation and setup",
+    "Paid reviewer quotes",
+    "Application hosting, engineering and support",
+    "Taxes and refunds",
+    "FX conversion",
+    "Existing inventory audit savings",
+    "Unconfirmed credits or donations"
+  ]
+}

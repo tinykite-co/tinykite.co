@@ -1,0 +1,84 @@
+---
+import { buttonVariants } from '@refraction-ui/astro';
+import { demoStages, demoScreens } from './demo-model';
+---
+<figure class="silent-demo" data-gloss-demo data-stage="reading" role="group" aria-label="Gloss walkthrough using real app screens: read, look up duck, understand its meaning, revisit saved history, practise and return to the book">
+  <div class="demo-world">
+    <div class="demo-book" aria-hidden="true">
+      <div class="book-top"><span>◆</span><span class="book-lines"></span></div>
+      <p>A <mark>duck<span class="word-question">?</span><span class="word-check">✓</span></mark><br />swam across<br />the pond.</p>
+      <div class="book-rule"></div><div class="book-rule short"></div>
+      <span class="book-page">12</span>
+    </div>
+    <div class="demo-connection" aria-hidden="true"><span></span><span></span><span></span><svg viewBox="0 0 24 24"><path d="m8 4 8 8-8 8"/></svg></div>
+    <div class="demo-phone" aria-hidden="true">
+      {demoScreens.map(screen => <div class="demo-screen" data-demo-screen={screen.id} data-active={screen.id === demoStages[0].screen}>
+        <img src={screen.light} alt="" width="390" height="844" loading="eager" decoding="async" />
+      </div>)}
+    </div>
+  </div>
+  <div class="demo-controls">
+    <div class="demo-steps" aria-label="Walkthrough steps">{demoStages.map((stage,index) => <button type="button" data-demo-step={index} aria-label={stage.label} aria-pressed={index===0}><span></span></button>)}</div>
+    <div class="demo-buttons">
+      <button type="button" data-demo-toggle aria-label="Pause walkthrough" class:list={[buttonVariants({variant:'ghost',size:'icon'}),'demo-control']}><svg class="pause-icon" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></svg><svg class="play-icon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></button>
+      <button type="button" data-demo-next aria-label="Next step" class:list={[buttonVariants({variant:'ghost',size:'icon'}),'demo-control']}><svg viewBox="0 0 24 24"><path d="m7 5 9 7-9 7m11-14v14"/></svg></button>
+      <button type="button" data-demo-replay aria-label="Replay walkthrough" class:list={[buttonVariants({variant:'ghost',size:'icon'}),'demo-control']}><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg></button>
+    </div>
+  </div>
+  <p class="demo-accessible" data-demo-description>{demoStages[0].description}</p>
+  <p class="demo-accessible" data-demo-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+  <figcaption class="demo-capture-note">Real beta screens, shown in the app’s light appearance.</figcaption>
+  <p class="demo-accessible">Captured on 11 November 2026 beside an illustrative reading passage. Some dictionary entries do not yet have pictures. No app controls are recreated. Use the step controls to explore at your own pace.</p>
+</figure>
+<style>
+.silent-demo{--demo-ink:var(--color-text);--demo-muted:var(--color-text-muted);--demo-paper:var(--color-panel-bg);--demo-border:var(--color-border);--demo-accent:var(--gloss-sage);--demo-wash:color-mix(in srgb,var(--demo-accent) 8%,var(--color-bg));position:relative;margin:0;border:1px solid var(--demo-border);border-radius:2rem;overflow:hidden;background:radial-gradient(ellipse at 75% 45%,color-mix(in srgb,var(--demo-accent) 10%,transparent),transparent 70%),var(--demo-wash);color:var(--demo-ink);contain:layout style;}
+.demo-world{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1.15fr);align-items:center;gap:1.5rem;max-width:960px;margin:auto;padding:3rem;}
+.demo-book{position:relative;transform:rotate(-5deg);border:1px solid var(--demo-border);border-radius:8px 22px 22px 8px;background:linear-gradient(90deg,color-mix(in srgb,var(--demo-muted) 10%,transparent),transparent 7%),var(--demo-paper);box-shadow:6px 6px 0 -2px var(--demo-paper),7px 7px 0 -2px var(--demo-border),0 20px 40px color-mix(in srgb,var(--demo-ink) 8%,transparent);padding:2rem 2rem 3rem;transition:transform .8s ease;}
+.book-top{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;color:var(--demo-accent)}.book-lines{height:1px;flex:1;background:var(--demo-border)}.demo-book p{font-family:Georgia,serif;font-size:clamp(1.15rem,2.8vw,2rem);line-height:1.8;margin:0 0 1rem}.demo-book mark{position:relative;display:inline-block;background:color-mix(in srgb,var(--demo-accent) 16%,transparent);color:inherit;border-radius:4px;padding:0 .3rem}.word-question,.word-check{position:absolute;right:-.7rem;top:-.4rem;font-family:system-ui;font-size:.8rem;width:1.3rem;height:1.3rem;border-radius:50%;background:var(--demo-paper);color:var(--demo-accent);border:1px solid var(--demo-accent);text-align:center;line-height:1.2rem}.word-check{opacity:0}.book-rule{height:5px;width:90%;border-radius:8px;background:var(--demo-border);margin-top:1rem}.book-rule.short{width:65%}.book-page{position:absolute;bottom:1rem;left:50%;font-size:.7rem;color:var(--demo-muted)}
+.demo-connection{display:flex;align-items:center;gap:4px;color:var(--demo-accent);opacity:.4;transition:opacity .5s}.demo-connection span{width:4px;height:4px;border-radius:50%;background:currentColor}.demo-connection svg{width:22px;fill:none;stroke:currentColor;stroke-width:2}
+.demo-phone{position:relative;aspect-ratio:390/844;width:100%;max-width:340px;justify-self:center;border:1px solid var(--demo-border);border-radius:1.4rem;overflow:hidden;background:var(--demo-paper);box-shadow:0 16px 45px color-mix(in srgb,var(--demo-ink) 12%,transparent)}.demo-screen{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .55s ease,visibility .55s}.demo-screen img{display:block;width:100%;height:100%;object-fit:contain}.demo-screen[data-active=true]{opacity:1;visibility:visible}
+.demo-capture-note{padding:0 1.5rem 1.3rem;color:var(--demo-muted);font-size:.75rem;line-height:1.6;text-align:center}.demo-controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;align-items:center;padding:0 1.5rem 1.25rem}.demo-steps{display:flex;gap:2px;align-items:center}.demo-steps button{padding:12px 4px;min-height:44px;width:28px;background:transparent;border:0;cursor:pointer}.demo-steps span{display:block;height:3px;background:color-mix(in srgb,var(--demo-accent) 35%,var(--demo-paper));border-radius:3px}.demo-steps [aria-pressed=true] span{background:var(--demo-accent)}.demo-buttons{display:flex;gap:4px}.demo-control{min-width:44px;min-height:44px;color:var(--demo-ink)}.demo-control svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.play-icon{display:none}.demo-accessible{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+[data-stage=searching] .demo-connection,[data-stage=meaning] .demo-connection{opacity:1}[data-stage=understood] .demo-book{transform:rotate(0)}[data-stage=understood] .word-check{opacity:1}[data-stage=understood] .word-question{opacity:0}[data-stage=understood] .demo-connection{transform:rotate(180deg);opacity:1}[data-paused=true] .play-icon{display:block}[data-paused=true] .pause-icon{display:none}[data-static=true] *{transition:none!important}
+@media(max-width:680px){.demo-world{grid-template-columns:minmax(0,1fr);gap:1.4rem;padding:1.5rem 1rem 1rem}.demo-book{padding:1rem 1.25rem;width:min(100%,340px);justify-self:center;transform:rotate(-2deg);border-radius:8px 15px 15px 8px}.book-top,.book-rule,.book-page{display:none}.demo-book p{font-size:1.15rem;line-height:1.8;margin:0;text-align:center}.demo-book br{display:none}.demo-book mark{margin-inline:.2rem}.demo-connection{display:none}.demo-phone{max-width:340px;border-radius:1rem}.demo-controls{padding-inline:.6rem;gap:.3rem}.demo-steps button{width:23px;padding-inline:3px}.demo-buttons{gap:0}.silent-demo{border-radius:1.5rem}}
+@media(prefers-reduced-motion:reduce){.silent-demo *{transition:none!important}}
+</style>
+<script>
+import { createDemoPlayback, demoStages, isDemoRunning, nextDemoStage, updateDemoPlayback, type DemoEvent } from './demo-model';
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+for (const demo of document.querySelectorAll<HTMLElement>('[data-gloss-demo]')) {
+  let state = createDemoPlayback(motionPreference.matches, !document.hidden);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const toggle = demo.querySelector<HTMLButtonElement>('[data-demo-toggle]')!;
+  const steps = [...demo.querySelectorAll<HTMLButtonElement>('[data-demo-step]')];
+  const screens = [...demo.querySelectorAll<HTMLElement>('[data-demo-screen]')];
+  const description = demo.querySelector<HTMLElement>('[data-demo-description]')!;
+  const announcement = demo.querySelector<HTMLElement>('[data-demo-announcement]')!;
+  const render = () => {
+    const stage = demoStages[state.index]!;
+    demo.dataset['stage'] = stage.id;
+    screens.forEach(screen => screen.dataset['active'] = String(screen.dataset['demoScreen'] === stage.screen));
+    demo.dataset['paused'] = String(state.paused);
+    demo.dataset['static'] = String(state.manual || state.reducedMotion);
+    demo.dataset['frozen'] = String(!isDemoRunning(state));
+    toggle.setAttribute('aria-label', state.paused ? 'Play walkthrough' : 'Pause walkthrough');
+    steps.forEach((button, step) => button.setAttribute('aria-pressed', String(state.index === step)));
+    description.textContent = stage.description;
+    clearTimeout(timer);
+    if (isDemoRunning(state)) timer = setTimeout(() => dispatch({ type: 'tick' }), state.remaining);
+  };
+  const dispatch = (event: DemoEvent) => {
+    state = updateDemoPlayback(state, event, performance.now());
+    if (event.type === 'select' || event.type === 'replay') announcement.textContent = demoStages[state.index]!.description;
+    else if (event.type === 'tick') announcement.textContent = '';
+    render();
+  };
+  toggle.addEventListener('click', () => dispatch({ type: 'toggle' }));
+  demo.querySelector('[data-demo-next]')!.addEventListener('click', () => dispatch({ type: 'select', index: nextDemoStage(state.index) }));
+  demo.querySelector('[data-demo-replay]')!.addEventListener('click', () => dispatch({ type: 'replay' }));
+  steps.forEach((button, index) => button.addEventListener('click', () => dispatch({ type: 'select', index })));
+  new IntersectionObserver(entries => dispatch({ type: 'visibility', value: (entries[0]?.intersectionRatio ?? 0) >= .3 }), { threshold: .3 }).observe(demo);
+  document.addEventListener('visibilitychange', () => dispatch({ type: 'pageVisibility', value: !document.hidden }));
+  motionPreference.addEventListener('change', event => dispatch({ type: 'motion', value: event.matches }));
+  render();
+}
+</script>

@@ -3,7 +3,7 @@
   "currency": "gbp",
   "siteBaseUrl": "https://tinykite.co",
   "status": "preview",
-  "goal": 10000,
+  "goal": null,
   "tiers": [
     {
       "id": "supporter",
