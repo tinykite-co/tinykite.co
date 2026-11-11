@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     /* TinyKite Brand Theme — Light (Warm Cream) */
     --color-bg: #f7f4ee;
     /* Warm Cream */
@@ -60,6 +61,7 @@
   }
 
   :root[class~="dark"] {
+    color-scheme: dark;
     /* TinyKite Brand Theme — Dark (Deep Navy) */
     --color-bg: #0b1020;
     /* Deep Navy */

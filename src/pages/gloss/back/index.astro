@@ -1,118 +1,75 @@
 ---
+import { buttonVariants } from "@refraction-ui/astro";
 import BackPage from "../../../components/gloss/back/BackPage.astro";
 import BackingRules from "../../../components/gloss/back/BackingRules.astro";
-import GoalProgress from "../../../components/gloss/back/GoalProgress.astro";
-import PlusPlans from "../../../components/gloss/back/PlusPlans.astro";
+import FundRewards from "../../../components/gloss/back/FundRewards.astro";
+import FamilyPlan from "../../../components/family/FamilyPlan.astro";
 import { campaign, dollars, languagePath, languagesByGroup, SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
-
-/**
- * The directory of language campaigns. It deliberately tells no story: each
- * language's page is written for its own families and stands alone, so this
- * page only lists them, with the rules and plans every campaign shares.
- */
-const { languages, tiers, closesOn } = campaign;
-const lowestPrice = Math.min(...tiers.map((tier) => tier.price));
-const groups = languagesByGroup(languages);
-
-const faqs = [
-  {
-    question: "Why should I pay for a dictionary?",
-    answer: "Because each good answer costs money. Pictures cost image-generation credits, every meaning is checked by a paid person, and the servers run every day. Gloss has no ads and sells no data, so the families who use it pay for it.",
-  },
-  {
-    question: "Why one campaign per language?",
-    answer: "Each language is built only if its own families fund it, and nobody pays for one that doesn’t happen.",
-  },
-  {
-    question: "Are the pictures made by AI?",
-    answer: "Yes. An image model draws them, a second model checks them, and doubtful ones go to a person. Most of what you fund is people: native speakers and teachers who check the words.",
-  },
-  {
-    question: "How do I get Gloss Plus as a reward?",
-    answer: "We email the grown-up who backed. They sign in to their TinyKite account in the app’s Grown-ups area, and Plus follows that account on iPhone and Android. If you chose to gift a family, we also send you a code to pass on to them. Children never see a code or a price.",
-  },
+import { pictureFund, pounds } from "../../../lib/gloss/picture-fund";
+const groups = languagesByGroup(campaign.languages.filter(language => language.group !== "english"));
+const contact = (subject: string) => `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+const goals = [
+  { number: "01", title: "See the meaning", body: "Build towards 5,000 useful pictured words. Give different meanings their own pictures: the bat that flies and the bat used in a game." },
+  { number: "02", title: "Trust what you see", body: "Check the picture against its meaning, the explanation and its suitability for young readers. Fix doubtful entries before publishing them. Keep a way to report mistakes." },
+  { number: "03", title: "Carry your language with you", body: "Add regional-language meanings and pronunciation alongside English, reviewed by native speakers. One familiar picture can connect a new English word with a word from home." },
 ];
 ---
-
-<BackPage
-  title="Back Gloss — TinyKite"
-  description="Gloss is a picture dictionary for children reading real books. Choose the language, or the English, your family reads in."
->
-  <!-- Hero -->
-  <section class="relative pt-32 pb-8 px-6">
-    <div class="container mx-auto max-w-5xl">
-      <p class="text-[var(--gloss-sage)] font-medium tracking-wide uppercase text-sm mb-3">Back Gloss</p>
-      <h1 class="text-4xl md:text-5xl font-bold mb-5 text-text" style="font-family: 'Lora', serif;">
-        Choose your family’s language<span class="text-[var(--gloss-honey)]">.</span>
-      </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
-        Each language has its own page, its own goal and its own backers. If a goal isn’t reached, everyone who backed it gets their money back. Backing starts at {dollars(lowestPrice)}.
-      </p>
-    </div>
-  </section>
-
-  <!-- Languages, by group -->
-  {groups.map((group) => (
-    <section class="py-8 px-6">
-      <div class="container mx-auto max-w-5xl">
-        <h2 class="text-2xl font-bold text-text mb-5" style="font-family: 'Lora', serif;">{group.title}</h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {group.languages.map((language) => (
-            <a href={languagePath(language)} class="rounded-2xl border p-5 bg-white dark:bg-white/[0.03] border-gray-100 dark:border-white/[0.06] hover:border-[var(--gloss-sage)] transition-colors flex flex-col">
-              <h3 class="font-semibold text-text text-lg mb-1">{language.name}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{language.who}</p>
-              <div class="mt-auto">
-                <GoalProgress language={language} closesOn={closesOn} />
-              </div>
-            </a>
-          ))}
+<BackPage title="Help build the picture dictionary — Gloss" description="Back a vetted picture dictionary for young readers and grown-ups learning another language. One shared campaign, with TinyKite Family rewards and regional-language expansion plans.">
+  <section class="px-5 py-12 sm:px-8 sm:py-20">
+    <div class="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1.4fr_0.6fr] md:items-center">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-[var(--gloss-sage)]">Gloss · A dictionary worth building together</p>
+        <h1 class="mt-4 text-4xl font-bold leading-tight text-text sm:text-6xl">A word. A picture.<br />A world that makes sense.</h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-text">Help us build a vetted picture dictionary for young readers—and for grown-ups finding their feet in a new language.</p>
+        <p class="mt-4 max-w-xl leading-relaxed text-muted-foreground">Instead of asking ChatGPT or Gemini to make a fresh picture every time, open a picture made for that meaning, checked, and ready to use again. More time understanding. Less time prompting.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#rewards" class:list={[buttonVariants({ size: "lg" }), "campaign-primary min-h-12"]}>Explore backer rewards</a>
+          <a href="https://gloss.tinykite.co/" class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12"]}>Try Gloss free</a>
         </div>
+        <p class="mt-4 text-sm text-muted-foreground">Free during beta · No card needed · Backing is optional</p>
       </div>
-    </section>
-  ))}
-
-  <section class="pt-4 pb-12 px-6">
-    <div class="container mx-auto max-w-5xl">
-      <p class="text-gray-600 dark:text-gray-400">
-        Not here? <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("A Gloss campaign for my language")}`} class="text-[var(--gloss-sage)] font-semibold hover:underline">Ask for your language</a>. If enough families ask, we’ll open it. Native speakers who would check words are especially welcome.
-      </p>
+      <figure class="mx-auto max-w-64">
+        <img src="/gloss/screenshots/app/03-duck-article.png" width="1170" height="2532" alt="A Gloss dictionary entry for duck, with a picture, pronunciation and short meanings" class="w-full rounded-3xl border border-border shadow-lg" />
+        <figcaption class="mt-3 text-center text-sm text-muted-foreground">An existing Gloss entry. Not every word has a picture yet—that’s what we’re building.</figcaption>
+      </figure>
     </div>
   </section>
-
-  <!-- Rules -->
-  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
-    <div class="container mx-auto max-w-3xl">
-      <h2 class="text-3xl font-bold text-text mb-6" style="font-family: 'Lora', serif;">How backing works</h2>
-      <BackingRules />
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="goals">
+    <h2 id="goals" class="text-3xl font-bold text-text">What we’re working towards</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-3">{goals.map(goal => <article class="rounded-2xl border border-border bg-card p-6"><p class="text-sm font-semibold text-[var(--gloss-sage)]">{goal.number}</p><h3 class="mt-3 text-xl font-bold text-text">{goal.title}</h3><p class="mt-3 leading-relaxed text-muted-foreground">{goal.body}</p></article>)}</div>
+    <p class="mt-5 leading-relaxed text-muted-foreground">AI can help draft pictures and explanations. Generation is not the same as vetting: each entry needs checks, and translations need native-speaker review before we call them finished.</p>
+  </section>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="home-language">
+    <div class="rounded-3xl border border-border bg-card p-6 sm:p-10">
+      <p class="text-sm font-semibold uppercase tracking-wide text-[var(--gloss-sage)]">English for the book. Your language for the connection.</p>
+      <h2 id="home-language" class="mt-3 max-w-2xl text-3xl font-bold text-text">Help their reading grow without leaving their mother tongue behind.</h2>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-text">A child meets a word in an English story. The picture makes the idea visible; the word in your family’s language connects it to conversations at home. Our aim is to support English reading and keep regional vocabulary growing alongside it.</p>
+      <p class="mt-4 max-w-3xl leading-relaxed text-muted-foreground">The same approach can help a grown-up learning another language: start with a meaning you can see, hear the word, and revisit it. These bilingual expansions are planned, not available in every language today.</p>
     </div>
   </section>
-
-  <!-- Plans -->
-  <section class="py-16 px-6">
-    <div class="container mx-auto max-w-5xl">
-      <h2 class="text-3xl font-bold text-text mb-3" style="font-family: 'Lora', serif;">What Gloss will cost</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
-        Backing pays to make the pictures and meanings once. Running Gloss costs money every month, so after the beta it’s a paid app. Starter lets a child try a few words a day at no charge. Gloss Plus is the whole dictionary. Every backer gets at least a year of Plus.
-      </p>
-      <PlusPlans />
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="budget">
+    <h2 id="budget" class="text-3xl font-bold text-text">One campaign. A clear path to more languages.</h2>
+    <p class="mt-4 max-w-3xl leading-relaxed text-muted-foreground">Contributions go into one shared picture-dictionary project. The working budget below shows the foundation and the additional cost of each language; these aren’t separate fundraisers.</p>
+    <article class="my-7 rounded-2xl border border-border bg-card p-6"><p class="text-sm text-muted-foreground">Foundation · working fundraising target</p><p class="mt-2 text-3xl font-bold text-text">{pounds(pictureFund.goal)}</p><h3 class="mt-3 text-xl font-bold text-text">Towards {pictureFund.pictureGoal.toLocaleString("en-GB")} pictured English words</h3><p class="mt-3 max-w-3xl text-muted-foreground">Picture creation, checking meanings and suitability, editing, and publishing the shared library. This is a planning budget, not a supplier quote or a claim that funding guarantees completion. We’ll publish actual costs and progress.</p></article>
+    <h3 class="text-xl font-bold text-text">Additional language budgets</h3>
+    <p class="mt-3 max-w-3xl text-muted-foreground">These estimates are in addition to the shared foundation, carried forward from our initial language planning. The campaign rewards are in GBP; these estimates are in USD, not a currency conversion. Native-speaker quotes will refine them before work is commissioned.</p>
+    <div class="mt-6 grid gap-6 md:grid-cols-2">{groups.map(group => <div class="rounded-2xl border border-border bg-card p-5"><h4 class="mb-3 font-bold text-text">{group.title}</h4><ul class="divide-y divide-border">{group.languages.map(language => <li class="flex items-start justify-between gap-3 py-3"><a href={languagePath(language)} class="min-w-0 text-text underline decoration-border underline-offset-4">{language.name}</a><span class="shrink-0 text-sm text-muted-foreground">+ US {dollars(language.goal)}</span></li>)}</ul></div>)}</div>
+    <p class="mt-5 text-muted-foreground">Budgets cover translation by meaning, native-speaker review, pronunciation and culturally appropriate picture adjustments. Tell us which language matters to you: <a class="underline" href={contact("Gloss: our family’s language")}>share your language</a>. Interest guides priorities; it does not earmark your contribution.</p>
+  </section>
+  <section id="rewards" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-12 sm:px-8">
+    <h2 class="text-3xl font-bold text-text">Back the dictionary. Bring your family along.</h2>
+    <p class="mb-7 mt-4 max-w-3xl leading-relaxed text-muted-foreground">Make a one-off contribution and choose a reward. Here’s exactly what each one includes. Family memberships cover Nesta, Gloss and future TinyKite apps. Your membership year starts after the free beta, so free time doesn’t use up your reward.</p>
+    <FundRewards />
+  </section>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8" aria-labelledby="credits">
+    <div class="rounded-3xl border border-border bg-card p-6 sm:p-10">
+      <h2 id="credits" class="text-3xl font-bold text-text">Spare credits? A little time? A language you love?</h2>
+      <p class="mt-4 max-w-3xl leading-relaxed text-text">Unused image-generation credits could help us make more pictures. If your provider permits it, you can generate from an agreed brief in your own account and contribute the resulting images. Native speakers, teachers and parents can also help review words and pictures.</p>
+      <p class="mt-4 max-w-3xl text-muted-foreground">Please don’t send passwords, API keys or account access. Credits aren’t always transferable. Contact us first so we can agree the brief, permitted use and rights to publish. Every contribution still goes through review.</p>
+      <a class:list={[buttonVariants({ variant: "outline", size: "lg" }), "mt-6 min-h-12"]} href={contact("I can help Gloss with credits, images or review")}>I’d like to help</a>
     </div>
   </section>
-
-  <!-- FAQ -->
-  <section class="py-16 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
-    <div class="container mx-auto max-w-3xl">
-      <h2 class="text-3xl font-bold text-text mb-8" style="font-family: 'Lora', serif;">Questions</h2>
-      <div class="space-y-3">
-        {faqs.map((faq) => (
-          <details class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-5">
-            <summary class="font-semibold text-text cursor-pointer">{faq.question}</summary>
-            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mt-3">{faq.answer}</p>
-          </details>
-        ))}
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 mt-8">
-        Schools, publishers or sponsors who’d like to fund a whole language: <a href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Sponsoring a Gloss language")}`} class="text-[var(--gloss-sage)] font-semibold hover:underline">{SUPPORT_EMAIL}</a>. A real person reads every email.
-      </p>
-    </div>
-  </section>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8"><h2 class="mb-6 text-3xl font-bold text-text">One subscription when beta ends</h2><FamilyPlan /></section>
+  <section class="mx-auto max-w-3xl px-5 py-12 sm:px-8"><h2 class="mb-6 text-3xl font-bold text-text">How backing works</h2><BackingRules /></section>
 </BackPage>
+<style>.campaign-primary { color: hsl(var(--primary-foreground)); }</style>

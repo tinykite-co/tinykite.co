@@ -18,7 +18,7 @@ const { product } = catalog;
     <slot />
     <footer class="py-12 px-6 text-center text-sm text-gray-500">
       <a href="/gloss/" class="hover:underline">About Gloss</a> ·
-      <a href={BACK_HUB_PATH} class="hover:underline">All languages</a> ·
+      <a href={BACK_HUB_PATH} class="hover:underline">Campaign</a> ·
       <a href={TERMS_PATH} class="hover:underline">Terms</a> ·
       <a href="/gloss/privacy/" class="hover:underline">Privacy</a> ·
       <a href={BACKER_PRIVACY_PATH} class="hover:underline">Backer privacy</a> ·
@@ -35,4 +35,5 @@ const { product } = catalog;
     --gloss-honey: #e8a512;
     --gloss-paper: #f7f3ea;
   }
+  :root.dark .gloss-page { --gloss-sage: #80cbb5; --gloss-teal: #8fc9d4; }
 </style>

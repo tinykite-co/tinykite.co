@@ -4,7 +4,6 @@ import {
   BACK_HUB_PATH,
   campaign,
   PLAY_TESTING_URL,
-  REFUND_DAYS,
   SUPPORT_EMAIL,
   TESTFLIGHT_URL,
   type Language,
@@ -34,7 +33,7 @@ const languagePage = `${BACK_HUB_PATH}${language.slug}/`;
         Thank you<span class="text-[var(--gloss-honey)]">.</span>
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
-        You’ve backed {language.name}. Stripe will email your receipt. Within two working days we’ll email you too, from {SUPPORT_EMAIL}, with your rewards.
+        This page does not confirm a payment. If you completed checkout, your Stripe receipt is the record. Questions about a payment or reward? Contact {SUPPORT_EMAIL}.
       </p>
       <div class="rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6 mb-8">
         <h2 class="font-semibold text-text text-lg mb-3">Try Gloss now</h2>
@@ -45,7 +44,7 @@ const languagePage = `${BACK_HUB_PATH}${language.slug}/`;
         </p>
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-        If {language.name} doesn’t reach its goal, we refund you in full within {REFUND_DAYS} days of its closing date. Until it reaches its goal, email us any time for a full refund.
+        The campaign now supports one shared picture dictionary. Any earlier pledge remains subject to the terms shown when it was made.
       </p>
       <p class="mt-6"><a href={languagePage} class="text-[var(--gloss-sage)] font-semibold hover:underline">← Back to {language.name}</a></p>
     </div>

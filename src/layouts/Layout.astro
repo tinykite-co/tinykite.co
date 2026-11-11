@@ -50,9 +50,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Theme init (runs before paint to avoid a theme flash); toggling lives in ThemeToggle.astro -->
     <script is:inline>
       (() => {
-        const stored = typeof localStorage !== 'undefined' && localStorage.getItem('theme');
-        const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark', theme === 'dark');
+        let stored = 'system';
+        try { stored = localStorage.getItem('theme') || 'system'; } catch {}
+        const dark = stored === 'dark' || (stored === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
       })();
     </script>
     

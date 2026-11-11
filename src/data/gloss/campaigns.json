@@ -3,74 +3,7 @@
   "currency": "usd",
   "siteBaseUrl": "https://tinykite.co",
   "closesOn": null,
-  "tiers": [
-    {
-      "id": "early-backer",
-      "price": 10,
-      "title": "Early backer",
-      "limitPerLanguage": null,
-      "now": [
-        "A thank-you email with the iPhone and Android beta links",
-        "A vote on which words we do first",
-        "A monthly update: what we drew, what we checked, what it cost"
-      ],
-      "later": [
-        "A year of Gloss Plus for your family",
-        "Your family’s name in the app’s thank-you list, if you want it there"
-      ]
-    },
-    {
-      "id": "lifetime-family",
-      "price": 25,
-      "title": "Family for life",
-      "limitPerLanguage": null,
-      "now": [
-        "Everything in the $10 reward"
-      ],
-      "later": [
-        "Gloss Plus for everyone in your household, for life"
-      ]
-    },
-    {
-      "id": "gift-a-family",
-      "price": 50,
-      "title": "Gift a family",
-      "limitPerLanguage": null,
-      "now": [
-        "Everything in the $10 reward"
-      ],
-      "later": [
-        "Gloss Plus for life for your household",
-        "And for one more family you choose: grandchildren abroad, cousins back home, a friend’s child"
-      ]
-    },
-    {
-      "id": "picture-a-word",
-      "price": 100,
-      "title": "Choose a word",
-      "limitPerLanguage": 50,
-      "now": [
-        "Everything in the $50 reward",
-        "Pick a word, and see and approve its picture before anyone else"
-      ],
-      "later": [
-        "Your family thanked on that word’s page"
-      ]
-    },
-    {
-      "id": "patron",
-      "price": 500,
-      "title": "Patron",
-      "limitPerLanguage": null,
-      "now": [
-        "Everything in the $100 reward",
-        "Your family named as a patron of this language, in the app and on this page"
-      ],
-      "later": [
-        "Gloss Plus for life for up to 10 families you choose"
-      ]
-    }
-  ],
+  "tiers": [],
   "languages": [
     {
       "slug": "british-english",
@@ -99,36 +32,14 @@
         "A crossword and a letter-tile game built from each child’s own words",
         "A year of servers for the British dictionary"
       ],
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "screenshot": {
         "src": "/gloss/screenshots/app/03-duck-article.png",
         "alt": "Gloss showing the word duck: a picture, a short meaning, and four depths of meaning"
       },
-      "tierNames": {
-        "early-backer": {
-          "name": "First reader"
-        },
-        "lifetime-family": {
-          "name": "Family for life"
-        },
-        "gift-a-family": {
-          "name": "Gift a family"
-        },
-        "picture-a-word": {
-          "name": "Name a word"
-        },
-        "patron": {
-          "name": "Patron"
-        }
-      },
+      "tierNames": {},
       "story": {
         "moment": {
           "title": "About {unknownWordsAt9} times a chapter, a nine-year-old meets a word they don’t know yet",
@@ -236,33 +147,11 @@
         "US teachers and parents, paid to check the American dictionary",
         "A crossword and a letter-tile game built from each kid’s own words"
       ],
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "screenshot": null,
-      "tierNames": {
-        "early-backer": {
-          "name": "First reader"
-        },
-        "lifetime-family": {
-          "name": "Family for life"
-        },
-        "gift-a-family": {
-          "name": "Gift a family"
-        },
-        "picture-a-word": {
-          "name": "Name a word"
-        },
-        "patron": {
-          "name": "Patron"
-        }
-      },
+      "tierNames": {},
       "story": {
         "moment": {
           "title": "About {unknownWordsAt9} times a chapter, a 4th grader meets a word they don’t know yet",
@@ -388,13 +277,7 @@
         "Pictures redrawn where today’s don’t look like home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -450,7 +333,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "canadian-english",
@@ -495,13 +379,7 @@
         "Pictures redrawn where today’s don’t match life in Canada"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -561,7 +439,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "indian-english",
@@ -605,13 +484,7 @@
         "Pictures redrawn wherever today’s don’t look like an Indian home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -667,7 +540,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "new-zealand-english",
@@ -712,13 +586,7 @@
         "Pictures redrawn wherever today’s don’t look like Aotearoa"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -770,7 +638,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "irish-english",
@@ -814,13 +683,7 @@
         "Pictures redrawn wherever today’s don’t look like Ireland"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -876,7 +739,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "south-african-english",
@@ -921,13 +785,7 @@
         "Pictures redrawn wherever today’s don’t look like South Africa"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -979,7 +837,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "nigerian-english",
@@ -1023,13 +882,7 @@
         "Pictures redrawn wherever today’s don’t look like a Nigerian home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1085,7 +938,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "hinglish",
@@ -1137,38 +991,11 @@
         "src": "/gloss/screenshots/app/03-duck-article.png",
         "alt": "Gloss showing the word duck, with a chip for the Hindi word बतख़"
       },
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
-      "tierNames": {
-        "early-backer": {
-          "name": "Dost",
-          "meaning": "Friend"
-        },
-        "lifetime-family": {
-          "name": "Parivaar",
-          "meaning": "Family"
-        },
-        "gift-a-family": {
-          "name": "Tohfa",
-          "meaning": "Gift"
-        },
-        "picture-a-word": {
-          "name": "Apna shabd",
-          "meaning": "Your own word"
-        },
-        "patron": {
-          "name": "Shubhchintak",
-          "meaning": "Well-wisher"
-        }
-      },
+      "tierNames": {},
       "story": {
         "moment": {
           "title": "Your child is reading in English. You’re explaining in Hindi.",
@@ -1267,38 +1094,11 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Telugu home: food, clothes, homes, festivals"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
-      "tierNames": {
-        "early-backer": {
-          "name": "Nestham",
-          "meaning": "Friend"
-        },
-        "lifetime-family": {
-          "name": "Kutumbam",
-          "meaning": "Family"
-        },
-        "gift-a-family": {
-          "name": "Kaanuka",
-          "meaning": "Gift"
-        },
-        "picture-a-word": {
-          "name": "Mee maata",
-          "meaning": "Your word"
-        },
-        "patron": {
-          "name": "Shreyobhilaashi",
-          "meaning": "Well-wisher"
-        }
-      },
+      "tierNames": {},
       "story": {
         "moment": {
           "title": "Ammamma is here for six months. Your daughter is on chapter three.",
@@ -1393,38 +1193,11 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Tamil home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
-      "tierNames": {
-        "early-backer": {
-          "name": "Nanban",
-          "meaning": "Friend"
-        },
-        "lifetime-family": {
-          "name": "Kudumbam",
-          "meaning": "Family"
-        },
-        "gift-a-family": {
-          "name": "Parisu",
-          "meaning": "Gift"
-        },
-        "picture-a-word": {
-          "name": "Ungal sol",
-          "meaning": "Your word"
-        },
-        "patron": {
-          "name": "Nalam virumbi",
-          "meaning": "Well-wisher"
-        }
-      },
+      "tierNames": {},
       "story": {
         "moment": {
           "title": "Book Tamil and home Tamil are not the same Tamil",
@@ -1525,13 +1298,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Bengali home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1583,7 +1350,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "marathi",
@@ -1627,13 +1395,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Marathi home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1685,7 +1447,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "gujarati",
@@ -1729,13 +1492,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Gujarati home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1791,7 +1548,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "urdu",
@@ -1837,13 +1595,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit an Urdu-speaking home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1895,7 +1647,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "kannada",
@@ -1939,13 +1692,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Kannada home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -1993,7 +1740,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "malayalam",
@@ -2037,13 +1785,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Malayali home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2099,7 +1841,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "punjabi",
@@ -2143,13 +1886,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit a Punjabi home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2201,7 +1938,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "odia",
@@ -2246,13 +1984,7 @@
         "Pictures redrawn wherever today’s picture doesn’t fit an Odia home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2308,7 +2040,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "spanish",
@@ -2354,13 +2087,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2408,7 +2135,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "mandarin-chinese",
@@ -2454,13 +2182,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2512,7 +2234,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "arabic",
@@ -2558,13 +2281,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2616,7 +2333,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "french",
@@ -2662,13 +2380,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2716,7 +2428,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "portuguese",
@@ -2762,13 +2475,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2820,7 +2527,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "russian",
@@ -2866,13 +2574,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -2924,7 +2626,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "german",
@@ -2970,13 +2673,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -3024,7 +2721,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "japanese",
@@ -3070,13 +2768,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -3128,7 +2820,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     },
     {
       "slug": "korean",
@@ -3174,13 +2867,7 @@
         "Pictures redrawn wherever today’s don’t fit your family’s home"
       ],
       "screenshot": null,
-      "pledgeLinks": {
-        "early-backer": "",
-        "lifetime-family": "",
-        "gift-a-family": "",
-        "picture-a-word": "",
-        "patron": ""
-      },
+      "pledgeLinks": {},
       "raised": 0,
       "backers": 0,
       "nativeReviewed": false,
@@ -3232,7 +2919,8 @@
             }
           ]
         }
-      }
+      },
+      "tierNames": {}
     }
   ],
   "costReference": {

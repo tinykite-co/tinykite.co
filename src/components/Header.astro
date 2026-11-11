@@ -13,7 +13,8 @@ import ThemeToggle from "./ThemeToggle.astro";
   </a>
 
   <!-- Desktop Navigation -->
-  <nav class="hidden md:flex items-center gap-8 text-brand-slate dark:text-gray-300 text-sm font-medium">
+  <nav class="hidden lg:flex items-center gap-5 text-brand-slate dark:text-gray-300 text-sm font-medium">
+    <a href="/pricing/" class="text-text hover:underline">Pricing</a>
     <a href="/apps" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Apps</a>
     <a href="/typeracer" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">TypeRacer</a>
     <a href="/stopwatch" class="hover:text-brand-navy dark:hover:text-brand-gold transition-colors">Stopwatch</a>
@@ -23,15 +24,15 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   <!-- CTA & Theme Toggle -->
   <div class="flex items-center gap-4">
-    <div class="hidden md:block">
+    <div class="hidden lg:block">
       <ThemeToggle />
     </div>
-    <a href="https://chat.tinykite.co" class="site-header-workspace-btn hidden md:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
+    <a href="https://chat.tinykite.co" class="site-header-workspace-btn hidden lg:block px-5 py-2 bg-brand-navy text-brand-cream dark:bg-brand-gold dark:text-brand-navy text-sm font-bold rounded-full hover:opacity-85 hover:scale-[1.03] active:scale-95 transition-all duration-200">
       Workspace
     </a>
 
     <!-- Mobile Menu Icon -->
-    <button id="menu-icon" class="md:hidden text-brand-navy dark:text-brand-cream focus:outline-none">
+    <button id="menu-icon" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-brand-navy dark:text-brand-cream focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
@@ -40,6 +41,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden absolute top-full mt-4 right-0 w-full bg-brand-cream/95 dark:bg-brand-navy/95 border border-brand-mist dark:border-white/10 rounded-2xl p-6 flex-col gap-4 text-center backdrop-blur-xl shadow-xl">
+    <a href="/pricing/" class="text-text hover:underline">Pricing</a>
     <a href="/apps" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Apps</a>
     <a href="/typeracer" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">TypeRacer</a>
     <a href="/stopwatch" class="text-brand-navy dark:text-brand-cream hover:text-brand-gold text-lg font-medium">Stopwatch</a>
@@ -69,6 +71,7 @@ import ThemeToggle from "./ThemeToggle.astro";
     menuIcon.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
       mobileMenu.classList.toggle("flex");
+      menuIcon.setAttribute("aria-expanded", String(!mobileMenu.classList.contains("hidden")));
     });
 
     // Close menu when clicking a link
@@ -77,6 +80,7 @@ import ThemeToggle from "./ThemeToggle.astro";
       link.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
         mobileMenu.classList.remove("flex");
+        menuIcon.setAttribute("aria-expanded", "false");
       });
     });
   }

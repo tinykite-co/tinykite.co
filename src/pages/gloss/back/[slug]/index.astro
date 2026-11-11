@@ -1,164 +1,26 @@
 ---
+import { buttonVariants } from "@refraction-ui/astro";
 import BackPage from "../../../../components/gloss/back/BackPage.astro";
-import BackingRules from "../../../../components/gloss/back/BackingRules.astro";
-import GoalProgress from "../../../../components/gloss/back/GoalProgress.astro";
-import LanguageLinks from "../../../../components/gloss/back/LanguageLinks.astro";
-import PledgeTiers from "../../../../components/gloss/back/PledgeTiers.astro";
-import ReadingStory from "../../../../components/gloss/back/ReadingStory.astro";
-import { campaign, dollars, isOpen, isPricedFromReference, languagesByGroup, resolveStory, type Language } from "../../../../lib/gloss/campaign";
-
-/** One page per language campaign, generated from campaigns.json. */
+import { campaign, dollars, SUPPORT_EMAIL, type Language } from "../../../../lib/gloss/campaign";
 export function getStaticPaths() {
-  return campaign.languages.map((language) => ({ params: { slug: language.slug }, props: { language } }));
+  return campaign.languages.map(language => ({ params: { slug: language.slug }, props: { language } }));
 }
-
-interface Props {
-  language: Language;
-}
-
+interface Props { language: Language; }
 const { language } = Astro.props;
-const { tiers, closesOn } = campaign;
-const open = isOpen(language, closesOn);
-const hasTranslatedTierNames = Object.values(language.tierNames ?? {}).some((named) => named.meaning);
-const { costReference, readingEvidence } = campaign;
-const pricedFromReference = isPricedFromReference(language, campaign);
-const story = resolveStory(language, campaign);
-const otherLanguages = languagesByGroup(campaign.languages, language.slug);
-const sectionTitle = "text-3xl font-bold text-text mb-3";
-const card = "rounded-2xl border border-gray-100 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] p-6";
+const contact = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`I can help Gloss with ${language.name}`)}`;
 ---
-
-<BackPage
-  title={`Back ${language.name} in Gloss — TinyKite`}
-  description={`${language.promise} Goal ${dollars(language.goal)}. If it isn’t reached, every backer is refunded.`}
->
-  <!-- Hero -->
-  <section class="relative pt-32 pb-12 px-6">
-    <div class="container mx-auto max-w-3xl">
-      <p class="text-[var(--gloss-teal)] font-medium tracking-wide uppercase text-sm mb-2">{language.who}</p>
-      <h1 class="text-4xl md:text-5xl font-bold mb-5 text-text" style="font-family: 'Lora', serif;">
-        Back {language.name}<span class="text-[var(--gloss-honey)]">.</span>
-      </h1>
-      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">{language.promise}</p>
-      <div class={card}>
-        <GoalProgress language={language} closesOn={closesOn} />
-        <a href="#back" class="inline-block mt-5 px-8 py-3 rounded-full bg-[var(--gloss-sage)] text-white font-semibold hover:opacity-90 transition-opacity">
-          {open ? `Back ${language.name}` : "See the rewards"}
-        </a>
-      </div>
-    </div>
+<BackPage title={`${language.name} expansion — Gloss`} description={`The proposed ${language.name} expansion of Gloss’s shared picture dictionary, with scope and a working cost estimate.`}>
+  <section class="mx-auto max-w-3xl px-5 py-16 sm:px-8">
+    <a class="text-text underline" href="/gloss/back/">← The shared picture-dictionary campaign</a>
+    <p class="mt-8 text-sm font-semibold uppercase tracking-wide text-[var(--gloss-sage)]">Language expansion · planning estimate</p>
+    <h1 class="mt-4 text-4xl font-bold text-text">Gloss in {language.name}</h1>
+    <p class="mt-5 text-lg leading-relaxed text-text">{language.promise}</p>
+    <p class="mt-4 text-muted-foreground">This is proposed work, not a separate fundraiser. All backing supports the shared dictionary. Language preferences help us prioritise; they do not reserve funds or guarantee a delivery date.</p>
+    <div class="my-8 rounded-2xl border border-border bg-card p-6"><h2 class="text-xl font-bold text-text">Additional working budget</h2><p class="mt-3 text-3xl font-bold text-text">US {dollars(language.goal)}</p><p class="mt-3 text-muted-foreground">An initial estimate on top of the shared foundation, not a supplier quote. Native-speaker and production quotes will refine the scope and cost before we commission work.</p></div>
+    {language.roots && <p class="mb-8 text-lg leading-relaxed text-text">{language.roots}</p>}
+    <h2 class="text-2xl font-bold text-text">What we want to add</h2>
+    <ul class="my-5 space-y-3 text-text">{language.buys.map(item => <li>· {item}</li>)}</ul>
+    {language.samples.length > 0 && <section class="mt-8"><h2 class="text-2xl font-bold text-text">An illustration of the idea</h2><p class="mt-3 text-sm text-muted-foreground">Draft examples only. Native speakers must check and revise these before publication as dictionary entries.</p><div class="mt-5 space-y-4">{language.samples.map(sample => <article class="rounded-2xl border border-border bg-card p-5"><h3 class="text-xl font-bold text-text">{sample.word}</h3>{sample.lines.map(line => <p class="mt-2 leading-relaxed text-text">{line}</p>)}</article>)}</div></section>}
+    <div class="mt-9 flex flex-wrap gap-3"><a href="/gloss/back/#rewards" class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12"]}>See shared campaign rewards</a><a href={contact} class:list={[buttonVariants({ variant: "outline", size: "lg" }), "min-h-12"]}>Help with {language.name}</a></div>
   </section>
-
-  <ReadingStory story={story} evidence={readingEvidence} nativeReviewed={language.nativeReviewed} />
-
-  <!-- Why it matters -->
-  {(language.roots || language.forFun) && (
-    <section class="py-12 px-6">
-      <div class="container mx-auto max-w-3xl">
-        <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Why it matters</h2>
-        <div class="grid md:grid-cols-2 gap-5 mt-6">
-          {language.roots && (
-            <div class={card}>
-              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">Keep your family’s words</p>
-              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{language.roots}</p>
-            </div>
-          )}
-          {language.forFun && (
-            <div class={card}>
-              <p class="text-xs font-semibold text-[var(--gloss-teal)] uppercase tracking-wide mb-2">And for fun</p>
-              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{language.forFun}</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Already built -->
-  <section class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
-    <div class={`container mx-auto ${language.screenshot ? "max-w-5xl grid md:grid-cols-[1fr_16rem] gap-10 items-start" : "max-w-3xl"}`}>
-      <div>
-        <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Already working</h2>
-        <p class="text-gray-600 dark:text-gray-400 mb-6">{language.builtIntro}</p>
-        <div class="space-y-4">
-          {language.built.map((item) => (
-            <div class={card}>
-              <h3 class="font-semibold text-text mb-1">{item.title}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      {language.screenshot && (
-        <figure>
-          <img src={language.screenshot.src} alt={language.screenshot.alt} width="1170" height="2532" loading="lazy" class="w-full rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-lg" />
-          <figcaption class="text-xs text-gray-500 mt-2 text-center">Gloss 0.12 on iPhone</figcaption>
-        </figure>
-      )}
-    </div>
-  </section>
-
-  <!-- What's missing, with samples -->
-  <section class="py-12 px-6">
-    <div class="container mx-auto max-w-3xl">
-      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">What your money adds</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">{language.samplesIntro}</p>
-      {language.samples.length > 0 && (
-        <div class="space-y-4 mb-8">
-          {language.samples.map((sample) => (
-            <div class={card}>
-              <p class="text-xl font-semibold text-text mb-2" style="font-family: 'Lora', serif;">{sample.word}</p>
-              {sample.lines.map((line) => <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{line}</p>)}
-              {sample.picture && <p class="text-sm text-gray-500 mt-3">Picture: {sample.picture}</p>}
-            </div>
-          ))}
-          <p class="text-xs text-gray-500">Examples written by us to show the idea. Native speakers will check and rewrite them before anything ships.</p>
-        </div>
-      )}
-      <p class="font-semibold text-text mb-2">{dollars(language.goal)} pays for:</p>
-      <ul class="text-gray-600 dark:text-gray-400 space-y-1">
-        {language.buys.map((line) => <li>· {line}</li>)}
-      </ul>
-      <p class="text-sm text-gray-500 mt-4">These are estimates, not quotes. Every backer gets a report of what we actually spent.</p>
-      {pricedFromReference && (
-        <div class={`${card} mt-8`}>
-          <h3 class="font-semibold text-text mb-2">How we priced this</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            {costReference.built} What that took is how we estimated what {language.name} will cost.
-            {costReference.investedUsd !== null && ` So far we have put ${dollars(costReference.investedUsd)} into it.`}
-          </p>
-        </div>
-      )}
-    </div>
-  </section>
-
-  <!-- Rewards -->
-  <section id="back" class="py-12 px-6 bg-[var(--gloss-paper)]/40 dark:bg-white/[0.02]">
-    <div class="container mx-auto max-w-5xl">
-      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">Back {language.name}</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
-        Some rewards arrive the day you back, because Gloss already works. The rest arrive when Gloss launches. We thank grown-ups and families by name, never a child.
-      </p>
-      <PledgeTiers language={language} tiers={tiers} closesOn={closesOn} />
-      {hasTranslatedTierNames && (
-        <p class="text-xs text-gray-500 mt-4">Reward names are written the way your family would say them, with the English meaning beside them. Native speakers will check them, along with every other word.</p>
-      )}
-    </div>
-  </section>
-
-  <!-- Rules -->
-  <section class="py-12 px-6">
-    <div class="container mx-auto max-w-3xl">
-      <h2 class={sectionTitle} style="font-family: 'Lora', serif;">How backing works</h2>
-      <div class="mt-6"><BackingRules /></div>
-    </div>
-  </section>
-
-  <!-- Every other page, only here at the foot, so this page stands alone -->
-  <section class="py-12 px-6 border-t border-gray-100 dark:border-white/[0.06]">
-    <div class="container mx-auto max-w-5xl">
-      <LanguageLinks groups={otherLanguages} title="Gloss in other languages" />
-    </div>
-  </section>
-
 </BackPage>

@@ -3,24 +3,25 @@ import BackPage from "../../../components/gloss/back/BackPage.astro";
 import { SUPPORT_EMAIL } from "../../../lib/gloss/campaign";
 
 /** The privacy notice for backers (adults paying on the website), separate from the app's. */
-const LAST_UPDATED = "11 October 2026";
+const LAST_UPDATED = "11 November 2026";
 
 const sections = [
   {
     title: "Who we are",
-    body: ["Tiny Kite LTD (“TinyKite”), a company in the United Kingdom, runs the Gloss language campaigns and decides what happens to backers’ details."],
+    body: ["Tiny Kite LTD (“TinyKite”), a company in the United Kingdom, runs the Gloss picture-dictionary campaign and decides what happens to backers’ details."],
   },
   {
     title: "What we keep",
     body: [
-      "Your name, email address, country, the language you backed, the reward tier, the amount, and the date. Stripe sends us these when you pay.",
+      "Your name, email address, country, the reward tier, the amount, and the date. Stripe sends us these when you pay.",
       "We never see or keep your card details. Stripe handles the payment under its own privacy policy.",
     ],
   },
   {
     title: "Why we keep it",
     body: [
-      "To deliver your rewards, to send you campaign updates and the spending report you were promised, and to refund you if your language misses its goal. This is our contract with you.",
+      "To deliver your rewards, to send you campaign updates and the spending report you were promised, and to handle cancellations or refunds under the terms of your pledge. This is our contract with you.",
+      "If you email to offer credits, images or language review, we keep your message and contact details so we can coordinate that contribution. Never send account credentials.",
       "To keep the tax and accounting records UK law requires.",
       "If you choose a reward that names your family, we use the name you give us for that, and only that.",
     ],
@@ -46,7 +47,7 @@ const sections = [
 ];
 ---
 
-<BackPage title="Backer privacy notice — Gloss" description="What TinyKite keeps about people who back a Gloss language, and why.">
+<BackPage title="Backer privacy notice — Gloss" description="What TinyKite keeps about people who back the Gloss picture dictionary, and why.">
   <section class="pt-32 pb-12 px-6">
     <div class="container mx-auto max-w-2xl">
       <h1 class="text-4xl font-bold mb-2 text-text" style="font-family: 'Lora', serif;">Backer privacy notice</h1>

@@ -1,0 +1,74 @@
+{
+  "campaignId": "gloss-picture-dictionary-2026",
+  "currency": "gbp",
+  "siteBaseUrl": "https://tinykite.co",
+  "status": "preview",
+  "goal": 10000,
+  "pictureGoal": 5000,
+  "tiers": [
+    {
+      "id": "supporter",
+      "price": 10,
+      "title": "Picture supporter",
+      "limitPerLanguage": null,
+      "months": 0,
+      "households": 0,
+      "benefits": [
+        "Help create and review the shared picture dictionary",
+        "Progress updates and a published spending report",
+        "An optional grown-up name in the thank-you list"
+      ]
+    },
+    {
+      "id": "founding-family",
+      "price": 49,
+      "title": "Founding family",
+      "limitPerLanguage": null,
+      "months": 12,
+      "households": 1,
+      "benefits": [
+        "12 months of TinyKite Family for your household",
+        "Nesta, Gloss and future TinyKite apps as they launch",
+        "Your paid year starts after the free beta",
+        "Campaign updates and optional acknowledgement"
+      ]
+    },
+    {
+      "id": "two-families",
+      "price": 98,
+      "title": "Bring another family",
+      "limitPerLanguage": null,
+      "months": 12,
+      "households": 2,
+      "benefits": [
+        "12 months of TinyKite Family for two households",
+        "Keep one membership and gift the other to a family",
+        "Both memberships start after the free beta",
+        "Campaign updates and optional acknowledgement"
+      ]
+    },
+    {
+      "id": "word-sponsor",
+      "price": 249,
+      "title": "Sponsor the pictures",
+      "limitPerLanguage": null,
+      "months": 12,
+      "households": 2,
+      "benefits": [
+        "Everything in Bring another family",
+        "Suggest a word for the picture-making queue",
+        "See its draft and send feedback before publication",
+        "Editors keep the final say on accuracy and suitability"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "slug": "picture-dictionary",
+      "name": "Picture dictionary",
+      "pledgeLinks": {},
+      "raised": 0,
+      "backers": 0
+    }
+  ]
+}

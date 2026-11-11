@@ -1,5 +1,6 @@
 ---
 import { buttonVariants } from "@refraction-ui/astro";
+import FamilyPlan from "../../components/family/FamilyPlan.astro";
 import Layout from "../../layouts/Layout.astro";
 
 const createAccount = "https://accounts.tinykite.co/login/?mode=signup";
@@ -41,6 +42,7 @@ const secondary = buttonVariants({ variant: "outline", size: "lg" });
       ))}
     </section>
     <p class="mt-6 text-text">On a child’s device, open the app and choose <strong>I have a setup code</strong>. A grown-up creates the code and approves the device.</p>
+    <section class="mt-12" aria-label="One household plan"><FamilyPlan /><p class="mt-4 text-text"><a class="underline" href="/pricing/">Pricing details</a> · <a class="underline" href="/gloss/back/">Help build Gloss in your language</a></p></section>
   </main>
 </Layout>
 
